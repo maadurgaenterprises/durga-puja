@@ -25,7 +25,7 @@
     #sparkleCanvas { position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 1; }
 
     header { text-align: center; padding: 30px 15px 15px; position: relative; z-index: 2; }
-    header h1 { font-size: 26px; color: var(--gold); text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+    header h1 { font-size: 24px; color: var(--gold); text-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
     header p { color: #ffcdd2; font-size: 13px; margin-top: 5px; }
 
     /* Top Ticker */
@@ -61,56 +61,58 @@
 
     /* Store Grid */
     .store-title { text-align: center; color: var(--gold); margin-bottom: 20px; font-size: 22px; }
-    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; }
-    .product-box { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 12px; text-align: center; position: relative; }
+    .grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (max-width: 480px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    
+    .product-box { background: rgba(255, 255, 255, 0.04); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 12px; padding: 10px; text-align: center; position: relative; }
     .product-box.out-of-stock { opacity: 0.55; }
-    .badge-stock { position: absolute; top: 10px; right: 10px; background: #d32f2f; color: #fff; font-size: 11px; padding: 3px 7px; border-radius: 4px; font-weight: bold; }
-    .main-img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
+    .badge-stock { position: absolute; top: 8px; right: 8px; background: #d32f2f; color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: bold; }
+    .main-img { width: 100%; height: 120px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; }
     .thumb-row { display: flex; gap: 4px; justify-content: center; margin-bottom: 8px; }
-    .thumb-row img { width: 30px; height: 30px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,215,0,0.4); cursor: pointer; }
-    .product-box h4 { font-size: 14px; color: #fff; margin-bottom: 4px; }
-    .product-desc { font-size: 11px; color: #ffcdd2; margin-bottom: 8px; line-height: 1.3; }
-    .product-box .price { color: var(--gold); font-size: 16px; font-weight: bold; margin-bottom: 8px; }
-    .btn-buy { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; }
+    .thumb-row img { width: 26px; height: 26px; object-fit: cover; border-radius: 4px; border: 1px solid rgba(255,215,0,0.4); cursor: pointer; }
+    .product-box h4 { font-size: 13px; color: #fff; margin-bottom: 4px; }
+    .product-desc { font-size: 11px; color: #ffcdd2; margin-bottom: 6px; line-height: 1.3; }
+    .product-box .price { color: var(--gold); font-size: 15px; font-weight: bold; margin-bottom: 8px; }
+    .btn-buy { background: transparent; border: 1px solid var(--gold); color: var(--gold); padding: 6px 10px; border-radius: 6px; cursor: pointer; font-weight: 600; width: 100%; font-size: 12px; }
     .btn-buy:hover:not(:disabled) { background: var(--gold); color: #000; }
     .btn-buy:disabled { border-color: #666; color: #666; cursor: not-allowed; }
 
-    /* Verification Modal (UTR Flow) */
+    /* Verification Modal */
     .verify-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); z-index: 2000; justify-content: center; align-items: center; padding: 15px; }
     .verify-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 14px; padding: 22px; max-width: 420px; width: 100%; text-align: center; }
 
-    /* Fullscreen 4-Second Celebration Modal */
+    /* Celebration Modal */
     .fullscreen-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(18, 0, 2, 0.97); z-index: 9999; justify-content: center; align-items: center; text-align: center; padding: 20px; }
     .fullscreen-box { animation: zoomIn 0.4s ease; max-width: 550px; }
-    .fullscreen-box h1 { font-size: 32px; color: var(--gold); margin-bottom: 15px; }
-    .fullscreen-box p { font-size: 18px; color: #fff; line-height: 1.6; }
+    .fullscreen-box h1 { font-size: 28px; color: var(--gold); margin-bottom: 15px; }
+    .fullscreen-box p { font-size: 16px; color: #fff; line-height: 1.6; }
     @keyframes zoomIn { from { transform: scale(0.6); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-    /* 🔐 GOOGLE SIGN-IN MODAL */
+    /* 🔐 Google Auth Modal */
     .auth-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); z-index: 3000; justify-content: center; align-items: center; padding: 15px; backdrop-filter: blur(8px); }
     .auth-box { background: #180004; border: 2px solid var(--gold); border-radius: 16px; padding: 25px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.3); }
-    .auth-box h3 { color: var(--gold); margin-bottom: 12px; font-size: 20px; }
+    .auth-box h3 { color: var(--gold); margin-bottom: 12px; font-size: 18px; }
     .auth-box p { font-size: 13px; color: #ffcdd2; margin-bottom: 20px; line-height: 1.5; }
-    
-    .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #ffffff; color: #333333; border: none; border-radius: 8px; padding: 12px 16px; font-size: 15px; font-weight: bold; cursor: pointer; transition: 0.3s; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    .btn-google:hover { background: #f1f1f1; transform: scale(1.02); }
+    .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #ffffff; color: #333333; border: none; border-radius: 8px; padding: 12px 16px; font-size: 15px; font-weight: bold; cursor: pointer; }
     .btn-google svg { width: 20px; height: 20px; }
 
     /* Admin Panel */
-    #adminPanel { display: none; margin-top: 30px; background: rgba(10, 2, 4, 0.95); border: 2px solid var(--gold); border-radius: 14px; padding: 20px; }
-    .admin-select { font-weight: bold; background: #220005; color: var(--gold); border: 2px solid var(--gold); margin-bottom: 20px; }
+    #adminPanel { display: none; margin-top: 30px; background: rgba(10, 2, 4, 0.95); border: 2px solid var(--gold); border-radius: 14px; padding: 18px; }
+    .admin-select { font-weight: bold; background: #220005; color: var(--gold); border: 2px solid var(--gold); margin-bottom: 15px; }
     .admin-subpanel { display: none; }
     .admin-subpanel.active { display: block; }
     .admin-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; }
-    .admin-table th, .admin-table td { border: 1px solid rgba(255,215,0,0.3); padding: 8px; text-align: left; }
+    .admin-table th, .admin-table td { border: 1px solid rgba(255,215,0,0.3); padding: 6px; text-align: left; }
     .admin-table th { background: rgba(255,215,0,0.15); color: var(--gold); }
-    .admin-btn { padding: 5px 10px; border-radius: 4px; font-size: 11px; cursor: pointer; border: none; font-weight: bold; margin: 2px; }
+    .admin-btn { padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; border: none; font-weight: bold; margin: 2px; }
     .btn-stock { background: #ff9800; color: #000; }
     .btn-del { background: #d32f2f; color: #fff; }
 
+    /* Footer */
     footer { text-align: center; padding: 25px 15px; background: #0a0001; position: relative; z-index: 2; margin-top: 40px; border-top: 1px solid rgba(255,215,0,0.2); }
-    .social-links a { color: var(--gold); margin: 0 8px; text-decoration: none; font-size: 14px; font-weight: 500; }
-    .terms { font-size: 11px; color: #888; margin-top: 15px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.5; }
+    .social-links { margin-bottom: 12px; }
+    .social-links a { color: var(--gold); margin: 0 8px; text-decoration: none; font-size: 13px; font-weight: bold; }
+    .terms { font-size: 11px; color: #888; max-width: 700px; margin: 0 auto; line-height: 1.5; }
   </style>
 </head>
 <body>
@@ -190,7 +192,7 @@
             <tr>
               <th>तारीख</th>
               <th>दानदाता का नाम</th>
-              <th>स्थान (शहर/गाँव)</th>
+              <th>स्थान</th>
               <th>सहयोग राशि</th>
               <th>सेवा का उद्देश्य</th>
             </tr>
@@ -200,13 +202,13 @@
       </div>
     </div>
 
-    <!-- Devotional Store -->
+    <!-- Devotional Store (Always visible) -->
     <h3 class="store-title">माँ दुर्गा एंटरप्राइजेज — भक्ति स्टोर</h3>
     <div class="grid" id="productGrid"></div>
 
     <!-- Admin Link Button -->
     <div style="text-align: center; margin-top: 30px;">
-      <button type="button" onclick="openGoogleAdminAuth()" style="background: none; border: 1px dashed rgba(255,215,0,0.4); color: #aaa; padding: 8px 18px; border-radius: 4px; font-size: 13px; cursor: pointer;">
+      <button type="button" onclick="openGoogleAdminAuth()" style="background: none; border: 1px dashed rgba(255,215,0,0.4); color: #ffd700; padding: 8px 18px; border-radius: 4px; font-size: 13px; cursor: pointer;">
         🔐 2-Step Verified Owner Admin Dashboard
       </button>
     </div>
@@ -214,35 +216,35 @@
     <!-- Master Admin Dashboard -->
     <div id="adminPanel">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:15px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px;">
-        <h3 style="color: var(--gold);">मालिक कंट्रोल सेंटर (Verified: yu******23@gmail.com)</h3>
+        <h3 style="color: var(--gold); font-size: 15px;">मालिक कंट्रोल सेंटर (Verified: yu******23@gmail.com)</h3>
         <button class="admin-btn btn-del" onclick="logoutAdmin()">🔒 लॉगआउट करें</button>
       </div>
       
       <label style="color: var(--gold); font-size: 13px; font-weight: bold;">कस्टमाइज़ेशन विकल्प चुनें:</label>
       <select class="admin-select" id="adminSectionSelector" onchange="switchAdminSection(this.value)">
-        <option value="section_settings">⚙️ वेबसाइट सेटिंग्स एवं टिकर संदेश (Text Limit Free)</option>
-        <option value="section_donations">🙏 सत्यापित डोनेशन सूची (फर्जी नाम हटाएं / प्रबंधित करें)</option>
-        <option value="section_products">🛍️ प्रोडक्ट मैनेजमेंट (नया सामान, फोटो, स्टॉक स्थिति)</option>
+        <option value="section_settings">⚙️ वेबसाइट सेटिंग्स एवं टिकर संदेश</option>
+        <option value="section_donations">🙏 सत्यापित डोनेशन सूची</option>
+        <option value="section_products">🛍️ प्रोडक्ट मैनेजमेंट</option>
       </select>
 
       <!-- 1. Settings Section -->
       <div id="section_settings" class="admin-subpanel active">
         <div style="background: rgba(255,255,255,0.05); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
-          <h4 style="color: var(--gold); margin-bottom: 10px;">खाली समय में स्क्रीन पर चलने वाला संदेश (No Word Limit)</h4>
-          <textarea id="cfgIdleTicker" rows="3" placeholder="यहाँ खाली समय का संदेश लिखें..." style="margin-bottom: 14px;"></textarea>
+          <h4 style="color: var(--gold); margin-bottom: 10px;">खाली समय में स्क्रीन पर चलने वाला संदेश</h4>
+          <textarea id="cfgIdleTicker" rows="3" style="margin-bottom: 14px;"></textarea>
 
           <h4 style="color: var(--gold); margin-top: 10px; margin-bottom: 8px;">पेमेंट और बैंक सेटिंग्स</h4>
-          <label>पेमेंट का तरीका (Payment Mode)</label>
+          <label>पेमेंट का तरीका</label>
           <select id="cfgPaymentMode" style="margin-bottom: 10px; font-weight: bold; color: var(--gold);">
             <option value="UPI_MANUAL">वर्तमान बिज़नेस QR / UPI (8382893303-1@okbizaxis + UTR)</option>
-            <option value="RAZORPAY_AUTO">Razorpay पेमेंट गेटवे (100% ऑटो-डिटेक्ट)</option>
+            <option value="RAZORPAY_AUTO">Razorpay पेमेंट गेटवे</option>
           </select>
 
           <label>Google Pay Business UPI ID</label>
           <input type="text" id="cfgUpiId" value="8382893303-1@okbizaxis" style="margin-bottom: 8px;">
 
-          <label>Razorpay Key ID (भविष्य में गेटवे चालू होने पर)</label>
-          <input type="text" id="cfgRazorpayKey" placeholder="जैसे: rzp_live_xxxxxxxxxxxx" style="margin-bottom: 8px;">
+          <label>Razorpay Key ID</label>
+          <input type="text" id="cfgRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxx" style="margin-bottom: 8px;">
 
           <h4 style="color: var(--gold); margin-top: 15px; margin-bottom: 8px;">सोशल लिंक्स</h4>
           <label>व्हाट्सएप नंबर (10 अंक)</label>
@@ -258,7 +260,7 @@
       <div id="section_donations" class="admin-subpanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
           <h4 style="color: var(--gold);">सत्यापित डोनेशन रिकॉर्ड</h4>
-          <button class="admin-btn btn-del" onclick="clearAllDonations()">⚠️ सभी पुराने/फर्जी रिकॉर्ड साफ करें</button>
+          <button class="admin-btn btn-del" onclick="clearAllDonations()">⚠️ सभी पुराने रिकॉर्ड साफ करें</button>
         </div>
         <div style="overflow-x:auto;">
           <table class="admin-table" id="donationsTable">
@@ -277,7 +279,7 @@
           <input type="text" id="newProdName" placeholder="प्रोडक्ट का नाम" style="margin-bottom: 8px;">
           <input type="number" id="newProdPrice" placeholder="फिक्स मूल्य (₹)" style="margin-bottom: 8px;">
           <textarea id="newProdDesc" rows="2" placeholder="प्रोडक्ट का विवरण" style="margin-bottom: 8px;"></textarea>
-          <textarea id="newProdImgs" rows="2" placeholder="फोटो लिंक्स (कॉमा लगाकर: link1, link2)" style="margin-bottom: 8px;"></textarea>
+          <textarea id="newProdImgs" rows="2" placeholder="फोटो लिंक्स (कॉमा लगाकर)" style="margin-bottom: 8px;"></textarea>
           <button class="btn-buy" type="button" onclick="addNewProduct()" style="width: auto; padding: 8px 20px;">+ प्रोडक्ट लाइव करें</button>
         </div>
 
@@ -293,7 +295,7 @@
 
   </div>
 
-  <!-- 🔐 GOOGLE 2-STEP SIGN-IN MODAL (PROTECTED MASKED DISPLAY) -->
+  <!-- 🔐 GOOGLE 2-STEP SIGN-IN MODAL -->
   <div class="auth-modal" id="googleAuthModal">
     <div class="auth-box">
       <h3>🔐 सुरक्षित Google 2-Step सत्यापन</h3>
@@ -316,7 +318,7 @@
     </div>
   </div>
 
-  <!-- Verification Modal (UTR Flow) -->
+  <!-- Verification Modal -->
   <div class="verify-modal" id="verifyModal">
     <div class="verify-box">
       <h3 style="color: var(--gold); margin-bottom: 10px;">पेमेंट पूरा करें एवं पुष्टि करें</h3>
@@ -329,4 +331,482 @@
 
       <input type="text" id="paymentUtrInput" placeholder="12-अंकीय UTR / Ref नंबर दर्ज करें" style="margin-bottom: 12px;">
       
-      <button class="btn-magic" type="button" onclick="confirmPaymentSuccess()">पुष्टि करें (Confirm Payment)</but
+      <button class="btn-magic" type="button" onclick="confirmPaymentSuccess()">पुष्टि करें (Confirm Payment)</button>
+      <button type="button" onclick="cancelPaymentFlow()" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">भुगतान नहीं हुआ / रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- Fullscreen Celebration Modal -->
+  <div class="fullscreen-modal" id="celebrationModal">
+    <div class="fullscreen-box">
+      <h1>🎉 जय माता दी! 🎉</h1>
+      <p id="celebrationText"></p>
+      <p style="font-size: 13px; color: var(--gold); margin-top: 15px;">(यह संदेश 4 सेकंड में स्वतः बंद हो जाएगा)</p>
+    </div>
+  </div>
+
+  <!-- Footer (Always visible) -->
+  <footer>
+    <div class="social-links">
+      <a id="footerWaLink" href="https://wa.me/919120226597" target="_blank">📱 WhatsApp</a> |
+      <a id="footerInstaLink" href="https://www.instagram.com/shreedurgapuja_official?stkn=dmd3YmptZmp1YmZr" target="_blank">📷 Instagram</a> |
+      <a id="footerYtLink" href="https://youtube.com" target="_blank">▶ YouTube</a>
+    </div>
+    <div class="terms">
+      <b>Terms & Conditions:</b> All contributions made towards Shree Durga Puja Seva Samiti are voluntary offerings for community events, prasad, pandal arrangements, and disaster relief operations. Digital receipts are dispatched via WhatsApp. Merchandise supplied by Maa Durga Enterprises constitutes authentic devotional goods.
+    </div>
+  </footer>
+
+  <script>
+    const AUTHORIZED_ADMIN_EMAIL = "yugampal23@gmail.com";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyD5Ut5NXkC5Jp6WiTjrzfYMeVt_rcQY9Ck",
+      authDomain: "maa-durga-enterprises-81b10.firebaseapp.com",
+      projectId: "maa-durga-enterprises-81b10",
+      storageBucket: "maa-durga-enterprises-81b10.firebasestorage.app",
+      messagingSenderId: "43294530036",
+      appId: "1:43294530036:web:02d4313620a5b54ebe41a1",
+      measurementId: "G-YWXXTLH016"
+    };
+
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const authInstance = firebase.auth();
+    const googleProvider = new firebase.auth.GoogleAuthProvider();
+
+    function openGoogleAdminAuth() {
+      document.getElementById('googleAuthModal').style.display = 'flex';
+    }
+
+    function closeGoogleAuthModal() {
+      document.getElementById('googleAuthModal').style.display = 'none';
+    }
+
+    function executeGoogleLogin() {
+      authInstance.signInWithPopup(googleProvider)
+        .then((result) => {
+          const user = result.user;
+          if (user.email.toLowerCase() === AUTHORIZED_ADMIN_EMAIL.toLowerCase()) {
+            alert("प्रणाम! Google 2-Step सत्यापन सफल हुआ।");
+            closeGoogleAuthModal();
+            openAdminPanel();
+          } else {
+            authInstance.signOut();
+            alert("प्रवेश अस्वीकृत! केवल अधिकृत मालिक खाते को ही अनुमति है।");
+          }
+        })
+        .catch((error) => {
+          console.error("Google Auth Error:", error);
+          alert("Google सत्यापन विफल: " + error.message);
+        });
+    }
+
+    function openAdminPanel() {
+      document.getElementById('adminPanel').style.display = 'block';
+      loadAdminData();
+      window.scrollTo({ top: document.getElementById('adminPanel').offsetTop, behavior: 'smooth' });
+    }
+
+    function logoutAdmin() {
+      authInstance.signOut();
+      document.getElementById('adminPanel').style.display = 'none';
+      alert("एडमिन सुरक्षित रूप से लॉगआउट हो गया।");
+    }
+
+    let siteConfig = JSON.parse(localStorage.getItem('mde_config')) || {
+      mainHeader: "🚩 श्री दुर्गा पूजा सेवा समिति 🚩",
+      subHeader: "Maa Durga Enterprises | 12 माह जन-कल्याण एवं पावन सेवा पोर्टल",
+      idleTicker: "🚩 श्री दुर्गा पूजा सेवा समिति | Maa Durga Enterprises | अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🚩",
+      paymentMode: "UPI_MANUAL",
+      upiId: "8382893303-1@okbizaxis",
+      razorpayKey: "",
+      bizName: "Maa Durga Enterprises",
+      whatsapp: "9120226597",
+      instagram: "https://www.instagram.com/shreedurgapuja_official?stkn=dmd3YmptZmp1YmZr",
+      youtube: "https://youtube.com"
+    };
+
+    function applyConfig() {
+      document.getElementById('siteMainHeader').innerText = siteConfig.mainHeader;
+      document.getElementById('siteSubHeader').innerText = siteConfig.subHeader;
+      document.getElementById('footerWaLink').href = `https://wa.me/91${siteConfig.whatsapp}`;
+      document.getElementById('footerInstaLink').href = siteConfig.instagram;
+      document.getElementById('footerYtLink').href = siteConfig.youtube;
+      
+      document.getElementById('cfgIdleTicker').value = siteConfig.idleTicker;
+      document.getElementById('cfgPaymentMode').value = siteConfig.paymentMode || "UPI_MANUAL";
+      document.getElementById('cfgUpiId').value = siteConfig.upiId;
+      document.getElementById('cfgRazorpayKey').value = siteConfig.razorpayKey || "";
+      document.getElementById('cfgWhatsapp').value = siteConfig.whatsapp;
+      document.getElementById('cfgYoutube').value = siteConfig.youtube;
+    }
+
+    let products = JSON.parse(localStorage.getItem('mde_products')) || [
+      { id: 1, name: "श्री दुर्गा सप्तशती (सचित्र)", price: 151, desc: "शुद्ध हिंदी अनुवाद सहित।", inStock: true, images: ["https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400"] },
+      { id: 2, name: "माता की चुनरी व पोशाक", price: 251, desc: "जरी वर्क प्रीमियम पोशाक।", inStock: true, images: ["https://images.unsplash.com/photo-1609743522653-52354461eb27?w=400"] },
+      { id: 3, name: "अखंड ज्योति पीतल दीया", price: 351, desc: "शुद्ध पीतल अखंड दीप।", inStock: true, images: ["https://images.unsplash.com/photo-1582738411706-bfc8e691d1c2?w=400"] },
+      { id: 4, name: "3D लेमिनेटेड फोटो फ्रेम", price: 451, desc: "वाटरप्रूफ 3D फोटो फ्रेम।", inStock: false, images: ["https://images.unsplash.com/photo-1579783900882-c0d3dad7b119?w=400"] }
+    ];
+
+    let pendingTransaction = null;
+
+    function toggleView(view) {
+      if (view === 'donate') {
+        document.getElementById('donationPanel').style.display = 'block';
+        document.getElementById('donorDirectoryPanel').style.display = 'none';
+        document.getElementById('tabDonateBtn').classList.add('active');
+        document.getElementById('tabListBtn').classList.remove('active');
+      } else {
+        document.getElementById('donationPanel').style.display = 'none';
+        document.getElementById('donorDirectoryPanel').style.display = 'block';
+        document.getElementById('tabDonateBtn').classList.remove('active');
+        document.getElementById('tabListBtn').classList.add('active');
+        renderPublicDonorList();
+      }
+    }
+
+    function initiateDonation() {
+      const name = document.getElementById('donorName').value.trim() || "श्रद्धालु भक्त";
+      const rawAddr = document.getElementById('donorAddress').value.trim();
+      const address = (rawAddr && rawAddr !== "undefined") ? rawAddr : "";
+      const phone = document.getElementById('donorPhone').value.trim() || "";
+      const amount = document.getElementById('donorAmount').value.trim();
+      const cause = document.getElementById('cause').value;
+
+      if (!amount || amount <= 0) {
+        alert("कृपया सही सहयोग राशि दर्ज करें।");
+        return;
+      }
+
+      if (siteConfig.paymentMode === "RAZORPAY_AUTO" && siteConfig.razorpayKey) {
+        const options = {
+          "key": siteConfig.razorpayKey,
+          "amount": amount * 100,
+          "currency": "INR",
+          "name": "श्री दुर्गा पूजा सेवा समिति",
+          "description": cause + (address ? " - " + address : ""),
+          "prefill": { "name": name, "contact": phone },
+          "theme": { "color": "#c62828" },
+          "handler": function (response) {
+            saveVerifiedDonation(name, address, phone, amount, cause, response.razorpay_payment_id);
+          }
+        };
+        const rzp = new Razorpay(options);
+        rzp.open();
+        return;
+      }
+
+      pendingTransaction = {
+        name, address, phone, amount, cause,
+        date: new Date().toLocaleDateString('hi-IN')
+      };
+
+      const upiLink = `upi://pay?pa=${siteConfig.upiId}&pn=${encodeURIComponent(siteConfig.bizName)}&am=${amount}&cu=INR&tn=${encodeURIComponent(cause + " - " + name)}`;
+      window.location.href = upiLink;
+
+      const addrDisplay = address ? ` (${address})` : "";
+      document.getElementById('verifyDetailsText').innerHTML = `दानदाता: <b>${name}</b>${addrDisplay}<br>सहयोग राशि: <b>₹${amount}</b>`;
+      document.getElementById('verifyModal').style.display = 'flex';
+    }
+
+    function confirmPaymentSuccess() {
+      const utr = document.getElementById('paymentUtrInput').value.trim();
+      if (!utr || utr.length < 4) {
+        alert("कृपया सही 12-अंकीय UTR / UPI Ref नंबर दर्ज करें।");
+        return;
+      }
+
+      if (!pendingTransaction) return;
+      saveVerifiedDonation(pendingTransaction.name, pendingTransaction.address, pendingTransaction.phone, pendingTransaction.amount, pendingTransaction.cause, utr);
+
+      document.getElementById('verifyModal').style.display = 'none';
+      document.getElementById('paymentUtrInput').value = '';
+      pendingTransaction = null;
+    }
+
+    function cancelPaymentFlow() {
+      document.getElementById('verifyModal').style.display = 'none';
+      document.getElementById('paymentUtrInput').value = '';
+      pendingTransaction = null;
+    }
+
+    function saveVerifiedDonation(name, address, phone, amount, cause, refId) {
+      const cleanAddr = (address && address !== "undefined") ? address : "";
+      const record = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString('hi-IN'),
+        name, address: cleanAddr, phone, cause, amount, utr: refId
+      };
+      let donations = JSON.parse(localStorage.getItem('mde_donations')) || [];
+      donations.unshift(record);
+      localStorage.setItem('mde_donations', JSON.stringify(donations));
+
+      const addrShow = cleanAddr ? ` (${cleanAddr})` : "";
+      triggerFullscreenCelebration(`श्री <b>${name}</b> जी${addrShow},<br>${cause} हेतु आपके <b>₹${amount}</b> के पावन सहयोग के लिए माँ दुर्गा सेवा समिति आपका कोटि-कोटि आभार व्यक्त करती है!<br><br><span style="color:#ffd700; font-size:14px;">व्हाट्सएप नंबर ${phone} पर रसीद भेजी जा रही है।</span>`);
+
+      refreshTopTicker();
+      renderPublicDonorList();
+      document.getElementById('donorAmount').value = '';
+    }
+
+    function refreshTopTicker() {
+      const donations = JSON.parse(localStorage.getItem('mde_donations')) || [];
+      const ticker = document.getElementById('liveTicker');
+      
+      if (donations.length === 0) {
+        ticker.innerHTML = siteConfig.idleTicker;
+        return;
+      }
+
+      const recent = donations.slice(0, 8);
+      const tickerContent = recent.map(d => {
+        const addr = (d.address && d.address !== "undefined") ? ` (${d.address})` : "";
+        return `★ श्री ${d.name} जी${addr} - ₹${d.amount} (${d.cause})`;
+      }).join(' | ');
+
+      ticker.innerHTML = tickerContent + " | " + siteConfig.idleTicker;
+    }
+
+    function renderPublicDonorList(filter = '') {
+      const donations = JSON.parse(localStorage.getItem('mde_donations')) || [];
+      const tbody = document.getElementById('publicDonorBody');
+      tbody.innerHTML = '';
+
+      if (donations.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#aaa;">अभी तक कोई सहयोग रिकॉर्ड नहीं है। पहले दानदाता बनें!</td></tr>`;
+        return;
+      }
+
+      const q = filter.toLowerCase().trim();
+      let matched = [];
+      let unmatched = [];
+
+      donations.forEach(d => {
+        const addrText = (d.address && d.address !== "undefined") ? d.address : "";
+        if (q && (d.name.toLowerCase().includes(q) || (d.phone && d.phone.includes(q)) || addrText.toLowerCase().includes(q))) {
+          matched.push(d);
+        } else {
+          unmatched.push(d);
+        }
+      });
+
+      const displayList = q ? [...matched, ...unmatched] : donations;
+
+      displayList.forEach(d => {
+        const isHit = q && matched.includes(d);
+        const addrVal = (d.address && d.address !== "undefined") ? d.address : "—";
+        tbody.innerHTML += `
+          <tr class="${isHit ? 'highlight-row' : ''}">
+            <td>${d.date}</td>
+            <td><b>${d.name}</b></td>
+            <td>${addrVal}</td>
+            <td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td>
+            <td>${d.cause}</td>
+          </tr>
+        `;
+      });
+    }
+
+    function searchDonors() {
+      renderPublicDonorList(document.getElementById('searchInput').value);
+    }
+
+    function triggerFullscreenCelebration(message) {
+      const modal = document.getElementById('celebrationModal');
+      document.getElementById('celebrationText').innerHTML = message;
+      modal.style.display = 'flex';
+
+      try {
+        confetti({ particleCount: 130, spread: 85, origin: { y: 0.5 }, colors: ['#ffd700', '#ff1744', '#ffffff'] });
+      } catch(e) {}
+
+      setTimeout(() => { modal.style.display = 'none'; }, 4000);
+    }
+
+    function renderProducts() {
+      const grid = document.getElementById('productGrid');
+      grid.innerHTML = '';
+      products.forEach(p => {
+        const isAvailable = p.inStock !== false;
+        let thumbHtml = '';
+        if (p.images && p.images.length > 1) {
+          thumbHtml = `<div class="thumb-row">` + 
+            p.images.map(img => `<img src="${img}" onclick="document.getElementById('pimg_${p.id}').src='${img}'" alt="thumb">`).join('') +
+          `</div>`;
+        }
+        grid.innerHTML += `
+          <div class="product-box ${isAvailable ? '' : 'out-of-stock'}">
+            ${isAvailable ? '' : '<span class="badge-stock">Out of Stock</span>'}
+            <img id="pimg_${p.id}" class="main-img" src="${p.images[0]}" alt="${p.name}">
+            ${thumbHtml}
+            <h4>${p.name}</h4>
+            <p class="product-desc">${p.desc || ''}</p>
+            <div class="price">₹${p.price}</div>
+            <button class="btn-buy" type="button" ${isAvailable ? `onclick="alert('ऑर्डर हेतु कृपया डोनेशन बॉक्स में राशि भेजें या व्हाट्सएप पर संपर्क करें।')"` : 'disabled'}>
+              ${isAvailable ? 'ऑर्डर करें' : 'स्टॉक समाप्त'}
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    function switchAdminSection(sectionId) {
+      document.querySelectorAll('.admin-subpanel').forEach(p => p.classList.remove('active'));
+      document.getElementById(sectionId).classList.add('active');
+    }
+
+    function loadAdminData() {
+      const donations = JSON.parse(localStorage.getItem('mde_donations')) || [];
+      const donTbody = document.querySelector('#donationsTable tbody');
+      
+      if (donations.length === 0) {
+        donTbody.innerHTML = "<tr><td colspan='8' style='text-align:center;color:#aaa;'>कोई डोनेशन रिकॉर्ड नहीं है</td></tr>";
+      } else {
+        donTbody.innerHTML = donations.map((d, index) => `
+          <tr>
+            <td>${d.date}</td>
+            <td><b>${d.name}</b></td>
+            <td>${(d.address && d.address !== "undefined") ? d.address : "—"}</td>
+            <td>${d.phone || '—'}</td>
+            <td>${d.cause}</td>
+            <td>₹${d.amount}</td>
+            <td><small>${d.utr || '—'}</small></td>
+            <td><button class="admin-btn btn-del" onclick="deleteDonation(${index})">हटाएं</button></td>
+          </tr>
+        `).join('');
+      }
+
+      const invTbody = document.querySelector('#inventoryTable tbody');
+      invTbody.innerHTML = products.map(p => `
+        <tr>
+          <td><img src="${p.images[0]}" style="width:30px;height:30px;object-fit:cover;border-radius:4px;"></td>
+          <td><b>${p.name}</b></td>
+          <td>₹${p.price}</td>
+          <td><span style="color:${p.inStock !== false ? '#4caf50' : '#f44336'};font-weight:bold;">${p.inStock !== false ? 'In Stock' : 'Out of Stock'}</span></td>
+          <td>
+            <button class="admin-btn btn-stock" onclick="toggleStock(${p.id})">${p.inStock !== false ? 'Mark Out' : 'Mark In'}</button>
+            <button class="admin-btn btn-del" onclick="deleteProduct(${p.id})">हटाएं</button>
+          </td>
+        </tr>
+      `).join('') || "<tr><td colspan='5'>कोई प्रोडक्ट नहीं</td></tr>";
+    }
+
+    function deleteDonation(index) {
+      if (confirm("क्या आप इस डोनेशन रिकॉर्ड को हटाना चाहते हैं?")) {
+        let donations = JSON.parse(localStorage.getItem('mde_donations')) || [];
+        donations.splice(index, 1);
+        localStorage.setItem('mde_donations', JSON.stringify(donations));
+        loadAdminData();
+        refreshTopTicker();
+        renderPublicDonorList();
+      }
+    }
+
+    function clearAllDonations() {
+      if (confirm("चेतावनी: क्या आप सभी पुराने रिकॉर्ड्स एक साथ डिलीट करना चाहते हैं?")) {
+        localStorage.removeItem('mde_donations');
+        loadAdminData();
+        refreshTopTicker();
+        renderPublicDonorList();
+        alert("सभी पुराने डोनेशन रिकॉर्ड्स साफ़ कर दिए गए हैं!");
+      }
+    }
+
+    function toggleStock(prodId) {
+      const prod = products.find(p => p.id === prodId);
+      if (prod) {
+        prod.inStock = prod.inStock === false ? true : false;
+        localStorage.setItem('mde_products', JSON.stringify(products));
+        renderProducts();
+        loadAdminData();
+      }
+    }
+
+    function deleteProduct(prodId) {
+      if (confirm("क्या आप इस प्रोडक्ट को हटाना चाहते हैं?")) {
+        products = products.filter(p => p.id !== prodId);
+        localStorage.setItem('mde_products', JSON.stringify(products));
+        renderProducts();
+        loadAdminData();
+      }
+    }
+
+    function addNewProduct() {
+      const name = document.getElementById('newProdName').value.trim();
+      const price = document.getElementById('newProdPrice').value.trim();
+      const desc = document.getElementById('newProdDesc').value.trim();
+      const rawImgs = document.getElementById('newProdImgs').value.trim();
+
+      if (!name || !price || !rawImgs) {
+        alert("कृपया नाम, मूल्य और कम से कम 1 फोटो लिंक भरें।");
+        return;
+      }
+
+      const imgArray = rawImgs.split(',').map(u => u.trim()).filter(u => u.length > 0);
+      products.push({ id: Date.now(), name, price: Number(price), desc, inStock: true, images: imgArray });
+      localStorage.setItem('mde_products', JSON.stringify(products));
+      renderProducts();
+      loadAdminData();
+      alert("प्रोडक्ट लाइव हो गया!");
+      document.getElementById('newProdName').value = '';
+      document.getElementById('newProdPrice').value = '';
+      document.getElementById('newProdDesc').value = '';
+      document.getElementById('newProdImgs').value = '';
+    }
+
+    function saveSiteSettings() {
+      siteConfig.idleTicker = document.getElementById('cfgIdleTicker').value.trim();
+      siteConfig.paymentMode = document.getElementById('cfgPaymentMode').value;
+      siteConfig.upiId = document.getElementById('cfgUpiId').value.trim();
+      siteConfig.razorpayKey = document.getElementById('cfgRazorpayKey').value.trim();
+      siteConfig.whatsapp = document.getElementById('cfgWhatsapp').value.trim();
+      siteConfig.youtube = document.getElementById('cfgYoutube').value.trim();
+
+      localStorage.setItem('mde_config', JSON.stringify(siteConfig));
+      applyConfig();
+      refreshTopTicker();
+      alert("सेटिंग्स और नया टिकर संदेश सफलतापूर्वक सुरक्षित हो गए!");
+    }
+
+    // Canvas Sparkles Animation
+    const canvas = document.getElementById('sparkleCanvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    class Particle {
+      constructor() { this.reset(); }
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = Math.random() * 2 + 0.5;
+        this.speedY = -(Math.random() * 0.7 + 0.2);
+        this.opacity = Math.random() * 0.7 + 0.3;
+      }
+      update() { this.y += this.speedY; if (this.y < 0) this.reset(); }
+      draw() {
+        ctx.fillStyle = `rgba(255, 215, 0, ${this.opacity})`;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+    for (let i = 0; i < 35; i++) particles.push(new Particle());
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach(p => { p.update(); p.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    // Initialize Everything
+    applyConfig();
+    renderProducts();
+    refreshTopTicker();
+    renderPublicDonorList();
+  </script>
+</body>
+</html>
