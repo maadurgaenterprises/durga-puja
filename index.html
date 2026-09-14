@@ -65,11 +65,15 @@
     .badge-ref { font-size: 9px; padding: 2px 5px; border-radius: 3px; display: inline-block; margin-bottom: 4px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-    /* Live Satsang Chat Box */
-    .chat-box-wrapper { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,215,0,0.3); border-radius: 10px; padding: 12px; margin-top: 15px; }
-    .chat-messages-area { height: 240px; overflow-y: auto; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 8px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px; }
-    .chat-msg-item { background: rgba(255,255,255,0.06); padding: 6px 10px; border-radius: 6px; font-size: 12px; border-left: 3px solid var(--gold); }
-    .chat-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 2px; }
+    /* Instagram Style Full-Screen Chat Interface */
+    .insta-chat-box { background: #0b0002; border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
+    .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
+    .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.6); }
+    .insta-msg-bubble { background: rgba(255,255,255,0.07); padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 80%; word-break: break-word; border: 1px solid rgba(255,215,0,0.15); }
+    .insta-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 3px; }
+    .insta-chat-input-bar { padding: 12px; background: rgba(0,0,0,0.8); display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,215,0,0.2); }
+    .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
+    .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; }
 
     /* Custom Theme Overlays */
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
@@ -234,14 +238,25 @@
       </div>
     </div>
 
-    <!-- PANEL 4: LIVE SATSANG CHAT -->
-    <div id="panelChat" class="card" style="display:none;">
-      <h2>💬 भक्त लाइव सत्संग चैट (गाना सुनते हुए चर्चा करें)</h2>
-      <div class="chat-box-wrapper">
-        <div class="chat-messages-area" id="globalChatContainer"></div>
-        <div style="display:flex; gap:6px; margin-top:8px;">
-          <input type="text" id="chatInputMsg" placeholder="जय माता दी या संदेश लिखें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
-          <button class="btn-main" onclick="sendGlobalChatMessage()" style="width:auto; padding:0 16px;">भेजें</button>
+    <!-- PANEL 4: INSTAGRAM STYLE FULL-SCREEN LIVE CHAT -->
+    <div id="panelChat" style="display:none;">
+      <div class="insta-chat-box">
+        <div class="insta-chat-header">
+          <div>
+            <b style="color:var(--gold); font-size:15px;">💬 भक्त लाइव सत्संग चर्चा</b>
+            <p style="font-size:10px; color:#aaa;">गाना सुनते हुए सभी भक्तों से लाइव जुड़ें</p>
+          </div>
+          <div style="background:rgba(76,175,80,0.2); border:1px solid #4caf50; color:#81c784; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:bold;">
+            🟢 <span id="onlineUsersCount">1</span> ऑनलाइन
+          </div>
+        </div>
+
+        <div class="insta-messages-area" id="globalChatContainer"></div>
+
+        <div class="insta-chat-input-bar">
+          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो लिंक या वीडियो भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
+          <button class="insta-action-btn" onclick="promptMediaLink()" title="फोटो या वीडियो लिंक जोड़ें">📷</button>
+          <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
         </div>
       </div>
     </div>
@@ -789,7 +804,7 @@
       }
     }
 
-    // --- Zero-Friction Anywhere Touch/Scroll Trigger ---
+    // --- Zero-Friction Anywhere Touch/Scroll/Click Trigger ---
     let hasUserInteracted = false;
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
@@ -802,6 +817,35 @@
     ['click', 'touchstart', 'scroll'].forEach(evt => {
       window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true });
     });
+
+    // --- Online Presence & User Heartbeat ---
+    function updateOnlinePresence() {
+      if (!db) return;
+      const clientId = localStorage.getItem('siti_client_id') || 'usr_' + Math.random().toString(36).substring(2);
+      localStorage.setItem('siti_client_id', clientId);
+
+      db.collection("presence").doc(clientId).set({
+        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
+      }, { merge: true }).catch(() => {});
+    }
+
+    setInterval(updateOnlinePresence, 15000);
+    updateOnlinePresence();
+
+    if (db) {
+      db.collection("presence").onSnapshot(snap => {
+        const now = Date.now();
+        let activeCount = 0;
+        snap.forEach(doc => {
+          const data = doc.data();
+          if (data.lastSeen && (now - data.lastSeen.toMillis() < 45000)) {
+            activeCount++;
+          }
+        });
+        const cntEl = document.getElementById('onlineUsersCount');
+        if (cntEl) cntEl.innerText = Math.max(1, activeCount);
+      }, err => {});
+    }
 
     // --- Auth Listener ---
     if (auth) {
@@ -975,14 +1019,14 @@
       }, err => {});
     }
 
-    // --- Global Live Satsang Chat Functions ---
+    // --- Global Live Satsang Chat Functions with Media/File Support ---
     function sendGlobalChatMessage() {
       if (!db) return;
       const msgInput = document.getElementById('chatInputMsg');
       const text = msgInput ? msgInput.value.trim() : '';
       if (!text) return;
 
-      const senderName = currentUser ? (currentUser.displayName || "श्रद्धालु भक्त") : "अज्ञात भक्त";
+      const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "अज्ञात भक्त";
 
       db.collection("chats").add({
         name: senderName,
@@ -994,16 +1038,40 @@
       }).catch(e => showAppToast(e.message));
     }
 
+    function promptMediaLink() {
+      const link = prompt("कृपया फोटो, वीडियो या फाइल का सीधा URL (Link) दर्ज करें:");
+      if (!link) return;
+      const msgInput = document.getElementById('chatInputMsg');
+      if (msgInput) {
+        msgInput.value = link;
+        sendGlobalChatMessage();
+      }
+    }
+
     function renderGlobalChat() {
       try {
         const box = document.getElementById('globalChatContainer');
         if (!box) return;
-        box.innerHTML = cloudChats.map(c => `
-          <div class="chat-msg-item">
-            <div class="chat-msg-sender">${c.name || 'भक्त'} <span style="font-weight:normal; color:#aaa; font-size:10px; margin-left:6px;">${c.dateStr || ''}</span></div>
-            <div>${c.message || ''}</div>
-          </div>
-        `).join('');
+        box.innerHTML = cloudChats.map(c => {
+          let content = c.message || '';
+          if (content.match(/\.(jpeg|jpg|gif|png|webp)$/i) || content.startsWith('http')) {
+            if (content.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
+              content = `<a href="${content}" target="_blank"><img src="${content}" style="max-width:100%; max-height:160px; border-radius:6px; margin-top:4px; display:block;"></a>`;
+            } else if (content.match(/\.(mp4|webm|ogg)$/i)) {
+              content = `<video src="${content}" controls style="max-width:100%; max-height:160px; border-radius:6px; margin-top:4px; display:block;"></video>`;
+            } else {
+              content = `<a href="${content}" target="_blank" style="color:var(--gold); word-break:break-all;">${content}</a>`;
+            }
+          }
+          return `
+            <div style="display:flex; flex-direction:column; align-items:flex-start;">
+              <div class="insta-msg-bubble">
+                <div class="insta-msg-sender">${c.name || 'अज्ञात भक्त'} <span style="font-weight:normal; color:#aaa; font-size:9px; margin-left:6px;">${c.dateStr || ''}</span></div>
+                <div>${content}</div>
+              </div>
+            </div>
+          `;
+        }).join('');
         box.scrollTop = box.scrollHeight;
       } catch(e) {}
     }
@@ -1015,7 +1083,7 @@
         tb.innerHTML = cloudChats.map(c => `
           <tr>
             <td>${c.dateStr || '—'}</td>
-            <td><b>${c.name || '—'}</b></td>
+            <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
             <td>${c.message || ''}</td>
             <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
           </tr>
