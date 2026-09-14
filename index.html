@@ -69,13 +69,9 @@
     .fullscreen-modal { background: rgba(18, 0, 2, 0.97); }
     .verify-box, .auth-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 14px; padding: 22px; max-width: 420px; width: 100%; text-align: center; }
     .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #ffffff; color: #333; border: none; border-radius: 8px; padding: 12px 16px; font-size: 15px; font-weight: bold; cursor: pointer; }
-    .btn-google svg { width: 20px; height: 20px; }
 
     /* Admin Panel */
     #adminPanel { display: none; margin-top: 30px; background: rgba(10, 2, 4, 0.95); border: 2px solid var(--gold); border-radius: 14px; padding: 18px; }
-    .admin-select { font-weight: bold; background: #220005; color: var(--gold); border: 2px solid var(--gold); margin-bottom: 15px; }
-    .admin-subpanel { display: none; }
-    .admin-subpanel.active { display: block; }
     .admin-table { width: 100%; border-collapse: collapse; margin-top: 12px; font-size: 12px; }
     .admin-table th, .admin-table td { border: 1px solid rgba(255,215,0,0.3); padding: 6px; text-align: left; }
     .admin-table th { background: rgba(255,215,0,0.15); color: var(--gold); }
@@ -106,7 +102,7 @@
   <!-- Real-time Top Ticker with Maa Durga Enterprises -->
   <div class="ticker-container">
     <div class="ticker-text" id="liveTicker">
-      🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸
+      🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸 सत्य, निष्ठा एवं जन-सेवा को समर्पित 🚩
     </div>
   </div>
 
@@ -170,35 +166,44 @@
         <button class="admin-btn btn-del" onclick="logoutAdmin()">🔒 लॉगआउट करें</button>
       </div>
 
-      <div id="section_donations" class="admin-subpanel active">
-        <!-- Manual Cash Form -->
-        <div style="background: rgba(255, 215, 0, 0.08); padding: 14px; border-radius: 8px; border: 1px dashed var(--gold); margin-bottom: 18px;">
-          <h4 style="color: var(--gold); margin-bottom: 8px;">💵 नकद (Cash) सहयोग दर्ज करें (सभी डिवाइस में लाइव दिखेगा)</h4>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <input type="text" id="manualName" placeholder="दानदाता का नाम *">
-            <input type="text" id="manualAddress" placeholder="स्थान / शहर / गाँव">
-          </div>
-          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
-            <input type="tel" id="manualPhone" placeholder="मोबाइल नंबर">
-            <input type="number" id="manualAmount" placeholder="नकद राशि (₹) *">
-          </div>
-          <select id="manualCause" style="margin-bottom: 10px;">
-            <option value="श्री दुर्गा पूजा एवं अखंड भंडारा">श्री दुर्गा पूजा एवं अखंड भंडारा</option>
-            <option value="आपदा एवं बाढ़ पीड़ित सहायता">आपदा एवं बाढ़ पीड़ित सहायता</option>
-            <option value="दैनिक अन्नदान एवं गौ-सेवा">दैनिक अन्नदान एवं गौ-सेवा</option>
-            <option value="अन्य धार्मिक कार्य">अन्य धार्मिक कार्य</option>
-          </select>
-          <button class="btn-magic" type="button" onclick="addManualCashDonation()" style="padding: 10px;">+ क्लाउड में लाइव सेव करें</button>
+      <!-- Manual Cash Form -->
+      <div style="background: rgba(255, 215, 0, 0.08); padding: 14px; border-radius: 8px; border: 1px dashed var(--gold); margin-bottom: 18px;">
+        <h4 style="color: var(--gold); margin-bottom: 8px;">💵 नकद (Cash) सहयोग दर्ज करें (सभी डिवाइस में लाइव दिखेगा)</h4>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <input type="text" id="manualName" placeholder="दानदाता का नाम *">
+          <input type="text" id="manualAddress" placeholder="स्थान / शहर / गाँव">
         </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+          <input type="tel" id="manualPhone" placeholder="मोबाइल नंबर">
+          <input type="number" id="manualAmount" placeholder="नकद राशि (₹) *">
+        </div>
+        <select id="manualCause" style="margin-bottom: 10px;">
+          <option value="श्री दुर्गा पूजा एवं अखंड भंडारा">श्री दुर्गा पूजा एवं अखंड भंडारा</option>
+          <option value="आपदा एवं बाढ़ पीड़ित सहायता">आपदा एवं बाढ़ पीड़ित सहायता</option>
+          <option value="दैनिक अन्नदान एवं गौ-सेवा">दैनिक अन्नदान एवं गौ-सेवा</option>
+          <option value="अन्य धार्मिक कार्य">अन्य धार्मिक कार्य</option>
+        </select>
+        <button class="btn-magic" type="button" onclick="addManualCashDonation()" style="padding: 10px;">+ क्लाउड में लाइव सेव करें</button>
+      </div>
 
-        <div style="overflow-x:auto;">
-          <table class="admin-table" id="donationsTable">
-            <thead>
-              <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>कारण</th><th>राशि</th><th>UTR/Ref</th><th>एक्शन</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <h4 style="color:var(--gold); margin: 15px 0 8px;">📋 दानदाताओं की सूची</h4>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="donationsTable">
+          <thead>
+            <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>कारण</th><th>राशि</th><th>UTR/Ref</th><th>एक्शन</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <h4 style="color:var(--gold); margin: 25px 0 8px;">💬 भक्तों के सुझाव एवं प्रतिक्रिया (Feedbacks)</h4>
+      <div style="overflow-x:auto;">
+        <table class="admin-table" id="feedbacksTable">
+          <thead>
+            <tr><th>तारीख</th><th>नाम</th><th>संदेश / सुझाव</th><th>एक्शन</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
       </div>
     </div>
 
@@ -225,7 +230,7 @@
     </div>
   </div>
 
-  <!-- Celebration Modal (Updated message) -->
+  <!-- Celebration Modal -->
   <div class="fullscreen-modal" id="celebrationModal">
     <div class="fullscreen-box" style="text-align:center;">
       <h1 style="font-size:28px; color:var(--gold); margin-bottom:15px;">🎉 जय माता दी! 🎉</h1>
@@ -233,7 +238,7 @@
     </div>
   </div>
 
-  <!-- Enhanced Footer with Terms, Contact & Feedback -->
+  <!-- Enhanced Footer with Direct Review & Cloud Feedback -->
   <footer>
     <div class="footer-container">
       <div class="footer-grid">
@@ -259,13 +264,20 @@
           </div>
         </div>
 
-        <!-- Feedback Box -->
+        <!-- In-Website Cloud Feedback Box + Direct Google Review Button -->
         <div class="footer-col">
           <h4>💬 सुझाव एवं प्रतिक्रिया (Feedback)</h4>
           <p style="font-size:11px; margin-bottom:8px;">समिति के कार्यों, भंडारा व्यवस्था या वेबसाइट के लिए अपनी राय दें:</p>
           <div class="feedback-box">
+            <input type="text" id="feedbackUserName" placeholder="आपका शुभ नाम (वैकल्पिक)" style="margin-bottom:6px; font-size:12px; padding:8px 10px;">
             <textarea id="userFeedbackText" placeholder="अपना सुझाव या संदेश यहाँ लिखें..."></textarea>
-            <button class="btn-magic" type="button" onclick="sendFeedback()" style="padding:8px 14px; font-size:12px; width:auto;">संदेश भेजें</button>
+            <div style="display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-top:4px;">
+              <button class="btn-magic" type="button" onclick="submitFeedbackToCloud()" style="padding:8px 16px; font-size:12px; width:auto;">संदेश भेजें</button>
+              <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" style="background:rgba(255,215,0,0.18); border:1px solid var(--gold); color:var(--gold); padding:8px 12px; border-radius:8px; font-size:12px; text-decoration:none; font-weight:bold; display:inline-flex; align-items:center; gap:5px;">
+                ⭐ Google पर रिव्यू दें
+              </a>
+            </div>
+            <p id="feedbackStatusMsg" style="font-size:12px; color:#4caf50; margin-top:8px; display:none; font-weight:bold;">✅ आपका संदेश प्राप्त हो गया है। जय माता दी!</p>
           </div>
         </div>
 
@@ -305,6 +317,7 @@
     const googleProvider = new firebase.auth.GoogleAuthProvider();
 
     let cloudDonations = [];
+    let cloudFeedbacks = [];
 
     // Real-time Cloud Listener for Multi-device live sync
     db.collection("donations").onSnapshot((snapshot) => {
@@ -312,15 +325,24 @@
       snapshot.forEach((doc) => {
         cloudDonations.push({ id: doc.id, ...doc.data() });
       });
-      
-      // Sort in memory so no Firestore composite index is required
       cloudDonations.sort((a, b) => (b.timeNumber || 0) - (a.timeNumber || 0));
-
       refreshTopTicker();
       renderPublicDonorList();
       renderAdminDonations();
     }, (error) => {
-      console.error("Firestore sync error:", error);
+      console.error("Donations sync error:", error);
+    });
+
+    // Real-time Cloud Listener for Feedbacks
+    db.collection("feedbacks").onSnapshot((snapshot) => {
+      cloudFeedbacks = [];
+      snapshot.forEach((doc) => {
+        cloudFeedbacks.push({ id: doc.id, ...doc.data() });
+      });
+      cloudFeedbacks.sort((a, b) => (b.timeNumber || 0) - (a.timeNumber || 0));
+      renderAdminFeedbacks();
+    }, (error) => {
+      console.error("Feedback sync error:", error);
     });
 
     function openGoogleAdminAuth() { document.getElementById('googleAuthModal').style.display = 'flex'; }
@@ -412,7 +434,6 @@
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        // Exact custom message requested
         triggerCelebration(`श्री <b>${name}</b> जी,<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`);
       }).catch(err => alert("डेटाबेस में सुरक्षित नहीं हुआ: " + err.message));
     }
@@ -420,6 +441,35 @@
     function deleteFromCloud(docId) {
       if (confirm("क्या आप इस रिकॉर्ड को हटाना चाहते हैं?")) {
         db.collection("donations").doc(docId).delete();
+      }
+    }
+
+    function submitFeedbackToCloud() {
+      const name = document.getElementById('feedbackUserName').value.trim() || "श्रद्धालु";
+      const text = document.getElementById('userFeedbackText').value.trim();
+      
+      if (!text) { alert("कृपया अपना सुझाव या संदेश लिखें!"); return; }
+
+      db.collection("feedbacks").add({
+        name: name,
+        message: text,
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        const msgEl = document.getElementById('feedbackStatusMsg');
+        msgEl.style.display = 'block';
+        document.getElementById('userFeedbackText').value = '';
+        document.getElementById('feedbackUserName').value = '';
+        setTimeout(() => { msgEl.style.display = 'none'; }, 4000);
+      }).catch(err => {
+        alert("संदेश भेजने में त्रुटि: " + err.message);
+      });
+    }
+
+    function deleteFeedback(docId) {
+      if (confirm("क्या आप इस फीडबैक को हटाना चाहते हैं?")) {
+        db.collection("feedbacks").doc(docId).delete();
       }
     }
 
@@ -482,6 +532,23 @@
       }
     }
 
+    function renderAdminFeedbacks() {
+      const fbTbody = document.querySelector('#feedbacksTable tbody');
+      if (!fbTbody) return;
+      if (cloudFeedbacks.length === 0) {
+        fbTbody.innerHTML = "<tr><td colspan='4' style='text-align:center;color:#aaa;'>कोई नया फीडबैक नहीं आया है</td></tr>";
+      } else {
+        fbTbody.innerHTML = cloudFeedbacks.map(f => `
+          <tr>
+            <td>${f.date}</td>
+            <td><b>${f.name}</b></td>
+            <td>${f.message}</td>
+            <td><button class="admin-btn btn-del" onclick="deleteFeedback('${f.id}')">हटाएं</button></td>
+          </tr>
+        `).join('');
+      }
+    }
+
     function searchDonors() { renderPublicDonorList(document.getElementById('searchInput').value); }
 
     function triggerCelebration(msg) {
@@ -489,14 +556,6 @@
       document.getElementById('celebrationModal').style.display = 'flex';
       try { confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       setTimeout(() => { document.getElementById('celebrationModal').style.display = 'none'; }, 4500);
-    }
-
-    function sendFeedback() {
-      const text = document.getElementById('userFeedbackText').value.trim();
-      if(!text) { alert("कृपया अपना सुझाव या प्रतिक्रिया लिखें!"); return; }
-      const waUrl = `https://wa.me/919120226597?text=${encodeURIComponent("प्रणाम समिति, मेरा सुझाव/प्रतिक्रिया: " + text)}`;
-      window.open(waUrl, '_blank');
-      document.getElementById('userFeedbackText').value = '';
     }
 
     const products = [
