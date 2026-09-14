@@ -292,7 +292,7 @@
     </div>
   </div>
 
-  <!-- CELEBRATION BROADCAST MODAL (RESTORED EXACT BEAUTIFUL WELCOME POPUP) -->
+  <!-- CELEBRATION BROADCAST MODAL -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -494,7 +494,7 @@
     let isFirstDonationLoad = true;
     let configuredPaymentMode = 'upi';
 
-    // Side Drawer Navigation Toggle
+    // --- Side Drawer Navigation Toggle ---
     function toggleSideNav() {
       const d = document.getElementById('sideNavDrawer');
       d.style.display = (d.style.display === 'block') ? 'none' : 'block';
@@ -511,7 +511,7 @@
       event.target.classList.add('active');
     }
 
-    // Device Language Detection
+    // --- Device Language Detection ---
     const userLang = (navigator.language || navigator.userLanguage || 'hi').toLowerCase();
     const isEn = userLang.startsWith('en');
 
@@ -550,17 +550,25 @@
     }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // Unified Respectful Salutation
+    // --- Unified Respectful Salutation ---
     function getSmartSalutation(name) {
       const clean = (name || "").trim();
       if (!clean) return "भक्त";
       return `श्री/श्रीमती ${clean} जी`;
     }
 
-    // YouTube Music Player
+    // --- Robust YouTube URL Extractor (Supports ?si= & youtu.be) ---
+    function extractVideoId(url) {
+      if (!url) return null;
+      const regExp = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
+      const match = url.match(regExp);
+      return match ? match[1] : null;
+    }
+
+    // YouTube Music Player Engine
     let ytPlayer = null;
     let isMusicPlaying = false;
-    let currentYtVideoId = "dQw4w9WgXcQ";
+    let currentYtVideoId = "ChC8RMdyvhk"; // Default loaded video
 
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -583,7 +591,15 @@
         return;
       }
       if (!isMusicPlaying) {
-        ytPlayer.playVideo();
+        const linkInInput = document.getElementById('admYtLink') ? document.getElementById('admYtLink').value : '';
+        const resolvedId = extractVideoId(linkInInput) || currentYtVideoId;
+        
+        if (resolvedId && ytPlayer.getVideoData && ytPlayer.getVideoData().video_id !== resolvedId) {
+          ytPlayer.loadVideoById(resolvedId);
+        } else {
+          ytPlayer.playVideo();
+        }
+
         isMusicPlaying = true;
         btnTxt.innerText = isEn ? "Pause Music" : "संगीत रोकें";
       } else {
@@ -593,7 +609,7 @@
       }
     }
 
-    // Auth Listener
+    // --- Auth Listener ---
     auth.onAuthStateChanged(user => {
       currentUser = user;
       const navArea = document.getElementById('navAuthArea');
@@ -651,7 +667,7 @@
       document.getElementById(id).classList.add('active');
     }
 
-    // Firestore Sync Listeners
+    // --- Firestore Sync Listeners ---
     db.collection("donations").onSnapshot(snap => {
       let isInit = isFirstDonationLoad;
       isFirstDonationLoad = false;
@@ -713,9 +729,9 @@
         }
         if (s.yt) {
           document.getElementById('admYtLink').value = s.yt;
-          let match = s.yt.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
-          if (match && match[1]) {
-            currentYtVideoId = match[1];
+          const vidId = extractVideoId(s.yt);
+          if (vidId) {
+            currentYtVideoId = vidId;
             if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
               ytPlayer.cueVideoById(currentYtVideoId);
             }
@@ -724,7 +740,7 @@
       }
     });
 
-    // Store & Categories
+    // --- Store & Categories ---
     function renderCategories() {
       const cats = ['all'];
       cloudProducts.forEach(p => {
@@ -780,7 +796,7 @@
       `).join('');
     }
 
-    // Checkout Flow
+    // --- Checkout Flow ---
     let selectedProduct = null;
     let appliedDiscountPct = 0;
     let paymentVerifiedByGateway = false;
@@ -914,7 +930,7 @@
       }).catch(e => showAppToast(e.message));
     }
 
-    // Customer My Orders Display
+    // --- Customer My Orders Display ---
     function renderCustomerOrders() {
       const cont = document.getElementById('ordersContainer');
       if (!cont) return;
@@ -994,7 +1010,7 @@
       }).join('');
     }
 
-    // Admin Operations
+    // --- Admin Operations ---
     function saveAdminSettings() {
       db.collection("settings").doc("main").set({
         ticker: document.getElementById('admTickerText').value,
@@ -1068,7 +1084,6 @@
       `).join('');
     }
 
-    // Save Admin Order Status, Custom OTP & Checkbox Visibility
     function saveOrderDetails(orderId) {
       const otpVal = document.getElementById(`admOtpInput_${orderId}`).value.trim();
       const isVisible = document.getElementById(`admOtpCheck_${orderId}`).checked;
@@ -1181,7 +1196,7 @@
       `).join('');
     }
 
-    // Public Donation Flow
+    // --- Public Donation Flow ---
     function startDonationFlow() {
       const name = document.getElementById('donName').value.trim() || "श्रद्धालु भक्त";
       const amt = document.getElementById('donAmount').value.trim();
@@ -1238,25 +1253,22 @@
       });
     }
 
-    // ElevenLabs Audio Instance (welcome.MP3)
+    // --- Audio Celebration Broadcast (ElevenLabs welcome.MP3) ---
     const elevenLabsAudio = new Audio("welcome.MP3");
 
     function triggerCelebration(name, cause, amount) {
       const respectfulName = getSmartSalutation(name);
       
-      // Update and Show Welcome Popup
       document.getElementById('celDonorName').innerText = `${respectfulName},`;
       document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
       document.getElementById('celebrationModal').style.display = 'flex';
       
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
 
-      // Duck YouTube Audio if running
       if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
         ytPlayer.setVolume(20);
       }
 
-      // Play welcome.MP3 without any synthetic clapping
       setTimeout(() => {
         elevenLabsAudio.currentTime = 0;
         elevenLabsAudio.play().then(() => {
@@ -1272,7 +1284,6 @@
             const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
             const utter = new SpeechSynthesisUtterance(sentence);
             utter.lang = 'hi-IN';
-            utter.rate = 0.95;
             utter.onend = () => {
               if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
                 ytPlayer.setVolume(100);
@@ -1283,7 +1294,6 @@
         });
       }, 300);
 
-      // Close modal after 9 seconds
       setTimeout(() => closeCelebrationModal(), 9000);
     }
 
