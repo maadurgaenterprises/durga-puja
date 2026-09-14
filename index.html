@@ -69,11 +69,11 @@
     .insta-chat-box { background: #0b0002; border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
     .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
     .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.6); }
-    .insta-msg-bubble { background: rgba(255,255,255,0.07); padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 80%; word-break: break-word; border: 1px solid rgba(255,215,0,0.15); }
+    .insta-msg-bubble { background: rgba(255,255,255,0.07); padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 85%; word-break: break-word; border: 1px solid rgba(255,215,0,0.15); }
     .insta-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 3px; }
     .insta-chat-input-bar { padding: 12px; background: rgba(0,0,0,0.8); display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,215,0,0.2); }
     .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
-    .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 4px; display: flex; align-items: center; justify-content: center; }
+    .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
     /* Custom Theme Overlays */
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
@@ -122,6 +122,11 @@
 
   <!-- Background Ad-Free YouTube Player (Hidden) -->
   <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
+
+  <!-- Hidden File Input for Storage Gallery/File Upload -->
+  <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
+  <!-- Hidden Camera Input -->
+  <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
 
   <!-- Top Bar -->
   <div class="top-bar">
@@ -244,7 +249,7 @@
         <div class="insta-chat-header">
           <div>
             <b style="color:var(--gold); font-size:15px;">💬 भक्त लाइव सत्संग चर्चा</b>
-            <p style="font-size:10px; color:#aaa;">गाना सुनते हुए सभी भक्तों से लाइव जुड़ें</p>
+            <p style="font-size:10px; color:#aaa;">गाना सुनते हुए सभी भक्तों से लाइव जुड़ें (24 घंटे में मैसेज स्वतः डिलीट होंगे)</p>
           </div>
           <div style="background:rgba(76,175,80,0.2); border:1px solid #4caf50; color:#81c784; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:bold;">
             🟢 <span id="onlineUsersCount">1</span> ऑनलाइन
@@ -254,8 +259,10 @@
         <div class="insta-messages-area" id="globalChatContainer"></div>
 
         <div class="insta-chat-input-bar">
-          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो लिंक या वीडियो भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
-          <button class="insta-action-btn" onclick="promptMediaLink()" title="फोटो या वीडियो लिंक जोड़ें">📷</button>
+          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो या फाइल भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
+          <button class="insta-action-btn" onclick="toggleVoiceRecording()" id="micBtn" title="वॉयस नोट भेजें">🎙️</button>
+          <button class="insta-action-btn" onclick="openCameraApp()" title="कैमरा से फोटो लें">📷</button>
+          <button class="insta-action-btn" onclick="openFileStorage()" title="स्टोरेज से फाइल/फोटो चुनें">📁</button>
           <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
         </div>
       </div>
@@ -922,7 +929,7 @@
       } catch(e) {}
     }
 
-    // --- Firestore Sync Listeners ---
+    // --- Firestore Sync & 24-Hour Auto Cleanup ---
     if (db) {
       db.collection("donations").onSnapshot(snap => {
         let isInit = isFirstDonationLoad;
@@ -965,65 +972,34 @@
         renderAdminOrders();
       }, err => {});
 
+      // 24-Hour Chat Message Auto Purge Check
       db.collection("chats").orderBy("timeNumber", "asc").onSnapshot(snap => {
+        const now = Date.now();
+        const oneDayMs = 24 * 60 * 60 * 1000;
         cloudChats = [];
-        snap.forEach(doc => cloudChats.push({ id: doc.id, ...doc.data() }));
+        snap.forEach(doc => {
+          const data = doc.data();
+          if (data.timeNumber && (now - data.timeNumber > oneDayMs)) {
+            // Auto delete messages older than 24 hours to save database
+            db.collection("chats").doc(doc.id).delete().catch(() => {});
+          } else {
+            cloudChats.push({ id: doc.id, ...data });
+          }
+        });
         renderGlobalChat();
         renderAdminChat();
       }, err => {});
-
-      db.collection("settings").doc("main").onSnapshot(doc => {
-        if (doc.exists) {
-          const s = doc.data();
-          if (s.ticker) {
-            const lt = document.getElementById('liveTicker');
-            if (lt) lt.innerText = s.ticker;
-            const att = document.getElementById('admTickerText');
-            if (att) att.value = s.ticker;
-          }
-          if (s.upi) {
-            const aup = document.getElementById('admUpiId');
-            if (aup) aup.value = s.upi;
-          }
-          if (s.razorpay) {
-            const arz = document.getElementById('admRazorpayKey');
-            if (arz) arz.value = s.razorpay;
-          }
-          if (s.wa) {
-            const adw = document.getElementById('admWaPhone');
-            if (adw) adw.value = s.wa;
-            const ftw = document.getElementById('ftrWa');
-            if (ftw) {
-              ftw.href = `https://wa.me/${s.wa}`;
-              ftw.innerText = `+${s.wa}`;
-            }
-          }
-          if (s.insta) {
-            const adi = document.getElementById('admInstaLink');
-            if (adi) adi.value = s.insta;
-            const fti = document.getElementById('ftrInsta');
-            if (fti) fti.href = s.insta;
-          }
-          if (s.yt) {
-            const ady = document.getElementById('admYtLink');
-            if (ady) ady.value = s.yt;
-            const vidId = extractVideoId(s.yt);
-            if (vidId) {
-              currentYtVideoId = vidId;
-              if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
-                ytPlayer.cueVideoById(currentYtVideoId);
-              }
-            }
-          }
-        }
-      }, err => {});
     }
 
-    // --- Global Live Satsang Chat Functions with Media/File Support ---
-    function sendGlobalChatMessage() {
+    // --- Global Live Satsang Chat with Native Storage / Camera / Voice ---
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+
+    function sendGlobalChatMessage(customContent = null, isVoice = false) {
       if (!db) return;
       const msgInput = document.getElementById('chatInputMsg');
-      const text = msgInput ? msgInput.value.trim() : '';
+      const text = customContent !== null ? customContent : (msgInput ? msgInput.value.trim() : '');
       if (!text) return;
 
       const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "अज्ञात भक्त";
@@ -1031,20 +1007,78 @@
       db.collection("chats").add({
         name: senderName,
         message: text,
+        isVoiceNote: isVoice,
         timeNumber: Date.now(),
         dateStr: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
       }).then(() => {
-        msgInput.value = '';
+        if (msgInput && customContent === null) msgInput.value = '';
       }).catch(e => showAppToast(e.message));
     }
 
-    function promptMediaLink() {
-      const link = prompt("कृपया फोटो, वीडियो या फाइल का सीधा URL (Link) दर्ज करें:");
-      if (!link) return;
-      const msgInput = document.getElementById('chatInputMsg');
-      if (msgInput) {
-        msgInput.value = link;
-        sendGlobalChatMessage();
+    function openFileStorage() {
+      const picker = document.getElementById('hiddenFilePicker');
+      if (picker) picker.click();
+    }
+
+    function openCameraApp() {
+      const cam = document.getElementById('hiddenCameraPicker');
+      if (cam) cam.click();
+    }
+
+    function handleFileSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const fileDataUrl = e.target.result;
+        if (file.type.startsWith('image/')) {
+          sendGlobalChatMessage(`<img src="${fileDataUrl}" style="max-width:100%; max-height:180px; border-radius:6px; display:block;">`);
+        } else if (file.type.startsWith('video/')) {
+          sendGlobalChatMessage(`<video src="${fileDataUrl}" controls style="max-width:100%; max-height:180px; border-radius:6px; display:block;"></video>`);
+        } else if (file.type.startsWith('audio/')) {
+          sendGlobalChatMessage(`<audio src="${fileDataUrl}" controls style="width:100%; max-width:240px;"></audio>`, true);
+        } else {
+          sendGlobalChatMessage(`📄 <a href="${fileDataUrl}" download="${file.name}" style="color:var(--gold); text-decoration:underline;">डाउनलोड फाइल: ${file.name}</a>`);
+        }
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function toggleVoiceRecording() {
+      if (!isRecording) {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+          showAppToast("आपका ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
+          return;
+        }
+        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
+          mediaRecorder = new MediaRecorder(stream);
+          audioChunks = [];
+          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              sendGlobalChatMessage(`<audio src="${e.target.result}" controls style="width:100%; max-width:240px;"></audio>`, true);
+            };
+            reader.readAsDataURL(audioBlob);
+          };
+          mediaRecorder.start();
+          isRecording = true;
+          const micBtn = document.getElementById('micBtn');
+          if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = '🔴'; }
+          showAppToast("🎙️ रिकॉर्डिंग शुरू हो गई है... रोकने के लिए दोबारा माइक दबाएं।");
+        }).catch(err => {
+          showAppToast("माइक्रोफोन की अनुमति आवश्यक है!");
+        });
+      } else {
+        if (mediaRecorder) {
+          mediaRecorder.stop();
+        }
+        isRecording = false;
+        const micBtn = document.getElementById('micBtn');
+        if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = '🎙️'; }
+        showAppToast("✅ वॉइस नोट भेजा जा रहा है...");
       }
     }
 
@@ -1052,26 +1086,14 @@
       try {
         const box = document.getElementById('globalChatContainer');
         if (!box) return;
-        box.innerHTML = cloudChats.map(c => {
-          let content = c.message || '';
-          if (content.match(/\.(jpeg|jpg|gif|png|webp)$/i) || content.startsWith('http')) {
-            if (content.match(/\.(jpeg|jpg|gif|png|webp)$/i)) {
-              content = `<a href="${content}" target="_blank"><img src="${content}" style="max-width:100%; max-height:160px; border-radius:6px; margin-top:4px; display:block;"></a>`;
-            } else if (content.match(/\.(mp4|webm|ogg)$/i)) {
-              content = `<video src="${content}" controls style="max-width:100%; max-height:160px; border-radius:6px; margin-top:4px; display:block;"></video>`;
-            } else {
-              content = `<a href="${content}" target="_blank" style="color:var(--gold); word-break:break-all;">${content}</a>`;
-            }
-          }
-          return `
-            <div style="display:flex; flex-direction:column; align-items:flex-start;">
-              <div class="insta-msg-bubble">
-                <div class="insta-msg-sender">${c.name || 'अज्ञात भक्त'} <span style="font-weight:normal; color:#aaa; font-size:9px; margin-left:6px;">${c.dateStr || ''}</span></div>
-                <div>${content}</div>
-              </div>
+        box.innerHTML = cloudChats.map(c => `
+          <div style="display:flex; flex-direction:column; align-items:flex-start;">
+            <div class="insta-msg-bubble">
+              <div class="insta-msg-sender">${c.name || 'अज्ञात भक्त'} <span style="font-weight:normal; color:#aaa; font-size:9px; margin-left:6px;">${c.dateStr || ''}</span></div>
+              <div>${c.message || ''}</div>
             </div>
-          `;
-        }).join('');
+          </div>
+        `).join('');
         box.scrollTop = box.scrollHeight;
       } catch(e) {}
     }
@@ -1084,7 +1106,7 @@
           <tr>
             <td>${c.dateStr || '—'}</td>
             <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
-            <td>${c.message || ''}</td>
+            <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
             <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
           </tr>
         `).join('');
