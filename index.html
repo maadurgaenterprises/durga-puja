@@ -111,7 +111,7 @@
 <body>
 
   <!-- Background Ad-Free YouTube Player (Hidden) -->
-  <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px;"></div>
+  <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
 
   <!-- Top Bar -->
   <div class="top-bar">
@@ -559,7 +559,7 @@
     // --- Side Drawer Navigation Toggle ---
     function toggleSideNav() {
       const d = document.getElementById('sideNavDrawer');
-      d.style.display = (d.style.display === 'block') ? 'none' : 'block';
+      if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
     }
 
     function switchNav(tab) {
@@ -569,8 +569,9 @@
         const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
         if (p) p.style.display = 'none';
       });
-      document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'block';
-      event.target.classList.add('active');
+      const targetPanel = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (targetPanel) targetPanel.style.display = 'block';
+      if (event && event.target) event.target.classList.add('active');
     }
 
     // --- Device Language Detection ---
@@ -579,39 +580,68 @@
 
     function applyLanguage() {
       if (isEn) {
-        document.getElementById('siteDocTitle').innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
-        document.getElementById('musicBtnTxt').innerText = "Play Music";
-        document.getElementById('navLoginTxt').innerText = "Login / Sign-up";
-        document.getElementById('drwDonate').innerText = "Contribution Form";
-        document.getElementById('drwStore').innerText = "Devotional Store";
-        document.getElementById('drwList').innerText = "Public Donor List";
-        document.getElementById('drwOrders').innerText = "My Orders";
-        document.getElementById('txtDonateTitle').innerText = "Devotional Contribution / Donation";
-        document.getElementById('lblCause').innerText = "Select Purpose";
-        document.getElementById('lblSalutation').innerText = "Salutation (Optional)";
-        document.getElementById('lblName').innerText = "Full Name";
-        document.getElementById('lblCity').innerText = "City / Village";
-        document.getElementById('lblPhone').innerText = "WhatsApp Number";
-        document.getElementById('lblAmount').innerText = "Contribution Amount (₹)";
-        document.getElementById('btnPayDon').innerText = "Contribute (Pay Now)";
-        document.getElementById('txtSuggestedTitle').innerText = "🌟 Recommended Devotional Items";
-        document.getElementById('txtStoreTitle').innerText = "Maa Durga Enterprises — Devotional Store";
-        document.getElementById('txtDirTitle').innerText = "📜 Public Transparency Board";
-        document.getElementById('txtMyOrdersTitle').innerText = "📦 My Orders & Live Status";
-        document.getElementById('thDate').innerText = "Date";
-        document.getElementById('thDonor').innerText = "Donor";
-        document.getElementById('thCity').innerText = "Location";
-        document.getElementById('thAmount').innerText = "Amount";
-        document.getElementById('thCause').innerText = "Purpose";
+        const docTitle = document.getElementById('siteDocTitle');
+        if (docTitle) docTitle.innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
+        const mTxt = document.getElementById('musicBtnTxt');
+        if (mTxt) mTxt.innerText = "Play Music";
+        const lTxt = document.getElementById('navLoginTxt');
+        if (lTxt) lTxt.innerText = "Login / Sign-up";
+        const drwDon = document.getElementById('drwDonate');
+        if (drwDon) drwDon.innerText = "Contribution Form";
+        const drwSto = document.getElementById('drwStore');
+        if (drwSto) drwSto.innerText = "Devotional Store";
+        const drwLis = document.getElementById('drwList');
+        if (drwLis) drwLis.innerText = "Public Donor List";
+        const drwOrd = document.getElementById('drwOrders');
+        if (drwOrd) drwOrd.innerText = "My Orders";
+        const txtDonT = document.getElementById('txtDonateTitle');
+        if (txtDonT) txtDonT.innerText = "Devotional Contribution / Donation";
+        const lblC = document.getElementById('lblCause');
+        if (lblC) lblC.innerText = "Select Purpose";
+        const lblSal = document.getElementById('lblSalutation');
+        if (lblSal) lblSal.innerText = "Salutation (Optional)";
+        const lblN = document.getElementById('lblName');
+        if (lblN) lblN.innerText = "Full Name";
+        const lblCi = document.getElementById('lblCity');
+        if (lblCi) lblCi.innerText = "City / Village";
+        const lblPh = document.getElementById('lblPhone');
+        if (lblPh) lblPh.innerText = "WhatsApp Number";
+        const lblAm = document.getElementById('lblAmount');
+        if (lblAm) lblAm.innerText = "Contribution Amount (₹)";
+        const btnPy = document.getElementById('btnPayDon');
+        if (btnPy) btnPy.innerText = "Contribute (Pay Now)";
+        const txtSug = document.getElementById('txtSuggestedTitle');
+        if (txtSug) txtSug.innerText = "🌟 Recommended Devotional Items";
+        const txtSto = document.getElementById('txtStoreTitle');
+        if (txtSto) txtSto.innerText = "Maa Durga Enterprises — Devotional Store";
+        const txtDir = document.getElementById('txtDirTitle');
+        if (txtDir) txtDir.innerText = "📜 Public Transparency Board";
+        const txtMyO = document.getElementById('txtMyOrdersTitle');
+        if (txtMyO) txtMyO.innerText = "📦 My Orders & Live Status";
+        const thD = document.getElementById('thDate');
+        if (thD) thD.innerText = "Date";
+        const thDon = document.getElementById('thDonor');
+        if (thDon) thDon.innerText = "Donor";
+        const thCit = document.getElementById('thCity');
+        if (thCit) thCit.innerText = "Location";
+        const thAmt = document.getElementById('thAmount');
+        if (thAmt) thAmt.innerText = "Amount";
+        const thCau = document.getElementById('thCause');
+        if (thCau) thCau.innerText = "Purpose";
       }
     }
     applyLanguage();
 
     function showAppToast(msg) {
-      document.getElementById('notifyMsg').innerText = msg;
-      document.getElementById('notifyPopup').style.display = 'flex';
+      const m = document.getElementById('notifyMsg');
+      if (m) m.innerText = msg;
+      const p = document.getElementById('notifyPopup');
+      if (p) p.style.display = 'flex';
     }
-    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    function closeModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
+    }
 
     // --- Format Salutation + Name ---
     function formatDonorName(name, salutation) {
@@ -631,7 +661,7 @@
       return match ? match[1] : null;
     }
 
-    // --- Realtime Ad-Free Synced Room ---
+    // --- Safe Realtime Ad-Free Synced Room ---
     let ytPlayer = null;
     let isMusicPlaying = false;
     let currentYtVideoId = "ChC8RMdyvhk";
@@ -640,45 +670,58 @@
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScript = document.getElementsByTagName('script')[0];
-    firstScript.parentNode.insertBefore(tag, firstScript);
+    if (firstScript && firstScript.parentNode) {
+      firstScript.parentNode.insertBefore(tag, firstScript);
+    }
 
     window.onYouTubeIframeAPIReady = function() {
-      ytPlayer = new YT.Player('ytPlayerDiv', {
-        height: '0',
-        width: '0',
-        videoId: currentYtVideoId,
-        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId },
-        events: {
-          'onReady': onPlayerReadySync
-        }
-      });
+      try {
+        ytPlayer = new YT.Player('ytPlayerDiv', {
+          height: '0',
+          width: '0',
+          videoId: currentYtVideoId,
+          playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId },
+          events: {
+            'onReady': onPlayerReadySync,
+            'onError': (e) => { console.log("YT Error:", e); }
+          }
+        });
+      } catch(err) {
+        console.log("YT Init exception:", err);
+      }
     };
 
     function onPlayerReadySync() {
-      db.collection("settings").doc("music_room").onSnapshot(doc => {
-        if (doc.exists) {
-          const data = doc.data();
-          songPlaybackStartTime = data.startedAt || null;
-          if (data.videoId && data.videoId !== currentYtVideoId) {
-            currentYtVideoId = data.videoId;
-            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-              const seekSec = calculateCurrentPlaybackSecond();
-              ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+      try {
+        db.collection("settings").doc("music_room").onSnapshot(doc => {
+          if (doc.exists) {
+            const data = doc.data();
+            songPlaybackStartTime = data.startedAt || null;
+            if (data.videoId && data.videoId !== currentYtVideoId) {
+              currentYtVideoId = data.videoId;
+              if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+                const seekSec = calculateCurrentPlaybackSecond();
+                ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+              }
             }
           }
-        }
-      });
+        });
+      } catch(err) {
+        console.log("Music sync err:", err);
+      }
     }
 
     function calculateCurrentPlaybackSecond() {
       if (!songPlaybackStartTime) return 0;
       const now = Date.now();
       const elapsedSeconds = Math.floor((now - songPlaybackStartTime) / 1000);
-      const totalDuration = (ytPlayer && ytPlayer.getDuration) ? ytPlayer.getDuration() : 300;
-      if (totalDuration > 0) {
-        return elapsedSeconds % Math.floor(totalDuration);
-      }
-      return elapsedSeconds;
+      let totalDuration = 300;
+      try {
+        if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+          totalDuration = ytPlayer.getDuration() || 300;
+        }
+      } catch(e) {}
+      return elapsedSeconds % Math.floor(totalDuration);
     }
 
     function startMusicPlayback() {
@@ -691,20 +734,24 @@
         db.collection("settings").doc("music_room").set({
           startedAt: startTime,
           videoId: resolvedId
-        }, { merge: true });
+        }, { merge: true }).catch(() => {});
         songPlaybackStartTime = startTime;
       }
 
       const seekSeconds = calculateCurrentPlaybackSecond();
 
-      if (resolvedId && ytPlayer.getVideoData && ytPlayer.getVideoData().video_id !== resolvedId) {
-        ytPlayer.loadVideoById({
-          videoId: resolvedId,
-          startSeconds: seekSeconds
-        });
-      } else {
-        ytPlayer.seekTo(seekSeconds, true);
-        ytPlayer.playVideo();
+      try {
+        if (resolvedId && ytPlayer.getVideoData && ytPlayer.getVideoData().video_id !== resolvedId) {
+          ytPlayer.loadVideoById({
+            videoId: resolvedId,
+            startSeconds: seekSeconds
+          });
+        } else {
+          ytPlayer.seekTo(seekSeconds, true);
+          ytPlayer.playVideo();
+        }
+      } catch(e) {
+        console.log("Play error:", e);
       }
 
       isMusicPlaying = true;
@@ -721,18 +768,18 @@
       if (!isMusicPlaying) {
         startMusicPlayback();
       } else {
-        ytPlayer.pauseVideo();
+        try { ytPlayer.pauseVideo(); } catch(e) {}
         isMusicPlaying = false;
         if (btnTxt) btnTxt.innerText = isEn ? "Play Music" : "संगीत बजाएँ";
       }
     }
 
-    // --- Zero-Friction First Touch Trigger (Anywhere on screen) ---
+    // --- Zero-Friction First Touch Trigger (Safely wrapped) ---
     let hasUserInteracted = false;
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
       hasUserInteracted = true;
-      startMusicPlayback();
+      try { startMusicPlayback(); } catch(e) {}
       ['click', 'touchstart', 'scroll'].forEach(evt => {
         window.removeEventListener(evt, handleFirstUserInteraction);
       });
@@ -749,25 +796,28 @@
 
       if (user) {
         if (user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
-          navArea.innerHTML = `
+          if (navArea) navArea.innerHTML = `
             <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
             <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
           `;
         } else {
-          navArea.innerHTML = `
+          if (navArea) navArea.innerHTML = `
             <span style="font-size:11px; color:#ffcdd2; margin-right:4px;">${user.displayName ? user.displayName.split(' ')[0] : 'User'}</span>
             <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
           `;
         }
-        drwOrders.style.display = "block";
+        if (drwOrders) drwOrders.style.display = "block";
       } else {
-        navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
-        drwOrders.style.display = "none";
+        if (navArea) navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
+        if (drwOrders) drwOrders.style.display = "none";
       }
       renderCustomerOrders();
     });
 
-    function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+    function openLoginModal() {
+      const m = document.getElementById('loginModal');
+      if (m) m.style.display = 'flex';
+    }
     function loginWithGoogle() {
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
@@ -778,15 +828,19 @@
     }
 
     function openOwnerVerification() {
-      document.getElementById('ownerPassInput').value = '';
-      document.getElementById('adminPassModal').style.display = 'flex';
+      const passIn = document.getElementById('ownerPassInput');
+      if (passIn) passIn.value = '';
+      const passMod = document.getElementById('adminPassModal');
+      if (passMod) passMod.style.display = 'flex';
     }
 
     function verifyOwnerPassword() {
-      const pass = document.getElementById('ownerPassInput').value;
+      const passInput = document.getElementById('ownerPassInput');
+      const pass = passInput ? passInput.value : '';
       if (pass === OWNER_MASTER_PASS) {
         closeModal('adminPassModal');
-        document.getElementById('adminPortal').style.display = 'block';
+        const admPortal = document.getElementById('adminPortal');
+        if (admPortal) admPortal.style.display = 'block';
       } else {
         showAppToast("गलत मास्टर पासवर्ड!");
       }
@@ -795,8 +849,9 @@
     function switchAdm(id) {
       document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
-      event.target.classList.add('active');
-      document.getElementById(id).classList.add('active');
+      if (event && event.target) event.target.classList.add('active');
+      const targetSec = document.getElementById(id);
+      if (targetSec) targetSec.classList.add('active');
     }
 
     // --- Firestore Sync Listeners ---
@@ -815,7 +870,7 @@
       refreshTicker();
       renderPublicDonors();
       renderAdminDonations();
-    });
+    }, err => { console.log("Donations sync error:", err); });
 
     db.collection("products").onSnapshot(snap => {
       cloudProducts = [];
@@ -824,43 +879,61 @@
       renderStoreProducts();
       renderSuggestedProducts();
       renderAdminProducts();
-    });
+    }, err => { console.log("Products sync error:", err); });
 
     db.collection("coupons").onSnapshot(snap => {
       cloudCoupons = [];
       snap.forEach(doc => cloudCoupons.push({ id: doc.id, ...doc.data() }));
       renderAdminCoupons();
-    });
+    }, err => { console.log("Coupons sync error:", err); });
 
     db.collection("orders").onSnapshot(snap => {
       cloudOrders = [];
       snap.forEach(doc => cloudOrders.push({ id: doc.id, ...doc.data() }));
       renderCustomerOrders();
       renderAdminOrders();
-    });
+    }, err => { console.log("Orders sync error:", err); });
 
     db.collection("settings").doc("main").onSnapshot(doc => {
       if (doc.exists) {
         const s = doc.data();
-        if (s.ticker) document.getElementById('liveTicker').innerText = s.ticker;
-        if (s.ticker) document.getElementById('admTickerText').value = s.ticker;
+        if (s.ticker) {
+          const lt = document.getElementById('liveTicker');
+          if (lt) lt.innerText = s.ticker;
+          const att = document.getElementById('admTickerText');
+          if (att) att.value = s.ticker;
+        }
         if (s.paymentMode) {
           configuredPaymentMode = s.paymentMode;
-          document.getElementById('admPaymentMode').value = s.paymentMode;
+          const apm = document.getElementById('admPaymentMode');
+          if (apm) apm.value = s.paymentMode;
         }
-        if (s.upi) document.getElementById('admUpiId').value = s.upi;
-        if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
+        if (s.upi) {
+          const aup = document.getElementById('admUpiId');
+          if (aup) aup.value = s.upi;
+        }
+        if (s.razorpay) {
+          const arz = document.getElementById('admRazorpayKey');
+          if (arz) arz.value = s.razorpay;
+        }
         if (s.wa) {
-          document.getElementById('admWaPhone').value = s.wa;
-          document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
-          document.getElementById('ftrWa').innerText = `+${s.wa}`;
+          const adw = document.getElementById('admWaPhone');
+          if (adw) adw.value = s.wa;
+          const ftw = document.getElementById('ftrWa');
+          if (ftw) {
+            ftw.href = `https://wa.me/${s.wa}`;
+            ftw.innerText = `+${s.wa}`;
+          }
         }
         if (s.insta) {
-          document.getElementById('admInstaLink').value = s.insta;
-          document.getElementById('ftrInsta').href = s.insta;
+          const adi = document.getElementById('admInstaLink');
+          if (adi) adi.value = s.insta;
+          const fti = document.getElementById('ftrInsta');
+          if (fti) fti.href = s.insta;
         }
         if (s.yt) {
-          document.getElementById('admYtLink').value = s.yt;
+          const ady = document.getElementById('admYtLink');
+          if (ady) ady.value = s.yt;
           const vidId = extractVideoId(s.yt);
           if (vidId) {
             currentYtVideoId = vidId;
@@ -870,7 +943,7 @@
           }
         }
       }
-    });
+    }, err => { console.log("Settings sync error:", err); });
 
     // --- Store & Categories ---
     function renderCategories() {
@@ -879,6 +952,7 @@
         if (p.category && !cats.includes(p.category)) cats.push(p.category);
       });
       const cBox = document.getElementById('catScroll');
+      if (!cBox) return;
       cBox.innerHTML = cats.map(c => `
         <span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
           ${c === 'all' ? (isEn ? 'All' : 'सभी') : c}
@@ -894,6 +968,7 @@
 
     function renderStoreProducts() {
       const g = document.getElementById('fullStoreGrid');
+      if (!g) return;
       const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
       if (filtered.length === 0) {
         g.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#aaa;">सामग्री लोड हो रही है...</p>`;
@@ -916,6 +991,7 @@
 
     function renderSuggestedProducts() {
       const sg = document.getElementById('suggestedGrid');
+      if (!sg) return;
       const sugList = cloudProducts.filter(p => p.isSuggested);
       const listToRender = sugList.length > 0 ? sugList : cloudProducts.slice(0, 2);
       sg.innerHTML = listToRender.map(p => `
@@ -942,28 +1018,38 @@
       if (!selectedProduct) return;
 
       appliedDiscountPct = 0;
-      document.getElementById('chkCouponInput').value = '';
-      document.getElementById('couponMsg').style.display = 'none';
-      document.getElementById('chkUtrInput').value = '';
+      const cInput = document.getElementById('chkCouponInput');
+      if (cInput) cInput.value = '';
+      const cMsg = document.getElementById('couponMsg');
+      if (cMsg) cMsg.style.display = 'none';
+      const cUtr = document.getElementById('chkUtrInput');
+      if (cUtr) cUtr.value = '';
 
-      document.getElementById('chkProdName').innerText = selectedProduct.name;
-      document.getElementById('chkProdDetails').innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
-      document.getElementById('chkCustName').value = currentUser.displayName || '';
+      const pNameEl = document.getElementById('chkProdName');
+      if (pNameEl) pNameEl.innerText = selectedProduct.name;
+      const pDetEl = document.getElementById('chkProdDetails');
+      if (pDetEl) pDetEl.innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
+      const cNameEl = document.getElementById('chkCustName');
+      if (cNameEl) cNameEl.value = currentUser.displayName || '';
       
       updatePayText();
       generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
-      document.getElementById('checkoutModal').style.display = 'flex';
+      const chkMod = document.getElementById('checkoutModal');
+      if (chkMod) chkMod.style.display = 'flex';
     }
 
     function applyStoreCoupon() {
-      const code = document.getElementById('chkCouponInput').value.trim().toUpperCase();
+      const cInput = document.getElementById('chkCouponInput');
+      const code = cInput ? cInput.value.trim().toUpperCase() : '';
       if (!code) return;
       const c = cloudCoupons.find(x => x.code.toUpperCase() === code);
       if (c) {
         appliedDiscountPct = Number(c.discount);
         const m = document.getElementById('couponMsg');
-        m.innerText = `🎉 '${code}' लागू हुआ! (${appliedDiscountPct}% छूट)`;
-        m.style.display = 'block';
+        if (m) {
+          m.innerText = `🎉 '${code}' लागू हुआ! (${appliedDiscountPct}% छूट)`;
+          m.style.display = 'block';
+        }
         updatePayText();
         generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
       } else {
@@ -979,39 +1065,55 @@
     }
 
     function updatePayText() {
-      document.getElementById('finalCheckoutAmt').innerText = `₹${getFinalPayAmount()}`;
+      const fAmt = document.getElementById('finalCheckoutAmt');
+      if (fAmt) fAmt.innerText = `₹${getFinalPayAmount()}`;
     }
 
     function generateDynamicQrCode(containerId, amount) {
       const container = document.getElementById(containerId);
+      if (!container) return;
       container.innerHTML = "";
-      const upiId = document.getElementById('admUpiId').value || "paytm.s20g6r2@pty";
+      const upiInput = document.getElementById('admUpiId');
+      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
       const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
 
-      new QRCode(container, {
-        text: upiString,
-        width: 170,
-        height: 170,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-        correctLevel: QRCode.CorrectLevel.H
-      });
+      try {
+        new QRCode(container, {
+          text: upiString,
+          width: 170,
+          height: 170,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+      } catch(e) {
+        console.log("QR Gen err:", e);
+      }
     }
 
     function openStoreUpiApp() {
       const amt = getFinalPayAmount();
-      const upiId = document.getElementById('admUpiId').value || "paytm.s20g6r2@pty";
+      const upiInput = document.getElementById('admUpiId');
+      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
       window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amt}&cu=INR`;
     }
 
     function confirmStoreOrder() {
-      const name = document.getElementById('chkCustName').value.trim();
-      const pin = document.getElementById('chkPincode').value.trim();
-      const phone = document.getElementById('chkPhone').value.trim();
-      const street = document.getElementById('chkStreet').value.trim();
-      const city = document.getElementById('chkCity').value.trim();
-      const state = document.getElementById('chkState').value.trim();
-      const utr = document.getElementById('chkUtrInput').value.trim();
+      const cName = document.getElementById('chkCustName');
+      const cPin = document.getElementById('chkPincode');
+      const cPho = document.getElementById('chkPhone');
+      const cStr = document.getElementById('chkStreet');
+      const cCit = document.getElementById('chkCity');
+      const cSta = document.getElementById('chkState');
+      const cUtr = document.getElementById('chkUtrInput');
+
+      const name = cName ? cName.value.trim() : '';
+      const pin = cPin ? cPin.value.trim() : '';
+      const phone = cPho ? cPho.value.trim() : '';
+      const street = cStr ? cStr.value.trim() : '';
+      const city = cCit ? cCit.value.trim() : '';
+      const state = cSta ? cSta.value.trim() : 'Uttar Pradesh';
+      const utr = cUtr ? cUtr.value.trim() : '';
 
       if (!name || !pin || !phone || !street || !city) {
         showAppToast("कृपया नाम, पिनकोड, फोन, मकान/सड़क और शहर पूरा भरें!");
@@ -1141,16 +1243,24 @@
 
     // --- Admin Operations ---
     function saveAdminSettings() {
-      const newYtLink = document.getElementById('admYtLink').value.trim();
+      const ytIn = document.getElementById('admYtLink');
+      const newYtLink = ytIn ? ytIn.value.trim() : '';
       const resolvedId = extractVideoId(newYtLink);
 
+      const tickIn = document.getElementById('admTickerText');
+      const payMod = document.getElementById('admPaymentMode');
+      const upiIn = document.getElementById('admUpiId');
+      const razIn = document.getElementById('admRazorpayKey');
+      const waIn = document.getElementById('admWaPhone');
+      const insIn = document.getElementById('admInstaLink');
+
       const settingsData = {
-        ticker: document.getElementById('admTickerText').value,
-        paymentMode: document.getElementById('admPaymentMode').value,
-        upi: document.getElementById('admUpiId').value,
-        razorpay: document.getElementById('admRazorpayKey').value,
-        wa: document.getElementById('admWaPhone').value,
-        insta: document.getElementById('admInstaLink').value,
+        ticker: tickIn ? tickIn.value : '',
+        paymentMode: payMod ? payMod.value : 'upi',
+        upi: upiIn ? upiIn.value : '',
+        razorpay: razIn ? razIn.value : '',
+        wa: waIn ? waIn.value : '',
+        insta: insIn ? insIn.value : '',
         yt: newYtLink
       };
 
@@ -1164,10 +1274,10 @@
           db.collection("settings").doc("music_room").set({
             startedAt: Date.now(),
             videoId: resolvedId
-          }, { merge: true });
+          }, { merge: true }).catch(() => {});
         }
         showAppToast("✅ सभी सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!");
-      });
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function saveNewProduct() {
@@ -1312,13 +1422,12 @@
       const sal = document.getElementById('admCashSalutation').value;
       const name = document.getElementById('admCashName').value.trim();
       const city = document.getElementById('admCashCity').value.trim();
-      const phone = document.getElementById('admCashPhone').value.trim();
       const amt = document.getElementById('admCashAmt').value.trim();
 
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, salutation: sal, address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        name, salutation: sal, address: city, phone: "", amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1348,32 +1457,44 @@
     let pendingDonationData = null;
 
     function openDonationModal() {
-      const name = document.getElementById('donName').value.trim() || "श्रद्धालु भक्त";
-      const sal = document.getElementById('donSalutation').value;
-      const amt = document.getElementById('donAmount').value.trim();
-      const cause = document.getElementById('donCause').value;
-      const city = document.getElementById('donCity').value.trim();
-      const phone = document.getElementById('donPhone').value.trim();
+      const dName = document.getElementById('donName');
+      const dSal = document.getElementById('donSalutation');
+      const dAmt = document.getElementById('donAmount');
+      const dCau = document.getElementById('donCause');
+      const dCit = document.getElementById('donCity');
+      const dPho = document.getElementById('donPhone');
+
+      const name = dName ? dName.value.trim() : "श्रद्धालु भक्त";
+      const sal = dSal ? dSal.value : 'none';
+      const amt = dAmt ? dAmt.value.trim() : '';
+      const cause = dCau ? dCau.value : 'श्री दुर्गा पूजा एवं अखंड भंडारा';
+      const city = dCit ? dCit.value.trim() : '';
+      const phone = dPho ? dPho.value.trim() : '';
 
       if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
 
       pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
 
-      document.getElementById('donModalInfo').innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
-      document.getElementById('donUtrInput').value = '';
+      const infoEl = document.getElementById('donModalInfo');
+      if (infoEl) infoEl.innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
+      const utrIn = document.getElementById('donUtrInput');
+      if (utrIn) utrIn.value = '';
       generateDynamicQrCode('donationQrContainer', amt);
-      document.getElementById('donationModal').style.display = 'flex';
+      const donMod = document.getElementById('donationModal');
+      if (donMod) donMod.style.display = 'flex';
     }
 
     function openDirectUpiApp() {
       if (!pendingDonationData) return;
-      const upiId = document.getElementById('admUpiId').value || "paytm.s20g6r2@pty";
+      const upiInput = document.getElementById('admUpiId');
+      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
       window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
     }
 
     function submitSecureDonation() {
       if (!pendingDonationData) return;
-      const utr = document.getElementById('donUtrInput').value.trim();
+      const utrInput = document.getElementById('donUtrInput');
+      const utr = utrInput ? utrInput.value.trim() : '';
 
       if (!utr || utr.length < 12) {
         showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
@@ -1402,15 +1523,16 @@
       }).then(() => {
         closeModal('donationModal');
         showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
-        document.getElementById('donName').value = '';
-        document.getElementById('donAmount').value = '';
-        document.getElementById('donCity').value = '';
-        document.getElementById('donPhone').value = '';
-      });
+        const dN = document.getElementById('donName'); if(dN) dN.value = '';
+        const dA = document.getElementById('donAmount'); if(dA) dA.value = '';
+        const dC = document.getElementById('donCity'); if(dC) dC.value = '';
+        const dP = document.getElementById('donPhone'); if(dP) dP.value = '';
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function refreshTicker() {
       const t = document.getElementById('liveTicker');
+      if (!t) return;
       const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
       if (cloudDonations.length === 0) { t.innerText = base; return; }
       const recent = cloudDonations.slice(0, 8).map(d => {
@@ -1434,7 +1556,8 @@
     }
 
     function searchPublicDonors() {
-      const q = document.getElementById('dirSearch').value.toLowerCase().trim();
+      const dirSearch = document.getElementById('dirSearch');
+      const q = dirSearch ? dirSearch.value.toLowerCase().trim() : '';
       document.querySelectorAll('#publicDonorBody tr').forEach(r => {
         r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
       });
@@ -1446,14 +1569,17 @@
     function triggerCelebration(name, cause, amount, salutation) {
       const respectfulName = formatDonorName(name, salutation);
       
-      document.getElementById('celDonorName').innerText = `${respectfulName},`;
-      document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
-      document.getElementById('celebrationModal').style.display = 'flex';
+      const cNameEl = document.getElementById('celDonorName');
+      if (cNameEl) cNameEl.innerText = `${respectfulName},`;
+      const cMsgEl = document.getElementById('celMsg');
+      if (cMsgEl) cMsgEl.innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
+      const celMod = document.getElementById('celebrationModal');
+      if (celMod) celMod.style.display = 'flex';
       
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
 
       if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-        ytPlayer.setVolume(20);
+        try { ytPlayer.setVolume(20); } catch(e) {}
       }
 
       setTimeout(() => {
@@ -1461,22 +1587,24 @@
         elevenLabsAudio.play().then(() => {
           elevenLabsAudio.onended = () => {
             if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-              ytPlayer.setVolume(100);
+              try { ytPlayer.setVolume(100); } catch(e) {}
             }
           };
         }).catch(err => {
           console.log("Audio play prevented:", err);
           if ('speechSynthesis' in window) {
-            window.speechSynthesis.cancel();
-            const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
-            const utter = new SpeechSynthesisUtterance(sentence);
-            utter.lang = 'hi-IN';
-            utter.onend = () => {
-              if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-                ytPlayer.setVolume(100);
-              }
-            };
-            window.speechSynthesis.speak(utter);
+            try {
+              window.speechSynthesis.cancel();
+              const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
+              const utter = new SpeechSynthesisUtterance(sentence);
+              utter.lang = 'hi-IN';
+              utter.onend = () => {
+                if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
+                  try { ytPlayer.setVolume(100); } catch(e) {}
+                }
+              };
+              window.speechSynthesis.speak(utter);
+            } catch(e) {}
           }
         });
       }, 300);
@@ -1488,7 +1616,7 @@
       closeModal('celebrationModal');
       try { elevenLabsAudio.pause(); } catch(e) {}
       if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-        ytPlayer.setVolume(100);
+        try { ytPlayer.setVolume(100); } catch(e) {}
       }
     }
 
@@ -1512,13 +1640,17 @@
     function openLegal(type) {
       const doc = legalDocs[type];
       if (!doc) return;
-      document.getElementById('legalHeading').innerText = doc.title;
-      document.getElementById('legalBodyText').innerHTML = doc.content;
-      document.getElementById('legalPage').style.display = 'block';
+      const hEl = document.getElementById('legalHeading');
+      if (hEl) hEl.innerText = doc.title;
+      const bEl = document.getElementById('legalBodyText');
+      if (bEl) bEl.innerHTML = doc.content;
+      const lPage = document.getElementById('legalPage');
+      if (lPage) lPage.style.display = 'block';
     }
 
     function closeLegalPage() {
-      document.getElementById('legalPage').style.display = 'none';
+      const lPage = document.getElementById('legalPage');
+      if (lPage) lPage.style.display = 'none';
     }
   </script>
 </body>
