@@ -63,7 +63,7 @@
     .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-    /* Instagram Style Full-Screen Chat Interface */
+    /* Instagram Style Chat */
     .insta-chat-box { background: #0b0002; border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
     .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
     .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.6); }
@@ -73,7 +73,7 @@
     .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
     .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
-    /* Custom Theme Overlays */
+    /* Popups */
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
 
@@ -82,17 +82,7 @@
     .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
     .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
-    /* Timeline Tracker */
-    .timeline-wrap { position: relative; padding-left: 26px; margin-top: 14px; text-align: left; }
-    .timeline-line { position: absolute; top: 8px; left: 8px; width: 3px; height: calc(100% - 24px); background: #444; }
-    .timeline-line.active-fill { background: #4caf50; }
-    .timeline-step { position: relative; margin-bottom: 18px; }
-    .timeline-dot { position: absolute; left: -24px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: #555; border: 2px solid #1a0004; }
-    .timeline-step.completed .timeline-dot { background: #4caf50; box-shadow: 0 0 8px #4caf50; }
-    .step-title { font-size: 13px; font-weight: bold; color: #fff; }
-    .step-desc { font-size: 11px; color: #aaa; margin-top: 2px; }
-
-    /* Fullscreen Dedicated Admin Dashboard */
+    /* Admin Portal */
     #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
     .admin-inner { max-width: 980px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
     .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.25); }
@@ -105,24 +95,24 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Feedback Cards */
-    .feedback-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
-    @media (min-width: 600px) { .feedback-grid { grid-template-columns: 1fr 1fr; } }
-    .fb-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 12px; font-size: 12px; }
-    .fb-header { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--gold); font-weight: bold; }
+    /* Legal Pages */
+    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0c0002; z-index: 7000; overflow-y: auto; padding: 20px 14px; }
+    .legal-container { max-width: 850px; margin: 0 auto; background: #170004; border: 1px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #e0e0e0; }
 
     /* Sticky Footer */
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
     .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
     .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; }
+    .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
   </style>
 </head>
 <body>
 
-  <!-- Background YouTube Player -->
+  <!-- Background Audio Player -->
   <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
 
-  <!-- Hidden Pickers -->
+  <!-- Pickers -->
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
   <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
 
@@ -145,11 +135,11 @@
       <b style="color:var(--gold); font-size:14px;">🚩 नेविगेशन मेनू</b>
       <button onclick="toggleSideNav()" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
     </div>
-    <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span id="drwDonate">सहयोग फॉर्म</span></button>
-    <button class="drawer-item" onclick="switchNav('store')">🛍️ <span id="drwStore">भक्ति स्टोर</span></button>
-    <button class="drawer-item" onclick="switchNav('directory')">📜 <span id="drwList">सार्वजनिक सूची</span></button>
-    <button class="drawer-item" onclick="switchNav('chat')">💬 <span id="drwChat">भक्त लाइव चैट</span></button>
-    <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">📦 <span id="drwOrders">मेरे ऑर्डर्स</span></button>
+    <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span>सहयोग फॉर्म</span></button>
+    <button class="drawer-item" onclick="switchNav('store')">🛍️ <span>भक्ति स्टोर</span></button>
+    <button class="drawer-item" onclick="switchNav('directory')">📜 <span>सार्वजनिक सूची</span></button>
+    <button class="drawer-item" onclick="switchNav('chat')">💬 <span>भक्त लाइव चैट</span></button>
+    <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">📦 <span>मेरे ऑर्डर्स</span></button>
   </div>
 
   <header>
@@ -231,7 +221,7 @@
       <div class="table-responsive">
         <table>
           <thead>
-            <tr><th id="thDate">तारीख</th><th id="thDonor">दानदाता</th><th id="thCity">स्थान</th><th id="thAmount">सहयोग राशि</th><th id="thCause">उद्देश्य</th></tr>
+            <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>सहयोग राशि</th><th>उद्देश्य</th></tr>
           </thead>
           <tbody id="publicDonorBody"></tbody>
         </table>
@@ -269,27 +259,34 @@
       <div id="ordersContainer"></div>
     </div>
 
-    <!-- PUBLIC FEEDBACK & REVIEWS SECTION -->
-    <div class="card" style="margin-top:20px;">
-      <h2 style="color:var(--gold); font-size:17px; text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव (Feedback)</h2>
+  </div>
+
+  <!-- POPUP: FEEDBACK MODAL (Opens neatly from footer) -->
+  <div class="custom-popup-overlay" id="feedbackModal">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left;">
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
       
-      <div style="background:rgba(0,0,0,0.4); padding:14px; border-radius:8px; border:1px solid rgba(255,215,0,0.2); margin-bottom:14px;">
-        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px;">अपना पावन अनुभव या सुझाव साझा करें:</h4>
-        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-bottom:8px;">
-          <input type="text" id="fbNameInput" placeholder="आपका शुभ नाम">
-          <select id="fbRatingInput" style="padding:10px;">
-            <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
-            <option value="4">⭐⭐⭐⭐ 4 Star</option>
-            <option value="3">⭐⭐⭐ 3 Star</option>
-          </select>
-        </div>
-        <textarea id="fbMsgInput" placeholder="अपना सुझाव या अनुभव यहाँ लिखें..." style="height:60px; margin-bottom:8px;"></textarea>
-        <button class="btn-main" onclick="submitPublicFeedback()" style="padding:8px; font-size:13px;">सुझाव भेजें (Submit)</button>
+      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;">
+        <label>आपका शुभ नाम:</label>
+        <input type="text" id="fbNameInput" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
+        
+        <label>रेटिंग चुनें:</label>
+        <select id="fbRatingInput" style="margin-bottom:8px;">
+          <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+          <option value="4">⭐⭐⭐⭐ 4 Star</option>
+          <option value="3">⭐⭐⭐ 3 Star</option>
+        </select>
+        
+        <label>अपना पावन अनुभव या सुझाव लिखें:</label>
+        <textarea id="fbMsgInput" placeholder="सुझाव यहाँ लिखें..." style="height:60px; margin-bottom:10px;"></textarea>
+        
+        <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
       </div>
 
-      <div class="feedback-grid" id="publicFeedbackList"></div>
+      <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
+      
+      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
     </div>
-
   </div>
 
   <!-- LOGIN MODAL -->
@@ -299,7 +296,7 @@
       <button class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
       </button>
-      <br><button onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें (Cancel)</button>
+      <br><button onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
@@ -323,7 +320,7 @@
     </div>
   </div>
 
-  <!-- DONATION MODAL -->
+  <!-- DONATION PAYMENT MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
@@ -331,16 +328,13 @@
       
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;">
         <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 QR स्कैन करें या ऐप खोलें:</p>
-        
         <div class="upi-app-badges">
           <span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe खोलें</span>
         </div>
-
         <div style="display: flex; justify-content: center; margin: 10px 0;">
           <div class="qr-box-wrapper" id="donationQrContainer"></div>
         </div>
         <p style="font-size:10px; color:#ccc;">(राशि अपने आप फिक्स है)</p>
-
         <div style="margin-top:10px; text-align:left;">
           <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
           <input type="text" id="donUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
@@ -359,15 +353,14 @@
       <div id="chkProdDetails" style="font-size:12px; color:#ffcdd2; margin-bottom:10px; text-align:center;"></div>
       
       <div class="form-group"><label>पूरा नाम (Full Name)</label><input type="text" id="chkCustName"></div>
-      
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-        <div class="form-group"><label>पिनकोड (Pincode) *</label><input type="number" id="chkPincode"></div>
+        <div class="form-group"><label>पिनकोड *</label><input type="number" id="chkPincode"></div>
         <div class="form-group"><label>मोबाइल नंबर *</label><input type="tel" id="chkPhone"></div>
       </div>
-      <div class="form-group"><label>मकान नं, भवन या सड़क (House/Street) *</label><input type="text" id="chkStreet"></div>
+      <div class="form-group"><label>मकान नं, भवन या सड़क *</label><input type="text" id="chkStreet"></div>
       <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-        <div class="form-group"><label>ज़िला / शहर (City/District) *</label><input type="text" id="chkCity"></div>
-        <div class="form-group"><label>राज्य (State) *</label><input type="text" id="chkState" value="Uttar Pradesh"></div>
+        <div class="form-group"><label>ज़िला / शहर *</label><input type="text" id="chkCity"></div>
+        <div class="form-group"><label>राज्य *</label><input type="text" id="chkState" value="Uttar Pradesh"></div>
       </div>
 
       <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold); margin:8px 0;">
@@ -383,16 +376,13 @@
       </div>
 
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(255,215,0,0.3); text-align:center;">
-        <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 स्कैन करें या नीचे दिए गए ऐप से भुगतान करें:</p>
-        
+        <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 स्कैन करें या ऐप से भुगतान करें:</p>
         <div class="upi-app-badges">
           <span class="upi-badge" onclick="openStoreUpiApp()">Paytm / GPay / PhonePe खोलें</span>
         </div>
-
         <div style="display: flex; justify-content: center; margin: 10px 0;">
           <div class="qr-box-wrapper" id="dynamicQrContainer"></div>
         </div>
-
         <div style="margin-top:10px; text-align:left;">
           <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
           <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
@@ -459,7 +449,7 @@
         <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
         <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
 
-        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल व मीडिया लिंक्स:</h4>
+        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
         <div class="form-group"><label>यूट्यूब भजन लिंक:</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
 
@@ -514,7 +504,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 5: Donations WITH MOBILE NUMBER & 1-CLICK WHATSAPP RECEIPT -->
+      <!-- Admin Sec 5: Donations -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
           <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
@@ -561,7 +551,7 @@
     </div>
   </div>
 
-  <!-- Footer -->
+  <!-- FIXED STICKY FOOTER (WITH FEEDBACK BUTTON RIGHT BESIDE GOOGLE REVIEW) -->
   <footer>
     <div style="max-width:900px; margin:0 auto;">
       <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
@@ -574,8 +564,10 @@
         <button class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
       </div>
 
-      <div style="margin-top:12px;">
-        <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" style="background:rgba(255,215,0,0.18); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:6px; text-decoration:none; font-size:12px; font-weight:bold;">⭐ Google पर रिव्यू दें</a>
+      <!-- ACTION BUTTONS: REVIEW & FEEDBACK SIDE-BY-SIDE INSIDE FOOTER -->
+      <div class="footer-action-btns">
+        <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" class="ftr-pill-btn">⭐ Google पर रिव्यू दें</a>
+        <button type="button" class="ftr-pill-btn" onclick="openModal('feedbackModal')">✍️ सुझाव / Feedback दें</button>
       </div>
 
       <p style="margin-top:15px; font-size:11px; color:#777;">© 2026 Maa Durga Enterprises. सर्वाधिकार सुरक्षित।</p>
@@ -640,6 +632,11 @@
       if (m) m.innerText = msg;
       const p = document.getElementById('notifyPopup');
       if (p) p.style.display = 'flex';
+    }
+
+    function openModal(id) {
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'flex';
     }
 
     function closeModal(id) {
@@ -958,17 +955,16 @@
       const box = document.getElementById('publicFeedbackList');
       if (!box) return;
       if (cloudFeedbacks.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column: 1/-1;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
+        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
         return;
       }
       box.innerHTML = cloudFeedbacks.map(f => `
-        <div class="fb-card" style="${f.pinned ? 'border:1px solid var(--gold); background:rgba(255,215,0,0.08);' : ''}">
-          <div class="fb-header">
-            <span>${f.name} ${f.pinned ? '⭐ (पिन किया गया)' : ''}</span>
+        <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
+          <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
+            <span>${f.name} ${f.pinned ? '⭐' : ''}</span>
             <span>${'⭐'.repeat(f.rating || 5)}</span>
           </div>
-          <p style="color:#ffcdd2; line-height:1.5;">${f.message}</p>
-          <small style="color:#777; display:block; margin-top:6px;">${f.date || ''}</small>
+          <p style="color:#ffcdd2;">${f.message}</p>
         </div>
       `).join('');
     }
@@ -1051,7 +1047,6 @@
       }).join('');
     }
 
-    // --- Save Cash Donation with Phone ---
     function saveAdminCashDonation() {
       if (!db) return;
       const name = document.getElementById('admCashName')?.value.trim();
@@ -1074,7 +1069,6 @@
       });
     }
 
-    // --- Direct Donation Modal Flow ---
     function openDonationModal() {
       const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
       const sal = document.getElementById('donSalutation')?.value || 'none';
@@ -1136,7 +1130,7 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // --- Chat & Media Functions ---
+    // --- Chat & Media ---
     let mediaRecorder = null;
     let audioChunks = [];
     let isRecording = false;
@@ -1331,7 +1325,6 @@
       try { elevenLabsAudio.pause(); } catch(e) {}
     }
 
-    // --- Store & Orders Basic Handlers ---
     function renderCategories() {
       const cats = ['all'];
       cloudProducts.forEach(p => { if (p.category && !cats.includes(p.category)) cats.push(p.category); });
@@ -1424,6 +1417,21 @@
         </div>
       `).join('');
     }
+
+    const legalDocs = {
+      terms: { title: "Terms and Conditions", content: "<p>यह पोर्टल Maa Durga Enterprises तथा श्री दुर्गा पूजा सेवा समिति द्वारा संचालित है।</p>" },
+      privacy: { title: "Privacy Policy", content: "<p>डेटा क्लाउड में सुरक्षित है।</p>" },
+      refund: { title: "Refund Policy", content: "<p>धार्मिक सहयोग गैर-वापसीयोग्य है।</p>" },
+      shipping: { title: "Shipping Policy", content: "<p>डिलीवरी 3-7 दिनों में प्रेषित होती है।</p>" }
+    };
+    function openLegal(type) {
+      const doc = legalDocs[type];
+      if (!doc) return;
+      document.getElementById('legalHeading').innerText = doc.title;
+      document.getElementById('legalBodyText').innerHTML = doc.content;
+      document.getElementById('legalPage').style.display = 'block';
+    }
+    function closeLegalPage() { document.getElementById('legalPage').style.display = 'none'; }
   </script>
 </body>
 </html>
