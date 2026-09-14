@@ -67,7 +67,7 @@
     .verify-modal { background: rgba(0,0,0,0.88); }
     .auth-modal { background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); }
     .fullscreen-modal { background: rgba(18, 0, 2, 0.96); }
-    .fullscreen-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 16px; padding: 28px 20px; max-width: 480px; width: 100%; box-shadow: 0 0 35px rgba(255,215,0,0.4); }
+    .fullscreen-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 16px; padding: 28px 20px; max-width: 480px; width: 100%; box-shadow: 0 0 35px rgba(255,215,0,0.4); text-align: center; }
     .verify-box, .auth-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 14px; padding: 22px; max-width: 420px; width: 100%; text-align: center; }
     .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #ffffff; color: #333; border: none; border-radius: 8px; padding: 12px 16px; font-size: 15px; font-weight: bold; cursor: pointer; }
 
@@ -233,7 +233,7 @@
 
   <!-- Real-time Broadcast Celebration Modal -->
   <div class="fullscreen-modal" id="celebrationModal">
-    <div class="fullscreen-box" style="text-align:center;">
+    <div class="fullscreen-box">
       <h1 style="font-size:26px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
       <p id="celebrationText" style="font-size:16px; line-height: 1.6;"></p>
       <p style="font-size:14px; color:var(--gold); margin-top:12px; font-weight:bold;">
@@ -334,7 +334,6 @@
       snapshot.docChanges().forEach((change) => {
         if (change.type === "added" && !isFirst) {
           const newDoc = change.doc.data();
-          // Broadcast popup on ALL devices open right now
           triggerCelebration(newDoc.name, newDoc.cause, newDoc.amount);
         }
       });
@@ -567,42 +566,80 @@
 
     function searchDonors() { renderPublicDonorList(document.getElementById('searchInput').value); }
 
-    // Sound and Speech Synthesis
-    const applauseAudio = new Audio("https://actions.google.com/sounds/v1/crowds/applause_medium_crowd.ogg");
+    // --- High Performance Web Audio Engine for Clapping ---
+    let audioCtx = null;
+    function initAudio() {
+      if (!audioCtx) {
+        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      }
+      if (audioCtx.state === 'suspended') {
+        audioCtx.resume();
+      }
+    }
+    window.addEventListener('click', initAudio, { once: true });
+    window.addEventListener('touchstart', initAudio, { once: true });
+
+    function playClappingSound() {
+      try {
+        initAudio();
+        if (!audioCtx) return;
+        for (let i = 0; i < 14; i++) {
+          setTimeout(() => {
+            const bufferSize = audioCtx.sampleRate * 0.09;
+            const buffer = audioCtx.createBuffer(1, bufferSize, audioCtx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let j = 0; j < bufferSize; j++) {
+              data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (audioCtx.sampleRate * 0.02));
+            }
+            const noise = audioCtx.createBufferSource();
+            noise.buffer = buffer;
+            const filter = audioCtx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 1100 + Math.random() * 400;
+            const gain = audioCtx.createGain();
+            gain.gain.setValueAtTime(0.8, audioCtx.currentTime);
+            noise.connect(filter);
+            filter.connect(gain);
+            gain.connect(audioCtx.destination);
+            noise.start();
+          }, i * 150);
+        }
+      } catch (e) {
+        console.log("Audio play error:", e);
+      }
+    }
 
     function triggerCelebration(name, cause, amount) {
       const textMsg = `श्री <b>${name}</b> जी,<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
       document.getElementById('celebrationText').innerHTML = textMsg;
       document.getElementById('celebrationModal').style.display = 'flex';
       
-      try { confetti({ particleCount: 140, spread: 85, origin: { y: 0.5 } }); } catch(e) {}
+      try { confetti({ particleCount: 150, spread: 85, origin: { y: 0.5 } }); } catch(e) {}
 
-      // Play Clapping Sound
-      try {
-        applauseAudio.currentTime = 0;
-        applauseAudio.play().catch(e => console.log("Audio play prevented:", e));
-      } catch(e) {}
+      // Play clapping sound
+      playClappingSound();
 
-      // Text to Speech in Hindi
+      // Clear & Speak Full Hindi Sentence
       if ('speechSynthesis' in window) {
         window.speechSynthesis.cancel();
         const spokenSentence = `जय माता दी! श्री ${name} जी, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे।`;
         const utterance = new SpeechSynthesisUtterance(spokenSentence);
         utterance.lang = 'hi-IN';
-        utterance.rate = 0.95;
-        window.speechSynthesis.speak(utterance);
+        utterance.rate = 0.93;
+        utterance.pitch = 1.0;
+        setTimeout(() => {
+          window.speechSynthesis.speak(utterance);
+        }, 250);
       }
 
-      // Automatically dismiss after 8 seconds
       setTimeout(() => {
         closeCelebration();
-      }, 8500);
+      }, 9500);
     }
 
     function closeCelebration() {
       document.getElementById('celebrationModal').style.display = 'none';
       if ('speechSynthesis' in window) window.speechSynthesis.cancel();
-      try { applauseAudio.pause(); } catch(e) {}
     }
 
     const products = [
