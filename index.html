@@ -95,14 +95,15 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Legal Pages */
-    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0c0002; z-index: 7000; overflow-y: auto; padding: 20px 14px; }
-    .legal-container { max-width: 850px; margin: 0 auto; background: #170004; border: 1px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #e0e0e0; }
+    /* Dedicated Legal & Contact Modal */
+    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 7000; overflow-y: auto; padding: 25px 15px; }
+    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.3); position: relative; }
 
     /* Sticky Footer */
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
-    .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
-    .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; }
+    .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+    .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; }
+    .footer-link-btn:hover { color: #fff; }
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
   </style>
@@ -286,6 +287,15 @@
       <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
       
       <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
+    </div>
+  </div>
+
+  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL (FIXED & WORKING 100%) -->
+  <div class="legal-page" id="legalPage">
+    <div class="legal-container">
+      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
+      <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
+      <div id="legalBodyText"></div>
     </div>
   </div>
 
@@ -551,17 +561,19 @@
     </div>
   </div>
 
-  <!-- FIXED STICKY FOOTER (WITH FEEDBACK BUTTON RIGHT BESIDE GOOGLE REVIEW) -->
+  <!-- FIXED STICKY FOOTER WITH POLICIES & CONTACT US -->
   <footer>
     <div style="max-width:900px; margin:0 auto;">
       <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
       <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
+      <!-- ALL 5 WORKING POLICY & CONTACT LINKS -->
       <div class="footer-links">
-        <button class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
-        <button class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
-        <button class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
-        <button class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('contact')">Contact Us (संपर्क करें)</button>
       </div>
 
       <!-- ACTION BUTTONS: REVIEW & FEEDBACK SIDE-BY-SIDE INSIDE FOOTER -->
@@ -948,6 +960,7 @@
       }).then(() => {
         showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
         document.getElementById('fbMsgInput').value = '';
+        closeModal('feedbackModal');
       }).catch(e => showAppToast(e.message));
     }
 
@@ -955,7 +968,7 @@
       const box = document.getElementById('publicFeedbackList');
       if (!box) return;
       if (cloudFeedbacks.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
+        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
         return;
       }
       box.innerHTML = cloudFeedbacks.map(f => `
@@ -1325,6 +1338,7 @@
       try { elevenLabsAudio.pause(); } catch(e) {}
     }
 
+    // --- Store & Orders Basic Handlers ---
     function renderCategories() {
       const cats = ['all'];
       cloudProducts.forEach(p => { if (p.category && !cats.includes(p.category)) cats.push(p.category); });
@@ -1418,20 +1432,71 @@
       `).join('');
     }
 
+    // --- Dedicated Legal & Contact Content (100% Fixed & Complete) ---
     const legalDocs = {
-      terms: { title: "Terms and Conditions", content: "<p>यह पोर्टल Maa Durga Enterprises तथा श्री दुर्गा पूजा सेवा समिति द्वारा संचालित है।</p>" },
-      privacy: { title: "Privacy Policy", content: "<p>डेटा क्लाउड में सुरक्षित है।</p>" },
-      refund: { title: "Refund Policy", content: "<p>धार्मिक सहयोग गैर-वापसीयोग्य है।</p>" },
-      shipping: { title: "Shipping Policy", content: "<p>डिलीवरी 3-7 दिनों में प्रेषित होती है।</p>" }
+      terms: { 
+        title: "Terms & Conditions (नियम एवं शर्तें)", 
+        content: `
+          <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा संचालित है।</p>
+          <p><b>2. सेवा व सहयोग:</b> वेबसाइट पर किया जाने वाला सहयोग पूर्णतः स्वैच्छिक एवं धार्मिक/जनकल्याणकारी कार्यों हेतु है।</p>
+          <p><b>3. उत्पाद एवं सेवाएँ:</b> भक्ति स्टोर में उपलब्ध सामग्री की डिलीवरी 3 से 7 कार्य दिवसों में की जाती है।</p>
+          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय एवं शिष्ट भाषा का उपयोग करें। किसी भी अनुचित संदेश को तत्काल हटाया जा सकता है।</p>
+        ` 
+      },
+      privacy: { 
+        title: "Privacy Policy (गोपनीयता नीति)", 
+        content: `
+          <p><b>1. डेटा सुरक्षा:</b> हम आपके नाम, मोबाइल नंबर व पते की गोपनीयता का पूर्ण सम्मान करते हैं।</p>
+          <p><b>2. उपयोग:</b> आपका नंबर केवल ऑर्डर डिलीवरी, OTP सत्यापन एवं सहयोग रसीद प्रेषित करने हेतु उपयोग किया जाता है।</p>
+          <p><b>3. तीसरे पक्ष से सुरक्षा:</b> आपकी कोई भी निजी जानकारी किसी अन्य बाहरी व्यक्ति या विज्ञापनदाता के साथ साझा नहीं की जाती।</p>
+        ` 
+      },
+      refund: { 
+        title: "Refund Policy (रिफंड एवं वापसी नीति)", 
+        content: `
+          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य (Non-Refundable) है।</p>
+          <p><b>2. स्टोर सामग्री:</b> भक्ति स्टोर से मँगाए गए सामान में यदि कोई टूट-फूट या दोष होता है, तो डिलीवरी के 2 दिनों के भीतर सूचित करने पर प्रतिस्थापन (Replacement) अथवा रिफंड प्रदान किया जाएगा।</p>
+        ` 
+      },
+      shipping: { 
+        title: "Shipping Policy (डिलीवरी नीति)", 
+        content: `
+          <p><b>1. डिलीवरी समय:</b> ऑर्डर कन्फर्म होने के 3 से 7 कार्य दिवसों में पार्सल आपके पते पर सुरक्षित पहुँचाया जाता है।</p>
+          <p><b>2. सुरक्षित OTP सिस्टम:</b> डिलीवरी प्रतिनिधि को सामान प्राप्त करते समय अपना गुप्त OTP बताना अनिवार्य है।</p>
+          <p><b>3. ट्रैकिंग:</b> आप 'मेरे ऑर्डर्स' सेक्शन में अपने ऑर्डर की लाइव स्थिति (शिप, रवाना, डिलीवर) कभी भी देख सकते हैं।</p>
+        ` 
+      },
+      contact: {
+        title: "Contact Us (संपर्क विवरण)",
+        content: `
+          <p style="margin-bottom:12px;">श्री दुर्गा पूजा सेवा समिति एवं Maa Durga Enterprises से संपर्क करने हेतु विवरण:</p>
+          <div style="background:rgba(255,215,0,0.08); border:1px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:12px;">
+            <p style="margin-bottom:10px;">📞 <b>मोबाइल / व्हाट्सएप:</b> <a href="tel:+919120226597" style="color:var(--gold); font-weight:bold; text-decoration:none;">+91 9120226597</a></p>
+            <p style="margin-bottom:10px;">✉️ <b>ईमेल आईडी:</b> <a href="mailto:yugampal23@gmail.com" style="color:var(--gold); font-weight:bold; text-decoration:none;">yugampal23@gmail.com</a></p>
+            <p>📍 <b>कार्यालय पता:</b> माँ दुर्गा एंटरप्राइजेज, श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़, उत्तर प्रदेश - 230001</p>
+          </div>
+          <p style="font-size:11px; color:#aaa;">(समय: प्रातः 08:00 AM से सायं 09:00 PM तक | किसी भी सहायता हेतु कभी भी संपर्क कर सकते हैं)</p>
+        `
+      }
     };
+
     function openLegal(type) {
       const doc = legalDocs[type];
       if (!doc) return;
-      document.getElementById('legalHeading').innerText = doc.title;
-      document.getElementById('legalBodyText').innerHTML = doc.content;
-      document.getElementById('legalPage').style.display = 'block';
+      const h = document.getElementById('legalHeading');
+      const b = document.getElementById('legalBodyText');
+      const p = document.getElementById('legalPage');
+      if (h && b && p) {
+        h.innerText = doc.title;
+        b.innerHTML = doc.content;
+        p.style.display = 'block';
+      }
     }
-    function closeLegalPage() { document.getElementById('legalPage').style.display = 'none'; }
+
+    function closeLegalPage() {
+      const p = document.getElementById('legalPage');
+      if (p) p.style.display = 'none';
+    }
   </script>
 </body>
 </html>
