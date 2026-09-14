@@ -292,15 +292,16 @@
     </div>
   </div>
 
-  <!-- CELEBRATION BROADCAST MODAL -->
+  <!-- CELEBRATION BROADCAST MODAL (RESTORED EXACT BEAUTIFUL WELCOME POPUP) -->
   <div class="custom-popup-overlay" id="celebrationModal">
-    <div class="custom-popup-box">
-      <h1 style="font-size:24px; color:var(--gold); margin-bottom:10px;">🎉 जय माता दी! 🎉</h1>
-      <p id="celMsg" style="font-size:15px; line-height: 1.6;"></p>
-      <p style="font-size:13px; color:var(--gold); margin-top:10px; font-weight:bold;">
-        🌸 माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे। 🌸
+    <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
+      <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
+      <h3 id="celDonorName" style="color:#fff; font-size:17px; margin-bottom:10px;"></h3>
+      <p id="celMsg" style="font-size:14px; line-height: 1.6; color:#ffcdd2;"></p>
+      <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
+        🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
       </p>
-      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:14px;">जय माता दी</button>
+      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
     </div>
   </div>
 
@@ -313,7 +314,7 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN OWNER ADMIN DASHBOARD (COMPLETE CONTROLS + DELETE OPTION) -->
+  <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
   <div id="adminPortal">
     <div class="admin-inner">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px; margin-bottom:12px;">
@@ -398,12 +399,12 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Orders, Custom OTP, Flipkart Status & Permanent Delete Option -->
+      <!-- Admin Sec 4: Orders, Save Button & Checkbox OTP Control -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (अपनी मर्जी का OTP डालें, स्थिति बदलें व फर्जी ऑर्डर हटाएं)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (OTP टिक होने पर ही दिखेगा, स्थिति बदलकर सम्मति दें)</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>पता व फोन</th><th>डिलीवरी OTP</th><th>स्थिति (Flipkart Style)</th><th>एक्शन</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>पता व फोन</th><th>OTP व टिक</th><th>स्थिति बदलें</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -493,7 +494,7 @@
     let isFirstDonationLoad = true;
     let configuredPaymentMode = 'upi';
 
-    // --- Side Drawer Navigation Toggle ---
+    // Side Drawer Navigation Toggle
     function toggleSideNav() {
       const d = document.getElementById('sideNavDrawer');
       d.style.display = (d.style.display === 'block') ? 'none' : 'block';
@@ -510,7 +511,7 @@
       event.target.classList.add('active');
     }
 
-    // --- Device Language Auto-Detection ---
+    // Device Language Detection
     const userLang = (navigator.language || navigator.userLanguage || 'hi').toLowerCase();
     const isEn = userLang.startsWith('en');
 
@@ -549,19 +550,14 @@
     }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // --- Automatic Gender / Salutation Recognition ---
-    const femaleList = ["puja","pooja","shreya","rita","geeta","sita","priya","anjali","neha","kavita","sunita","anita","radha","durga","lakshmi","sarita","manju","rekha","pushpa","arti","aarti","poonam","vandana","mamta","seema","soni","sonia","sonam","chanda","renu","preeti","khushbu","pinky","meena","neetu"];
+    // Unified Respectful Salutation
     function getSmartSalutation(name) {
       const clean = (name || "").trim();
       if (!clean) return "भक्त";
-      const first = clean.split(' ')[0].toLowerCase();
-      if (femaleList.includes(first)) {
-        return `श्रीमती/सुश्री ${clean} जी`;
-      }
-      return `श्री ${clean} जी`;
+      return `श्री/श्रीमती ${clean} जी`;
     }
 
-    // --- YouTube Music Player Engine ---
+    // YouTube Music Player
     let ytPlayer = null;
     let isMusicPlaying = false;
     let currentYtVideoId = "dQw4w9WgXcQ";
@@ -597,7 +593,7 @@
       }
     }
 
-    // --- Auth Listener ---
+    // Auth Listener
     auth.onAuthStateChanged(user => {
       currentUser = user;
       const navArea = document.getElementById('navAuthArea');
@@ -655,7 +651,7 @@
       document.getElementById(id).classList.add('active');
     }
 
-    // --- Firestore Sync Listeners ---
+    // Firestore Sync Listeners
     db.collection("donations").onSnapshot(snap => {
       let isInit = isFirstDonationLoad;
       isFirstDonationLoad = false;
@@ -728,7 +724,7 @@
       }
     });
 
-    // --- Store & Categories ---
+    // Store & Categories
     function renderCategories() {
       const cats = ['all'];
       cloudProducts.forEach(p => {
@@ -784,7 +780,7 @@
       `).join('');
     }
 
-    // --- Flipkart Separated Address & Order Flow ---
+    // Checkout Flow
     let selectedProduct = null;
     let appliedDiscountPct = 0;
     let paymentVerifiedByGateway = false;
@@ -808,7 +804,6 @@
       document.getElementById('chkProdDetails').innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
       document.getElementById('chkCustName').value = currentUser.displayName || '';
       
-      // Toggle UTR input based on configured payment method
       if (configuredPaymentMode === 'razorpay') {
         document.getElementById('utrInputFieldContainer').style.display = 'none';
         document.getElementById('btnMakePayment').innerText = "💳 Razorpay Gateway से भुगतान करें";
@@ -904,8 +899,9 @@
         state: state,
         fullAddress: fullAddress,
         utr: utr,
-        otp: null, // Always hidden by default until owner sets in admin
-        statusCode: 1, // 1: Confirmed, 2: Shipped, 3: Out for Delivery, 4: Delivered
+        otp: "",
+        showOtpToUser: false,
+        statusCode: 1,
         status: "ऑर्डर कन्फ़र्म हुआ",
         statusDesc: "आपने सफलतापूर्वक ऑर्डर कर दिया है। विक्रेता द्वारा पैकिंग प्रक्रिया जारी है।",
         refundable: selectedProduct.refundable,
@@ -918,7 +914,7 @@
       }).catch(e => showAppToast(e.message));
     }
 
-    // --- Flipkart Style Customer Timeline Orders ---
+    // Customer My Orders Display
     function renderCustomerOrders() {
       const cont = document.getElementById('ordersContainer');
       if (!cont) return;
@@ -932,59 +928,73 @@
         return;
       }
       cont.innerHTML = my.map(o => {
-        const sc = o.statusCode || 1;
+        const sc = o.statusCode !== undefined ? o.statusCode : 1;
         const dispAddr = o.fullAddress || o.address || 'पता सुरक्षित है';
+        const isCancelled = (sc === 0);
+
+        let otpDisplayHtml = "";
+        if (o.showOtpToUser && o.otp) {
+          otpDisplayHtml = `
+            <div style="text-align:right;">
+              <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
+              <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
+                🔑 ${o.otp}
+              </span>
+            </div>
+          `;
+        }
+
         return `
-          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,0,0.25); border-radius:12px; padding:16px; margin-bottom:18px;">
+          <div style="background:rgba(255,255,255,0.03); border:1px solid ${isCancelled ? 'rgba(211,47,47,0.5)' : 'rgba(255,215,0,0.25)'}; border-radius:12px; padding:16px; margin-bottom:18px;">
             <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:8px; margin-bottom:12px;">
               <div>
                 <b style="color:var(--gold); font-size:15px;">${o.productName}</b>
                 <span style="color:#fff; font-size:13px; margin-left:6px;">₹${o.amount}</span>
               </div>
-              <div style="text-align:right;">
-                <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
-                <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
-                  🔑 ${o.otp ? o.otp : '******'}
-                </span>
-              </div>
+              ${otpDisplayHtml}
             </div>
 
             <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">डिलीवरी पता: ${dispAddr} | फोन: ${o.phone || '—'}</p>
 
-            <!-- Flipkart Style Vertical Timeline -->
-            <div class="timeline-wrap">
-              <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
-              
-              <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
-                <div class="timeline-dot"></div>
-                <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
-                <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr}</div>
+            ${isCancelled ? `
+              <div style="background:rgba(211,47,47,0.15); border:1px solid #d32f2f; padding:10px; border-radius:6px; color:#ff8a80; font-size:13px; font-weight:bold; text-align:center;">
+                ❌ यह ऑर्डर विक्रेता द्वारा रद्द (Cancelled) कर दिया गया है।
               </div>
+            ` : `
+              <div class="timeline-wrap">
+                <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
+                
+                <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
+                  <div class="timeline-dot"></div>
+                  <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
+                  <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr || '—'}</div>
+                </div>
 
-              <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
-                <div class="timeline-dot"></div>
-                <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
-                <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
-              </div>
+                <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
+                  <div class="timeline-dot"></div>
+                  <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
+                  <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
+                </div>
 
-              <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
-                <div class="timeline-dot"></div>
-                <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
-                <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
-              </div>
+                <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
+                  <div class="timeline-dot"></div>
+                  <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
+                  <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
+                </div>
 
-              <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
-                <div class="timeline-dot"></div>
-                <div class="step-title">डिलीवर किया गया (Delivered)</div>
-                <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
+                <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
+                  <div class="timeline-dot"></div>
+                  <div class="step-title">डिलीवर किया गया (Delivered)</div>
+                  <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
+                </div>
               </div>
-            </div>
+            `}
           </div>
         `;
       }).join('');
     }
 
-    // --- Admin Operations ---
+    // Admin Operations
     function saveAdminSettings() {
       db.collection("settings").doc("main").set({
         ticker: document.getElementById('admTickerText').value,
@@ -1058,32 +1068,28 @@
       `).join('');
     }
 
-    // Owner sets custom OTP code for any customer
-    function setCustomOrderOtp(orderId) {
-      const otpCode = prompt("इस ग्राहक हेतु मनचाहा गुप्त डिलीवरी OTP दर्ज करें (उदा: 2043, 7766 या कोई भी कोड):");
-      if (otpCode) {
-        db.collection("orders").doc(orderId).update({
-          otp: otpCode.trim()
-        }).then(() => showAppToast(`✅ OTP '${otpCode}' सुरक्षित हो गया और ग्राहक के डैशबोर्ड में दिखने लगा!`));
-      }
-    }
+    // Save Admin Order Status, Custom OTP & Checkbox Visibility
+    function saveOrderDetails(orderId) {
+      const otpVal = document.getElementById(`admOtpInput_${orderId}`).value.trim();
+      const isVisible = document.getElementById(`admOtpCheck_${orderId}`).checked;
+      const statusLvl = parseInt(document.getElementById(`admStatusSel_${orderId}`).value);
 
-    // Update Flipkart Style Timeline Level
-    function updateOrderTimeline(orderId, levelStr) {
-      const lvl = parseInt(levelStr);
       let statusName = "ऑर्डर कन्फ़र्म हुआ";
-      if (lvl === 2) statusName = "शिप किया गया";
-      if (lvl === 3) statusName = "डिलीवरी के लिए रवाना";
-      if (lvl === 4) statusName = "डिलीवर किया गया";
-      if (lvl === 0) statusName = "रद्द किया गया";
+      if (statusLvl === 2) statusName = "शिप किया गया";
+      if (statusLvl === 3) statusName = "डिलीवरी के लिए रवाना";
+      if (statusLvl === 4) statusName = "डिलीवर किया गया";
+      if (statusLvl === 0) statusName = "रद्द";
 
       db.collection("orders").doc(orderId).update({
-        statusCode: lvl,
+        otp: otpVal,
+        showOtpToUser: isVisible,
+        statusCode: statusLvl,
         status: statusName
-      }).then(() => showAppToast(`✅ ऑर्डर स्थिति बदलकर '${statusName}' कर दी गई है!`));
+      }).then(() => {
+        showAppToast("✅ सम्मति सुरक्षित! ग्राहक को नई स्थिति व OTP सेटिंग अपडेट हो गई।");
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // Delete Fake/Spam Order Permanently from Firestore
     function deleteOrderPermanently(orderId) {
       if (confirm("क्या आप इस फर्जी या टेस्ट ऑर्डर को डेटाबेस से हमेशा के लिए हटाना चाहते हैं?")) {
         db.collection("orders").doc(orderId).delete().then(() => {
@@ -1096,11 +1102,12 @@
       const tb = document.querySelector('#admOrdTable tbody');
       if (!tb) return;
       if (cloudOrders.length === 0) {
-        tb.innerHTML = "<tr><td colspan='9' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
+        tb.innerHTML = "<tr><td colspan='10' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
         return;
       }
       tb.innerHTML = cloudOrders.map(o => {
         const fullAddr = o.fullAddress || o.address || '—';
+        const sc = o.statusCode !== undefined ? o.statusCode : 1;
         return `
         <tr>
           <td>${o.date || '—'}</td>
@@ -1110,22 +1117,28 @@
           <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
           <td>${fullAddr}<br>📞 ${o.phone || '—'}</td>
           <td>
-            <button onclick="setCustomOrderOtp('${o.id}')" style="background:#ff9800; border:none; color:#000; padding:4px 7px; font-weight:bold; border-radius:3px; cursor:pointer;">
-              🔑 ${o.otp ? o.otp : '+ OTP डालें'}
-            </button>
+            <div style="display:flex; align-items:center; gap:4px;">
+              <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:65px; padding:3px; font-size:11px;">
+              <input type="checkbox" id="admOtpCheck_${o.id}" ${o.showOtpToUser ? 'checked' : ''} title="टिक रहने पर ही ग्राहक को OTP दिखेगा" style="width:16px; height:16px; cursor:pointer;">
+            </div>
           </td>
           <td>
-            <select onchange="updateOrderTimeline('${o.id}', this.value)" style="font-size:11px; padding:3px; width:125px;">
-              <option value="1" ${(o.statusCode || 1) == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
-              <option value="2" ${(o.statusCode || 1) == 2 ? 'selected' : ''}>2. शिप किया गया</option>
-              <option value="3" ${(o.statusCode || 1) == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
-              <option value="4" ${(o.statusCode || 1) == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
-              <option value="0" ${(o.statusCode || 1) == 0 ? 'selected' : ''}>0. रद्द</option>
+            <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:120px;">
+              <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
+              <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप किया गया</option>
+              <option value="3" ${sc == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
+              <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
+              <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द (Cancel)</option>
             </select>
           </td>
           <td>
+            <button onclick="saveOrderDetails('${o.id}')" style="background:#4caf50; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
+              💾 सम्मति
+            </button>
+          </td>
+          <td>
             <button onclick="deleteOrderPermanently('${o.id}')" style="background:#d32f2f; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-              🗑️ हटाएं
+              🗑️
             </button>
           </td>
         </tr>
@@ -1159,7 +1172,7 @@
       tb.innerHTML = cloudDonations.map(d => `
         <tr>
           <td>${d.date}</td>
-          <td><b>${d.name}</b></td>
+          <td><b>${getSmartSalutation(d.name)}</b></td>
           <td>${d.address || '—'}</td>
           <td>₹${d.amount}</td>
           <td>${d.utr}</td>
@@ -1168,7 +1181,7 @@
       `).join('');
     }
 
-    // --- Public Donation Flow ---
+    // Public Donation Flow
     function startDonationFlow() {
       const name = document.getElementById('donName').value.trim() || "श्रद्धालु भक्त";
       const amt = document.getElementById('donAmount').value.trim();
@@ -1199,8 +1212,7 @@
       const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
       if (cloudDonations.length === 0) { t.innerText = base; return; }
       const recent = cloudDonations.slice(0, 8).map(d => {
-        const respectfulName = getSmartSalutation(d.name);
-        return `★ ${respectfulName} - ₹${d.amount} (${d.cause})`;
+        return `★ ${getSmartSalutation(d.name)} - ₹${d.amount} (${d.cause})`;
       }).join(' | ');
       t.innerText = recent + " | " + base;
     }
@@ -1226,45 +1238,25 @@
       });
     }
 
-    // --- Audio, welcome.MP3 & Celebration Broadcast ---
-    let audioCtx = null;
-    function playApplause() {
-      try {
-        if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        if (audioCtx.state === 'suspended') audioCtx.resume();
-        for (let i = 0; i < 12; i++) {
-          setTimeout(() => {
-            const buf = audioCtx.createBuffer(1, audioCtx.sampleRate * 0.08, audioCtx.sampleRate);
-            const data = buf.getChannelData(0);
-            for (let j = 0; j < data.length; j++) data[j] = (Math.random() * 2 - 1) * Math.exp(-j / (audioCtx.sampleRate * 0.02));
-            const src = audioCtx.createBufferSource();
-            src.buffer = buf;
-            const fil = audioCtx.createBiquadFilter();
-            fil.type = 'bandpass';
-            fil.frequency.value = 1100 + Math.random() * 400;
-            const gn = audioCtx.createGain();
-            gn.gain.setValueAtTime(0.7, audioCtx.currentTime);
-            src.connect(fil); fil.connect(gn); gn.connect(audioCtx.destination);
-            src.start();
-          }, i * 150);
-        }
-      } catch(e) {}
-    }
-
+    // ElevenLabs Audio Instance (welcome.MP3)
     const elevenLabsAudio = new Audio("welcome.MP3");
 
     function triggerCelebration(name, cause, amount) {
       const respectfulName = getSmartSalutation(name);
-      document.getElementById('celMsg').innerHTML = `${respectfulName},<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
-      document.getElementById('celebrationModal').style.display = 'flex';
-      try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       
-      playApplause();
+      // Update and Show Welcome Popup
+      document.getElementById('celDonorName').innerText = `${respectfulName},`;
+      document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
+      document.getElementById('celebrationModal').style.display = 'flex';
+      
+      try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
 
+      // Duck YouTube Audio if running
       if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
         ytPlayer.setVolume(20);
       }
 
+      // Play welcome.MP3 without any synthetic clapping
       setTimeout(() => {
         elevenLabsAudio.currentTime = 0;
         elevenLabsAudio.play().then(() => {
@@ -1274,12 +1266,13 @@
             }
           };
         }).catch(err => {
-          console.log("Fallback to browser speech:", err);
+          console.log("Audio play prevented:", err);
           if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
-            const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे।`;
+            const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
             const utter = new SpeechSynthesisUtterance(sentence);
             utter.lang = 'hi-IN';
+            utter.rate = 0.95;
             utter.onend = () => {
               if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
                 ytPlayer.setVolume(100);
@@ -1288,8 +1281,9 @@
             window.speechSynthesis.speak(utter);
           }
         });
-      }, 400);
+      }, 300);
 
+      // Close modal after 9 seconds
       setTimeout(() => closeCelebrationModal(), 9000);
     }
 
@@ -1301,7 +1295,7 @@
       }
     }
 
-    // --- Dedicated Fullscreen Legal Pages ---
+    // Dedicated Fullscreen Legal Pages
     const legalDocs = {
       terms: {
         title: "नियम एवं शर्तें (Terms and Conditions)",
