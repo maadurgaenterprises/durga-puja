@@ -1085,7 +1085,7 @@
       });
     }
 
-    // --- Audio Synthesis, ElevenLabs Audio & Celebration Broadcast ---
+    // --- Audio Synthesis, welcome.MP3 & Celebration Broadcast ---
     let audioCtx = null;
     function playApplause() {
       try {
@@ -1110,8 +1110,8 @@
       } catch(e) {}
     }
 
-    // ElevenLabs Custom Audio Instance
-    const elevenLabsAudio = new Audio("welcome.mp3");
+    // ElevenLabs Custom Audio Instance Matching Exact Filename: welcome.MP3
+    const elevenLabsAudio = new Audio("welcome.MP3");
 
     function triggerCelebration(name, cause, amount, gender = 'auto') {
       const respectfulName = getSmartSalutation(name, gender);
@@ -1127,7 +1127,7 @@
         ytPlayer.setVolume(20);
       }
 
-      // ताली के तुरंत बाद ElevenLabs की असली आवाज़ बजेगी
+      // ताली के तुरंत बाद welcome.MP3 की असली आवाज़ बजेगी
       setTimeout(() => {
         elevenLabsAudio.currentTime = 0;
         elevenLabsAudio.play().then(() => {
@@ -1137,8 +1137,8 @@
             }
           };
         }).catch(err => {
-          console.log("ElevenLabs audio play prevented:", err);
-          // Fallback: अगर MP3 न मिले तो ब्राउज़र की आवाज़ बोलेगी
+          console.log("Audio play failed on welcome.MP3:", err);
+          // Fallback अगर किसी वजह से लोड न हो
           if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे।`;
