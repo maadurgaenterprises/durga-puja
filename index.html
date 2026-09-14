@@ -541,10 +541,20 @@
       measurementId: "G-YWXXTLH016"
     };
 
-    if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
-    const auth = firebase.auth();
-    const db = firebase.firestore();
-    const googleProvider = new firebase.auth.GoogleAuthProvider();
+    let auth = null;
+    let db = null;
+    let googleProvider = null;
+
+    try {
+      if (!firebase.apps.length) {
+        firebase.initializeApp(firebaseConfig);
+      }
+      auth = firebase.auth();
+      db = firebase.firestore();
+      googleProvider = new firebase.auth.GoogleAuthProvider();
+    } catch(e) {
+      console.log("Firebase Init Error:", e);
+    }
 
     let currentUser = null;
     let cloudDonations = [];
@@ -553,25 +563,28 @@
     let cloudOrders = [];
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
-    let configuredPaymentMode = 'upi';
     let pendingDonationData = null;
 
     // --- Side Drawer Navigation Toggle ---
     function toggleSideNav() {
-      const d = document.getElementById('sideNavDrawer');
-      if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
+      try {
+        const d = document.getElementById('sideNavDrawer');
+        if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
+      } catch(e) {}
     }
 
     function switchNav(tab) {
-      toggleSideNav();
-      document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
-      ['donate', 'store', 'directory', 'orders'].forEach(id => {
-        const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
-        if (p) p.style.display = 'none';
-      });
-      const targetPanel = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
-      if (targetPanel) targetPanel.style.display = 'block';
-      if (event && event.target) event.target.classList.add('active');
+      try {
+        toggleSideNav();
+        document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
+        ['donate', 'store', 'directory', 'orders'].forEach(id => {
+          const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
+          if (p) p.style.display = 'none';
+        });
+        const targetPanel = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
+        if (targetPanel) targetPanel.style.display = 'block';
+        if (event && event.target) event.target.classList.add('active');
+      } catch(e) {}
     }
 
     // --- Device Language Detection ---
@@ -579,7 +592,8 @@
     const isEn = userLang.startsWith('en');
 
     function applyLanguage() {
-      if (isEn) {
+      if (!isEn) return;
+      try {
         const docTitle = document.getElementById('siteDocTitle');
         if (docTitle) docTitle.innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
         const mTxt = document.getElementById('musicBtnTxt');
@@ -618,29 +632,24 @@
         if (txtDir) txtDir.innerText = "📜 Public Transparency Board";
         const txtMyO = document.getElementById('txtMyOrdersTitle');
         if (txtMyO) txtMyO.innerText = "📦 My Orders & Live Status";
-        const thD = document.getElementById('thDate');
-        if (thD) thD.innerText = "Date";
-        const thDon = document.getElementById('thDonor');
-        if (thDon) thDon.innerText = "Donor";
-        const thCit = document.getElementById('thCity');
-        if (thCit) thCit.innerText = "Location";
-        const thAmt = document.getElementById('thAmount');
-        if (thAmt) thAmt.innerText = "Amount";
-        const thCau = document.getElementById('thCause');
-        if (thCau) thCau.innerText = "Purpose";
-      }
+      } catch(e) {}
     }
     applyLanguage();
 
     function showAppToast(msg) {
-      const m = document.getElementById('notifyMsg');
-      if (m) m.innerText = msg;
-      const p = document.getElementById('notifyPopup');
-      if (p) p.style.display = 'flex';
+      try {
+        const m = document.getElementById('notifyMsg');
+        if (m) m.innerText = msg;
+        const p = document.getElementById('notifyPopup');
+        if (p) p.style.display = 'flex';
+      } catch(e) { alert(msg); }
     }
+
     function closeModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
+      try {
+        const el = document.getElementById(id);
+        if (el) el.style.display = 'none';
+      } catch(e) {}
     }
 
     // --- Format Salutation + Name ---
@@ -671,7 +680,7 @@
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScript = document.getElementsByTagName('script')[0];
     if (firstScript && firstScript.parentNode) {
-      firstScript.parentNode.insertBefore(tag, firstScript);
+      try { firstScript.parentNode.insertBefore(tag, firstScript); } catch(e) {}
     }
 
     window.onYouTubeIframeAPIReady = function() {
@@ -692,6 +701,7 @@
     };
 
     function onPlayerReadySync() {
+      if (!db) return;
       try {
         db.collection("settings").doc("music_room").onSnapshot(doc => {
           if (doc.exists) {
@@ -705,10 +715,8 @@
               }
             }
           }
-        });
-      } catch(err) {
-        console.log("Music sync err:", err);
-      }
+        }, err => {});
+      } catch(err) {}
     }
 
     function calculateCurrentPlaybackSecond() {
@@ -729,7 +737,7 @@
       const linkInInput = document.getElementById('admYtLink') ? document.getElementById('admYtLink').value : '';
       const resolvedId = extractVideoId(linkInInput) || currentYtVideoId;
 
-      if (!songPlaybackStartTime) {
+      if (!songPlaybackStartTime && db) {
         const startTime = Date.now();
         db.collection("settings").doc("music_room").set({
           startedAt: startTime,
@@ -750,9 +758,7 @@
           ytPlayer.seekTo(seekSeconds, true);
           ytPlayer.playVideo();
         }
-      } catch(e) {
-        console.log("Play error:", e);
-      }
+      } catch(e) {}
 
       isMusicPlaying = true;
       const btnTxt = document.getElementById('musicBtnTxt');
@@ -774,7 +780,7 @@
       }
     }
 
-    // --- Zero-Friction First Touch Trigger (Safely wrapped) ---
+    // --- Zero-Friction First Touch Trigger ---
     let hasUserInteracted = false;
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
@@ -789,39 +795,46 @@
     });
 
     // --- Auth Listener ---
-    auth.onAuthStateChanged(user => {
-      currentUser = user;
-      const navArea = document.getElementById('navAuthArea');
-      const drwOrders = document.getElementById('drwOrdersItem');
+    if (auth) {
+      auth.onAuthStateChanged(user => {
+        currentUser = user;
+        const navArea = document.getElementById('navAuthArea');
+        const drwOrders = document.getElementById('drwOrdersItem');
 
-      if (user) {
-        if (user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
-          if (navArea) navArea.innerHTML = `
-            <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
-            <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
-          `;
+        if (user) {
+          if (user.email && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+            if (navArea) navArea.innerHTML = `
+              <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
+              <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
+            `;
+          } else {
+            if (navArea) navArea.innerHTML = `
+              <span style="font-size:11px; color:#ffcdd2; margin-right:4px;">${user.displayName ? user.displayName.split(' ')[0] : 'User'}</span>
+              <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
+            `;
+          }
+          if (drwOrders) drwOrders.style.display = "block";
         } else {
-          if (navArea) navArea.innerHTML = `
-            <span style="font-size:11px; color:#ffcdd2; margin-right:4px;">${user.displayName ? user.displayName.split(' ')[0] : 'User'}</span>
-            <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
-          `;
+          if (navArea) navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
+          if (drwOrders) drwOrders.style.display = "none";
         }
-        if (drwOrders) drwOrders.style.display = "block";
-      } else {
-        if (navArea) navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
-        if (drwOrders) drwOrders.style.display = "none";
-      }
-      renderCustomerOrders();
-    });
+        renderCustomerOrders();
+      });
+    }
 
     function openLoginModal() {
       const m = document.getElementById('loginModal');
       if (m) m.style.display = 'flex';
     }
+
     function loginWithGoogle() {
+      if (!auth || !googleProvider) {
+        showAppToast("ऑथेंटिकेशन सेवा अभी तैयार नहीं है।");
+        return;
+      }
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
-        if (res.user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
+        if (res.user && res.user.email && res.user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
           openOwnerVerification();
         }
       }).catch(e => showAppToast(e.message));
@@ -847,117 +860,120 @@
     }
 
     function switchAdm(id) {
-      document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
-      document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
-      if (event && event.target) event.target.classList.add('active');
-      const targetSec = document.getElementById(id);
-      if (targetSec) targetSec.classList.add('active');
+      try {
+        document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
+        if (event && event.target) event.target.classList.add('active');
+        const targetSec = document.getElementById(id);
+        if (targetSec) targetSec.classList.add('active');
+      } catch(e) {}
     }
 
-    // --- Firestore Sync Listeners ---
-    db.collection("donations").onSnapshot(snap => {
-      let isInit = isFirstDonationLoad;
-      isFirstDonationLoad = false;
-      snap.docChanges().forEach(c => {
-        if (c.type === "added" && !isInit) {
-          const d = c.doc.data();
-          triggerCelebration(d.name, d.cause, d.amount, d.salutation);
-        }
-      });
-      cloudDonations = [];
-      snap.forEach(doc => cloudDonations.push({ id: doc.id, ...doc.data() }));
-      cloudDonations.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
-      refreshTicker();
-      renderPublicDonors();
-      renderAdminDonations();
-    }, err => { console.log("Donations sync error:", err); });
+    // --- Firestore Sync Listeners (Safely wrapped) ---
+    if (db) {
+      db.collection("donations").onSnapshot(snap => {
+        let isInit = isFirstDonationLoad;
+        isFirstDonationLoad = false;
+        try {
+          snap.docChanges().forEach(c => {
+            if (c.type === "added" && !isInit) {
+              const d = c.doc.data();
+              triggerCelebration(d.name, d.cause, d.amount, d.salutation);
+            }
+          });
+        } catch(e) {}
+        cloudDonations = [];
+        snap.forEach(doc => cloudDonations.push({ id: doc.id, ...doc.data() }));
+        cloudDonations.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
+        refreshTicker();
+        renderPublicDonors();
+        renderAdminDonations();
+      }, err => {});
 
-    db.collection("products").onSnapshot(snap => {
-      cloudProducts = [];
-      snap.forEach(doc => cloudProducts.push({ id: doc.id, ...doc.data() }));
-      renderCategories();
-      renderStoreProducts();
-      renderSuggestedProducts();
-      renderAdminProducts();
-    }, err => { console.log("Products sync error:", err); });
+      db.collection("products").onSnapshot(snap => {
+        cloudProducts = [];
+        snap.forEach(doc => cloudProducts.push({ id: doc.id, ...doc.data() }));
+        renderCategories();
+        renderStoreProducts();
+        renderSuggestedProducts();
+        renderAdminProducts();
+      }, err => {});
 
-    db.collection("coupons").onSnapshot(snap => {
-      cloudCoupons = [];
-      snap.forEach(doc => cloudCoupons.push({ id: doc.id, ...doc.data() }));
-      renderAdminCoupons();
-    }, err => { console.log("Coupons sync error:", err); });
+      db.collection("coupons").onSnapshot(snap => {
+        cloudCoupons = [];
+        snap.forEach(doc => cloudCoupons.push({ id: doc.id, ...doc.data() }));
+        renderAdminCoupons();
+      }, err => {});
 
-    db.collection("orders").onSnapshot(snap => {
-      cloudOrders = [];
-      snap.forEach(doc => cloudOrders.push({ id: doc.id, ...doc.data() }));
-      renderCustomerOrders();
-      renderAdminOrders();
-    }, err => { console.log("Orders sync error:", err); });
+      db.collection("orders").onSnapshot(snap => {
+        cloudOrders = [];
+        snap.forEach(doc => cloudOrders.push({ id: doc.id, ...doc.data() }));
+        renderCustomerOrders();
+        renderAdminOrders();
+      }, err => {});
 
-    db.collection("settings").doc("main").onSnapshot(doc => {
-      if (doc.exists) {
-        const s = doc.data();
-        if (s.ticker) {
-          const lt = document.getElementById('liveTicker');
-          if (lt) lt.innerText = s.ticker;
-          const att = document.getElementById('admTickerText');
-          if (att) att.value = s.ticker;
-        }
-        if (s.paymentMode) {
-          configuredPaymentMode = s.paymentMode;
-          const apm = document.getElementById('admPaymentMode');
-          if (apm) apm.value = s.paymentMode;
-        }
-        if (s.upi) {
-          const aup = document.getElementById('admUpiId');
-          if (aup) aup.value = s.upi;
-        }
-        if (s.razorpay) {
-          const arz = document.getElementById('admRazorpayKey');
-          if (arz) arz.value = s.razorpay;
-        }
-        if (s.wa) {
-          const adw = document.getElementById('admWaPhone');
-          if (adw) adw.value = s.wa;
-          const ftw = document.getElementById('ftrWa');
-          if (ftw) {
-            ftw.href = `https://wa.me/${s.wa}`;
-            ftw.innerText = `+${s.wa}`;
+      db.collection("settings").doc("main").onSnapshot(doc => {
+        if (doc.exists) {
+          const s = doc.data();
+          if (s.ticker) {
+            const lt = document.getElementById('liveTicker');
+            if (lt) lt.innerText = s.ticker;
+            const att = document.getElementById('admTickerText');
+            if (att) att.value = s.ticker;
           }
-        }
-        if (s.insta) {
-          const adi = document.getElementById('admInstaLink');
-          if (adi) adi.value = s.insta;
-          const fti = document.getElementById('ftrInsta');
-          if (fti) fti.href = s.insta;
-        }
-        if (s.yt) {
-          const ady = document.getElementById('admYtLink');
-          if (ady) ady.value = s.yt;
-          const vidId = extractVideoId(s.yt);
-          if (vidId) {
-            currentYtVideoId = vidId;
-            if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
-              ytPlayer.cueVideoById(currentYtVideoId);
+          if (s.upi) {
+            const aup = document.getElementById('admUpiId');
+            if (aup) aup.value = s.upi;
+          }
+          if (s.razorpay) {
+            const arz = document.getElementById('admRazorpayKey');
+            if (arz) arz.value = s.razorpay;
+          }
+          if (s.wa) {
+            const adw = document.getElementById('admWaPhone');
+            if (adw) adw.value = s.wa;
+            const ftw = document.getElementById('ftrWa');
+            if (ftw) {
+              ftw.href = `https://wa.me/${s.wa}`;
+              ftw.innerText = `+${s.wa}`;
+            }
+          }
+          if (s.insta) {
+            const adi = document.getElementById('admInstaLink');
+            if (adi) adi.value = s.insta;
+            const fti = document.getElementById('ftrInsta');
+            if (fti) fti.href = s.insta;
+          }
+          if (s.yt) {
+            const ady = document.getElementById('admYtLink');
+            if (ady) ady.value = s.yt;
+            const vidId = extractVideoId(s.yt);
+            if (vidId) {
+              currentYtVideoId = vidId;
+              if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
+                ytPlayer.cueVideoById(currentYtVideoId);
+              }
             }
           }
         }
-      }
-    }, err => { console.log("Settings sync error:", err); });
+      }, err => {});
+    }
 
     // --- Store & Categories ---
     function renderCategories() {
-      const cats = ['all'];
-      cloudProducts.forEach(p => {
-        if (p.category && !cats.includes(p.category)) cats.push(p.category);
-      });
-      const cBox = document.getElementById('catScroll');
-      if (!cBox) return;
-      cBox.innerHTML = cats.map(c => `
-        <span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
-          ${c === 'all' ? (isEn ? 'All' : 'सभी') : c}
-        </span>
-      `).join('');
+      try {
+        const cats = ['all'];
+        cloudProducts.forEach(p => {
+          if (p.category && !cats.includes(p.category)) cats.push(p.category);
+        });
+        const cBox = document.getElementById('catScroll');
+        if (!cBox) return;
+        cBox.innerHTML = cats.map(c => `
+          <span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
+            ${c === 'all' ? (isEn ? 'All' : 'सभी') : c}
+          </span>
+        `).join('');
+      } catch(e) {}
     }
 
     function filterCategory(cat) {
@@ -967,41 +983,45 @@
     }
 
     function renderStoreProducts() {
-      const g = document.getElementById('fullStoreGrid');
-      if (!g) return;
-      const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
-      if (filtered.length === 0) {
-        g.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#aaa;">सामग्री लोड हो रही है...</p>`;
-        return;
-      }
-      g.innerHTML = filtered.map(p => `
-        <div class="p-card">
-          <img src="${p.img || 'https://via.placeholder.com/200'}" alt="${p.name}">
-          <div>
-            ${p.refundable ? '<span class="badge-ref" style="background:rgba(76,175,80,0.2);color:#81c784;">✓ 2 Days Refund</span>' : '<span class="badge-ref" style="background:rgba(211,47,47,0.2);color:#e57373;">Non-Refundable</span>'}
-            <div class="p-title">${p.name}</div>
+      try {
+        const g = document.getElementById('fullStoreGrid');
+        if (!g) return;
+        const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
+        if (filtered.length === 0) {
+          g.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#aaa;">सामग्री लोड हो रही है...</p>`;
+          return;
+        }
+        g.innerHTML = filtered.map(p => `
+          <div class="p-card">
+            <img src="${p.img || 'https://via.placeholder.com/200'}" alt="${p.name}">
+            <div>
+              ${p.refundable ? '<span class="badge-ref" style="background:rgba(76,175,80,0.2);color:#81c784;">✓ 2 Days Refund</span>' : '<span class="badge-ref" style="background:rgba(211,47,47,0.2);color:#e57373;">Non-Refundable</span>'}
+              <div class="p-title">${p.name}</div>
+            </div>
+            <div>
+              <div class="p-price">₹${p.price}</div>
+              <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
+            </div>
           </div>
-          <div>
-            <div class="p-price">₹${p.price}</div>
-            <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
-          </div>
-        </div>
-      `).join('');
+        `).join('');
+      } catch(e) {}
     }
 
     function renderSuggestedProducts() {
-      const sg = document.getElementById('suggestedGrid');
-      if (!sg) return;
-      const sugList = cloudProducts.filter(p => p.isSuggested);
-      const listToRender = sugList.length > 0 ? sugList : cloudProducts.slice(0, 2);
-      sg.innerHTML = listToRender.map(p => `
-        <div class="p-card">
-          <img src="${p.img || 'https://via.placeholder.com/200'}">
-          <div class="p-title">${p.name}</div>
-          <div class="p-price">₹${p.price}</div>
-          <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
-        </div>
-      `).join('');
+      try {
+        const sg = document.getElementById('suggestedGrid');
+        if (!sg) return;
+        const sugList = cloudProducts.filter(p => p.isSuggested);
+        const listToRender = sugList.length > 0 ? sugList : cloudProducts.slice(0, 2);
+        sg.innerHTML = listToRender.map(p => `
+          <div class="p-card">
+            <img src="${p.img || 'https://via.placeholder.com/200'}">
+            <div class="p-title">${p.name}</div>
+            <div class="p-price">₹${p.price}</div>
+            <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
+          </div>
+        `).join('');
+      } catch(e) {}
     }
 
     // --- Checkout Flow with Dynamic QR & Secure UTR Verification ---
@@ -1018,43 +1038,47 @@
       if (!selectedProduct) return;
 
       appliedDiscountPct = 0;
-      const cInput = document.getElementById('chkCouponInput');
-      if (cInput) cInput.value = '';
-      const cMsg = document.getElementById('couponMsg');
-      if (cMsg) cMsg.style.display = 'none';
-      const cUtr = document.getElementById('chkUtrInput');
-      if (cUtr) cUtr.value = '';
+      try {
+        const cInput = document.getElementById('chkCouponInput');
+        if (cInput) cInput.value = '';
+        const cMsg = document.getElementById('couponMsg');
+        if (cMsg) cMsg.style.display = 'none';
+        const cUtr = document.getElementById('chkUtrInput');
+        if (cUtr) cUtr.value = '';
 
-      const pNameEl = document.getElementById('chkProdName');
-      if (pNameEl) pNameEl.innerText = selectedProduct.name;
-      const pDetEl = document.getElementById('chkProdDetails');
-      if (pDetEl) pDetEl.innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
-      const cNameEl = document.getElementById('chkCustName');
-      if (cNameEl) cNameEl.value = currentUser.displayName || '';
-      
-      updatePayText();
-      generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
-      const chkMod = document.getElementById('checkoutModal');
-      if (chkMod) chkMod.style.display = 'flex';
+        const pNameEl = document.getElementById('chkProdName');
+        if (pNameEl) pNameEl.innerText = selectedProduct.name;
+        const pDetEl = document.getElementById('chkProdDetails');
+        if (pDetEl) pDetEl.innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
+        const cNameEl = document.getElementById('chkCustName');
+        if (cNameEl) cNameEl.value = currentUser.displayName || '';
+        
+        updatePayText();
+        generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
+        const chkMod = document.getElementById('checkoutModal');
+        if (chkMod) chkMod.style.display = 'flex';
+      } catch(e) {}
     }
 
     function applyStoreCoupon() {
-      const cInput = document.getElementById('chkCouponInput');
-      const code = cInput ? cInput.value.trim().toUpperCase() : '';
-      if (!code) return;
-      const c = cloudCoupons.find(x => x.code.toUpperCase() === code);
-      if (c) {
-        appliedDiscountPct = Number(c.discount);
-        const m = document.getElementById('couponMsg');
-        if (m) {
-          m.innerText = `🎉 '${code}' लागू हुआ! (${appliedDiscountPct}% छूट)`;
-          m.style.display = 'block';
+      try {
+        const cInput = document.getElementById('chkCouponInput');
+        const code = cInput ? cInput.value.trim().toUpperCase() : '';
+        if (!code) return;
+        const c = cloudCoupons.find(x => x.code.toUpperCase() === code);
+        if (c) {
+          appliedDiscountPct = Number(c.discount);
+          const m = document.getElementById('couponMsg');
+          if (m) {
+            m.innerText = `🎉 '${code}' लागू हुआ! (${appliedDiscountPct}% छूट)`;
+            m.style.display = 'block';
+          }
+          updatePayText();
+          generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
+        } else {
+          showAppToast("अमान्य कूपन कोड!");
         }
-        updatePayText();
-        generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
-      } else {
-        showAppToast("अमान्य कूपन कोड!");
-      }
+      } catch(e) {}
     }
 
     function getFinalPayAmount() {
@@ -1065,19 +1089,21 @@
     }
 
     function updatePayText() {
-      const fAmt = document.getElementById('finalCheckoutAmt');
-      if (fAmt) fAmt.innerText = `₹${getFinalPayAmount()}`;
+      try {
+        const fAmt = document.getElementById('finalCheckoutAmt');
+        if (fAmt) fAmt.innerText = `₹${getFinalPayAmount()}`;
+      } catch(e) {}
     }
 
     function generateDynamicQrCode(containerId, amount) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      container.innerHTML = "";
-      const upiInput = document.getElementById('admUpiId');
-      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-      const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
-
       try {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.innerHTML = "";
+        const upiInput = document.getElementById('admUpiId');
+        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
+        const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
+
         new QRCode(container, {
           text: upiString,
           width: 170,
@@ -1086,283 +1112,289 @@
           colorLight: "#ffffff",
           correctLevel: QRCode.CorrectLevel.H
         });
-      } catch(e) {
-        console.log("QR Gen err:", e);
-      }
+      } catch(e) {}
     }
 
     function openStoreUpiApp() {
-      const amt = getFinalPayAmount();
-      const upiInput = document.getElementById('admUpiId');
-      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amt}&cu=INR`;
+      try {
+        const amt = getFinalPayAmount();
+        const upiInput = document.getElementById('admUpiId');
+        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
+        window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amt}&cu=INR`;
+      } catch(e) {}
     }
 
     function confirmStoreOrder() {
-      const cName = document.getElementById('chkCustName');
-      const cPin = document.getElementById('chkPincode');
-      const cPho = document.getElementById('chkPhone');
-      const cStr = document.getElementById('chkStreet');
-      const cCit = document.getElementById('chkCity');
-      const cSta = document.getElementById('chkState');
-      const cUtr = document.getElementById('chkUtrInput');
+      if (!db || !currentUser || !selectedProduct) return;
+      try {
+        const name = document.getElementById('chkCustName')?.value.trim() || '';
+        const pin = document.getElementById('chkPincode')?.value.trim() || '';
+        const phone = document.getElementById('chkPhone')?.value.trim() || '';
+        const street = document.getElementById('chkStreet')?.value.trim() || '';
+        const city = document.getElementById('chkCity')?.value.trim() || '';
+        const state = document.getElementById('chkState')?.value.trim() || 'Uttar Pradesh';
+        const utr = document.getElementById('chkUtrInput')?.value.trim() || '';
 
-      const name = cName ? cName.value.trim() : '';
-      const pin = cPin ? cPin.value.trim() : '';
-      const phone = cPho ? cPho.value.trim() : '';
-      const street = cStr ? cStr.value.trim() : '';
-      const city = cCit ? cCit.value.trim() : '';
-      const state = cSta ? cSta.value.trim() : 'Uttar Pradesh';
-      const utr = cUtr ? cUtr.value.trim() : '';
+        if (!name || !pin || !phone || !street || !city) {
+          showAppToast("कृपया नाम, पिनकोड, फोन, मकान/सड़क और शहर पूरा भरें!");
+          return;
+        }
+        if (!utr || utr.length < 12) {
+          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
+          return;
+        }
 
-      if (!name || !pin || !phone || !street || !city) {
-        showAppToast("कृपया नाम, पिनकोड, फोन, मकान/सड़क और शहर पूरा भरें!");
-        return;
-      }
-      if (!utr || utr.length < 12) {
-        showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
-        return;
-      }
+        const dupOrd = cloudOrders.find(o => o.utr === utr);
+        const dupDon = cloudDonations.find(d => d.utr === utr);
+        if (dupOrd || dupDon) {
+          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
+          return;
+        }
 
-      // Strict UTR Duplication Check
-      const dupOrd = cloudOrders.find(o => o.utr === utr);
-      const dupDon = cloudDonations.find(d => d.utr === utr);
-      if (dupOrd || dupDon) {
-        showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
-        return;
-      }
+        const fullAddress = `${street}, ${city}, ${state} - PIN: ${pin}`;
 
-      const fullAddress = `${street}, ${city}, ${state} - PIN: ${pin}`;
-
-      db.collection("orders").add({
-        userEmail: currentUser.email,
-        userName: name,
-        productName: selectedProduct.name,
-        amount: getFinalPayAmount(),
-        pincode: pin,
-        phone: phone,
-        street: street,
-        city: city,
-        state: state,
-        fullAddress: fullAddress,
-        utr: utr,
-        otp: "",
-        showOtpToUser: false,
-        statusCode: 1,
-        status: "ऑर्डर कन्फ़र्म हुआ",
-        statusDesc: "आपने सफलतापूर्वक ऑर्डर कर दिया है। विक्रेता द्वारा पैकिंग प्रक्रिया जारी है।",
-        refundable: selectedProduct.refundable,
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now()
-      }).then(() => {
-        closeModal('checkoutModal');
-        showAppToast("✅ आपका ऑर्डर सुरक्षित दर्ज हो गया है!");
-        switchNav('orders');
-      }).catch(e => showAppToast(e.message));
+        db.collection("orders").add({
+          userEmail: currentUser.email,
+          userName: name,
+          productName: selectedProduct.name,
+          amount: getFinalPayAmount(),
+          pincode: pin,
+          phone: phone,
+          street: street,
+          city: city,
+          state: state,
+          fullAddress: fullAddress,
+          utr: utr,
+          otp: "",
+          showOtpToUser: false,
+          statusCode: 1,
+          status: "ऑर्डर कन्फ़र्म हुआ",
+          statusDesc: "आपने सफलतापूर्वक ऑर्डर कर दिया है। विक्रेता द्वारा पैकिंग प्रक्रिया जारी है।",
+          refundable: selectedProduct.refundable,
+          date: new Date().toLocaleDateString('hi-IN'),
+          timeNumber: Date.now()
+        }).then(() => {
+          closeModal('checkoutModal');
+          showAppToast("✅ आपका ऑर्डर सुरक्षित दर्ज हो गया है!");
+          switchNav('orders');
+        }).catch(e => showAppToast(e.message));
+      } catch(e) {}
     }
 
     // --- Customer My Orders Display ---
     function renderCustomerOrders() {
-      const cont = document.getElementById('ordersContainer');
-      if (!cont) return;
-      if (!currentUser) {
-        cont.innerHTML = `<p style="text-align:center; color:#aaa;">ऑर्डर्स देखने के लिए कृपया लॉगिन करें।</p>`;
-        return;
-      }
-      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
-      if (my.length === 0) {
-        cont.innerHTML = `<p style="text-align:center; color:#aaa;">अभी आपने कोई ऑर्डर नहीं किया है।</p>`;
-        return;
-      }
-      cont.innerHTML = my.map(o => {
-        const sc = o.statusCode !== undefined ? o.statusCode : 1;
-        const dispAddr = o.fullAddress || o.address || 'पता सुरक्षित है';
-        const isCancelled = (sc === 0);
+      try {
+        const cont = document.getElementById('ordersContainer');
+        if (!cont) return;
+        if (!currentUser) {
+          cont.innerHTML = `<p style="text-align:center; color:#aaa;">ऑर्डर्स देखने के लिए कृपया लॉगिन करें।</p>`;
+          return;
+        }
+        const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
+        if (my.length === 0) {
+          cont.innerHTML = `<p style="text-align:center; color:#aaa;">अभी आपने कोई ऑर्डर नहीं किया है।</p>`;
+          return;
+        }
+        cont.innerHTML = my.map(o => {
+          const sc = o.statusCode !== undefined ? o.statusCode : 1;
+          const dispAddr = o.fullAddress || o.address || 'पता सुरक्षित है';
+          const isCancelled = (sc === 0);
 
-        let otpDisplayHtml = "";
-        if (o.showOtpToUser && o.otp) {
-          otpDisplayHtml = `
-            <div style="text-align:right;">
-              <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
-              <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
-                🔑 ${o.otp}
-              </span>
+          let otpDisplayHtml = "";
+          if (o.showOtpToUser && o.otp) {
+            otpDisplayHtml = `
+              <div style="text-align:right;">
+                <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
+                <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
+                  🔑 ${o.otp}
+                </span>
+              </div>
+            `;
+          }
+
+          return `
+            <div style="background:rgba(255,255,255,0.03); border:1px solid ${isCancelled ? 'rgba(211,47,47,0.5)' : 'rgba(255,215,0,0.25)'}; border-radius:12px; padding:16px; margin-bottom:18px;">
+              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:8px; margin-bottom:12px;">
+                <div>
+                  <b style="color:var(--gold); font-size:15px;">${o.productName}</b>
+                  <span style="color:#fff; font-size:13px; margin-left:6px;">₹${o.amount}</span>
+                </div>
+                ${otpDisplayHtml}
+              </div>
+
+              <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">डिलीवरी पता: ${dispAddr} | फोन: ${o.phone || '—'}</p>
+
+              ${isCancelled ? `
+                <div style="background:rgba(211,47,47,0.15); border:1px solid #d32f2f; padding:10px; border-radius:6px; color:#ff8a80; font-size:13px; font-weight:bold; text-align:center;">
+                  ❌ यह ऑर्डर विक्रेता द्वारा रद्द (Cancelled) कर दिया गया है।
+                </div>
+              ` : `
+                <div class="timeline-wrap">
+                  <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
+                  
+                  <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
+                    <div class="timeline-dot"></div>
+                    <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
+                    <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr || '—'}</div>
+                  </div>
+
+                  <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
+                    <div class="timeline-dot"></div>
+                    <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
+                    <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
+                  </div>
+
+                  <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
+                    <div class="timeline-dot"></div>
+                    <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
+                    <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
+                  </div>
+
+                  <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
+                    <div class="timeline-dot"></div>
+                    <div class="step-title">डिलीवर किया गया (Delivered)</div>
+                    <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
+                  </div>
+                </div>
+              `}
             </div>
           `;
-        }
-
-        return `
-          <div style="background:rgba(255,255,255,0.03); border:1px solid ${isCancelled ? 'rgba(211,47,47,0.5)' : 'rgba(255,215,0,0.25)'}; border-radius:12px; padding:16px; margin-bottom:18px;">
-            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:8px; margin-bottom:12px;">
-              <div>
-                <b style="color:var(--gold); font-size:15px;">${o.productName}</b>
-                <span style="color:#fff; font-size:13px; margin-left:6px;">₹${o.amount}</span>
-              </div>
-              ${otpDisplayHtml}
-            </div>
-
-            <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">डिलीवरी पता: ${dispAddr} | फोन: ${o.phone || '—'}</p>
-
-            ${isCancelled ? `
-              <div style="background:rgba(211,47,47,0.15); border:1px solid #d32f2f; padding:10px; border-radius:6px; color:#ff8a80; font-size:13px; font-weight:bold; text-align:center;">
-                ❌ यह ऑर्डर विक्रेता द्वारा रद्द (Cancelled) कर दिया गया है।
-              </div>
-            ` : `
-              <div class="timeline-wrap">
-                <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
-                
-                <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
-                  <div class="timeline-dot"></div>
-                  <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
-                  <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr || '—'}</div>
-                </div>
-
-                <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
-                  <div class="timeline-dot"></div>
-                  <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
-                  <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
-                </div>
-
-                <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
-                  <div class="timeline-dot"></div>
-                  <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
-                  <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
-                </div>
-
-                <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
-                  <div class="timeline-dot"></div>
-                  <div class="step-title">डिलीवर किया गया (Delivered)</div>
-                  <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
-                </div>
-              </div>
-            `}
-          </div>
-        `;
-      }).join('');
+        }).join('');
+      } catch(e) {}
     }
 
     // --- Admin Operations ---
     function saveAdminSettings() {
-      const ytIn = document.getElementById('admYtLink');
-      const newYtLink = ytIn ? ytIn.value.trim() : '';
-      const resolvedId = extractVideoId(newYtLink);
+      if (!db) return;
+      try {
+        const ytIn = document.getElementById('admYtLink');
+        const newYtLink = ytIn ? ytIn.value.trim() : '';
+        const resolvedId = extractVideoId(newYtLink);
 
-      const tickIn = document.getElementById('admTickerText');
-      const payMod = document.getElementById('admPaymentMode');
-      const upiIn = document.getElementById('admUpiId');
-      const razIn = document.getElementById('admRazorpayKey');
-      const waIn = document.getElementById('admWaPhone');
-      const insIn = document.getElementById('admInstaLink');
+        const settingsData = {
+          ticker: document.getElementById('admTickerText')?.value || '',
+          paymentMode: document.getElementById('admPaymentMode')?.value || 'upi',
+          upi: document.getElementById('admUpiId')?.value || '',
+          razorpay: document.getElementById('admRazorpayKey')?.value || '',
+          wa: document.getElementById('admWaPhone')?.value || '',
+          insta: document.getElementById('admInstaLink')?.value || '',
+          yt: newYtLink
+        };
 
-      const settingsData = {
-        ticker: tickIn ? tickIn.value : '',
-        paymentMode: payMod ? payMod.value : 'upi',
-        upi: upiIn ? upiIn.value : '',
-        razorpay: razIn ? razIn.value : '',
-        wa: waIn ? waIn.value : '',
-        insta: insIn ? insIn.value : '',
-        yt: newYtLink
-      };
-
-      if (resolvedId && resolvedId !== currentYtVideoId) {
-        settingsData.videoId = resolvedId;
-        settingsData.startedAt = Date.now();
-      }
-
-      db.collection("settings").doc("main").set(settingsData, { merge: true }).then(() => {
         if (resolvedId && resolvedId !== currentYtVideoId) {
-          db.collection("settings").doc("music_room").set({
-            startedAt: Date.now(),
-            videoId: resolvedId
-          }, { merge: true }).catch(() => {});
+          settingsData.videoId = resolvedId;
+          settingsData.startedAt = Date.now();
         }
-        showAppToast("✅ सभी सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!");
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+
+        db.collection("settings").doc("main").set(settingsData, { merge: true }).then(() => {
+          if (resolvedId && resolvedId !== currentYtVideoId) {
+            db.collection("settings").doc("music_room").set({
+              startedAt: Date.now(),
+              videoId: resolvedId
+            }, { merge: true }).catch(() => {});
+          }
+          showAppToast("✅ सभी सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!");
+        }).catch(e => showAppToast("त्रुटि: " + e.message));
+      } catch(e) {}
     }
 
     function saveNewProduct() {
-      const name = document.getElementById('newPName').value.trim();
-      const price = document.getElementById('newPPrice').value.trim();
-      const cat = document.getElementById('newPCat').value.trim() || "सामान्य";
-      const sub = document.getElementById('newPSubCat').value.trim() || "";
-      const img = document.getElementById('newPImg').value.trim();
-      const desc = document.getElementById('newPDesc').value.trim();
-      const ref = document.getElementById('newPRefund').checked;
-      const sug = document.getElementById('newPSuggested').checked;
+      if (!db) return;
+      try {
+        const name = document.getElementById('newPName')?.value.trim();
+        const price = document.getElementById('newPPrice')?.value.trim();
+        const cat = document.getElementById('newPCat')?.value.trim() || "सामान्य";
+        const sub = document.getElementById('newPSubCat')?.value.trim() || "";
+        const img = document.getElementById('newPImg')?.value.trim();
+        const desc = document.getElementById('newPDesc')?.value.trim();
+        const ref = document.getElementById('newPRefund')?.checked || false;
+        const sug = document.getElementById('newPSuggested')?.checked || false;
 
-      if (!name || !price) { showAppToast("नाम व कीमत आवश्यक हैं!"); return; }
+        if (!name || !price) { showAppToast("नाम व कीमत आवश्यक हैं!"); return; }
 
-      db.collection("products").add({
-        name, price: Number(price), category: cat, subCategory: sub, img, desc, refundable: ref, isSuggested: sug, timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ नया प्रोडक्ट जुड़ गया!");
-        document.getElementById('newPName').value = '';
-        document.getElementById('newPPrice').value = '';
-        document.getElementById('newPImg').value = '';
-      });
+        db.collection("products").add({
+          name, price: Number(price), category: cat, subCategory: sub, img, desc, refundable: ref, isSuggested: sug, timeNumber: Date.now()
+        }).then(() => {
+          showAppToast("✅ नया प्रोडक्ट जुड़ गया!");
+          document.getElementById('newPName').value = '';
+          document.getElementById('newPPrice').value = '';
+          document.getElementById('newPImg').value = '';
+        });
+      } catch(e) {}
     }
 
     function renderAdminProducts() {
-      const tb = document.querySelector('#admProdTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudProducts.map(p => `
-        <tr>
-          <td><img src="${p.img || ''}" width="30" height="30" style="object-fit:cover;border-radius:4px;"></td>
-          <td><b>${p.name}</b></td>
-          <td>${p.category || '—'}</td>
-          <td>₹${p.price}</td>
-          <td>${p.isSuggested ? '⭐ हाँ' : 'नहीं'}</td>
-          <td>${p.refundable ? '✓ 2 दिन' : 'नहीं'}</td>
-          <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
+      try {
+        const tb = document.querySelector('#admProdTable tbody');
+        if (!tb) return;
+        tb.innerHTML = cloudProducts.map(p => `
+          <tr>
+            <td><img src="${p.img || ''}" width="30" height="30" style="object-fit:cover;border-radius:4px;"></td>
+            <td><b>${p.name}</b></td>
+            <td>${p.category || '—'}</td>
+            <td>₹${p.price}</td>
+            <td>${p.isSuggested ? '⭐ हाँ' : 'नहीं'}</td>
+            <td>${p.refundable ? '✓ 2 दिन' : 'नहीं'}</td>
+            <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `).join('');
+      } catch(e) {}
     }
 
     function saveNewCoupon() {
-      const code = document.getElementById('newCCode').value.trim().toUpperCase();
-      const dis = document.getElementById('newCDiscount').value.trim();
-      if (!code || !dis) { showAppToast("कोड व छूट % भरें!"); return; }
-      db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => {
-        showAppToast("✅ कूपन बन गया!");
-        document.getElementById('newCCode').value = '';
-        document.getElementById('newCDiscount').value = '';
-      });
+      if (!db) return;
+      try {
+        const code = document.getElementById('newCCode')?.value.trim().toUpperCase();
+        const dis = document.getElementById('newCDiscount')?.value.trim();
+        if (!code || !dis) { showAppToast("कोड व छूट % भरें!"); return; }
+        db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => {
+          showAppToast("✅ कूपन बन गया!");
+          document.getElementById('newCCode').value = '';
+          document.getElementById('newCDiscount').value = '';
+        });
+      } catch(e) {}
     }
 
     function renderAdminCoupons() {
-      const tb = document.querySelector('#admCoupTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudCoupons.map(c => `
-        <tr>
-          <td><b>${c.code}</b></td>
-          <td>${c.discount}%</td>
-          <td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
+      try {
+        const tb = document.querySelector('#admCoupTable tbody');
+        if (!tb) return;
+        tb.innerHTML = cloudCoupons.map(c => `
+          <tr>
+            <td><b>${c.code}</b></td>
+            <td>${c.discount}%</td>
+            <td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `).join('');
+      } catch(e) {}
     }
 
     function saveOrderDetails(orderId) {
-      const otpVal = document.getElementById(`admOtpInput_${orderId}`).value.trim();
-      const isVisible = document.getElementById(`admOtpCheck_${orderId}`).checked;
-      const statusLvl = parseInt(document.getElementById(`admStatusSel_${orderId}`).value);
+      if (!db) return;
+      try {
+        const otpVal = document.getElementById(`admOtpInput_${orderId}`)?.value.trim() || '';
+        const isVisible = document.getElementById(`admOtpCheck_${orderId}`)?.checked || false;
+        const statusLvl = parseInt(document.getElementById(`admStatusSel_${orderId}`)?.value || '1');
 
-      let statusName = "ऑर्डर कन्फ़र्म हुआ";
-      if (statusLvl === 2) statusName = "शिप किया गया";
-      if (statusLvl === 3) statusName = "डिलीवरी के लिए रवाना";
-      if (statusLvl === 4) statusName = "डिलीवर किया गया";
-      if (statusLvl === 0) statusName = "रद्द";
+        let statusName = "ऑर्डर कन्फ़र्म हुआ";
+        if (statusLvl === 2) statusName = "शिप किया गया";
+        if (statusLvl === 3) statusName = "डिलीवरी के लिए रवाना";
+        if (statusLvl === 4) statusName = "डिलीवर किया गया";
+        if (statusLvl === 0) statusName = "रद्द";
 
-      db.collection("orders").doc(orderId).update({
-        otp: otpVal,
-        showOtpToUser: isVisible,
-        statusCode: statusLvl,
-        status: statusName
-      }).then(() => {
-        showAppToast("✅ सम्मति सुरक्षित! ग्राहक को नई स्थिति व OTP सेटिंग अपडेट हो गई।");
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+        db.collection("orders").doc(orderId).update({
+          otp: otpVal,
+          showOtpToUser: isVisible,
+          statusCode: statusLvl,
+          status: statusName
+        }).then(() => {
+          showAppToast("✅ सम्मति सुरक्षित! ग्राहक को नई स्थिति व OTP सेटिंग अपडेट हो गई।");
+        }).catch(e => showAppToast("त्रुटि: " + e.message));
+      } catch(e) {}
     }
 
     function deleteOrderPermanently(orderId) {
+      if (!db) return;
       if (confirm("क्या आप इस फर्जी या टेस्ट ऑर्डर को डेटाबेस से हमेशा के लिए हटाना चाहते हैं?")) {
         db.collection("orders").doc(orderId).delete().then(() => {
           showAppToast("✅ ऑर्डर सफलतापूर्वक हटा दिया गया!");
@@ -1371,245 +1403,262 @@
     }
 
     function renderAdminOrders() {
-      const tb = document.querySelector('#admOrdTable tbody');
-      if (!tb) return;
-      if (cloudOrders.length === 0) {
-        tb.innerHTML = "<tr><td colspan='10' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
-        return;
-      }
-      tb.innerHTML = cloudOrders.map(o => {
-        const fullAddr = o.fullAddress || o.address || '—';
-        const sc = o.statusCode !== undefined ? o.statusCode : 1;
-        return `
-        <tr>
-          <td>${o.date || '—'}</td>
-          <td><b>${o.userName || '—'}</b><br><small>${o.userEmail || '—'}</small></td>
-          <td>${o.productName || '—'}</td>
-          <td>₹${o.amount || 0}</td>
-          <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
-          <td>${fullAddr}<br>📞 ${o.phone || '—'}</td>
-          <td>
-            <div style="display:flex; align-items:center; gap:4px;">
-              <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:65px; padding:3px; font-size:11px;">
-              <input type="checkbox" id="admOtpCheck_${o.id}" ${o.showOtpToUser ? 'checked' : ''} title="टिक रहने पर ही ग्राहक को OTP दिखेगा" style="width:16px; height:16px; cursor:pointer;">
-            </div>
-          </td>
-          <td>
-            <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:120px;">
-              <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
-              <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप किया गया</option>
-              <option value="3" ${sc == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
-              <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
-              <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द (Cancel)</option>
-            </select>
-          </td>
-          <td>
-            <button onclick="saveOrderDetails('${o.id}')" style="background:#4caf50; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-              💾 सम्मति
-            </button>
-          </td>
-          <td>
-            <button onclick="deleteOrderPermanently('${o.id}')" style="background:#d32f2f; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-              🗑️
-            </button>
-          </td>
-        </tr>
-      `;
-      }).join('');
+      try {
+        const tb = document.querySelector('#admOrdTable tbody');
+        if (!tb) return;
+        if (cloudOrders.length === 0) {
+          tb.innerHTML = "<tr><td colspan='10' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
+          return;
+        }
+        tb.innerHTML = cloudOrders.map(o => {
+          const fullAddr = o.fullAddress || o.address || '—';
+          const sc = o.statusCode !== undefined ? o.statusCode : 1;
+          return `
+          <tr>
+            <td>${o.date || '—'}</td>
+            <td><b>${o.userName || '—'}</b><br><small>${o.userEmail || '—'}</small></td>
+            <td>${o.productName || '—'}</td>
+            <td>₹${o.amount || 0}</td>
+            <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
+            <td>${fullAddr}<br>📞 ${o.phone || '—'}</td>
+            <td>
+              <div style="display:flex; align-items:center; gap:4px;">
+                <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:65px; padding:3px; font-size:11px;">
+                <input type="checkbox" id="admOtpCheck_${o.id}" ${o.showOtpToUser ? 'checked' : ''} title="टिक रहने पर ही ग्राहक को OTP दिखेगा" style="width:16px; height:16px; cursor:pointer;">
+              </div>
+            </td>
+            <td>
+              <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:120px;">
+                <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
+                <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप किया गया</option>
+                <option value="3" ${sc == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
+                <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
+                <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द (Cancel)</option>
+              </select>
+            </td>
+            <td>
+              <button onclick="saveOrderDetails('${o.id}')" style="background:#4caf50; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
+                💾 सम्मति
+              </button>
+            </td>
+            <td>
+              <button onclick="deleteOrderPermanently('${o.id}')" style="background:#d32f2f; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
+                🗑️
+              </button>
+            </td>
+          </tr>
+        `;
+        }).join('');
+      } catch(e) {}
     }
 
     function saveAdminCashDonation() {
-      const sal = document.getElementById('admCashSalutation').value;
-      const name = document.getElementById('admCashName').value.trim();
-      const city = document.getElementById('admCashCity').value.trim();
-      const amt = document.getElementById('admCashAmt').value.trim();
+      if (!db) return;
+      try {
+        const sal = document.getElementById('admCashSalutation')?.value || 'none';
+        const name = document.getElementById('admCashName')?.value.trim();
+        const city = document.getElementById('admCashCity')?.value.trim() || '';
+        const amt = document.getElementById('admCashAmt')?.value.trim();
 
-      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
+        if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
-      db.collection("donations").add({
-        name, salutation: sal, address: city, phone: "", amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        showAppToast("✅ सहयोग क्लाउड में दर्ज हुआ व लाइव प्रसारण शुरू!");
-        document.getElementById('admCashName').value = '';
-        document.getElementById('admCashAmt').value = '';
-      });
+        db.collection("donations").add({
+          name, salutation: sal, address: city, phone: "", amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+          date: new Date().toLocaleDateString('hi-IN'),
+          timeNumber: Date.now(),
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+          showAppToast("✅ सहयोग क्लाउड में दर्ज हुआ व लाइव प्रसारण शुरू!");
+          document.getElementById('admCashName').value = '';
+          document.getElementById('admCashAmt').value = '';
+        });
+      } catch(e) {}
     }
 
     function renderAdminDonations() {
-      const tb = document.querySelector('#admDonTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudDonations.map(d => `
-        <tr>
-          <td>${d.date}</td>
-          <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
-          <td>${d.address || '—'}</td>
-          <td>₹${d.amount}</td>
-          <td>${d.utr || 'VERIFIED'}</td>
-          <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
+      try {
+        const tb = document.querySelector('#admDonTable tbody');
+        if (!tb) return;
+        tb.innerHTML = cloudDonations.map(d => `
+          <tr>
+            <td>${d.date}</td>
+            <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
+            <td>${d.address || '—'}</td>
+            <td>₹${d.amount}</td>
+            <td>${d.utr || 'VERIFIED'}</td>
+            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `).join('');
+      } catch(e) {}
     }
 
     // --- Direct Donation Modal Flow with Paytm QR & Strict UTR Match ---
-    let pendingDonationData = null;
-
     function openDonationModal() {
-      const dName = document.getElementById('donName');
-      const dSal = document.getElementById('donSalutation');
-      const dAmt = document.getElementById('donAmount');
-      const dCau = document.getElementById('donCause');
-      const dCit = document.getElementById('donCity');
-      const dPho = document.getElementById('donPhone');
+      try {
+        const dName = document.getElementById('donName');
+        const dSal = document.getElementById('donSalutation');
+        const dAmt = document.getElementById('donAmount');
+        const dCau = document.getElementById('donCause');
+        const dCit = document.getElementById('donCity');
+        const dPho = document.getElementById('donPhone');
 
-      const name = dName ? dName.value.trim() : "श्रद्धालु भक्त";
-      const sal = dSal ? dSal.value : 'none';
-      const amt = dAmt ? dAmt.value.trim() : '';
-      const cause = dCau ? dCau.value : 'श्री दुर्गा पूजा एवं अखंड भंडारा';
-      const city = dCit ? dCit.value.trim() : '';
-      const phone = dPho ? dPho.value.trim() : '';
+        const name = dName ? dName.value.trim() : "श्रद्धालु भक्त";
+        const sal = dSal ? dSal.value : 'none';
+        const amt = dAmt ? dAmt.value.trim() : '';
+        const cause = dCau ? dCau.value : 'श्री दुर्गा पूजा एवं अखंड भंडारा';
+        const city = dCit ? dCit.value.trim() : '';
+        const phone = dPho ? dPho.value.trim() : '';
 
-      if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
+        if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
 
-      pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
+        pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
 
-      const infoEl = document.getElementById('donModalInfo');
-      if (infoEl) infoEl.innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
-      const utrIn = document.getElementById('donUtrInput');
-      if (utrIn) utrIn.value = '';
-      generateDynamicQrCode('donationQrContainer', amt);
-      const donMod = document.getElementById('donationModal');
-      if (donMod) donMod.style.display = 'flex';
+        const infoEl = document.getElementById('donModalInfo');
+        if (infoEl) infoEl.innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
+        const utrIn = document.getElementById('donUtrInput');
+        if (utrIn) utrIn.value = '';
+        generateDynamicQrCode('donationQrContainer', amt);
+        const donMod = document.getElementById('donationModal');
+        if (donMod) donMod.style.display = 'flex';
+      } catch(e) {}
     }
 
     function openDirectUpiApp() {
       if (!pendingDonationData) return;
-      const upiInput = document.getElementById('admUpiId');
-      const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
+      try {
+        const upiInput = document.getElementById('admUpiId');
+        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
+        window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
+      } catch(e) {}
     }
 
     function submitSecureDonation() {
-      if (!pendingDonationData) return;
-      const utrInput = document.getElementById('donUtrInput');
-      const utr = utrInput ? utrInput.value.trim() : '';
+      if (!pendingDonationData || !db) return;
+      try {
+        const utrInput = document.getElementById('donUtrInput');
+        const utr = utrInput ? utrInput.value.trim() : '';
 
-      if (!utr || utr.length < 12) {
-        showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
-        return;
-      }
+        if (!utr || utr.length < 12) {
+          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
+          return;
+        }
 
-      // Strict UTR Duplication Check (Prevents reuse of same UTR)
-      const dupOrd = cloudOrders.find(o => o.utr === utr);
-      const dupDon = cloudDonations.find(d => d.utr === utr);
-      if (dupOrd || dupDon) {
-        showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
-        return;
-      }
+        const dupOrd = cloudOrders.find(o => o.utr === utr);
+        const dupDon = cloudDonations.find(d => d.utr === utr);
+        if (dupOrd || dupDon) {
+          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
+          return;
+        }
 
-      db.collection("donations").add({
-        name: pendingDonationData.name,
-        salutation: pendingDonationData.salutation,
-        address: pendingDonationData.address,
-        phone: pendingDonationData.phone,
-        amount: pendingDonationData.amount,
-        cause: pendingDonationData.cause,
-        utr: utr,
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        closeModal('donationModal');
-        showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
-        const dN = document.getElementById('donName'); if(dN) dN.value = '';
-        const dA = document.getElementById('donAmount'); if(dA) dA.value = '';
-        const dC = document.getElementById('donCity'); if(dC) dC.value = '';
-        const dP = document.getElementById('donPhone'); if(dP) dP.value = '';
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+        db.collection("donations").add({
+          name: pendingDonationData.name,
+          salutation: pendingDonationData.salutation,
+          address: pendingDonationData.address,
+          phone: pendingDonationData.phone,
+          amount: pendingDonationData.amount,
+          cause: pendingDonationData.cause,
+          utr: utr,
+          date: new Date().toLocaleDateString('hi-IN'),
+          timeNumber: Date.now(),
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        }).then(() => {
+          closeModal('donationModal');
+          showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
+          const dN = document.getElementById('donName'); if(dN) dN.value = '';
+          const dA = document.getElementById('donAmount'); if(dA) dA.value = '';
+          const dC = document.getElementById('donCity'); if(dC) dC.value = '';
+          const dP = document.getElementById('donPhone'); if(dP) dP.value = '';
+        }).catch(e => showAppToast("त्रुटि: " + e.message));
+      } catch(e) {}
     }
 
     function refreshTicker() {
-      const t = document.getElementById('liveTicker');
-      if (!t) return;
-      const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
-      if (cloudDonations.length === 0) { t.innerText = base; return; }
-      const recent = cloudDonations.slice(0, 8).map(d => {
-        return `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`;
-      }).join(' | ');
-      t.innerText = recent + " | " + base;
+      try {
+        const t = document.getElementById('liveTicker');
+        if (!t) return;
+        const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
+        if (cloudDonations.length === 0) { t.innerText = base; return; }
+        const recent = cloudDonations.slice(0, 8).map(d => {
+          return `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`;
+        }).join(' | ');
+        t.innerText = recent + " | " + base;
+      } catch(e) {}
     }
 
     function renderPublicDonors() {
-      const b = document.getElementById('publicDonorBody');
-      if (!b) return;
-      b.innerHTML = cloudDonations.map(d => `
-        <tr>
-          <td>${d.date}</td>
-          <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
-          <td>${d.address || '—'}</td>
-          <td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td>
-          <td>${d.cause}</td>
-        </tr>
-      `).join('');
+      try {
+        const b = document.getElementById('publicDonorBody');
+        if (!b) return;
+        b.innerHTML = cloudDonations.map(d => `
+          <tr>
+            <td>${d.date}</td>
+            <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
+            <td>${d.address || '—'}</td>
+            <td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td>
+            <td>${d.cause}</td>
+          </tr>
+        `).join('');
+      } catch(e) {}
     }
 
     function searchPublicDonors() {
-      const dirSearch = document.getElementById('dirSearch');
-      const q = dirSearch ? dirSearch.value.toLowerCase().trim() : '';
-      document.querySelectorAll('#publicDonorBody tr').forEach(r => {
-        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
+      try {
+        const dirSearch = document.getElementById('dirSearch');
+        const q = dirSearch ? dirSearch.value.toLowerCase().trim() : '';
+        document.querySelectorAll('#publicDonorBody tr').forEach(r => {
+          r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+        });
+      } catch(e) {}
     }
 
-    // --- Audio Celebration Broadcast (ElevenLabs welcome.MP3) ---
+    // --- Audio Celebration Broadcast ---
     const elevenLabsAudio = new Audio("welcome.MP3");
 
     function triggerCelebration(name, cause, amount, salutation) {
-      const respectfulName = formatDonorName(name, salutation);
-      
-      const cNameEl = document.getElementById('celDonorName');
-      if (cNameEl) cNameEl.innerText = `${respectfulName},`;
-      const cMsgEl = document.getElementById('celMsg');
-      if (cMsgEl) cMsgEl.innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
-      const celMod = document.getElementById('celebrationModal');
-      if (celMod) celMod.style.display = 'flex';
-      
-      try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
+      try {
+        const respectfulName = formatDonorName(name, salutation);
+        
+        const cNameEl = document.getElementById('celDonorName');
+        if (cNameEl) cNameEl.innerText = `${respectfulName},`;
+        const cMsgEl = document.getElementById('celMsg');
+        if (cMsgEl) cMsgEl.innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
+        const celMod = document.getElementById('celebrationModal');
+        if (celMod) celMod.style.display = 'flex';
+        
+        try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
 
-      if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-        try { ytPlayer.setVolume(20); } catch(e) {}
-      }
+        if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
+          try { ytPlayer.setVolume(20); } catch(e) {}
+        }
 
-      setTimeout(() => {
-        elevenLabsAudio.currentTime = 0;
-        elevenLabsAudio.play().then(() => {
-          elevenLabsAudio.onended = () => {
-            if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-              try { ytPlayer.setVolume(100); } catch(e) {}
+        setTimeout(() => {
+          elevenLabsAudio.currentTime = 0;
+          elevenLabsAudio.play().then(() => {
+            elevenLabsAudio.onended = () => {
+              if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
+                try { ytPlayer.setVolume(100); } catch(e) {}
+              }
+            };
+          }).catch(err => {
+            if ('speechSynthesis' in window) {
+              try {
+                window.speechSynthesis.cancel();
+                const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
+                const utter = new SpeechSynthesisUtterance(sentence);
+                utter.lang = 'hi-IN';
+                utter.onend = () => {
+                  if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
+                    try { ytPlayer.setVolume(100); } catch(e) {}
+                  }
+                };
+                window.speechSynthesis.speak(utter);
+              } catch(e) {}
             }
-          };
-        }).catch(err => {
-          console.log("Audio play prevented:", err);
-          if ('speechSynthesis' in window) {
-            try {
-              window.speechSynthesis.cancel();
-              const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
-              const utter = new SpeechSynthesisUtterance(sentence);
-              utter.lang = 'hi-IN';
-              utter.onend = () => {
-                if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-                  try { ytPlayer.setVolume(100); } catch(e) {}
-                }
-              };
-              window.speechSynthesis.speak(utter);
-            } catch(e) {}
-          }
-        });
-      }, 300);
+          });
+        }, 300);
 
-      setTimeout(() => closeCelebrationModal(), 9000);
+        setTimeout(() => closeCelebrationModal(), 9000);
+      } catch(e) {}
     }
 
     function closeCelebrationModal() {
@@ -1638,19 +1687,23 @@
     };
 
     function openLegal(type) {
-      const doc = legalDocs[type];
-      if (!doc) return;
-      const hEl = document.getElementById('legalHeading');
-      if (hEl) hEl.innerText = doc.title;
-      const bEl = document.getElementById('legalBodyText');
-      if (bEl) bEl.innerHTML = doc.content;
-      const lPage = document.getElementById('legalPage');
-      if (lPage) lPage.style.display = 'block';
+      try {
+        const doc = legalDocs[type];
+        if (!doc) return;
+        const hEl = document.getElementById('legalHeading');
+        if (hEl) hEl.innerText = doc.title;
+        const bEl = document.getElementById('legalBodyText');
+        if (bEl) bEl.innerHTML = doc.content;
+        const lPage = document.getElementById('legalPage');
+        if (lPage) lPage.style.display = 'block';
+      } catch(e) {}
     }
 
     function closeLegalPage() {
-      const lPage = document.getElementById('legalPage');
-      if (lPage) lPage.style.display = 'none';
+      try {
+        const lPage = document.getElementById('legalPage');
+        if (lPage) lPage.style.display = 'none';
+      } catch(e) {}
     }
   </script>
 </body>
