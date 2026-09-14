@@ -222,13 +222,49 @@
       
       <label style="color: var(--gold); font-size: 13px; font-weight: bold;">कस्टमाइज़ेशन विकल्प चुनें:</label>
       <select class="admin-select" id="adminSectionSelector" onchange="switchAdminSection(this.value)">
-        <option value="section_settings">⚙️ वेबसाइट सेटिंग्स एवं टिकर संदेश</option>
         <option value="section_donations">🙏 सत्यापित डोनेशन सूची</option>
+        <option value="section_settings">⚙️ वेबसाइट सेटिंग्स एवं टिकर संदेश</option>
         <option value="section_products">🛍️ प्रोडक्ट मैनेजमेंट</option>
       </select>
 
-      <!-- 1. Settings Section -->
-      <div id="section_settings" class="admin-subpanel active">
+      <!-- 1. Donations Section with Manual Cash Entry -->
+      <div id="section_donations" class="admin-subpanel active">
+        <!-- Manual Cash Form -->
+        <div style="background: rgba(255, 215, 0, 0.08); padding: 14px; border-radius: 8px; border: 1px dashed var(--gold); margin-bottom: 18px;">
+          <h4 style="color: var(--gold); margin-bottom: 8px;">💵 नकद (Cash) सहयोग दर्ज करें (Manual Entry)</h4>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <input type="text" id="manualName" placeholder="दानदाता का नाम *">
+            <input type="text" id="manualAddress" placeholder="स्थान / शहर / गाँव">
+          </div>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 8px;">
+            <input type="tel" id="manualPhone" placeholder="मोबाइल नंबर (यदि हो)">
+            <input type="number" id="manualAmount" placeholder="नकद राशि (₹) *">
+          </div>
+          <select id="manualCause" style="margin-bottom: 10px;">
+            <option value="श्री दुर्गा पूजा एवं अखंड भंडारा">श्री दुर्गा पूजा एवं अखंड भंडारा</option>
+            <option value="आपदा एवं बाढ़ पीड़ित सहायता">आपदा एवं बाढ़ पीड़ित सहायता</option>
+            <option value="दैनिक अन्नदान एवं गौ-सेवा">दैनिक अन्नदान एवं गौ-सेवा</option>
+            <option value="अन्य धार्मिक कार्य">अन्य धार्मिक कार्य</option>
+          </select>
+          <button class="btn-magic" type="button" onclick="addManualCashDonation()" style="padding: 10px;">+ नकद सहयोग सूची में जोड़ें</button>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <h4 style="color: var(--gold);">सत्यापित डोनेशन रिकॉर्ड</h4>
+          <button class="admin-btn btn-del" onclick="clearAllDonations()">⚠️ सभी पुराने रिकॉर्ड साफ करें</button>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table" id="donationsTable">
+            <thead>
+              <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>मोबाइल</th><th>कारण</th><th>राशि</th><th>UTR/Ref</th><th>एक्शन</th></tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 2. Settings Section -->
+      <div id="section_settings" class="admin-subpanel">
         <div style="background: rgba(255,255,255,0.05); padding: 14px; border-radius: 8px; border: 1px solid rgba(255,215,0,0.2);">
           <h4 style="color: var(--gold); margin-bottom: 10px;">खाली समय में स्क्रीन पर चलने वाला संदेश</h4>
           <textarea id="cfgIdleTicker" rows="3" style="margin-bottom: 14px;"></textarea>
@@ -253,22 +289,6 @@
           <input type="text" id="cfgYoutube" style="margin-bottom: 12px;">
 
           <button class="btn-magic" type="button" onclick="saveSiteSettings()" style="padding: 10px;">सेटिंग्स सुरक्षित करें</button>
-        </div>
-      </div>
-
-      <!-- 2. Donations Section -->
-      <div id="section_donations" class="admin-subpanel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
-          <h4 style="color: var(--gold);">सत्यापित डोनेशन रिकॉर्ड</h4>
-          <button class="admin-btn btn-del" onclick="clearAllDonations()">⚠️ सभी पुराने रिकॉर्ड साफ करें</button>
-        </div>
-        <div style="overflow-x:auto;">
-          <table class="admin-table" id="donationsTable">
-            <thead>
-              <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>मोबाइल</th><th>कारण</th><th>राशि</th><th>UTR/Ref</th><th>एक्शन</th></tr>
-            </thead>
-            <tbody></tbody>
-          </table>
         </div>
       </div>
 
@@ -532,6 +552,29 @@
       pendingTransaction = null;
     }
 
+    function addManualCashDonation() {
+      const name = document.getElementById('manualName').value.trim();
+      const address = document.getElementById('manualAddress').value.trim();
+      const phone = document.getElementById('manualPhone').value.trim();
+      const amount = document.getElementById('manualAmount').value.trim();
+      const cause = document.getElementById('manualCause').value;
+
+      if (!name || !amount || amount <= 0) {
+        alert("कृपया दानदाता का नाम और सही नकद राशि दर्ज करें!");
+        return;
+      }
+
+      saveVerifiedDonation(name, address, phone, amount, cause, "💵 CASH / नकद");
+      loadAdminData();
+
+      // फॉर्म खाली करें
+      document.getElementById('manualName').value = '';
+      document.getElementById('manualAddress').value = '';
+      document.getElementById('manualPhone').value = '';
+      document.getElementById('manualAmount').value = '';
+      alert(`श्री ${name} जी का ₹${amount} का नकद सहयोग सफलतापूर्वक जुड़ गया!`);
+    }
+
     function saveVerifiedDonation(name, address, phone, amount, cause, refId) {
       const cleanAddr = (address && address !== "undefined") ? address : "";
       const record = {
@@ -544,11 +587,11 @@
       localStorage.setItem('mde_donations', JSON.stringify(donations));
 
       const addrShow = cleanAddr ? ` (${cleanAddr})` : "";
-      triggerFullscreenCelebration(`श्री <b>${name}</b> जी${addrShow},<br>${cause} हेतु आपके <b>₹${amount}</b> के पावन सहयोग के लिए माँ दुर्गा सेवा समिति आपका कोटि-कोटि आभार व्यक्त करती है!<br><br><span style="color:#ffd700; font-size:14px;">व्हाट्सएप नंबर ${phone} पर रसीद भेजी जा रही है।</span>`);
+      triggerFullscreenCelebration(`श्री <b>${name}</b> जी${addrShow},<br>${cause} हेतु आपके <b>₹${amount}</b> के पावन सहयोग के लिए माँ दुर्गा सेवा समिति आपका कोटि-कोटि आभार व्यक्त करती है!`);
 
       refreshTopTicker();
       renderPublicDonorList();
-      document.getElementById('donorAmount').value = '';
+      if(document.getElementById('donorAmount')) document.getElementById('donorAmount').value = '';
     }
 
     function refreshTopTicker() {
@@ -672,7 +715,7 @@
             <td>${d.phone || '—'}</td>
             <td>${d.cause}</td>
             <td>₹${d.amount}</td>
-            <td><small>${d.utr || '—'}</small></td>
+            <td><small style="color:var(--gold);">${d.utr || '—'}</small></td>
             <td><button class="admin-btn btn-del" onclick="deleteDonation(${index})">हटाएं</button></td>
           </tr>
         `).join('');
