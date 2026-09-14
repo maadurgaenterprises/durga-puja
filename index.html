@@ -7,7 +7,6 @@
   
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
-  <!-- QR Code Generator Library -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
   <!-- Firebase SDKs -->
@@ -51,7 +50,7 @@
     input:focus, select:focus, textarea:focus { border-color: var(--gold); }
     .btn-main { width: 100%; padding: 12px; background: linear-gradient(45deg, #d32f2f, #ff6f00); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(211,47,47,0.4); }
 
-    /* Flipkart Style Store & Suggested */
+    /* Store Grid */
     .sec-heading { font-size: 18px; color: var(--gold); margin: 20px 0 12px; text-align: center; }
     .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; }
     .cat-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); color: #fff; padding: 5px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; }
@@ -62,14 +61,13 @@
     .p-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; }
     .p-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 3px; }
     .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
-    .badge-ref { font-size: 9px; padding: 2px 5px; border-radius: 3px; display: inline-block; margin-bottom: 4px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
     /* Instagram Style Full-Screen Chat Interface */
     .insta-chat-box { background: #0b0002; border: 1px solid rgba(255,215,0,0.3); border-radius: 12px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
     .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
     .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: rgba(0,0,0,0.6); }
-    .insta-msg-bubble { background: rgba(255,255,255,0.07); padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 85%; word-break: break-word; border: 1px solid rgba(255,215,0,0.15); cursor: pointer; position: relative; }
+    .insta-msg-bubble { background: rgba(255,255,255,0.07); padding: 10px 14px; border-radius: 12px; font-size: 13px; max-width: 85%; word-break: break-word; border: 1px solid rgba(255,215,0,0.15); cursor: pointer; }
     .insta-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 3px; }
     .insta-chat-input-bar { padding: 12px; background: rgba(0,0,0,0.8); display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,215,0,0.2); }
     .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 20px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
@@ -84,20 +82,19 @@
     .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
     .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
-    /* Flipkart Style Timeline Tracker */
+    /* Timeline Tracker */
     .timeline-wrap { position: relative; padding-left: 26px; margin-top: 14px; text-align: left; }
     .timeline-line { position: absolute; top: 8px; left: 8px; width: 3px; height: calc(100% - 24px); background: #444; }
     .timeline-line.active-fill { background: #4caf50; }
     .timeline-step { position: relative; margin-bottom: 18px; }
     .timeline-dot { position: absolute; left: -24px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: #555; border: 2px solid #1a0004; }
     .timeline-step.completed .timeline-dot { background: #4caf50; box-shadow: 0 0 8px #4caf50; }
-    .timeline-step.active .timeline-dot { background: #ffd700; box-shadow: 0 0 8px #ffd700; }
     .step-title { font-size: 13px; font-weight: bold; color: #fff; }
     .step-desc { font-size: 11px; color: #aaa; margin-top: 2px; }
 
     /* Fullscreen Dedicated Admin Dashboard */
     #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
-    .admin-inner { max-width: 950px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
+    .admin-inner { max-width: 980px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
     .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.25); }
     .adm-tab { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; white-space: nowrap; }
     .adm-tab.active { background: var(--gold); color: #000; font-weight: bold; }
@@ -108,11 +105,13 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Legal Modal */
-    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0c0002; z-index: 7000; overflow-y: auto; padding: 20px 14px; }
-    .legal-container { max-width: 850px; margin: 0 auto; background: #170004; border: 1px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #e0e0e0; }
+    /* Feedback Cards */
+    .feedback-grid { display: grid; grid-template-columns: 1fr; gap: 10px; margin-top: 14px; }
+    @media (min-width: 600px) { .feedback-grid { grid-template-columns: 1fr 1fr; } }
+    .fb-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.2); border-radius: 8px; padding: 12px; font-size: 12px; }
+    .fb-header { display: flex; justify-content: space-between; margin-bottom: 6px; color: var(--gold); font-weight: bold; }
 
-    /* Fixed Sticky Footer */
+    /* Sticky Footer */
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
     .footer-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin: 12px 0; }
     .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; }
@@ -120,12 +119,11 @@
 </head>
 <body>
 
-  <!-- Background Ad-Free YouTube Player (Hidden) -->
+  <!-- Background YouTube Player -->
   <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
 
-  <!-- Hidden File Input for Storage Gallery/File Upload -->
+  <!-- Hidden Pickers -->
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
-  <!-- Hidden Camera Input -->
   <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
 
   <!-- Top Bar -->
@@ -137,7 +135,6 @@
       <div id="navAuthArea">
         <button class="auth-btn" onclick="openLoginModal()" id="navLoginTxt">लॉगिन / साइन-अप</button>
       </div>
-      <!-- Hamburger Menu Button -->
       <button class="menu-hamburger-btn" onclick="toggleSideNav()">☰</button>
     </div>
   </div>
@@ -183,7 +180,6 @@
           </select>
         </div>
 
-        <!-- Salutation Choice -->
         <div class="form-group">
           <label id="lblSalutation">संबोधन चुनें (वैकल्पिक)</label>
           <select id="donSalutation">
@@ -195,7 +191,7 @@
         </div>
 
         <div class="form-group">
-          <label id="lblName">शुभ नाम</label>
+          <label id="lblName">शुभ नाम *</label>
           <input type="text" id="donName" placeholder="नाम दर्ज करें">
         </div>
         <div class="form-group">
@@ -203,24 +199,23 @@
           <input type="text" id="donCity" placeholder="जैसे: प्रतापगढ़">
         </div>
         <div class="form-group">
-          <label id="lblPhone">व्हाट्सएप नंबर</label>
-          <input type="tel" id="donPhone" placeholder="10-अंकीय मोबाइल नंबर">
+          <label id="lblPhone">व्हाट्सएप मोबाइल नंबर (रसीद प्राप्त करने हेतु) *</label>
+          <input type="tel" id="donPhone" placeholder="10-अंकीय व्हाट्सएप नंबर दर्ज करें">
         </div>
         <div class="form-group">
-          <label id="lblAmount">सहयोग राशि (₹)</label>
+          <label id="lblAmount">सहयोग राशि (₹) *</label>
           <input type="number" id="donAmount" placeholder="राशि (₹)">
         </div>
         <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
-      <!-- Suggested Items Under Donation Form -->
       <div id="suggestedSec">
         <h3 class="sec-heading" id="txtSuggestedTitle">🌟 अनुशंसित एवं पावन सामग्री (Suggested Items)</h3>
         <div class="product-grid" id="suggestedGrid"></div>
       </div>
     </div>
 
-    <!-- PANEL 2: STORE WITH CATEGORIES -->
+    <!-- PANEL 2: STORE -->
     <div id="panelStore" style="display:none;">
       <h3 class="sec-heading" id="txtStoreTitle">माँ दुर्गा एंटरप्राइजेज — पावन भक्ति स्टोर</h3>
       <div class="category-scroll" id="catScroll">
@@ -243,7 +238,7 @@
       </div>
     </div>
 
-    <!-- PANEL 4: INSTAGRAM STYLE FULL-SCREEN LIVE CHAT -->
+    <!-- PANEL 4: LIVE CHAT -->
     <div id="panelChat" style="display:none;">
       <div class="insta-chat-box">
         <div class="insta-chat-header">
@@ -268,18 +263,39 @@
       </div>
     </div>
 
-    <!-- PANEL 5: FLIPKART STYLE MY ORDERS -->
+    <!-- PANEL 5: MY ORDERS -->
     <div id="panelOrders" class="card" style="display:none;">
       <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
     </div>
 
+    <!-- PUBLIC FEEDBACK & REVIEWS SECTION -->
+    <div class="card" style="margin-top:20px;">
+      <h2 style="color:var(--gold); font-size:17px; text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव (Feedback)</h2>
+      
+      <div style="background:rgba(0,0,0,0.4); padding:14px; border-radius:8px; border:1px solid rgba(255,215,0,0.2); margin-bottom:14px;">
+        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px;">अपना पावन अनुभव या सुझाव साझा करें:</h4>
+        <div style="display:grid; grid-template-columns: 2fr 1fr; gap:8px; margin-bottom:8px;">
+          <input type="text" id="fbNameInput" placeholder="आपका शुभ नाम">
+          <select id="fbRatingInput" style="padding:10px;">
+            <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+            <option value="4">⭐⭐⭐⭐ 4 Star</option>
+            <option value="3">⭐⭐⭐ 3 Star</option>
+          </select>
+        </div>
+        <textarea id="fbMsgInput" placeholder="अपना सुझाव या अनुभव यहाँ लिखें..." style="height:60px; margin-bottom:8px;"></textarea>
+        <button class="btn-main" onclick="submitPublicFeedback()" style="padding:8px; font-size:13px;">सुझाव भेजें (Submit)</button>
+      </div>
+
+      <div class="feedback-grid" id="publicFeedbackList"></div>
+    </div>
+
   </div>
 
-  <!-- CLEAN LOGIN MODAL -->
+  <!-- LOGIN MODAL -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span id="txtLoginHead">लॉगिन / साइन-अप</span></h3>
+      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
       <button class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
         <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
       </button>
@@ -287,7 +303,7 @@
     </div>
   </div>
 
-  <!-- OWNER SECOND STEP PASSWORD MODAL -->
+  <!-- ADMIN PASS MODAL -->
   <div class="custom-popup-overlay" id="adminPassModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
@@ -298,7 +314,7 @@
     </div>
   </div>
 
-  <!-- ADMIN DETAILED INSPECT MODAL -->
+  <!-- ADMIN INSPECT MODAL -->
   <div class="custom-popup-overlay" id="adminInspectModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
@@ -307,7 +323,7 @@
     </div>
   </div>
 
-  <!-- DEDICATED DONATION PAYMENT MODAL WITH QR & SECURE UTR -->
+  <!-- DONATION MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
@@ -336,7 +352,7 @@
     </div>
   </div>
 
-  <!-- FLIPKART STYLE SEPARATED ADDRESS CHECKOUT MODAL WITH DYNAMIC QR & SECURE UTR -->
+  <!-- CHECKOUT MODAL -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:460px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;" id="chkProdName">ऑर्डर विवरण</h3>
@@ -354,7 +370,6 @@
         <div class="form-group"><label>राज्य (State) *</label><input type="text" id="chkState" value="Uttar Pradesh"></div>
       </div>
 
-      <!-- Coupon -->
       <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold); margin:8px 0;">
         <div style="display:flex; gap:6px;">
           <input type="text" id="chkCouponInput" placeholder="Coupon Code (उदा: JAY40)" style="text-transform:uppercase;">
@@ -367,7 +382,6 @@
         अंतिम देय राशि: <span id="finalCheckoutAmt">₹0</span>
       </div>
 
-      <!-- DYNAMIC QR CODE & PAYMENT APPS CONTAINER -->
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(255,215,0,0.3); text-align:center;">
         <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 स्कैन करें या नीचे दिए गए ऐप से भुगतान करें:</p>
         
@@ -390,7 +404,7 @@
     </div>
   </div>
 
-  <!-- CLEAN POPUP -->
+  <!-- NOTIFY POPUP -->
   <div class="custom-popup-overlay" id="notifyPopup">
     <div class="custom-popup-box">
       <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
@@ -398,7 +412,7 @@
     </div>
   </div>
 
-  <!-- CELEBRATION BROADCAST MODAL -->
+  <!-- CELEBRATION MODAL -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -408,15 +422,6 @@
         🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
       </p>
       <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
-    </div>
-  </div>
-
-  <!-- DEDICATED FULLSCREEN LEGAL PAGES -->
-  <div class="legal-page" id="legalPage">
-    <div class="legal-container">
-      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:4px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
-      <h2 style="color:var(--gold); margin-bottom:14px;" id="legalHeading"></h2>
-      <div id="legalBodyText"></div>
     </div>
   </div>
 
@@ -433,13 +438,14 @@
         <button class="adm-tab" onclick="switchAdm('admProd')">🛍️ प्रोडक्ट्स व सजेस्टेड</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🏷️ डिस्काउंट कूपन्स</button>
         <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स व OTP</button>
-        <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन व नकद एंट्री</button>
-        <button class="adm-tab" onclick="switchAdm('admChatAdm')">💬 चैट मॉडरेटर</button>
+        <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन व मोबाइल रसीद</button>
+        <button class="adm-tab" onclick="switchAdm('admFeed')">💬 भक्त सुझाव (Feedback)</button>
+        <button class="adm-tab" onclick="switchAdm('admChatAdm')">🛡️ चैट मॉडरेटर</button>
       </div>
 
-      <!-- Admin Sec 1: Settings, Payment Gateway & Social Links -->
+      <!-- Admin Sec 1: Settings -->
       <div id="admSet" class="adm-sec active">
-        <h4 style="color:var(--gold); margin-bottom:8px;">खाली समय में स्क्रीन पर चलने वाला संदेश:</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
 
         <h4 style="color:var(--gold); margin-bottom:8px;">पेमेंट और बैंक सेटिंग्स:</h4>
@@ -447,21 +453,20 @@
           <label>पेमेंट का तरीका चुनें:</label>
           <select id="admPaymentMode">
             <option value="upi">Paytm बिज़नेस QR / UPI (paytm.s20g6r2@pty)</option>
-            <option value="razorpay">Razorpay ऑटो पेमेंट गेटवे (Key ID द्वारा)</option>
+            <option value="razorpay">Razorpay ऑटो पेमेंट गेटवे</option>
           </select>
         </div>
-        <div class="form-group"><label>Paytm / GPay Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-        <div class="form-group"><label>Razorpay Key ID (Payment Gateway):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+        <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
+        <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल व मीडिया लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
-        <div class="form-group"><label>इंस्टाग्राम प्रोफ़ाइल लिंक:</label><input type="text" id="admInstaLink" value="https://www.instagram.com/shreedurgapuja_official"></div>
-        <div class="form-group"><label>यूट्यूब भजन लिंक (Ad-Free Background Music हेतु):</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
+        <div class="form-group"><label>यूट्यूब भजन लिंक:</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
 
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
-      <!-- Admin Sec 2: Products & Suggested -->
+      <!-- Admin Sec 2: Products -->
       <div id="admProd" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट जोड़ें</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
@@ -469,21 +474,14 @@
           <input type="number" id="newPPrice" placeholder="कीमत (₹) *">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:6px 0;">
-          <input type="text" id="newPCat" placeholder="कैटेगरी (उदा: वस्त्र, पूजा सामग्री)">
-          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी (उदा: पुरुष, महिला, दीया)">
+          <input type="text" id="newPCat" placeholder="कैटेगरी">
+          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी">
         </div>
-        <input type="text" id="newPImg" placeholder="फोटो का सीधा URL लिंक" style="margin-bottom:6px;">
-        <input type="text" id="newPDesc" placeholder="संक्षिप्त विवरण" style="margin-bottom:6px;">
-        <div style="display:flex; gap:14px; margin-bottom:8px;">
-          <label style="color:#fff;"><input type="checkbox" id="newPRefund" style="width:auto;"> 2 दिन सीमित रिफंड मान्य</label>
-          <label style="color:var(--gold);"><input type="checkbox" id="newPSuggested" style="width:auto;"> डोनेशन पेज पर सजेस्ट करें</label>
-        </div>
+        <input type="text" id="newPImg" placeholder="फोटो URL लिंक" style="margin-bottom:6px;">
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में जोड़ें</button>
-
-        <h4 style="color:var(--gold); margin:16px 0 6px;">स्टोर प्रोडक्ट्स सूची</h4>
-        <div class="table-responsive">
+        <div class="table-responsive" style="margin-top:14px;">
           <table id="admProdTable">
-            <thead><tr><th>फोटो</th><th>नाम</th><th>कैटेगरी</th><th>कीमत</th><th>सजेस्टेड?</th><th>रिफंड?</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>फोटो</th><th>नाम</th><th>कैटेगरी</th><th>कीमत</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -505,48 +503,54 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Orders (Clickable Name to Inspect) -->
+      <!-- Admin Sec 4: Orders -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (नाम पर क्लिक करके संपूर्ण विवरण देखें)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स (नाम पर क्लिक करके पता व फोन देखें)</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक नाम (क्लिक करें)</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>OTP व टिक</th><th>स्थिति</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक नाम</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>OTP व टिक</th><th>स्थिति</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 5: Donations & Cash (Clickable Name to Inspect) -->
+      <!-- Admin Sec 5: Donations WITH MOBILE NUMBER & 1-CLICK WHATSAPP RECEIPT -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
-          <h4 style="color:var(--gold); margin-bottom:6px;">💵 सत्यापित दान / नकद एंट्री जोड़ें</h4>
+          <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <select id="admCashSalutation" style="padding:7px; font-size:11px;">
-              <option value="none">कोई नहीं (केवल नाम व जी)</option>
-              <option value="shree">श्री</option>
-              <option value="shrimati">श्रीमती</option>
-              <option value="kumari">कुमारी / सुश्री</option>
-            </select>
             <input type="text" id="admCashName" placeholder="दानदाता का नाम *">
+            <input type="tel" id="admCashPhone" placeholder="मोबाइल नंबर">
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="text" id="admCashCity" placeholder="स्थान (जैसे: प्रतापगढ़)">
+            <input type="text" id="admCashCity" placeholder="स्थान">
             <input type="number" id="admCashAmt" placeholder="राशि (₹) *">
           </div>
-          <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें व स्वागत करें</button>
+          <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें</button>
         </div>
-        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त दान सूचियाँ (नाम पर क्लिक करें)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">दानदाता सूची (मोबाइल नंबर व WhatsApp रसीद सहित)</h4>
         <div class="table-responsive">
           <table id="admDonTable">
-            <thead><tr><th>तारीख</th><th>दानदाता नाम (क्लिक करें)</th><th>स्थान</th><th>राशि</th><th>UTR/Ref</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>दानदाता नाम</th><th>मोबाइल नंबर</th><th>स्थान</th><th>राशि</th><th>UTR</th><th>व्हाट्सएप रसीद</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 6: Chat Moderator -->
+      <!-- Admin Sec 6: Feedback Moderator -->
+      <div id="admFeed" class="adm-sec">
+        <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव व रिव्यू मॉडरेटर</h4>
+        <div class="table-responsive">
+          <table id="admFeedTable">
+            <thead><tr><th>तारीख</th><th>भक्त नाम</th><th>रेटिंग</th><th>सुझाव संदेश</th><th>पिन (Pin ⭐)</th><th>हटाएं</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admin Sec 7: Chat Moderator -->
       <div id="admChatAdm" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">💬 लाइव चैट संदेश मॉडरेटर (संदेश हटाएं)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">🛡️ लाइव चैट संदेश मॉडरेटर</h4>
         <div class="table-responsive">
           <table id="admChatTable">
             <thead><tr><th>समय</th><th>भक्त नाम</th><th>संदेश</th><th>हटाएं</th></tr></thead>
@@ -564,11 +568,10 @@
       <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
       <div class="footer-links">
-        <button class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions (नियम व शर्तें)</button>
-        <button class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy (गोपनीयता नीति)</button>
-        <button class="footer-link-btn" onclick="openLegal('refund')">Refund Policy (रिफंड नीति)</button>
-        <button class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy (डिलीवरी नीति)</button>
-        <button class="footer-link-btn" onclick="openLegal('disclaimer')">Disclaimer (अस्वीकरण)</button>
+        <button class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
+        <button class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
+        <button class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
+        <button class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
       </div>
 
       <div style="margin-top:12px;">
@@ -598,9 +601,7 @@
     let googleProvider = null;
 
     try {
-      if (!firebase.apps.length) {
-        firebase.initializeApp(firebaseConfig);
-      }
+      if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
       auth = firebase.auth();
       db = firebase.firestore();
       googleProvider = new firebase.auth.GoogleAuthProvider();
@@ -612,80 +613,40 @@
     let cloudCoupons = [];
     let cloudOrders = [];
     let cloudChats = [];
+    let cloudFeedbacks = [];
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
     let pendingDonationData = null;
 
-    // --- Side Drawer Navigation Toggle ---
     function toggleSideNav() {
-      try {
-        const d = document.getElementById('sideNavDrawer');
-        if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
-      } catch(e) {}
+      const d = document.getElementById('sideNavDrawer');
+      if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
     }
 
     function switchNav(tab) {
-      try {
-        toggleSideNav();
-        document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
-        ['donate', 'store', 'directory', 'chat', 'orders'].forEach(id => {
-          const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
-          if (p) p.style.display = 'none';
-        });
-        const targetPanel = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
-        if (targetPanel) targetPanel.style.display = 'block';
-        if (event && event.target) event.target.classList.add('active');
-      } catch(e) {}
+      toggleSideNav();
+      document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
+      ['donate', 'store', 'directory', 'chat', 'orders'].forEach(id => {
+        const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
+        if (p) p.style.display = 'none';
+      });
+      const target = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
+      if (target) target.style.display = 'block';
+      if (event && event.target) event.target.classList.add('active');
     }
-
-    // --- Device Language Detection ---
-    const userLang = (navigator.language || navigator.userLanguage || 'hi').toLowerCase();
-    const isEn = userLang.startsWith('en');
-
-    function applyLanguage() {
-      if (!isEn) return;
-      try {
-        document.getElementById('siteDocTitle').innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
-        document.getElementById('musicBtnTxt').innerText = "Play Music";
-        document.getElementById('navLoginTxt').innerText = "Login / Sign-up";
-        document.getElementById('drwDonate').innerText = "Contribution Form";
-        document.getElementById('drwStore').innerText = "Devotional Store";
-        document.getElementById('drwList').innerText = "Public Donor List";
-        document.getElementById('drwChat').innerText = "Live Satsang Chat";
-        document.getElementById('drwOrders').innerText = "My Orders";
-        document.getElementById('txtDonateTitle').innerText = "Devotional Contribution / Donation";
-        document.getElementById('lblCause').innerText = "Select Purpose";
-        document.getElementById('lblSalutation').innerText = "Salutation (Optional)";
-        document.getElementById('lblName').innerText = "Full Name";
-        document.getElementById('lblCity').innerText = "City / Village";
-        document.getElementById('lblPhone').innerText = "WhatsApp Number";
-        document.getElementById('lblAmount').innerText = "Contribution Amount (₹)";
-        document.getElementById('btnPayDon').innerText = "Contribute (Pay Now)";
-        document.getElementById('txtSuggestedTitle').innerText = "🌟 Recommended Devotional Items";
-        document.getElementById('txtStoreTitle').innerText = "Maa Durga Enterprises — Devotional Store";
-        document.getElementById('txtDirTitle').innerText = "📜 Public Transparency Board";
-        document.getElementById('txtMyOrdersTitle').innerText = "📦 My Orders & Live Status";
-      } catch(e) {}
-    }
-    applyLanguage();
 
     function showAppToast(msg) {
-      try {
-        const m = document.getElementById('notifyMsg');
-        if (m) m.innerText = msg;
-        const p = document.getElementById('notifyPopup');
-        if (p) p.style.display = 'flex';
-      } catch(e) { alert(msg); }
+      const m = document.getElementById('notifyMsg');
+      if (m) m.innerText = msg;
+      const p = document.getElementById('notifyPopup');
+      if (p) p.style.display = 'flex';
     }
 
     function closeModal(id) {
-      try {
-        const el = document.getElementById(id);
-        if (el) el.style.display = 'none';
-      } catch(e) {}
+      const el = document.getElementById(id);
+      if (el) el.style.display = 'none';
     }
 
-    // --- Format Salutation + Name ---
     function formatDonorName(name, salutation) {
       const clean = (name || "").trim();
       if (!clean) return "श्रद्धालु भक्त";
@@ -695,7 +656,6 @@
       return `${clean} जी`;
     }
 
-    // --- Robust YouTube URL Extractor ---
     function extractVideoId(url) {
       if (!url) return null;
       const regExp = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
@@ -703,7 +663,7 @@
       return match ? match[1] : null;
     }
 
-    // --- Safe Realtime Ad-Free Synced Room & Zero-Friction Autoplay ---
+    // --- Background Ad-Free Music Player ---
     let ytPlayer = null;
     let isMusicPlaying = false;
     let currentYtVideoId = "ChC8RMdyvhk";
@@ -712,55 +672,43 @@
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
     const firstScript = document.getElementsByTagName('script')[0];
-    if (firstScript && firstScript.parentNode) {
-      try { firstScript.parentNode.insertBefore(tag, firstScript); } catch(e) {}
-    }
+    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
 
     window.onYouTubeIframeAPIReady = function() {
       try {
         ytPlayer = new YT.Player('ytPlayerDiv', {
-          height: '0',
-          width: '0',
-          videoId: currentYtVideoId,
+          height: '0', width: '0', videoId: currentYtVideoId,
           playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId },
-          events: {
-            'onReady': onPlayerReadySync,
-            'onError': (e) => {}
-          }
+          events: { 'onReady': onPlayerReadySync }
         });
       } catch(err) {}
     };
 
     function onPlayerReadySync() {
       if (!db) return;
-      try {
-        db.collection("settings").doc("music_room").onSnapshot(doc => {
-          if (doc.exists) {
-            const data = doc.data();
-            songPlaybackStartTime = data.startedAt || null;
-            if (data.videoId && data.videoId !== currentYtVideoId) {
-              currentYtVideoId = data.videoId;
-              if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-                const seekSec = calculateCurrentPlaybackSecond();
-                ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
-              }
+      db.collection("settings").doc("music_room").onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          songPlaybackStartTime = data.startedAt || null;
+          if (data.videoId && data.videoId !== currentYtVideoId) {
+            currentYtVideoId = data.videoId;
+            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+              const seekSec = calculateCurrentPlaybackSecond();
+              ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
             }
           }
-        }, err => {});
-      } catch(err) {}
+        }
+      }, err => {});
     }
 
     function calculateCurrentPlaybackSecond() {
       if (!songPlaybackStartTime) return 0;
-      const now = Date.now();
-      const elapsedSeconds = Math.floor((now - songPlaybackStartTime) / 1000);
+      const elapsed = Math.floor((Date.now() - songPlaybackStartTime) / 1000);
       let totalDuration = 300;
       try {
-        if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
-          totalDuration = ytPlayer.getDuration() || 300;
-        }
+        if (ytPlayer && typeof ytPlayer.getDuration === 'function') totalDuration = ytPlayer.getDuration() || 300;
       } catch(e) {}
-      return elapsedSeconds % Math.floor(totalDuration);
+      return elapsed % Math.floor(totalDuration);
     }
 
     function startMusicPlayback() {
@@ -770,21 +718,14 @@
 
       if (!songPlaybackStartTime && db) {
         const startTime = Date.now();
-        db.collection("settings").doc("music_room").set({
-          startedAt: startTime,
-          videoId: resolvedId
-        }, { merge: true }).catch(() => {});
+        db.collection("settings").doc("music_room").set({ startedAt: startTime, videoId: resolvedId }, { merge: true }).catch(() => {});
         songPlaybackStartTime = startTime;
       }
 
       const seekSeconds = calculateCurrentPlaybackSecond();
-
       try {
         if (resolvedId && ytPlayer.getVideoData && ytPlayer.getVideoData().video_id !== resolvedId) {
-          ytPlayer.loadVideoById({
-            videoId: resolvedId,
-            startSeconds: seekSeconds
-          });
+          ytPlayer.loadVideoById({ videoId: resolvedId, startSeconds: seekSeconds });
         } else {
           ytPlayer.seekTo(seekSeconds, true);
           ytPlayer.playVideo();
@@ -793,7 +734,7 @@
 
       isMusicPlaying = true;
       const btnTxt = document.getElementById('musicBtnTxt');
-      if (btnTxt) btnTxt.innerText = isEn ? "Pause Music" : "संगीत रोकें";
+      if (btnTxt) btnTxt.innerText = "संगीत रोकें";
     }
 
     function toggleBackgroundMusic() {
@@ -807,35 +748,26 @@
       } else {
         try { ytPlayer.pauseVideo(); } catch(e) {}
         isMusicPlaying = false;
-        if (btnTxt) btnTxt.innerText = isEn ? "Play Music" : "संगीत बजाएँ";
+        if (btnTxt) btnTxt.innerText = "Play Music";
       }
     }
 
-    // --- Zero-Friction Anywhere Touch/Scroll/Click Trigger ---
     let hasUserInteracted = false;
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
       hasUserInteracted = true;
       try { startMusicPlayback(); } catch(e) {}
-      ['click', 'touchstart', 'scroll'].forEach(evt => {
-        window.removeEventListener(evt, handleFirstUserInteraction);
-      });
+      ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, handleFirstUserInteraction));
     }
-    ['click', 'touchstart', 'scroll'].forEach(evt => {
-      window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true });
-    });
+    ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true }));
 
-    // --- Online Presence & User Heartbeat ---
+    // --- Presence ---
     function updateOnlinePresence() {
       if (!db) return;
       const clientId = localStorage.getItem('siti_client_id') || 'usr_' + Math.random().toString(36).substring(2);
       localStorage.setItem('siti_client_id', clientId);
-
-      db.collection("presence").doc(clientId).set({
-        lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-      }, { merge: true }).catch(() => {});
+      db.collection("presence").doc(clientId).set({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => {});
     }
-
     setInterval(updateOnlinePresence, 15000);
     updateOnlinePresence();
 
@@ -845,9 +777,7 @@
         let activeCount = 0;
         snap.forEach(doc => {
           const data = doc.data();
-          if (data.lastSeen && (now - data.lastSeen.toMillis() < 45000)) {
-            activeCount++;
-          }
+          if (data.lastSeen && (now - data.lastSeen.toMillis() < 45000)) activeCount++;
         });
         const cntEl = document.getElementById('onlineUsersCount');
         if (cntEl) cntEl.innerText = Math.max(1, activeCount);
@@ -860,38 +790,29 @@
         currentUser = user;
         const navArea = document.getElementById('navAuthArea');
         const drwOrders = document.getElementById('drwOrdersItem');
-
         if (user) {
           if (user.email && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
-            if (navArea) navArea.innerHTML = `
+            navArea.innerHTML = `
               <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
               <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
             `;
           } else {
-            if (navArea) navArea.innerHTML = `
+            navArea.innerHTML = `
               <span style="font-size:11px; color:#ffcdd2; margin-right:4px;">${user.displayName ? user.displayName.split(' ')[0] : 'User'}</span>
               <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
             `;
           }
           if (drwOrders) drwOrders.style.display = "block";
         } else {
-          if (navArea) navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
+          navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">लॉगिन / साइन-अप</button>`;
           if (drwOrders) drwOrders.style.display = "none";
         }
         renderCustomerOrders();
       });
     }
 
-    function openLoginModal() {
-      const m = document.getElementById('loginModal');
-      if (m) m.style.display = 'flex';
-    }
-
+    function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
     function loginWithGoogle() {
-      if (!auth || !googleProvider) {
-        showAppToast("ऑथेंटिकेशन सेवा अभी तैयार नहीं है।");
-        return;
-      }
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
         if (res.user && res.user.email && res.user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
@@ -901,47 +822,39 @@
     }
 
     function openOwnerVerification() {
-      const passIn = document.getElementById('ownerPassInput');
-      if (passIn) passIn.value = '';
-      const passMod = document.getElementById('adminPassModal');
-      if (passMod) passMod.style.display = 'flex';
+      document.getElementById('ownerPassInput').value = '';
+      document.getElementById('adminPassModal').style.display = 'flex';
     }
 
     function verifyOwnerPassword() {
-      const passInput = document.getElementById('ownerPassInput');
-      const pass = passInput ? passInput.value : '';
+      const pass = document.getElementById('ownerPassInput').value;
       if (pass === OWNER_MASTER_PASS) {
         closeModal('adminPassModal');
-        const admPortal = document.getElementById('adminPortal');
-        if (admPortal) admPortal.style.display = 'block';
+        document.getElementById('adminPortal').style.display = 'block';
       } else {
         showAppToast("गलत मास्टर पासवर्ड!");
       }
     }
 
     function switchAdm(id) {
-      try {
-        document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
-        document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
-        if (event && event.target) event.target.classList.add('active');
-        const targetSec = document.getElementById(id);
-        if (targetSec) targetSec.classList.add('active');
-      } catch(e) {}
+      document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
+      document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
+      if (event && event.target) event.target.classList.add('active');
+      const target = document.getElementById(id);
+      if (target) target.classList.add('active');
     }
 
-    // --- Firestore Sync & 1-Hour Auto Purge Cleanup ---
+    // --- Firestore Sync Listeners ---
     if (db) {
       db.collection("donations").onSnapshot(snap => {
         let isInit = isFirstDonationLoad;
         isFirstDonationLoad = false;
-        try {
-          snap.docChanges().forEach(c => {
-            if (c.type === "added" && !isInit) {
-              const d = c.doc.data();
-              triggerCelebration(d.name, d.cause, d.amount, d.salutation);
-            }
-          });
-        } catch(e) {}
+        snap.docChanges().forEach(c => {
+          if (c.type === "added" && !isInit) {
+            const d = c.doc.data();
+            triggerCelebration(d.name, d.cause, d.amount, d.salutation);
+          }
+        });
         cloudDonations = [];
         snap.forEach(doc => cloudDonations.push({ id: doc.id, ...doc.data() }));
         cloudDonations.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
@@ -972,7 +885,7 @@
         renderAdminOrders();
       }, err => {});
 
-      // 1-Hour Chat Message Auto Purge Check for Maximum Speed
+      // 1-Hour Chat Purge
       db.collection("chats").orderBy("timeNumber", "asc").onSnapshot(snap => {
         const now = Date.now();
         const oneHourMs = 60 * 60 * 1000;
@@ -988,9 +901,242 @@
         renderGlobalChat();
         renderAdminChat();
       }, err => {});
+
+      // Feedbacks Sync
+      db.collection("feedbacks").onSnapshot(snap => {
+        cloudFeedbacks = [];
+        snap.forEach(doc => cloudFeedbacks.push({ id: doc.id, ...doc.data() }));
+        cloudFeedbacks.sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+        renderPublicFeedbacks();
+        renderAdminFeedbacks();
+      }, err => {});
+
+      db.collection("settings").doc("main").onSnapshot(doc => {
+        if (doc.exists) {
+          const s = doc.data();
+          if (s.ticker) {
+            document.getElementById('liveTicker').innerText = s.ticker;
+            document.getElementById('admTickerText').value = s.ticker;
+          }
+          if (s.upi) document.getElementById('admUpiId').value = s.upi;
+          if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
+          if (s.wa) {
+            document.getElementById('admWaPhone').value = s.wa;
+            document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
+            document.getElementById('ftrWa').innerText = `+${s.wa}`;
+          }
+        }
+      }, err => {});
     }
 
-    // --- Global Live Satsang Chat with Long-Press Delete & Media ---
+    // --- Feedback Functions ---
+    function submitPublicFeedback() {
+      if (!db) return;
+      const name = document.getElementById('fbNameInput').value.trim() || "श्रद्धालु भक्त";
+      const rating = document.getElementById('fbRatingInput').value;
+      const msg = document.getElementById('fbMsgInput').value.trim();
+
+      if (!msg) {
+        showAppToast("कृपया अपना संदेश या अनुभव लिखें!");
+        return;
+      }
+
+      db.collection("feedbacks").add({
+        name: name,
+        rating: Number(rating),
+        message: msg,
+        pinned: false,
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
+        document.getElementById('fbMsgInput').value = '';
+      }).catch(e => showAppToast(e.message));
+    }
+
+    function renderPublicFeedbacks() {
+      const box = document.getElementById('publicFeedbackList');
+      if (!box) return;
+      if (cloudFeedbacks.length === 0) {
+        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column: 1/-1;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
+        return;
+      }
+      box.innerHTML = cloudFeedbacks.map(f => `
+        <div class="fb-card" style="${f.pinned ? 'border:1px solid var(--gold); background:rgba(255,215,0,0.08);' : ''}">
+          <div class="fb-header">
+            <span>${f.name} ${f.pinned ? '⭐ (पिन किया गया)' : ''}</span>
+            <span>${'⭐'.repeat(f.rating || 5)}</span>
+          </div>
+          <p style="color:#ffcdd2; line-height:1.5;">${f.message}</p>
+          <small style="color:#777; display:block; margin-top:6px;">${f.date || ''}</small>
+        </div>
+      `).join('');
+    }
+
+    function togglePinFeedback(id, currentStatus) {
+      if (!db) return;
+      db.collection("feedbacks").doc(id).update({ pinned: !currentStatus }).then(() => {
+        showAppToast("स्टेटस अपडेट हुआ!");
+      });
+    }
+
+    function renderAdminFeedbacks() {
+      const tb = document.querySelector('#admFeedTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudFeedbacks.map(f => `
+        <tr>
+          <td>${f.date || '—'}</td>
+          <td><b>${f.name || '—'}</b></td>
+          <td>${'⭐'.repeat(f.rating || 5)}</td>
+          <td>${f.message}</td>
+          <td>
+            <button onclick="togglePinFeedback('${f.id}', ${f.pinned || false})" style="background:${f.pinned ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
+              ${f.pinned ? '⭐ Pinned' : 'Pin करें'}
+            </button>
+          </td>
+          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+        </tr>
+      `).join('');
+    }
+
+    // --- WhatsApp Receipt Sender ---
+    function sendWhatsAppReceipt(phone, name, amount, cause, utr, date) {
+      if (!phone) {
+        showAppToast("दानदाता का मोबाइल नंबर उपलब्ध नहीं है!");
+        return;
+      }
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const finalPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+      
+      const receiptMsg = encodeURIComponent(
+        `🚩 *श्री दुर्गा पूजा सेवा समिति & Maa Durga Enterprises* 🚩\n\n` +
+        `सादर प्रणाम, *${name}* जी,\n` +
+        `माँ भगवती के पावन कार्य हेतु आपका सहयोग सप्रेम प्राप्त हुआ।\n\n` +
+        `🧾 *पावन सहयोग रसीद:* \n` +
+        `• उद्देश्य: ${cause}\n` +
+        `• सहयोग राशि: ₹${amount}\n` +
+        `• UTR / Ref No: ${utr}\n` +
+        `• दिनांक: ${date}\n\n` +
+        `🌸 माँ दुर्गा जी की कृपा आप और आपके समस्त परिवार पर सदैव बनी रहे। जय माता दी! 🌸`
+      );
+
+      window.open(`https://wa.me/${finalPhone}?text=${receiptMsg}`, '_blank');
+    }
+
+    // --- Render Admin Donations WITH MOBILE AND 1-CLICK RECEIPT ---
+    function renderAdminDonations() {
+      const tb = document.querySelector('#admDonTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudDonations.map(d => {
+        const dName = formatDonorName(d.name, d.salutation);
+        const phone = d.phone || '';
+        return `
+          <tr>
+            <td>${d.date}</td>
+            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${dName}</b></td>
+            <td><b style="color:#81c784;">${phone ? '📞 ' + phone : '—'}</b></td>
+            <td>${d.address || '—'}</td>
+            <td>₹${d.amount}</td>
+            <td>${d.utr || 'VERIFIED'}</td>
+            <td>
+              ${phone ? `
+                <button onclick="sendWhatsAppReceipt('${phone}', '${d.name}', '${d.amount}', '${d.cause}', '${d.utr || 'VERIFIED'}', '${d.date}')" style="background:#25D366; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
+                  📲 WhatsApp
+                </button>
+              ` : '<span style="color:#777;">नंबर नहीं</span>'}
+            </td>
+            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    // --- Save Cash Donation with Phone ---
+    function saveAdminCashDonation() {
+      if (!db) return;
+      const name = document.getElementById('admCashName')?.value.trim();
+      const phone = document.getElementById('admCashPhone')?.value.trim() || '';
+      const city = document.getElementById('admCashCity')?.value.trim() || '';
+      const amt = document.getElementById('admCashAmt')?.value.trim();
+
+      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
+
+      db.collection("donations").add({
+        name, salutation: "none", address: city, phone: phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        showAppToast("✅ सहयोग दर्ज हुआ!");
+        document.getElementById('admCashName').value = '';
+        document.getElementById('admCashPhone').value = '';
+        document.getElementById('admCashAmt').value = '';
+      });
+    }
+
+    // --- Direct Donation Modal Flow ---
+    function openDonationModal() {
+      const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
+      const sal = document.getElementById('donSalutation')?.value || 'none';
+      const amt = document.getElementById('donAmount')?.value.trim();
+      const cause = document.getElementById('donCause')?.value;
+      const city = document.getElementById('donCity')?.value.trim();
+      const phone = document.getElementById('donPhone')?.value.trim();
+
+      if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
+      if (!phone || phone.length < 10) { showAppToast("कृपया रसीद प्राप्त करने के लिए 10-अंकीय व्हाट्सएप नंबर दर्ज करें!"); return; }
+
+      pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
+
+      document.getElementById('donModalInfo').innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
+      document.getElementById('donUtrInput').value = '';
+      generateDynamicQrCode('donationQrContainer', amt);
+      document.getElementById('donationModal').style.display = 'flex';
+    }
+
+    function openDirectUpiApp() {
+      if (!pendingDonationData) return;
+      const upiId = document.getElementById('admUpiId')?.value || "paytm.s20g6r2@pty";
+      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
+    }
+
+    function submitSecureDonation() {
+      if (!pendingDonationData || !db) return;
+      const utr = document.getElementById('donUtrInput')?.value.trim();
+      if (!utr || utr.length < 12) {
+        showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
+        return;
+      }
+
+      const dupOrd = cloudOrders.find(o => o.utr === utr);
+      const dupDon = cloudDonations.find(d => d.utr === utr);
+      if (dupOrd || dupDon) {
+        showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
+        return;
+      }
+
+      db.collection("donations").add({
+        name: pendingDonationData.name,
+        salutation: pendingDonationData.salutation,
+        address: pendingDonationData.address,
+        phone: pendingDonationData.phone,
+        amount: pendingDonationData.amount,
+        cause: pendingDonationData.cause,
+        utr: utr,
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        closeModal('donationModal');
+        showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
+        document.getElementById('donName').value = '';
+        document.getElementById('donAmount').value = '';
+        document.getElementById('donPhone').value = '';
+        document.getElementById('donCity').value = '';
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
+    }
+
+    // --- Chat & Media Functions ---
     let mediaRecorder = null;
     let audioChunks = [];
     let isRecording = false;
@@ -1016,20 +1162,12 @@
       }).catch(e => showAppToast(e.message));
     }
 
-    function openFileStorage() {
-      const picker = document.getElementById('hiddenFilePicker');
-      if (picker) picker.click();
-    }
-
-    function openCameraApp() {
-      const cam = document.getElementById('hiddenCameraPicker');
-      if (cam) cam.click();
-    }
+    function openFileStorage() { document.getElementById('hiddenFilePicker')?.click(); }
+    function openCameraApp() { document.getElementById('hiddenCameraPicker')?.click(); }
 
     function handleFileSelected(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         const fileDataUrl = e.target.result;
@@ -1049,7 +1187,7 @@
     function toggleVoiceRecording() {
       if (!isRecording) {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          showAppToast("आपका ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
+          showAppToast("ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
           return;
         }
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -1068,22 +1206,16 @@
           isRecording = true;
           const micBtn = document.getElementById('micBtn');
           if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = '🔴'; }
-          showAppToast("🎙️ रिकॉर्डिंग शुरू हो गई है... रोकने के लिए दोबारा माइक दबाएं।");
-        }).catch(err => {
-          showAppToast("माइक्रोफोन की अनुमति आवश्यक है!");
-        });
+          showAppToast("🎙️ रिकॉर्डिंग शुरू... दोबारा दबाकर भेजें।");
+        }).catch(() => showAppToast("माइक्रोफोन की अनुमति आवश्यक है!"));
       } else {
-        if (mediaRecorder) {
-          mediaRecorder.stop();
-        }
+        if (mediaRecorder) mediaRecorder.stop();
         isRecording = false;
         const micBtn = document.getElementById('micBtn');
         if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = '🎙️'; }
-        showAppToast("✅ वॉइस नोट भेजा जा रहा है...");
       }
     }
 
-    // Long Press to Delete own message
     let pressTimer = null;
     function handleMsgTouchStart(chatId, msgEmail) {
       pressTimer = setTimeout(() => {
@@ -1091,838 +1223,206 @@
         const isMyMsg = currentUser && currentUser.email === msgEmail;
         if (isMyMsg || isOwner) {
           if (confirm("क्या आप इस संदेश को डिलीट करना चाहते हैं?")) {
-            db.collection("chats").doc(chatId).delete().then(() => {
-              showAppToast("संदेश डिलीट कर दिया गया!");
-            }).catch(e => showAppToast(e.message));
+            db.collection("chats").doc(chatId).delete().then(() => showAppToast("संदेश डिलीट हुआ!"));
           }
         } else {
           showAppToast("आप केवल अपना भेजा हुआ संदेश डिलीट कर सकते हैं!");
         }
-      }, 700); // 700ms long press
+      }, 700);
     }
 
-    function handleMsgTouchEnd() {
-      clearTimeout(pressTimer);
-    }
+    function handleMsgTouchEnd() { clearTimeout(pressTimer); }
 
     function renderGlobalChat() {
-      try {
-        const box = document.getElementById('globalChatContainer');
-        if (!box) return;
-        box.innerHTML = cloudChats.map(c => `
-          <div style="display:flex; flex-direction:column; align-items:flex-start;" 
-               ontouchstart="handleMsgTouchStart('${c.id}', '${c.email || ''}')" 
-               ontouchend="handleMsgTouchEnd()" 
-               onmousedown="handleMsgTouchStart('${c.id}', '${c.email || ''}')" 
-               onmouseup="handleMsgTouchEnd()">
-            <div class="insta-msg-bubble" title="मैसेज डिलीट करने के लिए 2-3 सेकंड दबाकर रखें">
-              <div class="insta-msg-sender">${c.name || 'अज्ञात भक्त'} <span style="font-weight:normal; color:#aaa; font-size:9px; margin-left:6px;">${c.dateStr || ''}</span></div>
-              <div>${c.message || ''}</div>
-            </div>
+      const box = document.getElementById('globalChatContainer');
+      if (!box) return;
+      box.innerHTML = cloudChats.map(c => `
+        <div style="display:flex; flex-direction:column; align-items:flex-start;" 
+             ontouchstart="handleMsgTouchStart('${c.id}', '${c.email || ''}')" 
+             ontouchend="handleMsgTouchEnd()" 
+             onmousedown="handleMsgTouchStart('${c.id}', '${c.email || ''}')" 
+             onmouseup="handleMsgTouchEnd()">
+          <div class="insta-msg-bubble">
+            <div class="insta-msg-sender">${c.name || 'अज्ञात भक्त'} <span style="font-weight:normal; color:#aaa; font-size:9px; margin-left:6px;">${c.dateStr || ''}</span></div>
+            <div>${c.message || ''}</div>
           </div>
-        `).join('');
-        box.scrollTop = box.scrollHeight;
-      } catch(e) {}
+        </div>
+      `).join('');
+      box.scrollTop = box.scrollHeight;
     }
 
     function renderAdminChat() {
-      try {
-        const tb = document.querySelector('#admChatTable tbody');
-        if (!tb) return;
-        tb.innerHTML = cloudChats.map(c => `
-          <tr>
-            <td>${c.dateStr || '—'}</td>
-            <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
-            <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
-            <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `).join('');
-      } catch(e) {}
+      const tb = document.querySelector('#admChatTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudChats.map(c => `
+        <tr>
+          <td>${c.dateStr || '—'}</td>
+          <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
+          <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
+          <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+        </tr>
+      `).join('');
     }
 
-    // --- Admin Clickable Inspect Record (Full details modal) ---
     function inspectRecord(type, id) {
-      try {
-        let item = null;
-        let html = "";
-        if (type === 'order') {
-          item = cloudOrders.find(o => o.id === id);
-          if (!item) return;
-          html = `
-            <b>📦 ऑर्डर विवरण:</b><br>
-            • नाम: ${item.userName || '—'}<br>
-            • ईमेल: ${item.userEmail || '—'}<br>
-            • सामग्री: ${item.productName || '—'}<br>
-            • राशि: ₹${item.amount || 0}<br>
-            • UTR: ${item.utr || '—'}<br>
-            • फोन: ${item.phone || '—'}<br>
-            • पूरा पता: ${item.fullAddress || item.address || '—'}<br>
-            • पिनकोड: ${item.pincode || '—'}<br>
-            • स्थिति: ${item.status || 'कन्फ़र्म हुआ'}<br>
-            • तारीख: ${item.date || '—'}
-          `;
-        } else if (type === 'donation') {
-          item = cloudDonations.find(d => d.id === id);
-          if (!item) return;
-          html = `
-            <b>💵 दान/सहयोग विवरण:</b><br>
-            • नाम: ${formatDonorName(item.name, item.salutation)}<br>
-            • उद्देश्य: ${item.cause || '—'}<br>
-            • राशि: ₹${item.amount || 0}<br>
-            • UTR: ${item.utr || '—'}<br>
-            • स्थान/शहर: ${item.address || '—'}<br>
-            • फोन: ${item.phone || '—'}<br>
-            • तारीख: ${item.date || '—'}
-          `;
-        }
-        document.getElementById('inspectContentBox').innerHTML = html;
-        document.getElementById('adminInspectModal').style.display = 'flex';
-      } catch(e) {}
-    }
-
-    // --- Store & Categories ---
-    function renderCategories() {
-      try {
-        const cats = ['all'];
-        cloudProducts.forEach(p => {
-          if (p.category && !cats.includes(p.category)) cats.push(p.category);
-        });
-        const cBox = document.getElementById('catScroll');
-        if (!cBox) return;
-        cBox.innerHTML = cats.map(c => `
-          <span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">
-            ${c === 'all' ? (isEn ? 'All' : 'सभी') : c}
-          </span>
-        `).join('');
-      } catch(e) {}
-    }
-
-    function filterCategory(cat) {
-      activeCategory = cat;
-      renderCategories();
-      renderStoreProducts();
-    }
-
-    function renderStoreProducts() {
-      try {
-        const g = document.getElementById('fullStoreGrid');
-        if (!g) return;
-        const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
-        if (filtered.length === 0) {
-          g.innerHTML = `<p style="grid-column: 1/-1; text-align:center; color:#aaa;">सामग्री लोड हो रही है...</p>`;
-          return;
-        }
-        g.innerHTML = filtered.map(p => `
-          <div class="p-card">
-            <img src="${p.img || 'https://via.placeholder.com/200'}" alt="${p.name}">
-            <div>
-              ${p.refundable ? '<span class="badge-ref" style="background:rgba(76,175,80,0.2);color:#81c784;">✓ 2 Days Refund</span>' : '<span class="badge-ref" style="background:rgba(211,47,47,0.2);color:#e57373;">Non-Refundable</span>'}
-              <div class="p-title">${p.name}</div>
-            </div>
-            <div>
-              <div class="p-price">₹${p.price}</div>
-              <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
-            </div>
-          </div>
-        `).join('');
-      } catch(e) {}
-    }
-
-    function renderSuggestedProducts() {
-      try {
-        const sg = document.getElementById('suggestedGrid');
-        if (!sg) return;
-        const sugList = cloudProducts.filter(p => p.isSuggested);
-        const listToRender = sugList.length > 0 ? sugList : cloudProducts.slice(0, 2);
-        sg.innerHTML = listToRender.map(p => `
-          <div class="p-card">
-            <img src="${p.img || 'https://via.placeholder.com/200'}">
-            <div class="p-title">${p.name}</div>
-            <div class="p-price">₹${p.price}</div>
-            <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 ${isEn ? 'Buy Now' : 'अभी खरीदें'}</button>
-          </div>
-        `).join('');
-      } catch(e) {}
-    }
-
-    // --- Checkout Flow with Dynamic QR & Secure UTR Verification ---
-    let selectedProduct = null;
-    let appliedDiscountPct = 0;
-
-    function openCheckout(pId) {
-      if (!currentUser) {
-        showAppToast("कृपया ऑर्डर करने से पहले लॉगिन करें!");
-        openLoginModal();
-        return;
+      let item = null;
+      let html = "";
+      if (type === 'order') {
+        item = cloudOrders.find(o => o.id === id);
+        if (!item) return;
+        html = `<b>📦 ऑर्डर विवरण:</b><br>• नाम: ${item.userName}<br>• फोन: ${item.phone}<br>• सामग्री: ${item.productName}<br>• राशि: ₹${item.amount}<br>• पता: ${item.fullAddress}<br>• UTR: ${item.utr}`;
+      } else if (type === 'donation') {
+        item = cloudDonations.find(d => d.id === id);
+        if (!item) return;
+        html = `<b>💵 दान विवरण:</b><br>• नाम: ${formatDonorName(item.name, item.salutation)}<br>• फोन: ${item.phone || 'उपलब्ध नहीं'}<br>• उद्देश्य: ${item.cause}<br>• राशि: ₹${item.amount}<br>• स्थान: ${item.address}<br>• UTR: ${item.utr}`;
       }
-      selectedProduct = cloudProducts.find(p => p.id === pId);
-      if (!selectedProduct) return;
-
-      appliedDiscountPct = 0;
-      try {
-        const cInput = document.getElementById('chkCouponInput');
-        if (cInput) cInput.value = '';
-        const cMsg = document.getElementById('couponMsg');
-        if (cMsg) cMsg.style.display = 'none';
-        const cUtr = document.getElementById('chkUtrInput');
-        if (cUtr) cUtr.value = '';
-
-        const pNameEl = document.getElementById('chkProdName');
-        if (pNameEl) pNameEl.innerText = selectedProduct.name;
-        const pDetEl = document.getElementById('chkProdDetails');
-        if (pDetEl) pDetEl.innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
-        const cNameEl = document.getElementById('chkCustName');
-        if (cNameEl) cNameEl.value = currentUser.displayName || '';
-        
-        updatePayText();
-        generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
-        const chkMod = document.getElementById('checkoutModal');
-        if (chkMod) chkMod.style.display = 'flex';
-      } catch(e) {}
-    }
-
-    function applyStoreCoupon() {
-      try {
-        const cInput = document.getElementById('chkCouponInput');
-        const code = cInput ? cInput.value.trim().toUpperCase() : '';
-        if (!code) return;
-        const c = cloudCoupons.find(x => x.code.toUpperCase() === code);
-        if (c) {
-          appliedDiscountPct = Number(c.discount);
-          const m = document.getElementById('couponMsg');
-          if (m) {
-            m.innerText = `🎉 '${code}' लागू हुआ! (${appliedDiscountPct}% छूट)`;
-            m.style.display = 'block';
-          }
-          updatePayText();
-          generateDynamicQrCode('dynamicQrContainer', getFinalPayAmount());
-        } else {
-          showAppToast("अमान्य कूपन कोड!");
-        }
-      } catch(e) {}
-    }
-
-    function getFinalPayAmount() {
-      if (!selectedProduct) return 0;
-      let amt = selectedProduct.price;
-      if (appliedDiscountPct > 0) amt = Math.round(amt - (amt * appliedDiscountPct / 100));
-      return amt;
-    }
-
-    function updatePayText() {
-      try {
-        const fAmt = document.getElementById('finalCheckoutAmt');
-        if (fAmt) fAmt.innerText = `₹${getFinalPayAmount()}`;
-      } catch(e) {}
+      document.getElementById('inspectContentBox').innerHTML = html;
+      document.getElementById('adminInspectModal').style.display = 'flex';
     }
 
     function generateDynamicQrCode(containerId, amount) {
-      try {
-        const container = document.getElementById(containerId);
-        if (!container) return;
-        container.innerHTML = "";
-        const upiInput = document.getElementById('admUpiId');
-        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-        const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
-
-        new QRCode(container, {
-          text: upiString,
-          width: 170,
-          height: 170,
-          colorDark: "#000000",
-          colorLight: "#ffffff",
-          correctLevel: QRCode.CorrectLevel.H
-        });
-      } catch(e) {}
-    }
-
-    function openStoreUpiApp() {
-      try {
-        const amt = getFinalPayAmount();
-        const upiInput = document.getElementById('admUpiId');
-        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-        window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amt}&cu=INR`;
-      } catch(e) {}
-    }
-
-    function confirmStoreOrder() {
-      if (!db || !currentUser || !selectedProduct) return;
-      try {
-        const name = document.getElementById('chkCustName')?.value.trim() || '';
-        const pin = document.getElementById('chkPincode')?.value.trim() || '';
-        const phone = document.getElementById('chkPhone')?.value.trim() || '';
-        const street = document.getElementById('chkStreet')?.value.trim() || '';
-        const city = document.getElementById('chkCity')?.value.trim() || '';
-        const state = document.getElementById('chkState')?.value.trim() || 'Uttar Pradesh';
-        const utr = document.getElementById('chkUtrInput')?.value.trim() || '';
-
-        if (!name || !pin || !phone || !street || !city) {
-          showAppToast("कृपया नाम, पिनकोड, फोन, मकान/सड़क और शहर पूरा भरें!");
-          return;
-        }
-        if (!utr || utr.length < 12) {
-          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
-          return;
-        }
-
-        const dupOrd = cloudOrders.find(o => o.utr === utr);
-        const dupDon = cloudDonations.find(d => d.utr === utr);
-        if (dupOrd || dupDon) {
-          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
-          return;
-        }
-
-        const fullAddress = `${street}, ${city}, ${state} - PIN: ${pin}`;
-
-        db.collection("orders").add({
-          userEmail: currentUser.email,
-          userName: name,
-          productName: selectedProduct.name,
-          amount: getFinalPayAmount(),
-          pincode: pin,
-          phone: phone,
-          street: street,
-          city: city,
-          state: state,
-          fullAddress: fullAddress,
-          utr: utr,
-          otp: "",
-          showOtpToUser: false,
-          statusCode: 1,
-          status: "ऑर्डर कन्फ़र्म हुआ",
-          statusDesc: "आपने सफलतापूर्वक ऑर्डर कर दिया है। विक्रेता द्वारा पैकिंग प्रक्रिया जारी है।",
-          refundable: selectedProduct.refundable,
-          date: new Date().toLocaleDateString('hi-IN'),
-          timeNumber: Date.now()
-        }).then(() => {
-          closeModal('checkoutModal');
-          showAppToast("✅ आपका ऑर्डर सुरक्षित दर्ज हो गया है!");
-          switchNav('orders');
-        }).catch(e => showAppToast(e.message));
-      } catch(e) {}
-    }
-
-    // --- Customer My Orders Display ---
-    function renderCustomerOrders() {
-      try {
-        const cont = document.getElementById('ordersContainer');
-        if (!cont) return;
-        if (!currentUser) {
-          cont.innerHTML = `<p style="text-align:center; color:#aaa;">ऑर्डर्स देखने के लिए कृपया लॉगिन करें।</p>`;
-          return;
-        }
-        const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
-        if (my.length === 0) {
-          cont.innerHTML = `<p style="text-align:center; color:#aaa;">अभी आपने कोई ऑर्डर नहीं किया है।</p>`;
-          return;
-        }
-        cont.innerHTML = my.map(o => {
-          const sc = o.statusCode !== undefined ? o.statusCode : 1;
-          const dispAddr = o.fullAddress || o.address || 'पता सुरक्षित है';
-          const isCancelled = (sc === 0);
-
-          let otpDisplayHtml = "";
-          if (o.showOtpToUser && o.otp) {
-            otpDisplayHtml = `
-              <div style="text-align:right;">
-                <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
-                <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
-                  🔑 ${o.otp}
-                </span>
-              </div>
-            `;
-          }
-
-          return `
-            <div style="background:rgba(255,255,255,0.03); border:1px solid ${isCancelled ? 'rgba(211,47,47,0.5)' : 'rgba(255,215,0,0.25)'}; border-radius:12px; padding:16px; margin-bottom:18px;">
-              <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:8px; margin-bottom:12px;">
-                <div>
-                  <b style="color:var(--gold); font-size:15px;">${o.productName}</b>
-                  <span style="color:#fff; font-size:13px; margin-left:6px;">₹${o.amount}</span>
-                </div>
-                ${otpDisplayHtml}
-              </div>
-
-              <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">डिलीवरी पता: ${dispAddr} | फोन: ${o.phone || '—'}</p>
-
-              ${isCancelled ? `
-                <div style="background:rgba(211,47,47,0.15); border:1px solid #d32f2f; padding:10px; border-radius:6px; color:#ff8a80; font-size:13px; font-weight:bold; text-align:center;">
-                  ❌ यह ऑर्डर विक्रेता द्वारा रद्द (Cancelled) कर दिया गया है।
-                </div>
-              ` : `
-                <div class="timeline-wrap">
-                  <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
-                  
-                  <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
-                    <div class="timeline-dot"></div>
-                    <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
-                    <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr || '—'}</div>
-                  </div>
-
-                  <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
-                    <div class="timeline-dot"></div>
-                    <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
-                    <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
-                  </div>
-
-                  <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
-                    <div class="timeline-dot"></div>
-                    <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
-                    <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
-                  </div>
-
-                  <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
-                    <div class="timeline-dot"></div>
-                    <div class="step-title">डिलीवर किया गया (Delivered)</div>
-                    <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
-                  </div>
-                </div>
-              `}
-            </div>
-          `;
-        }).join('');
-      } catch(e) {}
-    }
-
-    // --- Admin Operations ---
-    function saveAdminSettings() {
-      if (!db) return;
-      try {
-        const ytIn = document.getElementById('admYtLink');
-        const newYtLink = ytIn ? ytIn.value.trim() : '';
-        const resolvedId = extractVideoId(newYtLink);
-
-        const settingsData = {
-          ticker: document.getElementById('admTickerText')?.value || '',
-          paymentMode: document.getElementById('admPaymentMode')?.value || 'upi',
-          upi: document.getElementById('admUpiId')?.value || '',
-          razorpay: document.getElementById('admRazorpayKey')?.value || '',
-          wa: document.getElementById('admWaPhone')?.value || '',
-          insta: document.getElementById('admInstaLink')?.value || '',
-          yt: newYtLink
-        };
-
-        if (resolvedId && resolvedId !== currentYtVideoId) {
-          settingsData.videoId = resolvedId;
-          settingsData.startedAt = Date.now();
-        }
-
-        db.collection("settings").doc("main").set(settingsData, { merge: true }).then(() => {
-          if (resolvedId && resolvedId !== currentYtVideoId) {
-            db.collection("settings").doc("music_room").set({
-              startedAt: Date.now(),
-              videoId: resolvedId
-            }, { merge: true }).catch(() => {});
-          }
-          showAppToast("✅ सभी सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!");
-        }).catch(e => showAppToast("त्रुटि: " + e.message));
-      } catch(e) {}
-    }
-
-    function saveNewProduct() {
-      if (!db) return;
-      try {
-        const name = document.getElementById('newPName')?.value.trim();
-        const price = document.getElementById('newPPrice')?.value.trim();
-        const cat = document.getElementById('newPCat')?.value.trim() || "सामान्य";
-        const sub = document.getElementById('newPSubCat')?.value.trim() || "";
-        const img = document.getElementById('newPImg')?.value.trim();
-        const desc = document.getElementById('newPDesc')?.value.trim();
-        const ref = document.getElementById('newPRefund')?.checked || false;
-        const sug = document.getElementById('newPSuggested')?.checked || false;
-
-        if (!name || !price) { showAppToast("नाम व कीमत आवश्यक हैं!"); return; }
-
-        db.collection("products").add({
-          name, price: Number(price), category: cat, subCategory: sub, img, desc, refundable: ref, isSuggested: sug, timeNumber: Date.now()
-        }).then(() => {
-          showAppToast("✅ नया प्रोडक्ट जुड़ गया!");
-          document.getElementById('newPName').value = '';
-          document.getElementById('newPPrice').value = '';
-          document.getElementById('newPImg').value = '';
-        });
-      } catch(e) {}
-    }
-
-    function renderAdminProducts() {
-      try {
-        const tb = document.querySelector('#admProdTable tbody');
-        if (!tb) return;
-        tb.innerHTML = cloudProducts.map(p => `
-          <tr>
-            <td><img src="${p.img || ''}" width="30" height="30" style="object-fit:cover;border-radius:4px;"></td>
-            <td><b>${p.name}</b></td>
-            <td>${p.category || '—'}</td>
-            <td>₹${p.price}</td>
-            <td>${p.isSuggested ? '⭐ हाँ' : 'नहीं'}</td>
-            <td>${p.refundable ? '✓ 2 दिन' : 'नहीं'}</td>
-            <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `).join('');
-      } catch(e) {}
-    }
-
-    function saveNewCoupon() {
-      if (!db) return;
-      try {
-        const code = document.getElementById('newCCode')?.value.trim().toUpperCase();
-        const dis = document.getElementById('newCDiscount')?.value.trim();
-        if (!code || !dis) { showAppToast("कोड व छूट % भरें!"); return; }
-        db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => {
-          showAppToast("✅ कूपन बन गया!");
-          document.getElementById('newCCode').value = '';
-          document.getElementById('newCDiscount').value = '';
-        });
-      } catch(e) {}
-    }
-
-    function renderAdminCoupons() {
-      try {
-        const tb = document.querySelector('#admCoupTable tbody');
-        if (!tb) return;
-        tb.innerHTML = cloudCoupons.map(c => `
-          <tr>
-            <td><b>${c.code}</b></td>
-            <td>${c.discount}%</td>
-            <td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `).join('');
-      } catch(e) {}
-    }
-
-    function saveOrderDetails(orderId) {
-      if (!db) return;
-      try {
-        const otpVal = document.getElementById(`admOtpInput_${orderId}`)?.value.trim() || '';
-        const isVisible = document.getElementById(`admOtpCheck_${orderId}`)?.checked || false;
-        const statusLvl = parseInt(document.getElementById(`admStatusSel_${orderId}`)?.value || '1');
-
-        let statusName = "ऑर्डर कन्फ़र्म हुआ";
-        if (statusLvl === 2) statusName = "शिप किया गया";
-        if (statusLvl === 3) statusName = "डिलीवरी के लिए रवाना";
-        if (statusLvl === 4) statusName = "डिलीवर किया गया";
-        if (statusLvl === 0) statusName = "रद्द";
-
-        db.collection("orders").doc(orderId).update({
-          otp: otpVal,
-          showOtpToUser: isVisible,
-          statusCode: statusLvl,
-          status: statusName
-        }).then(() => {
-          showAppToast("✅ सम्मति सुरक्षित! ग्राहक को नई स्थिति व OTP सेटिंग अपडेट हो गई।");
-        }).catch(e => showAppToast("त्रुटि: " + e.message));
-      } catch(e) {}
-    }
-
-    function deleteOrderPermanently(orderId) {
-      if (!db) return;
-      if (confirm("क्या आप इस फर्जी या टेस्ट ऑर्डर को डेटाबेस से हमेशा के लिए हटाना चाहते हैं?")) {
-        db.collection("orders").doc(orderId).delete().then(() => {
-          showAppToast("✅ ऑर्डर सफलतापूर्वक हटा दिया गया!");
-        }).catch(err => showAppToast("त्रुटि: " + err.message));
-      }
-    }
-
-    function renderAdminOrders() {
-      try {
-        const tb = document.querySelector('#admOrdTable tbody');
-        if (!tb) return;
-        if (cloudOrders.length === 0) {
-          tb.innerHTML = "<tr><td colspan='9' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
-          return;
-        }
-        tb.innerHTML = cloudOrders.map(o => {
-          const sc = o.statusCode !== undefined ? o.statusCode : 1;
-          return `
-          <tr>
-            <td>${o.date || '—'}</td>
-            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('order', '${o.id}')">${o.userName || '—'}</b></td>
-            <td>${o.productName || '—'}</td>
-            <td>₹${o.amount || 0}</td>
-            <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
-            <td>
-              <div style="display:flex; align-items:center; gap:4px;">
-                <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:55px; padding:3px; font-size:11px;">
-                <input type="checkbox" id="admOtpCheck_${o.id}" ${o.showOtpToUser ? 'checked' : ''} title="टिक रहने पर ही ग्राहक को OTP दिखेगा" style="width:16px; height:16px; cursor:pointer;">
-              </div>
-            </td>
-            <td>
-              <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:110px;">
-                <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म</option>
-                <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप हुआ</option>
-                <option value="3" ${sc == 3 ? 'selected' : ''}>3. रवाना</option>
-                <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर</option>
-                <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द</option>
-              </select>
-            </td>
-            <td>
-              <button onclick="saveOrderDetails('${o.id}')" style="background:#4caf50; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                💾
-              </button>
-            </td>
-            <td>
-              <button onclick="deleteOrderPermanently('${o.id}')" style="background:#d32f2f; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                🗑️
-              </button>
-            </td>
-          </tr>
-        `;
-        }).join('');
-      } catch(e) {}
-    }
-
-    function saveAdminCashDonation() {
-      if (!db) return;
-      try {
-        const sal = document.getElementById('admCashSalutation')?.value || 'none';
-        const name = document.getElementById('admCashName')?.value.trim();
-        const city = document.getElementById('admCashCity')?.value.trim() || '';
-        const amt = document.getElementById('admCashAmt')?.value.trim();
-
-        if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
-
-        db.collection("donations").add({
-          name, salutation: sal, address: city, phone: "", amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
-          date: new Date().toLocaleDateString('hi-IN'),
-          timeNumber: Date.now(),
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => {
-          showAppToast("✅ सहयोग क्लाउड में दर्ज हुआ व लाइव प्रसारण शुरू!");
-          document.getElementById('admCashName').value = '';
-          document.getElementById('admCashAmt').value = '';
-        });
-      } catch(e) {}
-    }
-
-    function renderAdminDonations() {
-      try {
-        const tb = document.querySelector('#admDonTable tbody');
-        if (!tb) return;
-        tb.innerHTML = cloudDonations.map(d => `
-          <tr>
-            <td>${d.date}</td>
-            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${formatDonorName(d.name, d.salutation)}</b></td>
-            <td>${d.address || '—'}</td>
-            <td>₹${d.amount}</td>
-            <td>${d.utr || 'VERIFIED'}</td>
-            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `).join('');
-      } catch(e) {}
-    }
-
-    // --- Direct Donation Modal Flow with Paytm QR & Strict UTR Match ---
-    function openDonationModal() {
-      try {
-        const dName = document.getElementById('donName');
-        const dSal = document.getElementById('donSalutation');
-        const dAmt = document.getElementById('donAmount');
-        const dCau = document.getElementById('donCause');
-        const dCit = document.getElementById('donCity');
-        const dPho = document.getElementById('donPhone');
-
-        const name = dName ? dName.value.trim() : "श्रद्धालु भक्त";
-        const sal = dSal ? dSal.value : 'none';
-        const amt = dAmt ? dAmt.value.trim() : '';
-        const cause = dCau ? dCau.value : 'श्री दुर्गा पूजा एवं अखंड भंडारा';
-        const city = dCit ? dCit.value.trim() : '';
-        const phone = dPho ? dPho.value.trim() : '';
-
-        if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
-
-        pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
-
-        const infoEl = document.getElementById('donModalInfo');
-        if (infoEl) infoEl.innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
-        const utrIn = document.getElementById('donUtrInput');
-        if (utrIn) utrIn.value = '';
-        generateDynamicQrCode('donationQrContainer', amt);
-        const donMod = document.getElementById('donationModal');
-        if (donMod) donMod.style.display = 'flex';
-      } catch(e) {}
-    }
-
-    function openDirectUpiApp() {
-      if (!pendingDonationData) return;
-      try {
-        const upiInput = document.getElementById('admUpiId');
-        const upiId = (upiInput && upiInput.value) ? upiInput.value : "paytm.s20g6r2@pty";
-        window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
-      } catch(e) {}
-    }
-
-    function submitSecureDonation() {
-      if (!pendingDonationData || !db) return;
-      try {
-        const utrInput = document.getElementById('donUtrInput');
-        const utr = utrInput ? utrInput.value.trim() : '';
-
-        if (!utr || utr.length < 12) {
-          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
-          return;
-        }
-
-        const dupOrd = cloudOrders.find(o => o.utr === utr);
-        const dupDon = cloudDonations.find(d => d.utr === utr);
-        if (dupOrd || dupDon) {
-          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया केवल अपना असली UTR दर्ज करें।");
-          return;
-        }
-
-        db.collection("donations").add({
-          name: pendingDonationData.name,
-          salutation: pendingDonationData.salutation,
-          address: pendingDonationData.address,
-          phone: pendingDonationData.phone,
-          amount: pendingDonationData.amount,
-          cause: pendingDonationData.cause,
-          utr: utr,
-          date: new Date().toLocaleDateString('hi-IN'),
-          timeNumber: Date.now(),
-          timestamp: firebase.firestore.FieldValue.serverTimestamp()
-        }).then(() => {
-          closeModal('donationModal');
-          showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
-          const dN = document.getElementById('donName'); if(dN) dN.value = '';
-          const dA = document.getElementById('donAmount'); if(dA) dA.value = '';
-          const dC = document.getElementById('donCity'); if(dC) dC.value = '';
-          const dP = document.getElementById('donPhone'); if(dP) dP.value = '';
-        }).catch(e => showAppToast("त्रुटि: " + e.message));
-      } catch(e) {}
+      const container = document.getElementById(containerId);
+      if (!container) return;
+      container.innerHTML = "";
+      const upiId = document.getElementById('admUpiId')?.value || "paytm.s20g6r2@pty";
+      const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
+      new QRCode(container, { text: upiString, width: 170, height: 170, colorDark: "#000000", colorLight: "#ffffff" });
     }
 
     function refreshTicker() {
-      try {
-        const t = document.getElementById('liveTicker');
-        if (!t) return;
-        const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
-        if (cloudDonations.length === 0) { t.innerText = base; return; }
-        const recent = cloudDonations.slice(0, 8).map(d => {
-          return `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`;
-        }).join(' | ');
-        t.innerText = recent + " | " + base;
-      } catch(e) {}
+      const t = document.getElementById('liveTicker');
+      if (!t) return;
+      const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸";
+      if (cloudDonations.length === 0) { t.innerText = base; return; }
+      const recent = cloudDonations.slice(0, 8).map(d => `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`).join(' | ');
+      t.innerText = recent + " | " + base;
     }
 
     function renderPublicDonors() {
-      try {
-        const b = document.getElementById('publicDonorBody');
-        if (!b) return;
-        b.innerHTML = cloudDonations.map(d => `
-          <tr>
-            <td>${d.date}</td>
-            <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
-            <td>${d.address || '—'}</td>
-            <td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td>
-            <td>${d.cause}</td>
-          </tr>
-        `).join('');
-      } catch(e) {}
+      const b = document.getElementById('publicDonorBody');
+      if (!b) return;
+      b.innerHTML = cloudDonations.map(d => `
+        <tr><td>${d.date}</td><td><b>${formatDonorName(d.name, d.salutation)}</b></td><td>${d.address || '—'}</td><td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td><td>${d.cause}</td></tr>
+      `).join('');
     }
 
     function searchPublicDonors() {
-      try {
-        const dirSearch = document.getElementById('dirSearch');
-        const q = dirSearch ? dirSearch.value.toLowerCase().trim() : '';
-        document.querySelectorAll('#publicDonorBody tr').forEach(r => {
-          r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-        });
-      } catch(e) {}
+      const q = document.getElementById('dirSearch')?.value.toLowerCase().trim() || '';
+      document.querySelectorAll('#publicDonorBody tr').forEach(r => {
+        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
+      });
     }
 
-    // --- Audio Celebration Broadcast ---
     const elevenLabsAudio = new Audio("welcome.MP3");
-
     function triggerCelebration(name, cause, amount, salutation) {
-      try {
-        const respectfulName = formatDonorName(name, salutation);
-        
-        const cNameEl = document.getElementById('celDonorName');
-        if (cNameEl) cNameEl.innerText = `${respectfulName},`;
-        const cMsgEl = document.getElementById('celMsg');
-        if (cMsgEl) cMsgEl.innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
-        const celMod = document.getElementById('celebrationModal');
-        if (celMod) celMod.style.display = 'flex';
-        
-        try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
-
-        if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-          try { ytPlayer.setVolume(20); } catch(e) {}
-        }
-
-        setTimeout(() => {
-          elevenLabsAudio.currentTime = 0;
-          elevenLabsAudio.play().then(() => {
-            elevenLabsAudio.onended = () => {
-              if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-                try { ytPlayer.setVolume(100); } catch(e) {}
-              }
-            };
-          }).catch(err => {
-            if ('speechSynthesis' in window) {
-              try {
-                window.speechSynthesis.cancel();
-                const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे।`;
-                const utter = new SpeechSynthesisUtterance(sentence);
-                utter.lang = 'hi-IN';
-                utter.onend = () => {
-                  if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-                    try { ytPlayer.setVolume(100); } catch(e) {}
-                  }
-                };
-                window.speechSynthesis.speak(utter);
-              } catch(e) {}
-            }
-          });
-        }, 300);
-
-        setTimeout(() => closeCelebrationModal(), 9000);
-      } catch(e) {}
+      const dName = formatDonorName(name, salutation);
+      document.getElementById('celDonorName').innerText = `${dName},`;
+      document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए समिति आपका हार्दिक स्वागत करती है!`;
+      document.getElementById('celebrationModal').style.display = 'flex';
+      try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
+      setTimeout(() => {
+        elevenLabsAudio.play().catch(() => {});
+      }, 300);
+      setTimeout(() => closeCelebrationModal(), 9000);
     }
 
     function closeCelebrationModal() {
       closeModal('celebrationModal');
       try { elevenLabsAudio.pause(); } catch(e) {}
-      if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
-        try { ytPlayer.setVolume(100); } catch(e) {}
-      }
     }
 
-    // Dedicated Fullscreen Legal Pages
-    const legalDocs = {
-      terms: {
-        title: "नियम एवं शर्तें (Terms and Conditions)",
-        content: `
-          <p><b>1. सामान्य परिचय:</b> यह पोर्टल Maa Durga Enterprises तथा श्री दुर्गा पूजा सेवा समिति द्वारा संचालित है। यहाँ किया गया आर्थिक सहयोग स्वैच्छिक है।</p>
-          <p><b>2. पारदर्शिता नीति:</b> प्रत्येक दानदाता का नाम, राशि व स्थान सार्वजनिक बोर्ड पर प्रदर्शित होता है।</p>
-          <p><b>3. भक्ति स्टोर व रिफंड:</b> धार्मिक सामग्री पर 2 दिन की सीमित वापसी दोषपूर्ण स्थिति में ही मान्य होगी।</p>
-          <p><b>4. सुरक्षित डिलीवरी OTP:</b> डिलीवरी प्राप्त करते समय प्रतिनिधि को गुप्त OTP बताना अनिवार्य है।</p>
-        `
-      },
-      privacy: { title: "गोपनीयता नीति (Privacy Policy)", content: `<p>आपका डेटा एन्क्रिप्टेड क्लाउड में सुरक्षित है और किसी तीसरे पक्ष को साझा नहीं किया जाता।</p>` },
-      refund: { title: "रिफंड एवं वापसी नीति (Refund Policy)", content: `<p>धार्मिक सहयोग गैर-वापसीयोग्य है। स्टोर पर 2 दिन की सीमित वापसी केवल दोषपूर्ण सामग्री पर मान्य है।</p>` },
-      shipping: { title: "शिपिंग नीति (Shipping Policy)", content: `<p>सामग्री 3 से 7 दिनों में प्रेषित होती है। डिलीवरी OTP सत्यापन अनिवार्य है।</p>` },
-      disclaimer: { title: "अस्वीकरण (Disclaimer)", content: `<p>समस्त सेवाएँ पारदर्शी जन-कल्याण एवं आस्था पर आधारित हैं।</p>` }
-    };
-
-    function openLegal(type) {
-      try {
-        const doc = legalDocs[type];
-        if (!doc) return;
-        const hEl = document.getElementById('legalHeading');
-        if (hEl) hEl.innerText = doc.title;
-        const bEl = document.getElementById('legalBodyText');
-        if (bEl) bEl.innerHTML = doc.content;
-        const lPage = document.getElementById('legalPage');
-        if (lPage) lPage.style.display = 'block';
-      } catch(e) {}
+    // --- Store & Orders Basic Handlers ---
+    function renderCategories() {
+      const cats = ['all'];
+      cloudProducts.forEach(p => { if (p.category && !cats.includes(p.category)) cats.push(p.category); });
+      const cBox = document.getElementById('catScroll');
+      if (cBox) cBox.innerHTML = cats.map(c => `<span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">${c === 'all' ? 'सभी' : c}</span>`).join('');
     }
-
-    function closeLegalPage() {
-      try {
-        const lPage = document.getElementById('legalPage');
-        if (lPage) lPage.style.display = 'none';
-      } catch(e) {}
+    function filterCategory(cat) { activeCategory = cat; renderCategories(); renderStoreProducts(); }
+    function renderStoreProducts() {
+      const g = document.getElementById('fullStoreGrid');
+      if (!g) return;
+      const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
+      g.innerHTML = filtered.map(p => `
+        <div class="p-card">
+          <img src="${p.img || 'https://via.placeholder.com/200'}">
+          <div class="p-title">${p.name}</div>
+          <div class="p-price">₹${p.price}</div>
+          <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+        </div>
+      `).join('');
+    }
+    function renderSuggestedProducts() {
+      const sg = document.getElementById('suggestedGrid');
+      if (!sg) return;
+      sg.innerHTML = cloudProducts.slice(0, 4).map(p => `
+        <div class="p-card">
+          <img src="${p.img || 'https://via.placeholder.com/200'}">
+          <div class="p-title">${p.name}</div>
+          <div class="p-price">₹${p.price}</div>
+          <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+        </div>
+      `).join('');
+    }
+    function saveAdminSettings() {
+      db.collection("settings").doc("main").set({
+        ticker: document.getElementById('admTickerText').value,
+        upi: document.getElementById('admUpiId').value,
+        razorpay: document.getElementById('admRazorpayKey').value,
+        wa: document.getElementById('admWaPhone').value,
+        yt: document.getElementById('admYtLink').value
+      }, { merge: true }).then(() => showAppToast("सेटिंग्स सुरक्षित हुईं!"));
+    }
+    function saveNewProduct() {
+      const name = document.getElementById('newPName').value.trim();
+      const price = document.getElementById('newPPrice').value.trim();
+      if (!name || !price) return;
+      db.collection("products").add({ name, price: Number(price), category: document.getElementById('newPCat').value.trim() || 'सामान्य', img: document.getElementById('newPImg').value.trim(), timeNumber: Date.now() })
+        .then(() => { showAppToast("प्रोडक्ट जुड़ गया!"); document.getElementById('newPName').value = ''; document.getElementById('newPPrice').value = ''; });
+    }
+    function renderAdminProducts() {
+      const tb = document.querySelector('#admProdTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudProducts.map(p => `
+        <tr><td><img src="${p.img || ''}" width="30"></td><td>${p.name}</td><td>${p.category || '—'}</td><td>₹${p.price}</td><td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px;">हटाएं</button></td></tr>
+      `).join('');
+    }
+    function saveNewCoupon() {
+      const code = document.getElementById('newCCode').value.trim().toUpperCase();
+      const dis = document.getElementById('newCDiscount').value.trim();
+      if (!code || !dis) return;
+      db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => { showAppToast("कूपन बना!"); document.getElementById('newCCode').value = ''; document.getElementById('newCDiscount').value = ''; });
+    }
+    function renderAdminCoupons() {
+      const tb = document.querySelector('#admCoupTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
+    }
+    function renderAdminOrders() {
+      const tb = document.querySelector('#admOrdTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudOrders.map(o => `
+        <tr>
+          <td>${o.date}</td>
+          <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
+          <td>${o.productName}</td><td>₹${o.amount}</td><td>${o.utr}</td>
+          <td><input type="text" id="admOtp_${o.id}" value="${o.otp || ''}" style="width:50px;"> <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''}></td>
+          <td><select id="admStat_${o.id}"><option value="1">कन्फ़र्म</option><option value="2">शिप हुआ</option><option value="4">डिलीवर</option></select></td>
+          <td><button onclick="db.collection('orders').doc('${o.id}').update({ otp: document.getElementById('admOtp_${o.id}').value, showOtpToUser: document.getElementById('admOtpChk_${o.id}').checked })" style="background:#4caf50; color:#fff; border:none; padding:3px 6px;">💾</button></td>
+          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px;">🗑️</button></td>
+        </tr>
+      `).join('');
+    }
+    function renderCustomerOrders() {
+      const cont = document.getElementById('ordersContainer');
+      if (!cont || !currentUser) return;
+      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
+      cont.innerHTML = my.map(o => `
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.2); padding:12px; border-radius:8px; margin-bottom:10px;">
+          <b>${o.productName}</b> - ₹${o.amount} <br><small>पता: ${o.fullAddress}</small>
+          ${o.showOtpToUser && o.otp ? `<div style="color:#81c784; font-weight:bold; margin-top:4px;">🔑 डिलीवरी OTP: ${o.otp}</div>` : ''}
+        </div>
+      `).join('');
     }
   </script>
 </body>
