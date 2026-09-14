@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="siteDocTitle">Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति</title>
   
+  <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   
   <!-- Firebase SDKs -->
@@ -18,11 +19,19 @@
     body { background: radial-gradient(circle at top, #2d0005 0%, var(--bg) 100%); color: #fff; min-height: 100vh; overflow-x: hidden; }
     
     /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.6); border-bottom: 1px solid rgba(255,215,0,0.25); position: relative; z-index: 10; }
-    .music-btn { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 6px; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.7); border-bottom: 1px solid rgba(255,215,0,0.25); position: relative; z-index: 10; }
+    .music-btn { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .top-right-nav { display: flex; align-items: center; gap: 10px; }
     .auth-btn { background: var(--gold); border: none; color: #000; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+    .menu-hamburger-btn { background: none; border: 1px solid rgba(255,215,0,0.4); color: var(--gold); font-size: 18px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
-    header { text-align: center; padding: 18px 12px 10px; }
+    /* Side Navigation Drawer */
+    .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 260px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9000; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; margin-bottom: 15px; }
+    .drawer-item { display: block; width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 12px 10px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 6px; margin-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.15); }
+    .drawer-item:hover, .drawer-item.active { background: rgba(255,215,0,0.15); color: var(--gold); }
+
+    header { text-align: center; padding: 18px 12px 8px; }
     header h1 { font-size: 22px; color: var(--gold); text-shadow: 0 0 15px rgba(255,215,0,0.5); }
     header p { color: #ffcdd2; font-size: 12px; margin-top: 3px; }
 
@@ -31,11 +40,7 @@
     .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 32s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
     @keyframes scrollTicker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-    .main-wrap { max-width: 950px; margin: 15px auto; padding: 0 12px; }
-    .nav-tabs { display: flex; justify-content: center; gap: 8px; margin-bottom: 18px; flex-wrap: wrap; }
-    .tab-btn { background: rgba(255,215,0,0.12); border: 1px solid var(--gold); color: var(--gold); padding: 8px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
-    .tab-btn.active { background: var(--gold); color: #000; }
-
+    .main-wrap { max-width: 900px; margin: 15px auto; padding: 0 12px; }
     .card { background: var(--card-bg); border: 1px solid rgba(255,215,0,0.25); border-radius: 14px; padding: 18px; backdrop-filter: blur(8px); margin-bottom: 24px; }
     .card h2 { text-align: center; color: var(--gold); font-size: 18px; margin-bottom: 14px; }
     .form-group { margin-bottom: 11px; }
@@ -60,11 +65,18 @@
 
     /* Custom Theme Overlays */
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
-    .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 420px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
+    .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
 
-    /* Dedicated Legal Fullscreen */
-    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0c0002; z-index: 7000; overflow-y: auto; padding: 20px 14px; }
-    .legal-container { max-width: 850px; margin: 0 auto; background: #170004; border: 1px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #e0e0e0; }
+    /* Flipkart Style Timeline Tracker */
+    .timeline-wrap { position: relative; padding-left: 26px; margin-top: 14px; text-align: left; }
+    .timeline-line { position: absolute; top: 8px; left: 8px; width: 3px; height: calc(100% - 24px); background: #444; }
+    .timeline-line.active-fill { background: #4caf50; }
+    .timeline-step { position: relative; margin-bottom: 18px; }
+    .timeline-dot { position: absolute; left: -24px; top: 3px; width: 13px; height: 13px; border-radius: 50%; background: #555; border: 2px solid #1a0004; }
+    .timeline-step.completed .timeline-dot { background: #4caf50; box-shadow: 0 0 8px #4caf50; }
+    .timeline-step.active .timeline-dot { background: #ffd700; box-shadow: 0 0 8px #ffd700; }
+    .step-title { font-size: 13px; font-weight: bold; color: #fff; }
+    .step-desc { font-size: 11px; color: #aaa; margin-top: 2px; }
 
     /* Fullscreen Dedicated Admin Dashboard */
     #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
@@ -78,6 +90,10 @@
     table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
+
+    /* Legal Modal */
+    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0c0002; z-index: 7000; overflow-y: auto; padding: 20px 14px; }
+    .legal-container { max-width: 850px; margin: 0 auto; background: #170004; border: 1px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #e0e0e0; }
 
     /* Footer */
     footer { padding: 30px 15px 25px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: 30px; font-size: 12px; text-align: center; }
@@ -95,9 +111,25 @@
     <button class="music-btn" onclick="toggleBackgroundMusic()">
       🚩 <span id="musicBtnTxt">Play Music</span>
     </button>
-    <div id="navAuthArea">
-      <button class="auth-btn" onclick="openLoginModal()" id="navLoginTxt">लॉगिन / साइन-अप</button>
+    <div class="top-right-nav">
+      <div id="navAuthArea">
+        <button class="auth-btn" onclick="openLoginModal()" id="navLoginTxt">लॉगिन / साइन-अप</button>
+      </div>
+      <!-- Hamburger Menu Button -->
+      <button class="menu-hamburger-btn" onclick="toggleSideNav()">☰</button>
     </div>
+  </div>
+
+  <!-- Side Navigation Drawer -->
+  <div class="side-nav-drawer" id="sideNavDrawer">
+    <div class="drawer-header">
+      <b style="color:var(--gold); font-size:14px;">🚩 नेविगेशन मेनू</b>
+      <button onclick="toggleSideNav()" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
+    </div>
+    <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span id="drwDonate">सहयोग फॉर्म</span></button>
+    <button class="drawer-item" onclick="switchNav('store')">🛍️ <span id="drwStore">भक्ति स्टोर</span></button>
+    <button class="drawer-item" onclick="switchNav('directory')">📜 <span id="drwList">सार्वजनिक सूची</span></button>
+    <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">📦 <span id="drwOrders">मेरे ऑर्डर्स</span></button>
   </div>
 
   <header>
@@ -113,13 +145,6 @@
   </div>
 
   <div class="main-wrap">
-    <!-- Tabs -->
-    <div class="nav-tabs">
-      <button class="tab-btn active" id="tabNavDonate" onclick="switchTab('donate')">🙏 <span id="txtTabDonate">सहयोग फॉर्म</span></button>
-      <button class="tab-btn" id="tabNavStore" onclick="switchTab('store')">🛍️ <span id="txtTabStore">भक्ति स्टोर</span></button>
-      <button class="tab-btn" id="tabNavList" onclick="switchTab('directory')">📜 <span id="txtTabList">सार्वजनिक सूची</span></button>
-      <button class="tab-btn" id="tabNavOrders" onclick="switchTab('orders')" style="display:none;">📦 <span id="txtTabOrders">मेरे ऑर्डर्स</span></button>
-    </div>
 
     <!-- PANEL 1: DONATION + SUGGESTED PRODUCTS -->
     <div id="panelDonate">
@@ -137,15 +162,6 @@
         <div class="form-group">
           <label id="lblName">शुभ नाम</label>
           <input type="text" id="donName" placeholder="नाम दर्ज करें">
-        </div>
-        <div class="form-group">
-          <label id="lblSalutation">संबोधन (वैकल्पिक)</label>
-          <select id="donGender">
-            <option value="auto">नाम के अनुसार स्वतः पहचानें</option>
-            <option value="male">श्री (पुरुष)</option>
-            <option value="female">श्रीमती / सुश्री (महिला)</option>
-            <option value="none">कोई संबोधन नहीं (केवल जी)</option>
-          </select>
         </div>
         <div class="form-group">
           <label id="lblCity">स्थान / शहर / गाँव</label>
@@ -194,12 +210,13 @@
 
     <!-- PANEL 4: FLIPKART STYLE MY ORDERS -->
     <div id="panelOrders" class="card" style="display:none;">
-      <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं डिलीवरी स्टेटस</h2>
+      <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
     </div>
+
   </div>
 
-  <!-- CLEAN LOGIN MODAL (NO EXTRA TEXT) -->
+  <!-- CLEAN LOGIN MODAL -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span id="txtLoginHead">लॉगिन / साइन-अप</span></h3>
@@ -252,12 +269,14 @@
         अंतिम देय राशि: <span id="finalCheckoutAmt">₹0</span>
       </div>
 
-      <!-- UPI Payment & UTR -->
-      <div style="background:rgba(0,0,0,0.5); padding:8px; border-radius:6px; margin-bottom:10px; border:1px solid rgba(255,215,0,0.2);">
-        <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">1. UPI ऐप से ऑनलाइन भुगतान पूरा करें:</p>
-        <button type="button" class="btn-main" onclick="payViaUpiApp()" style="background:#ff9800; color:#000; padding:8px; font-size:13px; margin-bottom:8px;">📲 UPI Pay (GPay / PhonePe / Paytm)</button>
-        <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">2. भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
-        <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
+      <!-- Online Payment Flow according to Admin Configuration -->
+      <div id="upiPaymentStepBox" style="background:rgba(0,0,0,0.5); padding:8px; border-radius:6px; margin-bottom:10px; border:1px solid rgba(255,215,0,0.2);">
+        <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">1. ऑनलाइन भुगतान पूरा करें:</p>
+        <button type="button" class="btn-main" id="btnMakePayment" onclick="triggerCheckoutPayment()" style="background:#ff9800; color:#000; padding:8px; font-size:13px; margin-bottom:8px;">📲 भुगतान करें (Pay Now)</button>
+        <div id="utrInputFieldContainer">
+          <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">2. भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
+          <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
+        </div>
       </div>
 
       <button class="btn-main" onclick="confirmStoreOrder()">ऑर्डर कन्फर्म करें (Confirm Order)</button>
@@ -265,7 +284,7 @@
     </div>
   </div>
 
-  <!-- CLEAN POPUP (REPLACES ALL BROWSER ALERTS) -->
+  <!-- CLEAN POPUP -->
   <div class="custom-popup-overlay" id="notifyPopup">
     <div class="custom-popup-box">
       <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
@@ -294,7 +313,7 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
+  <!-- FULLSCREEN OWNER ADMIN DASHBOARD (RESTORED COMPLETE CONTROLS) -->
   <div id="adminPortal">
     <div class="admin-inner">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px; margin-bottom:12px;">
@@ -303,7 +322,7 @@
       </div>
 
       <div class="admin-tabs">
-        <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स व YouTube</button>
+        <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स व पेमेंट</button>
         <button class="adm-tab" onclick="switchAdm('admProd')">🛍️ प्रोडक्ट्स व सजेस्टेड</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🏷️ डिस्काउंट कूपन्स</button>
         <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स व OTP</button>
@@ -311,12 +330,27 @@
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 भक्त सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings -->
+      <!-- Admin Sec 1: Settings, Payment Gateway & Social Links -->
       <div id="admSet" class="adm-sec active">
-        <div class="form-group"><label>यूट्यूब भजन प्लेलिस्ट / वीडियो लिंक (Play Music Button हेतु):</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
-        <div class="form-group"><label>खाली समय में स्क्रीन पर चलने वाला टिकर संदेश:</label><textarea id="admTickerText" style="height:55px;"></textarea></div>
+        <h4 style="color:var(--gold); margin-bottom:8px;">खाली समय में स्क्रीन पर चलने वाला संदेश:</h4>
+        <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
+
+        <h4 style="color:var(--gold); margin-bottom:8px;">पेमेंट और बैंक सेटिंग्स:</h4>
+        <div class="form-group">
+          <label>पेमेंट का तरीका चुनें:</label>
+          <select id="admPaymentMode">
+            <option value="upi">वर्तमान बिज़नेस QR / UPI (8382893303-1@okbizaxis)</option>
+            <option value="razorpay">Razorpay ऑटो पेमेंट गेटवे (Key ID द्वारा)</option>
+          </select>
+        </div>
         <div class="form-group"><label>Google Pay Business UPI ID:</label><input type="text" id="admUpiId" value="8382893303-1@okbizaxis"></div>
-        <div class="form-group"><label>WhatsApp नंबर:</label><input type="tel" id="admWaPhone" value="9120226597"></div>
+        <div class="form-group"><label>Razorpay Key ID (Payment Gateway):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+
+        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल व मीडिया लिंक्स:</h4>
+        <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
+        <div class="form-group"><label>इंस्टाग्राम प्रोफ़ाइल लिंक:</label><input type="text" id="admInstaLink" value="https://www.instagram.com/shreedurgapuja_official"></div>
+        <div class="form-group"><label>यूट्यूब चैनल / भजन प्लेलिस्ट लिंक (Play Music Button हेतु):</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
+
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
@@ -364,12 +398,12 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Orders & Delivery OTP Assign -->
+      <!-- Admin Sec 4: Orders, Custom OTP Entry & Flipkart Status -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (OTP असाइन व स्थिति)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (अपनी मर्जी का OTP डालें व स्थिति बदलें)</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>पता व फोन</th><th>डिलीवरी OTP</th><th>स्थिति बदलें</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>पता व फोन</th><th>डिलीवरी OTP</th><th>स्थिति (Flipkart Style)</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -413,7 +447,7 @@
   <footer>
     <div style="max-width:900px; margin:0 auto;">
       <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
-      <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | ✉️ Email: yugampal23@gmail.com</p>
+      <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
       <div class="footer-links">
         <button class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions (नियम व शर्तें)</button>
@@ -457,6 +491,24 @@
     let cloudOrders = [];
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
+    let configuredPaymentMode = 'upi';
+
+    // --- Side Drawer Navigation Toggle ---
+    function toggleSideNav() {
+      const d = document.getElementById('sideNavDrawer');
+      d.style.display = (d.style.display === 'block') ? 'none' : 'block';
+    }
+
+    function switchNav(tab) {
+      toggleSideNav();
+      document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
+      ['donate', 'store', 'directory', 'orders'].forEach(id => {
+        const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
+        if (p) p.style.display = 'none';
+      });
+      document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1)).style.display = 'block';
+      event.target.classList.add('active');
+    }
 
     // --- Device Language Auto-Detection ---
     const userLang = (navigator.language || navigator.userLanguage || 'hi').toLowerCase();
@@ -467,14 +519,13 @@
         document.getElementById('siteDocTitle').innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
         document.getElementById('musicBtnTxt').innerText = "Play Music";
         document.getElementById('navLoginTxt').innerText = "Login / Sign-up";
-        document.getElementById('txtTabDonate').innerText = "Contribution Form";
-        document.getElementById('txtTabStore').innerText = "Devotional Store";
-        document.getElementById('txtTabList').innerText = "Public Donor List";
-        document.getElementById('txtTabOrders').innerText = "My Orders";
+        document.getElementById('drwDonate').innerText = "Contribution Form";
+        document.getElementById('drwStore').innerText = "Devotional Store";
+        document.getElementById('drwList').innerText = "Public Donor List";
+        document.getElementById('drwOrders').innerText = "My Orders";
         document.getElementById('txtDonateTitle').innerText = "Devotional Contribution / Donation";
         document.getElementById('lblCause').innerText = "Select Purpose";
         document.getElementById('lblName').innerText = "Full Name";
-        document.getElementById('lblSalutation').innerText = "Salutation (Optional)";
         document.getElementById('lblCity').innerText = "City / Village";
         document.getElementById('lblPhone').innerText = "WhatsApp Number";
         document.getElementById('lblAmount').innerText = "Contribution Amount (₹)";
@@ -482,7 +533,7 @@
         document.getElementById('txtSuggestedTitle').innerText = "🌟 Recommended Devotional Items";
         document.getElementById('txtStoreTitle').innerText = "Maa Durga Enterprises — Devotional Store";
         document.getElementById('txtDirTitle').innerText = "📜 Public Transparency Board";
-        document.getElementById('txtMyOrdersTitle').innerText = "📦 My Orders & Delivery OTP";
+        document.getElementById('txtMyOrdersTitle').innerText = "📦 My Orders & Live Status";
         document.getElementById('thDate').innerText = "Date";
         document.getElementById('thDonor').innerText = "Donor";
         document.getElementById('thCity').innerText = "Location";
@@ -492,22 +543,17 @@
     }
     applyLanguage();
 
-    // Clean App Notification (replaces window.alert)
     function showAppToast(msg) {
       document.getElementById('notifyMsg').innerText = msg;
       document.getElementById('notifyPopup').style.display = 'flex';
     }
     function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-    // --- Smart Gender / Salutation Engine ---
+    // --- Automatic Gender / Salutation Recognition ---
     const femaleList = ["puja","pooja","shreya","rita","geeta","sita","priya","anjali","neha","kavita","sunita","anita","radha","durga","lakshmi","sarita","manju","rekha","pushpa","arti","aarti","poonam","vandana","mamta","seema","soni","sonia","sonam","chanda","renu","preeti","khushbu","pinky","meena","neetu"];
-    function getSmartSalutation(name, selGender = 'auto') {
+    function getSmartSalutation(name) {
       const clean = (name || "").trim();
       if (!clean) return "भक्त";
-      if (selGender === 'male') return `श्री ${clean} जी`;
-      if (selGender === 'female') return `श्रीमती/सुश्री ${clean} जी`;
-      if (selGender === 'none') return `${clean} जी`;
-      
       const first = clean.split(' ')[0].toLowerCase();
       if (femaleList.includes(first)) {
         return `श्रीमती/सुश्री ${clean} जी`;
@@ -537,7 +583,7 @@
     function toggleBackgroundMusic() {
       const btnTxt = document.getElementById('musicBtnTxt');
       if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') {
-        showAppToast("म्यूजिक प्लेयर लोड हो रहा है, कृपया 2 सेकंड बाद पुनः दबाएँ।");
+        showAppToast("म्यूजिक लोड हो रहा है, 2 सेकंड बाद पुनः दबाएँ।");
         return;
       }
       if (!isMusicPlaying) {
@@ -555,12 +601,11 @@
     auth.onAuthStateChanged(user => {
       currentUser = user;
       const navArea = document.getElementById('navAuthArea');
-      const tabOrd = document.getElementById('tabNavOrders');
+      const drwOrders = document.getElementById('drwOrdersItem');
 
       if (user) {
         if (user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
           navArea.innerHTML = `
-            <span style="font-size:11px; color:var(--gold); margin-right:4px;">👑 Owner</span>
             <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
             <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
           `;
@@ -570,10 +615,10 @@
             <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
           `;
         }
-        tabOrd.style.display = "inline-block";
+        drwOrders.style.display = "block";
       } else {
         navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">${isEn ? 'Login / Sign-up' : 'लॉगिन / साइन-अप'}</button>`;
-        tabOrd.style.display = "none";
+        drwOrders.style.display = "none";
       }
       renderCustomerOrders();
     });
@@ -603,18 +648,6 @@
       }
     }
 
-    // --- Tab Switchers ---
-    function switchTab(t) {
-      ['donate', 'store', 'directory', 'orders'].forEach(id => {
-        const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
-        const b = document.getElementById('tabNav' + id.charAt(0).toUpperCase() + id.slice(1));
-        if (p) p.style.display = 'none';
-        if (b) b.classList.remove('active');
-      });
-      document.getElementById('panel' + t.charAt(0).toUpperCase() + t.slice(1)).style.display = 'block';
-      document.getElementById('tabNav' + t.charAt(0).toUpperCase() + t.slice(1)).classList.add('active');
-    }
-
     function switchAdm(id) {
       document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
@@ -622,14 +655,14 @@
       document.getElementById(id).classList.add('active');
     }
 
-    // --- Firestore Data Listeners ---
+    // --- Firestore Sync Listeners ---
     db.collection("donations").onSnapshot(snap => {
       let isInit = isFirstDonationLoad;
       isFirstDonationLoad = false;
       snap.docChanges().forEach(c => {
         if (c.type === "added" && !isInit) {
           const d = c.doc.data();
-          triggerCelebration(d.name, d.cause, d.amount, d.gender);
+          triggerCelebration(d.name, d.cause, d.amount);
         }
       });
       cloudDonations = [];
@@ -667,8 +700,21 @@
         const s = doc.data();
         if (s.ticker) document.getElementById('liveTicker').innerText = s.ticker;
         if (s.ticker) document.getElementById('admTickerText').value = s.ticker;
+        if (s.paymentMode) {
+          configuredPaymentMode = s.paymentMode;
+          document.getElementById('admPaymentMode').value = s.paymentMode;
+        }
         if (s.upi) document.getElementById('admUpiId').value = s.upi;
-        if (s.wa) document.getElementById('admWaPhone').value = s.wa;
+        if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
+        if (s.wa) {
+          document.getElementById('admWaPhone').value = s.wa;
+          document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
+          document.getElementById('ftrWa').innerText = `+${s.wa}`;
+        }
+        if (s.insta) {
+          document.getElementById('admInstaLink').value = s.insta;
+          document.getElementById('ftrInsta').href = s.insta;
+        }
         if (s.yt) {
           document.getElementById('admYtLink').value = s.yt;
           let match = s.yt.match(/(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/);
@@ -741,6 +787,7 @@
     // --- Flipkart Separated Address & Order Flow ---
     let selectedProduct = null;
     let appliedDiscountPct = 0;
+    let paymentVerifiedByGateway = false;
 
     function openCheckout(pId) {
       if (!currentUser) {
@@ -752,6 +799,7 @@
       if (!selectedProduct) return;
 
       appliedDiscountPct = 0;
+      paymentVerifiedByGateway = false;
       document.getElementById('chkCouponInput').value = '';
       document.getElementById('couponMsg').style.display = 'none';
       document.getElementById('chkUtrInput').value = '';
@@ -759,6 +807,16 @@
       document.getElementById('chkProdName').innerText = selectedProduct.name;
       document.getElementById('chkProdDetails').innerHTML = `मूल्य: <b>₹${selectedProduct.price}</b> | ${selectedProduct.refundable ? '2 दिन की सीमित वापसी मान्य' : 'वापसी योग्य नहीं'}`;
       document.getElementById('chkCustName').value = currentUser.displayName || '';
+      
+      // Toggle UTR input based on configured payment method
+      if (configuredPaymentMode === 'razorpay') {
+        document.getElementById('utrInputFieldContainer').style.display = 'none';
+        document.getElementById('btnMakePayment').innerText = "💳 Razorpay Gateway से भुगतान करें";
+      } else {
+        document.getElementById('utrInputFieldContainer').style.display = 'block';
+        document.getElementById('btnMakePayment').innerText = "📲 UPI Pay (GPay / PhonePe / Paytm)";
+      }
+
       updatePayText();
       document.getElementById('checkoutModal').style.display = 'flex';
     }
@@ -789,10 +847,29 @@
       document.getElementById('finalCheckoutAmt').innerText = `₹${getFinalPayAmount()}`;
     }
 
-    function payViaUpiApp() {
+    function triggerCheckoutPayment() {
       const amt = getFinalPayAmount();
-      const upiId = document.getElementById('admUpiId').value || "8382893303-1@okbizaxis";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR&tn=${encodeURIComponent("Store Order - " + selectedProduct.name)}`;
+      if (configuredPaymentMode === 'razorpay') {
+        const rzKey = document.getElementById('admRazorpayKey').value.trim();
+        if (!rzKey) { showAppToast("मालिक द्वारा Razorpay Key सेटअप नहीं की गई है!"); return; }
+        const options = {
+          "key": rzKey,
+          "amount": amt * 100,
+          "currency": "INR",
+          "name": "Maa Durga Enterprises",
+          "description": selectedProduct.name,
+          "handler": function (response) {
+            paymentVerifiedByGateway = true;
+            document.getElementById('chkUtrInput').value = response.razorpay_payment_id;
+            showAppToast("✅ भुगतान सफल! अब 'ऑर्डर कन्फर्म करें' दबाएँ।");
+          }
+        };
+        const rzp1 = new Razorpay(options);
+        rzp1.open();
+      } else {
+        const upiId = document.getElementById('admUpiId').value || "8382893303-1@okbizaxis";
+        window.location.href = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR&tn=${encodeURIComponent("Store Order - " + selectedProduct.name)}`;
+      }
     }
 
     function confirmStoreOrder() {
@@ -808,8 +885,8 @@
         showAppToast("कृपया नाम, पिनकोड, फोन, मकान/सड़क और शहर पूरा भरें!");
         return;
       }
-      if (!utr || utr.length < 4) {
-        showAppToast("कृपया UPI से पेमेंट पूरा करके अपना 12-अंकीय UTR / Ref नंबर दर्ज करें!");
+      if (!paymentVerifiedByGateway && (!utr || utr.length < 4)) {
+        showAppToast("कृपया भुगतान पूरा करके अपना UTR / Ref नंबर दर्ज करें!");
         return;
       }
 
@@ -827,19 +904,21 @@
         state: state,
         fullAddress: fullAddress,
         utr: utr,
-        otp: null, // Hidden until owner assigns from dashboard
-        status: "भुगतान प्राप्त (जाँच जारी)",
+        otp: null, // Always hidden by default until owner sets in admin
+        statusCode: 1, // 1: Confirmed, 2: Shipped, 3: Out for Delivery, 4: Delivered
+        status: "ऑर्डर कन्फ़र्म हुआ",
+        statusDesc: "आपने सफलतापूर्वक ऑर्डर कर दिया है। विक्रेता द्वारा पैकिंग प्रक्रिया जारी है।",
         refundable: selectedProduct.refundable,
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
         closeModal('checkoutModal');
         showAppToast("✅ आपका ऑर्डर सुरक्षित दर्ज हो गया है!");
-        switchTab('orders');
+        switchNav('orders');
       }).catch(e => showAppToast(e.message));
     }
 
-    // Customer My Orders
+    // --- Flipkart Style Customer Timeline Orders (Visual Timeline Tracker) ---
     function renderCustomerOrders() {
       const cont = document.getElementById('ordersContainer');
       if (!cont) return;
@@ -852,37 +931,69 @@
         cont.innerHTML = `<p style="text-align:center; color:#aaa;">अभी आपने कोई ऑर्डर नहीं किया है।</p>`;
         return;
       }
-      cont.innerHTML = my.map(o => `
-        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,0,0.25); border-radius:10px; padding:12px; margin-bottom:12px;">
-          <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:6px; margin-bottom:8px;">
-            <b style="color:var(--gold); font-size:14px;">${o.productName} (₹${o.amount})</b>
-            <span style="background:rgba(255,215,0,0.18); color:var(--gold); padding:2px 8px; border-radius:4px; font-size:10px;">${o.status}</span>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div style="font-size:12px; line-height:1.5;">
-              <p style="color:#ffcdd2;">तारीख: ${o.date} | UTR: <small style="color:var(--gold);">${o.utr}</small></p>
-              <p style="color:#fff;">पता: ${o.fullAddress}</p>
-              <p style="font-size:10px; color:#aaa;">${o.refundable ? '✓ 2 दिन सीमित वापसी मान्य' : 'Non-Refundable'}</p>
+      cont.innerHTML = my.map(o => {
+        const sc = o.statusCode || 1;
+        return `
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,0,0.25); border-radius:12px; padding:16px; margin-bottom:18px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px dashed rgba(255,215,0,0.25); padding-bottom:8px; margin-bottom:12px;">
+              <div>
+                <b style="color:var(--gold); font-size:15px;">${o.productName}</b>
+                <span style="color:#fff; font-size:13px; margin-left:6px;">₹${o.amount}</span>
+              </div>
+              <div style="text-align:right;">
+                <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
+                <span style="font-size:17px; font-weight:bold; color:#81c784; letter-spacing:2px;">
+                  🔑 ${o.otp ? o.otp : '******'}
+                </span>
+              </div>
             </div>
-            <div style="text-align:right;">
-              <span style="font-size:10px; color:#aaa; display:block;">डिलीवरी OTP:</span>
-              <span style="font-size:18px; font-weight:bold; color:#81c784; letter-spacing:2px;">
-                🔑 ${o.otp ? o.otp : '******'}
-              </span>
+
+            <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">डिलीवरी पता: ${o.fullAddress} | फोन: ${o.phone}</p>
+
+            <!-- Flipkart Style Vertical Timeline -->
+            <div class="timeline-wrap">
+              <div class="timeline-line ${sc >= 4 ? 'active-fill' : ''}"></div>
+              
+              <div class="timeline-step ${sc >= 1 ? 'completed' : ''}">
+                <div class="timeline-dot"></div>
+                <div class="step-title">ऑर्डर कन्फ़र्म हुआ (${o.date})</div>
+                <div class="step-desc">आपने ऑर्डर कर दिया है। UTR: ${o.utr}</div>
+              </div>
+
+              <div class="timeline-step ${sc >= 2 ? 'completed' : ''}">
+                <div class="timeline-dot"></div>
+                <div class="step-title">शिप किया गया (Maa Durga Enterprises)</div>
+                <div class="step-desc">पार्सल पैक होकर कूरियर पार्टनर को सुपुर्द कर दिया गया है।</div>
+              </div>
+
+              <div class="timeline-step ${sc >= 3 ? 'completed' : ''}">
+                <div class="timeline-dot"></div>
+                <div class="step-title">डिलीवरी के लिए रवाना (Out for Delivery)</div>
+                <div class="step-desc">डिलीवरी बॉय आपके पते पर आ रहा है। अपना OTP तैयार रखें।</div>
+              </div>
+
+              <div class="timeline-step ${sc >= 4 ? 'completed' : ''}">
+                <div class="timeline-dot"></div>
+                <div class="step-title">डिलीवर किया गया (Delivered)</div>
+                <div class="step-desc">पार्सल सफलतापूर्वक ग्राहक को सुपुर्द कर दिया गया।</div>
+              </div>
             </div>
           </div>
-        </div>
-      `).join('');
+        `;
+      }).join('');
     }
 
     // --- Admin Operations ---
     function saveAdminSettings() {
       db.collection("settings").doc("main").set({
         ticker: document.getElementById('admTickerText').value,
+        paymentMode: document.getElementById('admPaymentMode').value,
         upi: document.getElementById('admUpiId').value,
+        razorpay: document.getElementById('admRazorpayKey').value,
         wa: document.getElementById('admWaPhone').value,
+        insta: document.getElementById('admInstaLink').value,
         yt: document.getElementById('admYtLink').value
-      }).then(() => showAppToast("✅ सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!"));
+      }).then(() => showAppToast("✅ सभी सेटिंग्स सफलतापूर्वक सुरक्षित हो गईं!"));
     }
 
     function saveNewProduct() {
@@ -907,10 +1018,6 @@
       });
     }
 
-    function deleteProduct(id) {
-      if (confirm("हटाएं?")) db.collection("products").doc(id).delete();
-    }
-
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
@@ -922,7 +1029,7 @@
           <td>₹${p.price}</td>
           <td>${p.isSuggested ? '⭐ हाँ' : 'नहीं'}</td>
           <td>${p.refundable ? '✓ 2 दिन' : 'नहीं'}</td>
-          <td><button onclick="deleteProduct('${p.id}')" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
@@ -950,18 +1057,29 @@
       `).join('');
     }
 
-    function assignOrderOtp(orderId) {
-      const otp = prompt("ग्राहक हेतु 6-अंकीय गुप्त डिलीवरी OTP दर्ज करें (उदा: 789123):");
-      if (otp) {
+    // Owner sets any custom OTP code for any customer
+    function setCustomOrderOtp(orderId) {
+      const otpCode = prompt("इस ग्राहक हेतु मनचाहा गुप्त डिलीवरी OTP दर्ज करें (उदा: 2043, 7766 या कोई भी कोड):");
+      if (otpCode) {
         db.collection("orders").doc(orderId).update({
-          otp: otp,
-          status: "पुष्टीकृत (OTP जारी)"
-        }).then(() => showAppToast("✅ OTP जारी कर दिया गया है!"));
+          otp: otpCode.trim()
+        }).then(() => showAppToast(`✅ OTP '${otpCode}' सुरक्षित हो गया और ग्राहक के डैशबोर्ड में दिखने लगा!`));
       }
     }
 
-    function updateOrderStatus(orderId, st) {
-      db.collection("orders").doc(orderId).update({ status: st });
+    // Update Flipkart Style Timeline Level
+    function updateOrderTimeline(orderId, levelStr) {
+      const lvl = parseInt(levelStr);
+      let statusName = "ऑर्डर कन्फ़र्म हुआ";
+      if (lvl === 2) statusName = "शिप किया गया";
+      if (lvl === 3) statusName = "डिलीवरी के लिए रवाना";
+      if (lvl === 4) statusName = "डिलीवर किया गया";
+      if (lvl === 0) statusName = "रद्द किया गया";
+
+      db.collection("orders").doc(orderId).update({
+        statusCode: lvl,
+        status: statusName
+      }).then(() => showAppToast(`✅ ऑर्डर स्थिति बदलकर '${statusName}' कर दी गई है!`));
     }
 
     function renderAdminOrders() {
@@ -976,15 +1094,17 @@
           <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
           <td>${o.fullAddress}<br>📞 ${o.phone}</td>
           <td>
-            ${o.otp ? `<b style="color:#81c784;">🔑 ${o.otp}</b>` : `<button onclick="assignOrderOtp('${o.id}')" style="background:#ff9800; border:none; color:#000; padding:2px 6px; font-weight:bold; border-radius:3px; cursor:pointer;">+ OTP डालें</button>`}
+            <button onclick="setCustomOrderOtp('${o.id}')" style="background:#ff9800; border:none; color:#000; padding:4px 7px; font-weight:bold; border-radius:3px; cursor:pointer;">
+              🔑 ${o.otp ? o.otp : '+ OTP डालें'}
+            </button>
           </td>
           <td>
-            <select onchange="updateOrderStatus('${o.id}', this.value)" style="font-size:10px; padding:3px;">
-              <option value="${o.status}">${o.status}</option>
-              <option value="भुगतान सत्यापित">भुगतान सत्यापित</option>
-              <option value="पैक्ड व रवाना">पैक्ड व रवाना</option>
-              <option value="डिलीवर हो गया">डिलीवर हो गया</option>
-              <option value="रद्द">रद्द</option>
+            <select onchange="updateOrderTimeline('${o.id}', this.value)" style="font-size:11px; padding:3px; width:130px;">
+              <option value="1" ${(o.statusCode || 1) == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
+              <option value="2" ${(o.statusCode || 1) == 2 ? 'selected' : ''}>2. शिप किया गया</option>
+              <option value="3" ${(o.statusCode || 1) == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
+              <option value="4" ${(o.statusCode || 1) == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
+              <option value="0" ${(o.statusCode || 1) == 0 ? 'selected' : ''}>0. रद्द</option>
             </select>
           </td>
         </tr>
@@ -1000,12 +1120,12 @@
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "💵 CASH / नकद", gender: 'auto',
+        name, address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "💵 CASH / नकद",
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        showAppToast("✅ नकद सहयोग क्लाउड में दर्ज हुआ!");
+        showAppToast("✅ नकद सहयोग दर्ज हुआ!");
         document.getElementById('admCashName').value = '';
         document.getElementById('admCashAmt').value = '';
       });
@@ -1033,7 +1153,6 @@
       const cause = document.getElementById('donCause').value;
       const city = document.getElementById('donCity').value.trim();
       const phone = document.getElementById('donPhone').value.trim();
-      const gender = document.getElementById('donGender').value;
 
       if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
 
@@ -1041,10 +1160,10 @@
       window.location.href = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR&tn=${encodeURIComponent(cause + " - " + name)}`;
 
       setTimeout(() => {
-        const utr = prompt("पेमेंट पूरा करने के बाद कृपया 12-अंकीय UPI Ref / UTR नंबर दर्ज करें:");
+        const utr = prompt("पेमेंट पूरा करने के बाद 12-अंकीय UPI Ref / UTR नंबर दर्ज करें:");
         if (utr) {
           db.collection("donations").add({
-            name, address: city, phone, amount: Number(amt), cause, utr, gender,
+            name, address: city, phone, amount: Number(amt), cause, utr,
             date: new Date().toLocaleDateString('hi-IN'),
             timeNumber: Date.now(),
             timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1058,7 +1177,7 @@
       const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸";
       if (cloudDonations.length === 0) { t.innerText = base; return; }
       const recent = cloudDonations.slice(0, 8).map(d => {
-        const respectfulName = getSmartSalutation(d.name, d.gender);
+        const respectfulName = getSmartSalutation(d.name);
         return `★ ${respectfulName} - ₹${d.amount} (${d.cause})`;
       }).join(' | ');
       t.innerText = recent + " | " + base;
@@ -1070,7 +1189,7 @@
       b.innerHTML = cloudDonations.map(d => `
         <tr>
           <td>${d.date}</td>
-          <td><b>${getSmartSalutation(d.name, d.gender)}</b></td>
+          <td><b>${getSmartSalutation(d.name)}</b></td>
           <td>${d.address || '—'}</td>
           <td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td>
           <td>${d.cause}</td>
@@ -1085,7 +1204,7 @@
       });
     }
 
-    // --- Audio Synthesis, welcome.MP3 & Celebration Broadcast ---
+    // --- Audio, welcome.MP3 & Celebration Broadcast ---
     let audioCtx = null;
     function playApplause() {
       try {
@@ -1110,24 +1229,20 @@
       } catch(e) {}
     }
 
-    // ElevenLabs Custom Audio Instance Matching Exact Filename: welcome.MP3
     const elevenLabsAudio = new Audio("welcome.MP3");
 
-    function triggerCelebration(name, cause, amount, gender = 'auto') {
-      const respectfulName = getSmartSalutation(name, gender);
+    function triggerCelebration(name, cause, amount) {
+      const respectfulName = getSmartSalutation(name);
       document.getElementById('celMsg').innerHTML = `${respectfulName},<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
       document.getElementById('celebrationModal').style.display = 'flex';
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       
-      // तालियों की आवाज़
       playApplause();
 
-      // अगर YouTube पर भजन चल रहा है तो आवाज़ धीमी करें (Auto-ducking)
       if (ytPlayer && isMusicPlaying && typeof ytPlayer.setVolume === 'function') {
         ytPlayer.setVolume(20);
       }
 
-      // ताली के तुरंत बाद welcome.MP3 की असली आवाज़ बजेगी
       setTimeout(() => {
         elevenLabsAudio.currentTime = 0;
         elevenLabsAudio.play().then(() => {
@@ -1137,8 +1252,7 @@
             }
           };
         }).catch(err => {
-          console.log("Audio play failed on welcome.MP3:", err);
-          // Fallback अगर किसी वजह से लोड न हो
+          console.log("Fallback to browser speech:", err);
           if ('speechSynthesis' in window) {
             window.speechSynthesis.cancel();
             const sentence = `जय माता दी! ${respectfulName}, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे।`;
@@ -1154,7 +1268,6 @@
         });
       }, 400);
 
-      // 9 सेकंड बाद पॉपअप स्वतः बंद
       setTimeout(() => closeCelebrationModal(), 9000);
     }
 
@@ -1166,69 +1279,21 @@
       }
     }
 
-    // --- Dedicated Legal Pages (500-1000 Words) ---
+    // --- Dedicated Fullscreen Legal Pages ---
     const legalDocs = {
       terms: {
         title: "नियम एवं शर्तें (Terms and Conditions)",
         content: `
-          <p><b>1. सामान्य परिचय एवं अधिकार क्षेत्र:</b><br>
-          यह पोर्टल "Maa Durga Enterprises" तथा "श्री दुर्गा पूजा सेवा समिति" द्वारा संयुक्त रूप से जन-कल्याण एवं सेवा हेतु संचालित है। इस वेबसाइट का उपयोग करने पर आप इन सभी नियमों व शर्तों के प्रति अपनी पूर्ण सहमति व्यक्त करते हैं। किसी भी विधिक विवाद की स्थिति में न्यायिक क्षेत्र केवल प्रतापगढ़, उत्तर प्रदेश (भारत) रहेगा।</p>
-
-          <p><b>2. धार्मिक दान एवं पावन अंशदान की प्रकृति:</b><br>
-          समिति को दिया गया समस्त आर्थिक सहयोग पूर्णतः स्वैच्छिक है। यह अंशदान श्री दुर्गा पूजा महोत्सव, 12 माह अखंड भंडारा, दैनिक अन्नदान, गौ-सेवा और क्षेत्रीय आपदा पीड़ित सहायता के पावन उद्देश्य से लिया जाता है। किसी भी दानदाता को आर्थिक अथवा व्यावसायिक लाभ का दावा करने का अधिकार नहीं होगा।</p>
-
-          <p><b>3. पारदर्शी बोर्ड एवं सार्वजनिक प्रकटीकरण:</b><br>
-          सेवा समिति की पारदर्शिता नीति के अंतर्गत दानदाता का नाम, सहयोग राशि और शहर को सार्वजनिक लाइव बोर्ड पर प्रदर्शित किया जाता है। दानदाता द्वारा गलत या भ्रामक UTR दर्ज करने पर समिति को उसका रिकॉर्ड निरस्त करने का पूर्ण अधिकार है।</p>
-
-          <p><b>4. भक्ति स्टोर एवं उत्पाद खरीद:</b><br>
-          Maa Durga Enterprises के माध्यम से उपलब्ध कराई जाने वाली समस्त धार्मिक सामग्री प्रामाणिक है। ग्राहक द्वारा ऑर्डर करते समय पिनकोड, मोबाइल नंबर, सड़क/मकान नंबर और ज़िले की सही जानकारी देना अनिवार्य है। कैश ऑन डिलीवरी (COD) उपलब्ध नहीं है, समस्त ऑर्डर प्रीपेड होने अनिवार्य हैं।</p>
-
-          <p><b>5. सुरक्षित डिलीवरी OTP प्रणाली:</b><br>
-          धोखाधड़ी रोकने के लिए प्रत्येक पुष्टीकृत ऑर्डर के लिए एक गुप्त डिलीवरी OTP जारी किया जाता है। पार्सल की सुपुर्दगी केवल तभी होगी जब ग्राहक वह OTP डिलीवरी प्रतिनिधि को साझा करेगा। OTP किसी भी अनधिकृत व्यक्ति को न दें।</p>
+          <p><b>1. सामान्य परिचय:</b> यह पोर्टल Maa Durga Enterprises तथा श्री दुर्गा पूजा सेवा समिति द्वारा संचालित है। यहाँ किया गया आर्थिक सहयोग स्वैच्छिक है।</p>
+          <p><b>2. पारदर्शिता नीति:</b> प्रत्येक दानदाता का नाम, राशि व स्थान सार्वजनिक बोर्ड पर प्रदर्शित होता है।</p>
+          <p><b>3. भक्ति स्टोर व रिफंड:</b> धार्मिक सामग्री पर 2 दिन की सीमित वापसी दोषपूर्ण स्थिति में ही मान्य होगी।</p>
+          <p><b>4. सुरक्षित डिलीवरी OTP:</b> डिलीवरी प्राप्त करते समय प्रतिनिधि को गुप्त OTP बताना अनिवार्य है।</p>
         `
       },
-      privacy: {
-        title: "गोपनीयता नीति (Privacy Policy)",
-        content: `
-          <p><b>1. एकत्रित की जाने वाली जानकारी:</b><br>
-          हम उपयोगकर्ता का नाम, Google प्रमाणीकरण ईमेल, संपर्क नंबर, डिलीवरी हेतु विस्तृत भौतिक पता (पिनकोड, मकान नंबर, ज़िला, राज्य) तथा ऑनलाइन भुगतान संदर्भ (UTR) सुरक्षित रूप से संग्रहीत करते हैं।</p>
-
-          <p><b>2. डेटा का उपयोग:</b><br>
-          एकत्रित व्यक्तिगत डेटा का उपयोग केवल ऑर्डर प्रोसेसिंग, डिलीवरी समन्वय, रसीद प्रेषण और दानदाता के सम्मान हेतु सार्वजनिक बोर्ड पर प्रदर्शन के लिए किया जाता है।</p>
-
-          <p><b>3. डेटा सुरक्षा एवं गोपनीयता:</b><br>
-          Maa Durga Enterprises आपके व्यक्तिगत डेटा को किसी भी तृतीय-पक्ष विज्ञापनदाता या मार्केटिंग एजेंसी को न तो बेचती है और न ही साझा करती है। सारा डेटा Google Firebase के एन्क्रिप्टेड क्लाउड में सुरक्षित रहता है।</p>
-        `
-      },
-      refund: {
-        title: "रिफंड एवं वापसी नीति (Refund Policy)",
-        content: `
-          <p><b>1. धार्मिक सहयोग एवं दान का रिफंड:</b><br>
-          धार्मिक कार्यों, भंडारा व्यवस्था अथवा गौ-सेवा हेतु समर्पित किया गया आर्थिक अंशदान अपरिवर्तनीय व गैर-वापसीयोग्य (Strictly Non-refundable) है।</p>
-
-          <p><b>2. भक्ति स्टोर 2-दिवसीय सीमित रिफंड नीति:</b><br>
-          भक्ति स्टोर से खरीदे गए जिन उत्पादों पर '2 दिन सीमित रिफंड मान्य' अंकित है, उन पर डिलीवरी प्राप्त होने के अधिकतम 48 घंटों (2 दिन) के भीतर केवल सामग्री टूटी-फूटी (Damaged) या दोषपूर्ण निकलने पर ही रिप्लेसमेंट या रिफंड की प्रक्रिया स्वीकार की जाएगी।</p>
-
-          <p><b>3. नॉन-रिफंडेबल सामग्री:</b><br>
-          जिन धार्मिक सामग्रियों पर 'Non-Refundable' दर्ज है (जैसे अगरबत्ती, धूप, अभिमंत्रित प्रसाद या प्रयुक्त वस्त्र), उनकी वापसी किसी भी परिस्थिति में स्वीकार नहीं की जाएगी।</p>
-        `
-      },
-      shipping: {
-        title: "शिपिंग एवं डिलीवरी नीति (Shipping Policy)",
-        content: `
-          <p><b>1. डिलीवरी समयावधि:</b><br>
-          ऑर्डर की पुष्टि और भुगतान सत्यापन उपरांत सामान्यतः 3 से 7 कार्यदिवसों के भीतर पार्सल प्रेषित कर दिया जाता है।</p>
-
-          <p><b>2. सुरक्षित हैंडओवर (OTP आधारित):</b><br>
-          डिलीवरी बॉय को पार्सल सुपुर्द करते समय ग्राहक को वेबसाइट डैशबोर्ड में दर्शित गुप्त OTP बताना अनिवार्य होगा। बिना OTP सत्यापन के पार्सल प्रदान नहीं किया जाएगा।</p>
-        `
-      },
-      disclaimer: {
-        title: "अस्वीकरण (Disclaimer)",
-        content: `
-          <p>इस पोर्टल पर प्रस्तुत सभी जानकारी जन-हित, पारदर्शी दान व्यवस्था और धार्मिक सामग्री की सुलभता हेतु प्रदान की गई है। Maa Durga Enterprises व श्री दुर्गा पूजा सेवा समिति किसी भी तकनीकी व्यवधान, थर्ड-पार्टी पेमेंट गेटवे सर्वर त्रुटि अथवा प्राकृतिक आपदा के कारण डिलीवरी में हुए विलंब के प्रति सीमित दायित्व रखती है।</p>
-        `
-      }
+      privacy: { title: "गोपनीयता नीति (Privacy Policy)", content: `<p>आपका डेटा एन्क्रिप्टेड क्लाउड में सुरक्षित है और किसी तीसरे पक्ष को साझा नहीं किया जाता।</p>` },
+      refund: { title: "रिफंड एवं वापसी नीति (Refund Policy)", content: `<p>धार्मिक सहयोग गैर-वापसीयोग्य है। स्टोर पर 2 दिन की सीमित वापसी केवल दोषपूर्ण सामग्री पर मान्य है।</p>` },
+      shipping: { title: "शिपिंग नीति (Shipping Policy)", content: `<p>सामग्री 3 से 7 दिनों में प्रेषित होती है। डिलीवरी OTP सत्यापन अनिवार्य है।</p>` },
+      disclaimer: { title: "अस्वीकरण (Disclaimer)", content: `<p>समस्त सेवाएँ पारदर्शी जन-कल्याण एवं आस्था पर आधारित हैं।</p>` }
     };
 
     function openLegal(type) {
