@@ -66,7 +66,8 @@
     .verify-modal, .auth-modal, .fullscreen-modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 3000; justify-content: center; align-items: center; padding: 15px; }
     .verify-modal { background: rgba(0,0,0,0.88); }
     .auth-modal { background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); }
-    .fullscreen-modal { background: rgba(18, 0, 2, 0.97); }
+    .fullscreen-modal { background: rgba(18, 0, 2, 0.96); }
+    .fullscreen-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 16px; padding: 28px 20px; max-width: 480px; width: 100%; box-shadow: 0 0 35px rgba(255,215,0,0.4); }
     .verify-box, .auth-box { background: #1a0003; border: 2px solid var(--gold); border-radius: 14px; padding: 22px; max-width: 420px; width: 100%; text-align: center; }
     .btn-google { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; background: #ffffff; color: #333; border: none; border-radius: 8px; padding: 12px 16px; font-size: 15px; font-weight: bold; cursor: pointer; }
 
@@ -230,11 +231,15 @@
     </div>
   </div>
 
-  <!-- Celebration Modal -->
+  <!-- Real-time Broadcast Celebration Modal -->
   <div class="fullscreen-modal" id="celebrationModal">
     <div class="fullscreen-box" style="text-align:center;">
-      <h1 style="font-size:28px; color:var(--gold); margin-bottom:15px;">🎉 जय माता दी! 🎉</h1>
-      <p id="celebrationText" style="font-size:16px; line-height: 1.7;"></p>
+      <h1 style="font-size:26px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
+      <p id="celebrationText" style="font-size:16px; line-height: 1.6;"></p>
+      <p style="font-size:14px; color:var(--gold); margin-top:12px; font-weight:bold;">
+        🌸 माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे। 🌸
+      </p>
+      <button type="button" onclick="closeCelebration()" style="margin-top:18px; background:rgba(255,215,0,0.2); border:1px solid var(--gold); color:var(--gold); padding:6px 18px; border-radius:20px; font-size:12px; cursor:pointer;">बंद करें</button>
     </div>
   </div>
 
@@ -318,9 +323,22 @@
 
     let cloudDonations = [];
     let cloudFeedbacks = [];
+    let isInitialLoad = true;
 
-    // Real-time Cloud Listener for Multi-device live sync
+    // Real-time Cloud Listener for Multi-device live sync and Live Celebration Broadcast
     db.collection("donations").onSnapshot((snapshot) => {
+      let isFirst = isInitialLoad;
+      isInitialLoad = false;
+
+      // Detect newly added donations across ANY device
+      snapshot.docChanges().forEach((change) => {
+        if (change.type === "added" && !isFirst) {
+          const newDoc = change.doc.data();
+          // Broadcast popup on ALL devices open right now
+          triggerCelebration(newDoc.name, newDoc.cause, newDoc.amount);
+        }
+      });
+
       cloudDonations = [];
       snapshot.forEach((doc) => {
         cloudDonations.push({ id: doc.id, ...doc.data() });
@@ -433,8 +451,6 @@
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        triggerCelebration(`श्री <b>${name}</b> जी,<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`);
       }).catch(err => alert("डेटाबेस में सुरक्षित नहीं हुआ: " + err.message));
     }
 
@@ -551,11 +567,42 @@
 
     function searchDonors() { renderPublicDonorList(document.getElementById('searchInput').value); }
 
-    function triggerCelebration(msg) {
-      document.getElementById('celebrationText').innerHTML = msg;
+    // Sound and Speech Synthesis
+    const applauseAudio = new Audio("https://actions.google.com/sounds/v1/crowds/applause_medium_crowd.ogg");
+
+    function triggerCelebration(name, cause, amount) {
+      const textMsg = `श्री <b>${name}</b> जी,<br>${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है!`;
+      document.getElementById('celebrationText').innerHTML = textMsg;
       document.getElementById('celebrationModal').style.display = 'flex';
-      try { confetti({ particleCount: 120, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
-      setTimeout(() => { document.getElementById('celebrationModal').style.display = 'none'; }, 4500);
+      
+      try { confetti({ particleCount: 140, spread: 85, origin: { y: 0.5 } }); } catch(e) {}
+
+      // Play Clapping Sound
+      try {
+        applauseAudio.currentTime = 0;
+        applauseAudio.play().catch(e => console.log("Audio play prevented:", e));
+      } catch(e) {}
+
+      // Text to Speech in Hindi
+      if ('speechSynthesis' in window) {
+        window.speechSynthesis.cancel();
+        const spokenSentence = `जय माता दी! श्री ${name} जी, ${cause} हेतु आपके ${amount} रुपये के सहयोग के लिए श्री दुर्गा पूजा सेवा समिति आपका हार्दिक स्वागत करती है! माँ भगवती की कृपा आप और आपके परिवार पर सदैव बनी रहे।`;
+        const utterance = new SpeechSynthesisUtterance(spokenSentence);
+        utterance.lang = 'hi-IN';
+        utterance.rate = 0.95;
+        window.speechSynthesis.speak(utterance);
+      }
+
+      // Automatically dismiss after 8 seconds
+      setTimeout(() => {
+        closeCelebration();
+      }, 8500);
+    }
+
+    function closeCelebration() {
+      document.getElementById('celebrationModal').style.display = 'none';
+      if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+      try { applauseAudio.pause(); } catch(e) {}
     }
 
     const products = [
