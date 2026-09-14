@@ -65,6 +65,12 @@
     .badge-ref { font-size: 9px; padding: 2px 5px; border-radius: 3px; display: inline-block; margin-bottom: 4px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
+    /* Live Satsang Chat Box */
+    .chat-box-wrapper { background: rgba(0,0,0,0.6); border: 1px solid rgba(255,215,0,0.3); border-radius: 10px; padding: 12px; margin-top: 15px; }
+    .chat-messages-area { height: 240px; overflow-y: auto; background: rgba(0,0,0,0.4); border-radius: 6px; padding: 8px; margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px; }
+    .chat-msg-item { background: rgba(255,255,255,0.06); padding: 6px 10px; border-radius: 6px; font-size: 12px; border-left: 3px solid var(--gold); }
+    .chat-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 2px; }
+
     /* Custom Theme Overlays */
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
@@ -136,6 +142,7 @@
     <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span id="drwDonate">सहयोग फॉर्म</span></button>
     <button class="drawer-item" onclick="switchNav('store')">🛍️ <span id="drwStore">भक्ति स्टोर</span></button>
     <button class="drawer-item" onclick="switchNav('directory')">📜 <span id="drwList">सार्वजनिक सूची</span></button>
+    <button class="drawer-item" onclick="switchNav('chat')">💬 <span id="drwChat">भक्त लाइव चैट</span></button>
     <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">📦 <span id="drwOrders">मेरे ऑर्डर्स</span></button>
   </div>
 
@@ -227,7 +234,19 @@
       </div>
     </div>
 
-    <!-- PANEL 4: FLIPKART STYLE MY ORDERS -->
+    <!-- PANEL 4: LIVE SATSANG CHAT -->
+    <div id="panelChat" class="card" style="display:none;">
+      <h2>💬 भक्त लाइव सत्संग चैट (गाना सुनते हुए चर्चा करें)</h2>
+      <div class="chat-box-wrapper">
+        <div class="chat-messages-area" id="globalChatContainer"></div>
+        <div style="display:flex; gap:6px; margin-top:8px;">
+          <input type="text" id="chatInputMsg" placeholder="जय माता दी या संदेश लिखें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
+          <button class="btn-main" onclick="sendGlobalChatMessage()" style="width:auto; padding:0 16px;">भेजें</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANEL 5: FLIPKART STYLE MY ORDERS -->
     <div id="panelOrders" class="card" style="display:none;">
       <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
@@ -254,6 +273,15 @@
       <input type="password" id="ownerPassInput" placeholder="Master Password" style="margin-bottom:12px;">
       <button class="btn-main" onclick="verifyOwnerPassword()">प्रवेश करें</button>
       <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- ADMIN DETAILED INSPECT MODAL -->
+  <div class="custom-popup-overlay" id="adminInspectModal">
+    <div class="custom-popup-box" style="text-align:left; max-width:440px;">
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
+      <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;"></div>
+      <button class="btn-main" onclick="closeModal('adminInspectModal')">बंद करें</button>
     </div>
   </div>
 
@@ -384,7 +412,7 @@
         <button class="adm-tab" onclick="switchAdm('admCoup')">🏷️ डिस्काउंट कूपन्स</button>
         <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स व OTP</button>
         <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन व नकद एंट्री</button>
-        <button class="adm-tab" onclick="switchAdm('admFeed')">💬 भक्त सुझाव</button>
+        <button class="adm-tab" onclick="switchAdm('admChatAdm')">💬 चैट मॉडरेटर</button>
       </div>
 
       <!-- Admin Sec 1: Settings, Payment Gateway & Social Links -->
@@ -455,18 +483,18 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Orders -->
+      <!-- Admin Sec 4: Orders (Clickable Name to Inspect) -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त ग्राहक ऑर्डर्स (नाम पर क्लिक करके संपूर्ण विवरण देखें)</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>पता व फोन</th><th>OTP व टिक</th><th>स्थिति बदलें</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक नाम (क्लिक करें)</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>OTP व टिक</th><th>स्थिति</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 5: Donations & Cash -->
+      <!-- Admin Sec 5: Donations & Cash (Clickable Name to Inspect) -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
           <h4 style="color:var(--gold); margin-bottom:6px;">💵 सत्यापित दान / नकद एंट्री जोड़ें</h4>
@@ -485,19 +513,21 @@
           </div>
           <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें व स्वागत करें</button>
         </div>
+        <h4 style="color:var(--gold); margin-bottom:8px;">प्राप्त दान सूचियाँ (नाम पर क्लिक करें)</h4>
         <div class="table-responsive">
           <table id="admDonTable">
-            <thead><tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>राशि</th><th>UTR/Ref</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>दानदाता नाम (क्लिक करें)</th><th>स्थान</th><th>राशि</th><th>UTR/Ref</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 6: Feedback -->
-      <div id="admFeed" class="adm-sec">
+      <!-- Admin Sec 6: Chat Moderator -->
+      <div id="admChatAdm" class="adm-sec">
+        <h4 style="color:var(--gold); margin-bottom:8px;">💬 लाइव चैट संदेश मॉडरेटर (संदेश हटाएं)</h4>
         <div class="table-responsive">
-          <table id="admFeedTable">
-            <thead><tr><th>तारीख</th><th>नाम / ईमेल</th><th>संदेश</th><th>हटाएं</th></tr></thead>
+          <table id="admChatTable">
+            <thead><tr><th>समय</th><th>भक्त नाम</th><th>संदेश</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -552,15 +582,14 @@
       auth = firebase.auth();
       db = firebase.firestore();
       googleProvider = new firebase.auth.GoogleAuthProvider();
-    } catch(e) {
-      console.log("Firebase Init Error:", e);
-    }
+    } catch(e) {}
 
     let currentUser = null;
     let cloudDonations = [];
     let cloudProducts = [];
     let cloudCoupons = [];
     let cloudOrders = [];
+    let cloudChats = [];
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
     let pendingDonationData = null;
@@ -577,7 +606,7 @@
       try {
         toggleSideNav();
         document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
-        ['donate', 'store', 'directory', 'orders'].forEach(id => {
+        ['donate', 'store', 'directory', 'chat', 'orders'].forEach(id => {
           const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
           if (p) p.style.display = 'none';
         });
@@ -594,44 +623,26 @@
     function applyLanguage() {
       if (!isEn) return;
       try {
-        const docTitle = document.getElementById('siteDocTitle');
-        if (docTitle) docTitle.innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
-        const mTxt = document.getElementById('musicBtnTxt');
-        if (mTxt) mTxt.innerText = "Play Music";
-        const lTxt = document.getElementById('navLoginTxt');
-        if (lTxt) lTxt.innerText = "Login / Sign-up";
-        const drwDon = document.getElementById('drwDonate');
-        if (drwDon) drwDon.innerText = "Contribution Form";
-        const drwSto = document.getElementById('drwStore');
-        if (drwSto) drwSto.innerText = "Devotional Store";
-        const drwLis = document.getElementById('drwList');
-        if (drwLis) drwLis.innerText = "Public Donor List";
-        const drwOrd = document.getElementById('drwOrders');
-        if (drwOrd) drwOrd.innerText = "My Orders";
-        const txtDonT = document.getElementById('txtDonateTitle');
-        if (txtDonT) txtDonT.innerText = "Devotional Contribution / Donation";
-        const lblC = document.getElementById('lblCause');
-        if (lblC) lblC.innerText = "Select Purpose";
-        const lblSal = document.getElementById('lblSalutation');
-        if (lblSal) lblSal.innerText = "Salutation (Optional)";
-        const lblN = document.getElementById('lblName');
-        if (lblN) lblN.innerText = "Full Name";
-        const lblCi = document.getElementById('lblCity');
-        if (lblCi) lblCi.innerText = "City / Village";
-        const lblPh = document.getElementById('lblPhone');
-        if (lblPh) lblPh.innerText = "WhatsApp Number";
-        const lblAm = document.getElementById('lblAmount');
-        if (lblAm) lblAm.innerText = "Contribution Amount (₹)";
-        const btnPy = document.getElementById('btnPayDon');
-        if (btnPy) btnPy.innerText = "Contribute (Pay Now)";
-        const txtSug = document.getElementById('txtSuggestedTitle');
-        if (txtSug) txtSug.innerText = "🌟 Recommended Devotional Items";
-        const txtSto = document.getElementById('txtStoreTitle');
-        if (txtSto) txtSto.innerText = "Maa Durga Enterprises — Devotional Store";
-        const txtDir = document.getElementById('txtDirTitle');
-        if (txtDir) txtDir.innerText = "📜 Public Transparency Board";
-        const txtMyO = document.getElementById('txtMyOrdersTitle');
-        if (txtMyO) txtMyO.innerText = "📦 My Orders & Live Status";
+        document.getElementById('siteDocTitle').innerText = "Maa Durga Enterprises | Shree Durga Puja Sewa Samiti";
+        document.getElementById('musicBtnTxt').innerText = "Play Music";
+        document.getElementById('navLoginTxt').innerText = "Login / Sign-up";
+        document.getElementById('drwDonate').innerText = "Contribution Form";
+        document.getElementById('drwStore').innerText = "Devotional Store";
+        document.getElementById('drwList').innerText = "Public Donor List";
+        document.getElementById('drwChat').innerText = "Live Satsang Chat";
+        document.getElementById('drwOrders').innerText = "My Orders";
+        document.getElementById('txtDonateTitle').innerText = "Devotional Contribution / Donation";
+        document.getElementById('lblCause').innerText = "Select Purpose";
+        document.getElementById('lblSalutation').innerText = "Salutation (Optional)";
+        document.getElementById('lblName').innerText = "Full Name";
+        document.getElementById('lblCity').innerText = "City / Village";
+        document.getElementById('lblPhone').innerText = "WhatsApp Number";
+        document.getElementById('lblAmount').innerText = "Contribution Amount (₹)";
+        document.getElementById('btnPayDon').innerText = "Contribute (Pay Now)";
+        document.getElementById('txtSuggestedTitle').innerText = "🌟 Recommended Devotional Items";
+        document.getElementById('txtStoreTitle').innerText = "Maa Durga Enterprises — Devotional Store";
+        document.getElementById('txtDirTitle').innerText = "📜 Public Transparency Board";
+        document.getElementById('txtMyOrdersTitle').innerText = "📦 My Orders & Live Status";
       } catch(e) {}
     }
     applyLanguage();
@@ -670,7 +681,7 @@
       return match ? match[1] : null;
     }
 
-    // --- Safe Realtime Ad-Free Synced Room ---
+    // --- Safe Realtime Ad-Free Synced Room & Zero-Friction Autoplay ---
     let ytPlayer = null;
     let isMusicPlaying = false;
     let currentYtVideoId = "ChC8RMdyvhk";
@@ -692,12 +703,10 @@
           playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId },
           events: {
             'onReady': onPlayerReadySync,
-            'onError': (e) => { console.log("YT Error:", e); }
+            'onError': (e) => {}
           }
         });
-      } catch(err) {
-        console.log("YT Init exception:", err);
-      }
+      } catch(err) {}
     };
 
     function onPlayerReadySync() {
@@ -780,7 +789,7 @@
       }
     }
 
-    // --- Zero-Friction First Touch Trigger ---
+    // --- Zero-Friction Anywhere Touch/Scroll Trigger ---
     let hasUserInteracted = false;
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
@@ -869,7 +878,7 @@
       } catch(e) {}
     }
 
-    // --- Firestore Sync Listeners (Safely wrapped) ---
+    // --- Firestore Sync Listeners ---
     if (db) {
       db.collection("donations").onSnapshot(snap => {
         let isInit = isFirstDonationLoad;
@@ -910,6 +919,13 @@
         snap.forEach(doc => cloudOrders.push({ id: doc.id, ...doc.data() }));
         renderCustomerOrders();
         renderAdminOrders();
+      }, err => {});
+
+      db.collection("chats").orderBy("timeNumber", "asc").onSnapshot(snap => {
+        cloudChats = [];
+        snap.forEach(doc => cloudChats.push({ id: doc.id, ...doc.data() }));
+        renderGlobalChat();
+        renderAdminChat();
       }, err => {});
 
       db.collection("settings").doc("main").onSnapshot(doc => {
@@ -957,6 +973,94 @@
           }
         }
       }, err => {});
+    }
+
+    // --- Global Live Satsang Chat Functions ---
+    function sendGlobalChatMessage() {
+      if (!db) return;
+      const msgInput = document.getElementById('chatInputMsg');
+      const text = msgInput ? msgInput.value.trim() : '';
+      if (!text) return;
+
+      const senderName = currentUser ? (currentUser.displayName || "श्रद्धालु भक्त") : "अज्ञात भक्त";
+
+      db.collection("chats").add({
+        name: senderName,
+        message: text,
+        timeNumber: Date.now(),
+        dateStr: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
+      }).then(() => {
+        msgInput.value = '';
+      }).catch(e => showAppToast(e.message));
+    }
+
+    function renderGlobalChat() {
+      try {
+        const box = document.getElementById('globalChatContainer');
+        if (!box) return;
+        box.innerHTML = cloudChats.map(c => `
+          <div class="chat-msg-item">
+            <div class="chat-msg-sender">${c.name || 'भक्त'} <span style="font-weight:normal; color:#aaa; font-size:10px; margin-left:6px;">${c.dateStr || ''}</span></div>
+            <div>${c.message || ''}</div>
+          </div>
+        `).join('');
+        box.scrollTop = box.scrollHeight;
+      } catch(e) {}
+    }
+
+    function renderAdminChat() {
+      try {
+        const tb = document.querySelector('#admChatTable tbody');
+        if (!tb) return;
+        tb.innerHTML = cloudChats.map(c => `
+          <tr>
+            <td>${c.dateStr || '—'}</td>
+            <td><b>${c.name || '—'}</b></td>
+            <td>${c.message || ''}</td>
+            <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `).join('');
+      } catch(e) {}
+    }
+
+    // --- Admin Clickable Inspect Record (Full details modal) ---
+    function inspectRecord(type, id) {
+      try {
+        let item = null;
+        let html = "";
+        if (type === 'order') {
+          item = cloudOrders.find(o => o.id === id);
+          if (!item) return;
+          html = `
+            <b>📦 ऑर्डर विवरण:</b><br>
+            • नाम: ${item.userName || '—'}<br>
+            • ईमेल: ${item.userEmail || '—'}<br>
+            • सामग्री: ${item.productName || '—'}<br>
+            • राशि: ₹${item.amount || 0}<br>
+            • UTR: ${item.utr || '—'}<br>
+            • फोन: ${item.phone || '—'}<br>
+            • पूरा पता: ${item.fullAddress || item.address || '—'}<br>
+            • पिनकोड: ${item.pincode || '—'}<br>
+            • स्थिति: ${item.status || 'कन्फ़र्म हुआ'}<br>
+            • तारीख: ${item.date || '—'}
+          `;
+        } else if (type === 'donation') {
+          item = cloudDonations.find(d => d.id === id);
+          if (!item) return;
+          html = `
+            <b>💵 दान/सहयोग विवरण:</b><br>
+            • नाम: ${formatDonorName(item.name, item.salutation)}<br>
+            • उद्देश्य: ${item.cause || '—'}<br>
+            • राशि: ₹${item.amount || 0}<br>
+            • UTR: ${item.utr || '—'}<br>
+            • स्थान/शहर: ${item.address || '—'}<br>
+            • फोन: ${item.phone || '—'}<br>
+            • तारीख: ${item.date || '—'}
+          `;
+        }
+        document.getElementById('inspectContentBox').innerHTML = html;
+        document.getElementById('adminInspectModal').style.display = 'flex';
+      } catch(e) {}
     }
 
     // --- Store & Categories ---
@@ -1407,38 +1511,36 @@
         const tb = document.querySelector('#admOrdTable tbody');
         if (!tb) return;
         if (cloudOrders.length === 0) {
-          tb.innerHTML = "<tr><td colspan='10' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
+          tb.innerHTML = "<tr><td colspan='9' style='text-align:center; color:#aaa;'>कोई ऑर्डर उपलब्ध नहीं है</td></tr>";
           return;
         }
         tb.innerHTML = cloudOrders.map(o => {
-          const fullAddr = o.fullAddress || o.address || '—';
           const sc = o.statusCode !== undefined ? o.statusCode : 1;
           return `
           <tr>
             <td>${o.date || '—'}</td>
-            <td><b>${o.userName || '—'}</b><br><small>${o.userEmail || '—'}</small></td>
+            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('order', '${o.id}')">${o.userName || '—'}</b></td>
             <td>${o.productName || '—'}</td>
             <td>₹${o.amount || 0}</td>
             <td><small style="color:var(--gold); font-weight:bold;">${o.utr || '—'}</small></td>
-            <td>${fullAddr}<br>📞 ${o.phone || '—'}</td>
             <td>
               <div style="display:flex; align-items:center; gap:4px;">
-                <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:65px; padding:3px; font-size:11px;">
+                <input type="text" id="admOtpInput_${o.id}" value="${o.otp || ''}" placeholder="OTP" style="width:55px; padding:3px; font-size:11px;">
                 <input type="checkbox" id="admOtpCheck_${o.id}" ${o.showOtpToUser ? 'checked' : ''} title="टिक रहने पर ही ग्राहक को OTP दिखेगा" style="width:16px; height:16px; cursor:pointer;">
               </div>
             </td>
             <td>
-              <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:120px;">
-                <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म हुआ</option>
-                <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप किया गया</option>
-                <option value="3" ${sc == 3 ? 'selected' : ''}>3. डिलीवरी रवाना</option>
-                <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर हुआ</option>
-                <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द (Cancel)</option>
+              <select id="admStatusSel_${o.id}" style="font-size:11px; padding:3px; width:110px;">
+                <option value="1" ${sc == 1 ? 'selected' : ''}>1. कन्फ़र्म</option>
+                <option value="2" ${sc == 2 ? 'selected' : ''}>2. शिप हुआ</option>
+                <option value="3" ${sc == 3 ? 'selected' : ''}>3. रवाना</option>
+                <option value="4" ${sc == 4 ? 'selected' : ''}>4. डिलीवर</option>
+                <option value="0" ${sc == 0 ? 'selected' : ''}>0. रद्द</option>
               </select>
             </td>
             <td>
               <button onclick="saveOrderDetails('${o.id}')" style="background:#4caf50; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                💾 सम्मति
+                💾
               </button>
             </td>
             <td>
@@ -1482,7 +1584,7 @@
         tb.innerHTML = cloudDonations.map(d => `
           <tr>
             <td>${d.date}</td>
-            <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
+            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${formatDonorName(d.name, d.salutation)}</b></td>
             <td>${d.address || '—'}</td>
             <td>₹${d.amount}</td>
             <td>${d.utr || 'VERIFIED'}</td>
