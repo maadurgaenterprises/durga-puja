@@ -69,7 +69,7 @@
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
 
-    /* Dynamic QR Box inside Checkout/Donation */
+    /* Dynamic QR Box */
     .qr-box-wrapper { background: #fff; padding: 15px; border-radius: 10px; display: inline-block; margin: 10px 0; }
     .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
     .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; }
@@ -153,7 +153,7 @@
 
   <div class="main-wrap">
 
-    <!-- PANEL 1: DONATION + SUGGESTED PRODUCTS -->
+    <!-- PANEL 1: DONATION FORM (NO UTR REQUIRED) -->
     <div id="panelDonate">
       <div class="card">
         <h2 id="txtDonateTitle">पावन सेवा सहयोग / दान (अपनी इच्छानुसार)</h2>
@@ -194,7 +194,7 @@
           <label id="lblAmount">सहयोग राशि (₹)</label>
           <input type="number" id="donAmount" placeholder="राशि (₹)">
         </div>
-        <button class="btn-main" onclick="startDonationFlow()" id="btnPayDon">सहयोग करें (Pay Now)</button>
+        <button class="btn-main" onclick="startDirectDonation()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
       <!-- Suggested Items Under Donation Form -->
@@ -257,7 +257,7 @@
     </div>
   </div>
 
-  <!-- FLIPKART STYLE SEPARATED ADDRESS CHECKOUT MODAL WITH DYNAMIC QR & PAYMENT APP BADGES -->
+  <!-- FLIPKART STYLE SEPARATED ADDRESS CHECKOUT MODAL WITH DYNAMIC QR -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:460px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;" id="chkProdName">ऑर्डर विवरण</h3>
@@ -292,23 +292,19 @@
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; margin-bottom:12px; border:1px solid rgba(255,215,0,0.3); text-align:center;">
         <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 स्कैन करें या नीचे दिए गए ऐप से भुगतान करें:</p>
         
-        <!-- Supported UPI Apps Badges -->
         <div class="upi-app-badges">
           <span class="upi-badge">Google Pay</span>
           <span class="upi-badge">PhonePe</span>
           <span class="upi-badge">Paytm</span>
           <span class="upi-badge">BHIM UPI</span>
-          <span class="upi-badge">Other UPI / Cards</span>
         </div>
 
-        <!-- Live Generated QR Code with Fixed Amount -->
         <div style="display: flex; justify-content: center; margin: 10px 0;">
           <div class="qr-box-wrapper" id="dynamicQrContainer"></div>
         </div>
-        <p style="font-size:10px; color:#ccc;">(इस QR में राशि अपने आप फिक्स है)</p>
 
         <div style="margin-top:10px; text-align:left;">
-          <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद प्राप्त 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
+          <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद UTR / Ref नंबर दर्ज करें:</p>
           <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
         </div>
       </div>
@@ -444,10 +440,10 @@
         </div>
       </div>
 
-      <!-- Admin Sec 5: Donations & Cash -->
+      <!-- Admin Sec 5: Donations & Cash (Full control to add/remove entries manually) -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
-          <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद / UTR सत्यापित सहयोग जोड़ें</h4>
+          <h4 style="color:var(--gold); margin-bottom:6px;">💵 सत्यापित दान / नकद एंट्री जोड़ें</h4>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
             <select id="admCashSalutation" style="padding:7px; font-size:11px;">
               <option value="none">कोई नहीं (केवल नाम व जी)</option>
@@ -460,10 +456,6 @@
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
             <input type="text" id="admCashCity" placeholder="स्थान (जैसे: प्रतापगढ़)">
             <input type="number" id="admCashAmt" placeholder="राशि (₹) *">
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="tel" id="admCashPhone" placeholder="मोबाइल">
-            <input type="text" id="admCashUtr" placeholder="UTR / Ref No. (प्रत्येक UTR अद्वितीय होना चाहिए)">
           </div>
           <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें व स्वागत करें</button>
         </div>
@@ -902,7 +894,7 @@
       `).join('');
     }
 
-    // --- Checkout Flow with Dynamic QR Code ---
+    // --- Checkout Flow ---
     let selectedProduct = null;
     let appliedDiscountPct = 0;
     let paymentVerifiedByGateway = false;
@@ -958,14 +950,11 @@
       document.getElementById('finalCheckoutAmt').innerText = `₹${getFinalPayAmount()}`;
     }
 
-    // Generate Dynamic QR Code with Fixed Amount
     function generateDynamicQrCode() {
       const container = document.getElementById('dynamicQrContainer');
-      container.innerHTML = ""; // Clear old QR
+      container.innerHTML = "";
       const amt = getFinalPayAmount();
       const upiId = document.getElementById('admUpiId').value || "8382893303-1@okbizaxis";
-      
-      // UPI intent string with fixed amount
       const upiString = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR`;
 
       new QRCode(container, {
@@ -992,15 +981,7 @@
         return;
       }
       if (!utr || utr.length < 4) {
-        showAppToast("कृपया भुगतान पूरा करके अपना UTR / Ref नंबर दर्ज करें!");
-        return;
-      }
-
-      // Prevent duplicate UTR
-      const dupOrd = cloudOrders.find(o => o.utr === utr);
-      const dupDon = cloudDonations.find(d => d.utr === utr);
-      if (dupOrd || dupDon) {
-        showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया वैध UTR दर्ज करें।");
+        showAppToast("कृपया भुगतान के बाद UTR / Ref नंबर दर्ज करें!");
         return;
       }
 
@@ -1270,19 +1251,11 @@
       const city = document.getElementById('admCashCity').value.trim();
       const phone = document.getElementById('admCashPhone').value.trim();
       const amt = document.getElementById('admCashAmt').value.trim();
-      const utr = document.getElementById('admCashUtr').value.trim() || ("CASH_" + Date.now());
 
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
-      const dupOrd = cloudOrders.find(o => o.utr === utr);
-      const dupDon = cloudDonations.find(d => d.utr === utr);
-      if (dupOrd || dupDon) {
-        showAppToast("⚠️ यह UTR नंबर पहले से दर्ज है!");
-        return;
-      }
-
       db.collection("donations").add({
-        name, salutation: sal, address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: utr,
+        name, salutation: sal, address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_VERIFIED",
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1290,7 +1263,6 @@
         showAppToast("✅ सहयोग क्लाउड में दर्ज हुआ व लाइव प्रसारण शुरू!");
         document.getElementById('admCashName').value = '';
         document.getElementById('admCashAmt').value = '';
-        document.getElementById('admCashUtr').value = '';
       });
     }
 
@@ -1303,14 +1275,14 @@
           <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
           <td>${d.address || '—'}</td>
           <td>₹${d.amount}</td>
-          <td>${d.utr}</td>
+          <td>${d.utr || 'VERIFIED'}</td>
           <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
 
-    // --- Public Donation Flow (Opens UPI App directly or user can scan dynamic QR) ---
-    function startDonationFlow() {
+    // --- Direct Donation Flow (No UTR prompt required) ---
+    function startDirectDonation() {
       const name = document.getElementById('donName').value.trim() || "श्रद्धालु भक्त";
       const sal = document.getElementById('donSalutation').value;
       const amt = document.getElementById('donAmount').value.trim();
@@ -1320,28 +1292,16 @@
 
       if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
 
-      const upiId = document.getElementById('admUpiId').value || "8382893303-1@okbizaxis";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR`;
-
-      setTimeout(() => {
-        const utr = prompt("पेमेंट पूरा करने के बाद 12-अंकीय UPI Ref / UTR नंबर दर्ज करें:");
-        if (utr) {
-          const cleanUtr = utr.trim();
-          const dupOrd = cloudOrders.find(o => o.utr === cleanUtr);
-          const dupDon = cloudDonations.find(d => d.utr === cleanUtr);
-          if (dupOrd || dupDon) {
-            showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है! कृपया वैध UTR दर्ज करें।");
-            return;
-          }
-
-          db.collection("donations").add({
-            name, salutation: sal, address: city, phone, amount: Number(amt), cause, utr: cleanUtr,
-            date: new Date().toLocaleDateString('hi-IN'),
-            timeNumber: Date.now(),
-            timestamp: firebase.firestore.FieldValue.serverTimestamp()
-          });
-        }
-      }, 1500);
+      // Save directly to cloud without requiring UTR
+      db.collection("donations").add({
+        name, salutation: sal, address: city, phone, amount: Number(amt), cause, utr: "DIRECT_PAY",
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        const upiId = document.getElementById('admUpiId').value || "8382893303-1@okbizaxis";
+        window.location.href = `upi://pay?pa=${upiId}&pn=Maa%20Durga%20Enterprises&am=${amt}&cu=INR`;
+      });
     }
 
     function refreshTicker() {
