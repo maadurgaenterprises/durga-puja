@@ -342,12 +342,21 @@
       </div>
     </div>
 
-    <!-- PANEL 6: MY ORDERS -->
+    <!-- PANEL 6: MY ORDERS & FLIPKART TRACKING DASHBOARD -->
     <div id="panelOrders" class="card" style="display:none;">
       <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
     </div>
 
+  </div>
+
+  <!-- POPUP: FLIPKART STYLE ORDER TRACKING TIMELINE MODAL -->
+  <div class="custom-popup-overlay" id="orderTrackModal">
+    <div class="custom-popup-box" style="max-width:450px; text-align:left; max-height:85vh; overflow-y:auto;">
+      <h3 style="color:var(--gold); margin-bottom:10px; text-align:center;">📍 ऑर्डर लाइव ट्रैकिंग</h3>
+      <div id="trackModalContent" style="margin-bottom:14px;"></div>
+      <button class="btn-main" onclick="closeModal('orderTrackModal')">बंद करें</button>
+    </div>
   </div>
 
   <!-- POPUP: GANESH JI SUPPORT MODAL -->
@@ -403,7 +412,7 @@
     </div>
   </div>
 
-  <!-- POPUP: BLOG READER MODAL (WITH MULTI-PHOTO GALLERY) -->
+  <!-- POPUP: BLOG READER MODAL -->
   <div class="custom-popup-overlay" id="blogReaderModal">
     <div class="custom-popup-box" style="max-width:540px; text-align:left; max-height:85vh; overflow-y:auto;">
       <h3 style="color:var(--gold); margin-bottom:6px;" id="readerBlogTitle"></h3>
@@ -577,19 +586,8 @@
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
       <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
       
-      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;">
-        <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 QR स्कैन करें या ऐप खोलें:</p>
-        <div class="upi-app-badges">
-          <span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe खोलें</span>
-        </div>
-        <div style="display: flex; justify-content: center; margin: 10px 0;">
-          <div class="qr-box-wrapper" id="donationQrContainer"></div>
-        </div>
-        <p style="font-size:10px; color:#ccc;">(राशि अपने आप फिक्स है)</p>
-        <div style="margin-top:10px; text-align:left;">
-          <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
-          <input type="text" id="donUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
-        </div>
+      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox">
+        <!-- Dynamic based on payment gate mode -->
       </div>
 
       <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
@@ -638,7 +636,7 @@
         <button class="adm-tab" onclick="switchAdm('admChatAdm')">🛡️ चैट मॉडरेटर</button>
       </div>
 
-      <!-- Admin Sec 1: Settings & Gateway Controls -->
+      <!-- Admin Sec 1: Settings & Payment Gateway Controls -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
@@ -666,16 +664,21 @@
           </div>
         </div>
 
-        <h4 style="color:var(--gold); margin-bottom:8px;">💳 पेमेंट और बैंक सेटिंग्स (पेमेंट गेटवे कंट्रोल):</h4>
-        <div class="form-group">
-          <label>पेमेंट का तरीका चुनें:</label>
-          <select id="admPaymentMode">
-            <option value="upi">Paytm बिज़नेस QR / UPI (Manual QR / UPI)</option>
-            <option value="razorpay">Razorpay ऑटो पेमेंट गेटवे (Online Gateway)</option>
-          </select>
+        <h4 style="color:var(--gold); margin-bottom:8px;">💳 पेमेंट गेटवे मोड (एडमिन कंट्रोल):</h4>
+        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
+          <div class="form-group">
+            <label>पेमेंट का तरीका चुनें:</label>
+            <select id="admPaymentMode">
+              <option value="upi">UPI / QR (Paytm / GPay / PhonePe Manual)</option>
+              <option value="razorpay">Razorpay Auto Gateway</option>
+              <option value="cod">Cash on Delivery Only</option>
+            </select>
+          </div>
+          <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
+          <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
         </div>
-        <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-        <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+
+        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
 
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
@@ -699,7 +702,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 3: Devotional Blog Post Manager (Multi-Image URL Support) -->
+      <!-- Admin Sec 3: Devotional Blog Post Manager -->
       <div id="admBlogAdm" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नई भक्ति कथा / दर्शन पोस्ट जोड़ें (मल्टी-फोटो सपोर्ट)</h4>
         <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
@@ -741,9 +744,9 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Products with Multi-Photo URL & Suggested Toggle -->
+      <!-- Admin Sec 4: Products & Inventory Manager -->
       <div id="admProd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट / प्रसाद जोड़ें (मल्टी-फोटो सपोर्ट)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट / प्रसाद जोड़ें (स्टोर मैनेजमेंट)</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
           <input type="text" id="newPName" placeholder="सामग्री का नाम (उदा: Prasad Dana) *">
           <input type="number" id="newPPrice" placeholder="कीमत (₹) *">
@@ -775,9 +778,11 @@
           <label for="newPOnDonation" style="margin:0; color:#fff; font-weight:bold; cursor:pointer;">⭐ इसे डोनेशन (सहयोग) पेज पर सजेस्टेड (Suggested) में दिखाएं</label>
         </div>
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में जोड़ें</button>
-        <div class="table-responsive" style="margin-top:14px;">
+
+        <h4 style="color:var(--gold); margin:18px 0 8px;">स्टोर में जोड़े गए सभी प्रोडक्ट्स (आउट ऑफ़ स्टॉक या डिलीट करें):</h4>
+        <div class="table-responsive">
           <table id="admProdTable">
-            <thead><tr><th>फोटो</th><th>नाम</th><th>डोनेशन पेज?</th><th>कीमत</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>फोटो</th><th>नाम</th><th>स्टोर स्टेटस / डोनेशन</th><th>कीमत</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -799,12 +804,12 @@
         </div>
       </div>
 
-      <!-- Admin Sec 6: Orders -->
+      <!-- Admin Sec 6: Orders (5 Status Options Dashboard) -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स व 5-स्टेज डिलीवरी कंट्रोल</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक नाम</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>OTP व टिक</th><th>स्थिति</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>लाइव स्टेटस (5 स्टेज)</th><th>OTP दृश्य</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -923,6 +928,7 @@
     let pendingDonationData = null;
     let selectedProblemImageBase64 = null;
     let globalOfferExpiryTime = null;
+    let appSettingsMain = {};
 
     function toggleSideNav() {
       const d = document.getElementById('sideNavDrawer');
@@ -999,7 +1005,6 @@
       return rawUrl;
     }
 
-    // --- DYNAMIC EXTRA PHOTO INPUTS ---
     function addExtraPhotoInput() {
       const container = document.getElementById('extraPhotoInputsContainer');
       if (!container) return;
@@ -1237,7 +1242,6 @@
     }
 
     // --- Firestore Sync Listeners ---
-    let appSettingsMain = {};
     if (db) {
       db.collection("playlist").orderBy("timeNumber", "asc").onSnapshot(snap => {
         cloudPlaylist = [];
@@ -1452,16 +1456,18 @@
       const galleryBox = document.getElementById('modalProdGallery');
       galleryBox.innerHTML = "";
 
-      if (p.img) {
-        mediaBox.innerHTML = `<img src="${p.img}" style="max-height:220px; width:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,215,0,0.3);" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">`;
-      } else {
-        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">📦</div>`;
-      }
+      let allImgs = [];
+      if (p.img) allImgs.push(p.img);
+      if (p.gallery && p.gallery.length > 0) allImgs = allImgs.concat(p.gallery);
 
-      if (p.gallery && p.gallery.length > 0) {
-        galleryBox.innerHTML = p.gallery.map(imgUrl => `
+      if (allImgs.length > 0) {
+        mediaBox.innerHTML = `<img src="${allImgs[0]}" style="max-height:220px; width:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,215,0,0.3);" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">`;
+        
+        galleryBox.innerHTML = allImgs.map(imgUrl => `
           <img src="${imgUrl}" style="width:60px; height:60px; object-fit:cover; border-radius:4px; border:1px solid var(--gold); cursor:pointer;" onclick="document.getElementById('modalProdMedia').innerHTML='<img src=\x27${imgUrl}\x27 style=\x27max-height:220px; width:100%; object-fit:cover; border-radius:8px;\x27>'" onerror="this.onerror=null; this.src='https://via.placeholder.com/100';">
         `).join('');
+      } else {
+        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">📦</div>`;
       }
 
       document.getElementById('modalProdDesc').innerText = p.description || "इस उत्पाद के लिए कोई अतिरिक्त विवरण उपलब्ध नहीं है।";
@@ -1475,7 +1481,6 @@
       document.getElementById('chkTitle').innerText = `📦 ऑर्डर: ${activeCheckoutProduct.name}`;
       document.getElementById('chkProdSummary').innerHTML = `मूल्य: <b style="color:var(--gold);">₹${activeCheckoutProduct.price}</b>`;
       
-      // Reset checkout form
       document.getElementById('dlvName').value = currentUser && currentUser.displayName ? currentUser.displayName : '';
       document.getElementById('dlvPhone').value = '';
       document.getElementById('dlvAltPhone').value = '';
@@ -1491,6 +1496,24 @@
       appliedDiscountPercent = 0;
       currentCalculatedPrice = activeCheckoutProduct.price;
       document.getElementById('finalCheckoutAmt').innerText = `₹${currentCalculatedPrice}`;
+
+      // Populate payment modes based on admin control
+      const payModeSelect = document.getElementById('dlvPayMode');
+      const currentGatewayMode = appSettingsMain.paymentMode || 'upi';
+      if (currentGatewayMode === 'cod') {
+        payModeSelect.innerHTML = `<option value="cod">Cash on Delivery (COD - नगद भुगतान)</option>`;
+      } else if (currentGatewayMode === 'razorpay') {
+        payModeSelect.innerHTML = `
+          <option value="card">Debit / Credit Card / Netbanking</option>
+          <option value="cod">Cash on Delivery (COD)</option>
+        `;
+      } else {
+        payModeSelect.innerHTML = `
+          <option value="cod">Cash on Delivery (COD - नगद भुगतान)</option>
+          <option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>
+          <option value="card">Debit / Credit Card</option>
+        `;
+      }
 
       document.getElementById('checkoutStep1').style.display = 'block';
       document.getElementById('checkoutStep2').style.display = 'none';
@@ -1550,7 +1573,6 @@
         return;
       }
 
-      // Check if user already used this coupon
       const userEmail = currentUser ? currentUser.email : (localStorage.getItem('guest_email') || 'guest_' + MY_CLIENT_ID);
       const usedKey = `coupon_used_${userEmail}_${codeInput}`;
       if (localStorage.getItem(usedKey) === 'true') {
@@ -1566,7 +1588,6 @@
       msgEl.innerText = `✓ ${appliedDiscountPercent}% छूट सफलतापूर्वक लागू हुई!`;
       msgEl.style.display = 'block';
 
-      // Save usage in localStorage to enforce single use per ID
       localStorage.setItem(usedKey, 'true');
 
       if (document.getElementById('dlvPayMode').value === 'upi') {
@@ -1583,7 +1604,7 @@
     function confirmStoreOrderFinal() {
       if (!db || !activeCheckoutProduct) return;
       const payMode = document.getElementById('dlvPayMode').value;
-      let utr = "COD_" + Date.now().toString().slice(-6);
+      let utr = "NOT_REQUIRED";
 
       if (payMode === 'upi') {
         utr = document.getElementById('chkUtrInput').value.trim();
@@ -1596,6 +1617,10 @@
           showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
           return;
         }
+      } else if (payMode === 'card') {
+        utr = "ONLINE_CARD_" + Date.now().toString().slice(-6);
+      } else {
+        utr = "COD_" + Date.now().toString().slice(-6);
       }
 
       const fullAddr = `${document.getElementById('dlvHouse').value}, ${document.getElementById('dlvRoad').value}, ${document.getElementById('dlvArea').value}, ${document.getElementById('dlvCity').value}, ${document.getElementById('dlvDist').value} (Pin: ${document.getElementById('dlvPincode').value}), State: ${document.getElementById('dlvState').value}`;
@@ -1607,18 +1632,136 @@
         altPhone: document.getElementById('dlvAltPhone').value.trim(),
         fullAddress: fullAddr,
         productName: activeCheckoutProduct.name,
+        productImg: activeCheckoutProduct.img || '',
         amount: currentCalculatedPrice,
         paymentMode: payMode,
         utr: utr,
         otp: Math.floor(1000 + Math.random() * 9000).toString(),
-        showOtpToUser: true,
+        showOtpToUser: false, // Hidden by default until admin enables near delivery
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
-        status: "कन्फ़र्म"
+        status: "पेंडिंग" // Default 5-stage status
       }).then(() => {
         closeModal('checkoutModal');
-        showAppToast("🎉 बधाई हो! आपका ऑर्डर सफलतापूर्वक ले लिया गया है। जल्द ही हमारी टीम आपसे संपर्क करेगी।");
+        showAppToast("🎉 बधाई हो! आपका ऑर्डर सफलता पूर्वक ले लिया गया है। जल्द ही हमारी टीम आपसे संपर्क करेगी। धन्यवाद।");
       }).catch(e => showAppToast("त्रुटि: " + e.message));
+    }
+
+    // --- FLIPKART STYLE TRACKING MODAL FOR CUSTOMERS ---
+    function openOrderTrackingModal(orderId) {
+      const order = cloudOrders.find(o => o.id === orderId);
+      if (!order) return;
+
+      const currentStatus = order.status || "पेंडिंग";
+      const stages = ["पेंडिंग", "कन्फ़र्म", "शिप हुआ", "डिलीवरी के लिए निकला", "डिलीवर"];
+      let currentIndex = stages.indexOf(currentStatus);
+      if (currentIndex === -1) currentIndex = 0;
+
+      let timelineHtml = stages.map((st, idx) => {
+        let isDone = idx <= currentIndex;
+        let colorDot = isDone ? "#4caf50" : "#555";
+        let lineClr = idx < stages.length - 1 && idx < currentIndex ? "#4caf50" : "#444";
+        return `
+          <div style="display:flex; gap:12px; position:relative; margin-bottom:14px;">
+            <div style="display:flex; flex-direction:column; align-items:center;">
+              <div style="width:18px; height:18px; border-radius:50%; background:${colorDot}; border:2px solid var(--gold); z-index:2;"></div>
+              ${idx < stages.length - 1 ? `<div style="width:2px; height:35px; background:${lineClr}; margin-top:2px;"></div>` : ''}
+            </div>
+            <div>
+              <b style="font-size:14px; color:${isDone ? '#fff' : '#aaa'};">${st}</b>
+              <p style="font-size:11px; color:#aaa;">${isDone ? 'स्थिति सक्रिय / अपडेटेड' : 'प्रतीक्षा में...'}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      let otpBlock = "";
+      if (order.showOtpToUser && order.otp) {
+        otpBlock = `<div style="background:rgba(76,175,80,0.15); border:1px solid #4caf50; padding:10px; border-radius:8px; margin-top:12px; text-align:center;">
+          <b style="color:#81c784; font-size:14px;">🔑 गुप्त डिलीवरी OTP: ${order.otp}</b>
+          <p style="font-size:10px; color:#ccc;">सामान प्राप्त करते समय डिलीवरी बॉय को यह OTP बताएं।</p>
+        </div>`;
+      }
+
+      document.getElementById('trackModalContent').innerHTML = `
+        <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px; background:rgba(0,0,0,0.4); padding:8px; border-radius:8px;">
+          <img src="${order.productImg || 'https://via.placeholder.com/60'}" width="50" height="50" style="object-fit:cover; border-radius:6px;" onerror="this.style.display='none'">
+          <div>
+            <b style="color:var(--gold); font-size:13px;">${order.productName}</b>
+            <p style="font-size:11px; color:#ffcdd2;">मूल्य: ₹${order.amount} | दिनांक: ${order.date}</p>
+          </div>
+        </div>
+        <div style="padding:4px 10px;">${timelineHtml}</div>
+        ${otpBlock}
+      `;
+      openModal('orderTrackModal');
+    }
+
+    // --- RENDER CUSTOMER ORDERS DASHBOARD ---
+    function renderCustomerOrders() {
+      const cont = document.getElementById('ordersContainer');
+      if (!cont || !currentUser) return;
+      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
+      if (my.length === 0) {
+        cont.innerHTML = `<p style="color:#aaa; text-align:center; padding:15px;">आपका कोई ऑर्डर नहीं मिला।</p>`;
+        return;
+      }
+      cont.innerHTML = my.map(o => `
+        <div onclick="openOrderTrackingModal('${o.id}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.25); padding:12px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer;" title="स्टेटस देखने हेतु क्लिक करें">
+          <img src="${o.productImg || 'https://via.placeholder.com/60'}" width="60" height="60" style="object-fit:cover; border-radius:8px; border:1px solid var(--gold);" onerror="this.onerror=null; this.src='https://via.placeholder.com/60';">
+          <div style="flex:1;">
+            <b style="color:var(--gold); font-size:14px; display:block; margin-bottom:3px;">${o.productName}</b>
+            <p style="font-size:12px; color:#ffcdd2;">वर्तमान स्थिति: <b style="color:#81c784;">${o.status || 'पेंडिंग'}</b></p>
+            <small style="color:#aaa;">क्लिक करके विस्तृत स्टेटस (Flipkart स्टाइल) देखें ➔</small>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // --- ADMIN ORDERS & 5-STAGE STATUS MANAGER ---
+    function renderAdminOrders() {
+      const tb = document.querySelector('#admOrdTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudOrders.map(o => `
+        <tr>
+          <td>${o.date}</td>
+          <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
+          <td>${o.productName}</td>
+          <td>₹${o.amount}</td>
+          <td>${o.utr}</td>
+          <td>
+            <select id="admStat_${o.id}" onchange="updateOrderStatus('${o.id}')" style="background:#000; color:var(--gold); border:1px solid var(--gold); padding:4px; border-radius:4px;">
+              <option value="पेंडिंग" ${o.status === 'पेंडिंग' ? 'selected' : ''}>पेंडिंग (Default)</option>
+              <option value="कन्फ़र्म" ${o.status === 'कन्फ़र्म' ? 'selected' : ''}>कन्फ़र्म</option>
+              <option value="शिप हुआ" ${o.status === 'शिप हुआ' ? 'selected' : ''}>शिप हुआ</option>
+              <option value="डिलीवरी के लिए निकला" ${o.status === 'डिलीवरी के लिए निकला' ? 'selected' : ''}>डिलीवरी के लिए निकला</option>
+              <option value="डिलीवर" ${o.status === 'डिलीवर' ? 'selected' : ''}>डिलीवर</option>
+            </select>
+          </td>
+          <td>
+            <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''} onchange="updateOrderOtpVisibility('${o.id}')" style="width:16px; height:16px; cursor:pointer;" title="टिक करने पर ग्राहक को OTP दिखेगा">
+          </td>
+          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">🗑️</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function updateOrderStatus(orderId) {
+      const selectEl = document.getElementById(`admStat_${orderId}`);
+      if (!selectEl || !db) return;
+      const newStatus = selectEl.value;
+      db.collection("orders").doc(orderId).update({ status: newStatus }).then(() => {
+        showAppToast("✅ ऑर्डर स्टेटस अपडेट हुआ!");
+      });
+    }
+
+    function updateOrderOtpVisibility(orderId) {
+      const chkEl = document.getElementById(`admOtpChk_${orderId}`);
+      if (!chkEl || !db) return;
+      const isVisible = chkEl.checked;
+      db.collection("orders").doc(orderId).update({ showOtpToUser: isVisible }).then(() => {
+        showAppToast(isVisible ? "🔑 OTP अब ग्राहक को दिखने लगा है!" : "🔒 OTP ग्राहक से छिपा दिया गया है!");
+      });
     }
 
     // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
@@ -1667,7 +1810,7 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // --- DEVOTIONAL BLOG LOGIC (WITH MULTI-PHOTO GALLERY) ---
+    // --- DEVOTIONAL BLOG LOGIC ---
     function saveNewBlogPost() {
       if (!db) return;
       const title = document.getElementById('newBlogTitle').value.trim();
@@ -2111,12 +2254,26 @@
       pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
 
       document.getElementById('donModalInfo').innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
-      document.getElementById('donUtrInput').value = '';
       
       const payMode = appSettingsMain.paymentMode || 'upi';
-      if (payMode === 'upi') {
+      const donBox = document.getElementById('donPaymentBox');
+
+      if (payMode === 'cod') {
+        donBox.innerHTML = `<p style="color:#81c784; font-size:13px; font-weight:bold;">सहयोग हेतु नकद (Cash) या सेवा स्वीकार है।</p>`;
+      } else {
+        donBox.innerHTML = `
+          <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 QR स्कैन करें या ऐप खोलें:</p>
+          <div class="upi-app-badges"><span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
+          <div style="display: flex; justify-content: center; margin: 10px 0;"><div class="qr-box-wrapper" id="donationQrContainer"></div></div>
+          <p style="font-size:10px; color:#ccc;">(राशि अपने आप फिक्स है)</p>
+          <div style="margin-top:10px; text-align:left;">
+            <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
+            <input type="text" id="donUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
+          </div>
+        `;
         generateDynamicQrCode('donationQrContainer', amt);
       }
+
       document.getElementById('donationModal').style.display = 'flex';
     }
 
@@ -2129,7 +2286,7 @@
     function submitSecureDonation() {
       if (!pendingDonationData || !db) return;
       const payMode = appSettingsMain.paymentMode || 'upi';
-      let utr = "RAZORPAY_" + Date.now().toString().slice(-6);
+      let utr = "DONATION_" + Date.now().toString().slice(-6);
 
       if (payMode === 'upi') {
         utr = document.getElementById('donUtrInput')?.value.trim();
@@ -2326,17 +2483,21 @@
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
+      if (cloudProducts.length === 0) {
+        tb.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#aaa;">स्टोर में अभी कोई प्रोडक्ट नहीं है।</td></tr>`;
+        return;
+      }
       tb.innerHTML = cloudProducts.map(p => `
         <tr>
           <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
-          <td>${p.name}</td>
+          <td><b>${p.name}</b></td>
           <td>
             <button onclick="toggleProductOnDonation('${p.id}', ${p.showOnDonation || false})" style="background:${p.showOnDonation ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
-              ${p.showOnDonation ? '⭐ दिख रहा है' : 'छिपा हुआ'}
+              ${p.showOnDonation ? '⭐ सजेस्टेड' : 'हिडन'}
             </button>
           </td>
           <td>₹${p.price}</td>
-          <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;" title="डिलीट करें">🗑️</button></td>
         </tr>
       `).join('');
     }
@@ -2351,32 +2512,6 @@
       const tb = document.querySelector('#admCoupTable tbody');
       if (!tb) return;
       tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
-    }
-    function renderAdminOrders() {
-      const tb = document.querySelector('#admOrdTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudOrders.map(o => `
-        <tr>
-          <td>${o.date}</td>
-          <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
-          <td>${o.productName}</td><td>₹${o.amount}</td><td>${o.utr}</td>
-          <td><input type="text" id="admOtp_${o.id}" value="${o.otp || ''}" style="width:50px;"> <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''}></td>
-          <td><select id="admStat_${o.id}"><option value="1">कन्फ़र्म</option><option value="2">शिप हुआ</option><option value="4">डिलीवर</option></select></td>
-          <td><button onclick="db.collection('orders').doc('${o.id}').update({ otp: document.getElementById('admOtp_${o.id}').value, showOtpToUser: document.getElementById('admOtpChk_${o.id}').checked })" style="background:#4caf50; color:#fff; border:none; padding:3px 6px;">💾</button></td>
-          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px;">🗑️</button></td>
-        </tr>
-      `).join('');
-    }
-    function renderCustomerOrders() {
-      const cont = document.getElementById('ordersContainer');
-      if (!cont || !currentUser) return;
-      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
-      cont.innerHTML = my.map(o => `
-        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.2); padding:12px; border-radius:8px; margin-bottom:10px;">
-          <b>${o.productName}</b> - ₹${o.amount} <br><small>पता: ${o.fullAddress}</small>
-          ${o.showOtpToUser && o.otp ? `<div style="color:#81c784; font-weight:bold; margin-top:4px;">🔑 डिलीवरी OTP: ${o.otp}</div>` : ''}
-        </div>
-      `).join('');
     }
 
     // --- LEGAL & CONTACT MODAL LOGIC ---
