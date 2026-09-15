@@ -125,7 +125,7 @@
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
-    /* --- GANESH JI TIGHT FIRE GLOW BUTTON --- */
+    /* Ganesh Ji Clean Fire Floating Button */
     .ganesh-float-btn {
       position: fixed;
       bottom: 22px;
@@ -173,15 +173,18 @@
 </head>
 <body>
 
-  <!-- Background Audio Player -->
+  <!-- Background Audio Player & Keep-Alive Silent Track -->
   <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
+  <audio id="keepAliveAudio" loop style="display:none;" preload="auto">
+    <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
+  </audio>
 
   <!-- Pickers -->
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
   <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
   <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
 
-  <!-- GANESH JI FLOATING BUTTON -->
+  <!-- GANESH JI BUTTON -->
   <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
     <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="दिव्य चक्र">
     <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="श्री गणेश जी">
@@ -380,7 +383,7 @@
     </div>
   </div>
 
-  <!-- POPUP: IN-PAGE SAFE SCREENSHOT LIGHTBOX (FIXES ABOUT:BLANK ISSUE) -->
+  <!-- POPUP: SAFE SCREENSHOT VIEWER -->
   <div class="custom-popup-overlay" id="imagePreviewModal">
     <div class="custom-popup-box" style="max-width:550px; padding:15px; position:relative;">
       <h3 style="color:var(--gold); margin-bottom:10px; font-size:15px;">🔍 ग्राहक द्वारा भेजा गया स्क्रीनशॉट</h3>
@@ -594,7 +597,10 @@
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
-        <div class="form-group"><label>यूट्यूब भजन लिंक:</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
+        <div class="form-group">
+          <label>यूट्यूब भजन लिंक (यहाँ जो भी लिंक डालेंगे वो हमेशा फिक्स रहेगा):</label>
+          <input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=...">
+        </div>
 
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
@@ -826,7 +832,7 @@
       if (el) el.style.display = 'none';
     }
 
-    // --- In-Page Safe Screenshot Zoom & Download ---
+    // In-Page Lightbox Viewer for Screenshots
     function viewAdminScreenshot(dataUrl) {
       if (!dataUrl) return;
       const zoomImg = document.getElementById('previewZoomImage');
@@ -854,11 +860,14 @@
       return match ? match[1] : null;
     }
 
-    // --- INSTAGRAM WEBVIEW COMPATIBLE AUDIO PLAYER ---
+    // =========================================================================
+    // PERSISTENT CLOUD SYNCED AUDIO ENGINE WITH SCREEN-LOCK SUPPORT
+    // =========================================================================
     let ytPlayer = null;
     let isMusicPlaying = false;
-    let currentYtVideoId = "ChC8RMdyvhk";
+    let currentYtVideoId = ""; // No hardcoded fallback song, loads latest from cloud
     let songPlaybackStartTime = null;
+    let isPlayerReady = false;
 
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -866,36 +875,45 @@
     if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
 
     window.onYouTubeIframeAPIReady = function() {
-      try {
-        ytPlayer = new YT.Player('ytPlayerDiv', {
-          height: '0', width: '0', videoId: currentYtVideoId,
-          playerVars: { 
-            'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId,
-            'enablejsapi': 1, 'origin': window.location.origin
+      ytPlayer = new YT.Player('ytPlayerDiv', {
+        height: '0', width: '0',
+        playerVars: { 
+          'autoplay': 0, 
+          'controls': 0, 
+          'loop': 1,
+          'enablejsapi': 1, 
+          'origin': window.location.origin
+        },
+        events: { 
+          'onReady': () => {
+            isPlayerReady = true;
+            if (currentYtVideoId) {
+              syncAndPreparePlayer();
+            }
           },
-          events: { 
-            'onReady': onPlayerReadySync,
-            'onError': () => {}
-          }
-        });
-      } catch(err) {}
+          'onStateChange': (e) => {
+            if (e.data === YT.PlayerState.PLAYING) {
+              setupMediaSession();
+              const keepAudio = document.getElementById('keepAliveAudio');
+              if (keepAudio) keepAudio.play().catch(() => {});
+            }
+          },
+          'onError': () => {}
+        }
+      });
     };
 
-    function onPlayerReadySync() {
-      if (!db) return;
-      db.collection("settings").doc("music_room").onSnapshot(doc => {
-        if (doc.exists) {
-          const data = doc.data();
-          songPlaybackStartTime = data.startedAt || null;
-          if (data.videoId && data.videoId !== currentYtVideoId) {
-            currentYtVideoId = data.videoId;
-            if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
-              const seekSec = calculateCurrentPlaybackSecond();
-              ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
-            }
-          }
-        }
-      }, err => {});
+    function setupMediaSession() {
+      if ('mediaSession' in navigator) {
+        navigator.mediaSession.metadata = new MediaMetadata({
+          title: "🚩 पावन दिव्य संकीर्तन / भजन",
+          artist: "Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति",
+          album: "श्री दुर्गा पूजा लाइव दरबार",
+          artwork: [{ src: "ganesh.png", sizes: "512x512", type: "image/png" }]
+        });
+        navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
+        navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
+      }
     }
 
     function calculateCurrentPlaybackSecond() {
@@ -903,33 +921,46 @@
       const elapsed = Math.floor((Date.now() - songPlaybackStartTime) / 1000);
       let totalDuration = 300;
       try {
-        if (ytPlayer && typeof ytPlayer.getDuration === 'function') totalDuration = ytPlayer.getDuration() || 300;
+        if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
+          totalDuration = ytPlayer.getDuration() || 300;
+        }
       } catch(e) {}
-      return elapsed % Math.floor(totalDuration);
+      return elapsed % Math.max(30, Math.floor(totalDuration));
+    }
+
+    function syncAndPreparePlayer() {
+      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) return;
+      const seekSec = calculateCurrentPlaybackSecond();
+      try {
+        if (typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
+        if (typeof ytPlayer.setVolume === 'function') ytPlayer.setVolume(100);
+
+        const loadedVideoData = ytPlayer.getVideoData ? ytPlayer.getVideoData() : null;
+        if (!loadedVideoData || loadedVideoData.video_id !== currentYtVideoId) {
+          if (isMusicPlaying) {
+            ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+          } else {
+            ytPlayer.cueVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+          }
+        } else {
+          ytPlayer.seekTo(seekSec, true);
+        }
+      } catch(e) {}
     }
 
     function startMusicPlayback() {
-      if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
-      const linkInInput = document.getElementById('admYtLink') ? document.getElementById('admYtLink').value : '';
-      const resolvedId = extractVideoId(linkInInput) || currentYtVideoId;
-
-      if (!songPlaybackStartTime && db) {
-        const startTime = Date.now();
-        db.collection("settings").doc("music_room").set({ startedAt: startTime, videoId: resolvedId }, { merge: true }).catch(() => {});
-        songPlaybackStartTime = startTime;
-      }
-
+      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) return;
       const seekSeconds = calculateCurrentPlaybackSecond();
       try {
         if (typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
         if (typeof ytPlayer.setVolume === 'function') ytPlayer.setVolume(100);
 
-        if (resolvedId && ytPlayer.getVideoData && ytPlayer.getVideoData().video_id !== resolvedId) {
-          ytPlayer.loadVideoById({ videoId: resolvedId, startSeconds: seekSeconds });
-        } else {
-          ytPlayer.seekTo(seekSeconds, true);
-          ytPlayer.playVideo();
-        }
+        ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSeconds });
+        ytPlayer.playVideo();
+        
+        const keepAudio = document.getElementById('keepAliveAudio');
+        if (keepAudio) keepAudio.play().catch(() => {});
+        setupMediaSession();
       } catch(e) {}
 
       isMusicPlaying = true;
@@ -939,14 +970,18 @@
 
     function toggleBackgroundMusic() {
       const btnTxt = document.getElementById('musicBtnTxt');
-      if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') {
-        showAppToast("म्यूजिक लोड हो रहा है, 2 सेकंड बाद पुनः दबाएँ।");
+      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) {
+        showAppToast("भजन लिंक लोड हो रहा है, कृपया 2 सेकंड बाद दबाएँ।");
         return;
       }
       if (!isMusicPlaying) {
         startMusicPlayback();
       } else {
-        try { ytPlayer.pauseVideo(); } catch(e) {}
+        try { 
+          ytPlayer.pauseVideo(); 
+          const keepAudio = document.getElementById('keepAliveAudio');
+          if (keepAudio) keepAudio.pause();
+        } catch(e) {}
         isMusicPlaying = false;
         if (btnTxt) btnTxt.innerText = "Play Music";
       }
@@ -1047,6 +1082,53 @@
 
     // --- Firestore Sync Listeners ---
     if (db) {
+      // PERSISTENT LIVE SYNC OF SONG LINK & TIMESTAMPS
+      db.collection("settings").doc("music_room").onSnapshot(doc => {
+        if (doc.exists) {
+          const data = doc.data();
+          if (data.videoId) {
+            const hasChanged = currentYtVideoId !== data.videoId;
+            currentYtVideoId = data.videoId;
+            songPlaybackStartTime = data.startedAt || Date.now();
+
+            const admYt = document.getElementById('admYtLink');
+            if (admYt && !admYt.value) {
+              admYt.value = `https://www.youtube.com/watch?v=${data.videoId}`;
+            }
+
+            if (isPlayerReady) {
+              if (hasChanged && isMusicPlaying) {
+                const seekSec = calculateCurrentPlaybackSecond();
+                ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+              } else {
+                syncAndPreparePlayer();
+              }
+            }
+          }
+        }
+      }, err => {});
+
+      db.collection("settings").doc("main").onSnapshot(doc => {
+        if (doc.exists) {
+          const s = doc.data();
+          if (s.ticker) {
+            document.getElementById('liveTicker').innerText = s.ticker;
+            document.getElementById('admTickerText').value = s.ticker;
+          }
+          if (s.upi) document.getElementById('admUpiId').value = s.upi;
+          if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
+          if (s.wa) {
+            document.getElementById('admWaPhone').value = s.wa;
+            document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
+            document.getElementById('ftrWa').innerText = `+${s.wa}`;
+          }
+          if (s.yt && !currentYtVideoId) {
+            const extracted = extractVideoId(s.yt);
+            if (extracted) currentYtVideoId = extracted;
+          }
+        }
+      }, err => {});
+
       db.collection("donations").onSnapshot(snap => {
         let isInit = isFirstDonationLoad;
         isFirstDonationLoad = false;
@@ -1116,23 +1198,6 @@
         renderPublicBlogs();
         renderDonationFeaturedBlogs();
         renderAdminBlogs();
-      }, err => {});
-
-      db.collection("settings").doc("main").onSnapshot(doc => {
-        if (doc.exists) {
-          const s = doc.data();
-          if (s.ticker) {
-            document.getElementById('liveTicker').innerText = s.ticker;
-            document.getElementById('admTickerText').value = s.ticker;
-          }
-          if (s.upi) document.getElementById('admUpiId').value = s.upi;
-          if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
-          if (s.wa) {
-            document.getElementById('admWaPhone').value = s.wa;
-            document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
-            document.getElementById('ftrWa').innerText = `+${s.wa}`;
-          }
-        }
       }, err => {});
     }
 
@@ -1496,7 +1561,6 @@
       `).join('');
     }
 
-    // Fixed Screenshot Rendering for Admin Table with Lightbox Preview
     function renderAdminFeedbacks() {
       const tb = document.querySelector('#admFeedTable tbody');
       if (!tb) return;
@@ -1747,15 +1811,34 @@
         </div>
       `).join('');
     }
+
+    // PERSISTENT ADMIN AUDIO SAVE
     function saveAdminSettings() {
-      db.collection("settings").doc("main").set({
+      const ytLink = document.getElementById('admYtLink').value.trim();
+      const extractedId = extractVideoId(ytLink);
+
+      const batchData = {
         ticker: document.getElementById('admTickerText').value,
         upi: document.getElementById('admUpiId').value,
         razorpay: document.getElementById('admRazorpayKey').value,
         wa: document.getElementById('admWaPhone').value,
-        yt: document.getElementById('admYtLink').value
-      }, { merge: true }).then(() => showAppToast("सेटिंग्स सुरक्षित हुईं!"));
+        yt: ytLink
+      };
+
+      db.collection("settings").doc("main").set(batchData, { merge: true }).then(() => {
+        if (extractedId) {
+          db.collection("settings").doc("music_room").set({
+            videoId: extractedId,
+            startedAt: Date.now()
+          }, { merge: true }).then(() => {
+            showAppToast("✅ नया भजन लिंक हमेशा के लिए फिक्स हो गया!");
+          });
+        } else {
+          showAppToast("सेटिंग्स सुरक्षित हुईं!");
+        }
+      });
     }
+
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
@@ -1808,7 +1891,6 @@
       `).join('');
     }
 
-    // --- WORKING LEGAL & CONTACT MODAL LOGIC ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
