@@ -121,6 +121,7 @@
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
     .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
     .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; }
+    .footer-link-btn:hover { color: #fff; }
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
@@ -174,9 +175,6 @@
 
   <!-- Pure Ad-Free HTML5 MP3 Continuous Audio Stream Engine -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
-
-  <!-- YouTube Player for YouTube Mode -->
-  <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
 
   <!-- Pickers -->
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
@@ -589,8 +587,8 @@
           <div class="form-group">
             <label style="color:var(--gold); font-weight:bold;">ऑडियो माध्यम (Audio Source):</label>
             <select id="admAudioModeSelect" onchange="toggleAudioModeInputs()">
-              <option value="mp3">MP3 Stream (Google Drive / Archive.org प्लेलिस्ट)</option>
-              <option value="yt">YouTube Link (YouTube वीडियो से सीधे चलाएं)</option>
+              <option value="mp3">Google Drive प्लेलिस्ट (लगातार बजने वाले)</option>
+              <option value="yt">YouTube Link (YouTube वीडियो)</option>
             </select>
           </div>
 
@@ -617,15 +615,15 @@
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
-      <!-- Admin Sec 2: Playlist Manager (Auto Google Drive Direct Convertor) -->
+      <!-- Admin Sec 2: Playlist Manager -->
       <div id="admPlaylist" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ प्लेलिस्ट में नया भजन जोड़ें (Google Drive या MP3)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ प्लेलिस्ट में नया भजन जोड़ें (Google Drive लिंक)</h4>
         <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">
-          ⚡ <b>Google Drive लिंक सपोर्ट:</b> आप अपने 5 TB Google Drive से सीधा शेयर लिंक यहाँ पेस्ट कर सकते हैं। सिस्टम अपने-आप उसे फ़ास्ट स्ट्रीमिंग ऑडियो लिंक में बदल देगा!
+          ⚡ <b>Google Drive लिंक सपोर्ट:</b> अपने Google Drive फ़ोल्डर से किसी भी गाने का शेयर लिंक कॉपी करके यहाँ पेस्ट करें। सिस्टम अपने-आप उसे डायरेक्ट फ़ास्ट स्ट्रीमिंग ऑडियो लिंक में बदल देगा!
         </p>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
           <input type="text" id="newSongTitle" placeholder="भजन का नाम (उदा: दुर्गा आरती)">
-          <input type="text" id="newSongUrl" placeholder="Google Drive शेयर लिंक या सीधा MP3 लिंक *">
+          <input type="text" id="newSongUrl" placeholder="Google Drive शेयर लिंक (https://...) *">
         </div>
         <button class="btn-main" onclick="addNewPlaylistSong()">+ प्लेलिस्ट में जोड़ें</button>
 
@@ -1745,7 +1743,7 @@
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, salutation: "none", address: city, phone: phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
