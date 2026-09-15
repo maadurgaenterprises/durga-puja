@@ -121,7 +121,6 @@
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
     .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
     .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; }
-    .footer-link-btn:hover { color: #fff; }
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
@@ -173,11 +172,11 @@
 </head>
 <body>
 
-  <!-- Background Audio Player & Keep-Alive Silent Track -->
+  <!-- Pure Ad-Free HTML5 MP3 Continuous Audio Stream Engine -->
+  <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
+
+  <!-- YouTube Player for YouTube Mode -->
   <div id="ytPlayerDiv" style="position: absolute; top: -9999px; left: -9999px; pointer-events: none;"></div>
-  <audio id="keepAliveAudio" loop style="display:none;" preload="auto">
-    <source src="data:audio/wav;base64,UklGRigAAABXQVZFZm10IBAAAAABAAEARKwAAIhYAQACABAAZGF0YQQAAAAAAA==" type="audio/wav">
-  </audio>
 
   <!-- Pickers -->
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
@@ -569,7 +568,8 @@
       </div>
 
       <div class="admin-tabs">
-        <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स व पेमेंट</button>
+        <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स व ऑडियो</button>
+        <button class="adm-tab" onclick="switchAdm('admPlaylist')">🎵 भजन प्लेलिस्ट</button>
         <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 भक्ति ब्लॉग / कथाएँ</button>
         <button class="adm-tab" onclick="switchAdm('admProd')">🛍️ प्रोडक्ट्स व सजेस्टेड</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🏷️ डिस्काउंट कूपन्स</button>
@@ -579,10 +579,26 @@
         <button class="adm-tab" onclick="switchAdm('admChatAdm')">🛡️ चैट मॉडरेटर</button>
       </div>
 
-      <!-- Admin Sec 1: Settings -->
+      <!-- Admin Sec 1: Settings & Audio Switcher -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
+
+        <h4 style="color:var(--gold); margin-bottom:8px;">🎵 ऑडियो मोड चुनें:</h4>
+        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
+          <div class="form-group">
+            <label style="color:var(--gold); font-weight:bold;">ऑडियो माध्यम (Audio Source):</label>
+            <select id="admAudioModeSelect" onchange="toggleAudioModeInputs()">
+              <option value="mp3">MP3 Stream (Google Drive / Archive.org प्लेलिस्ट)</option>
+              <option value="yt">YouTube Link (YouTube वीडियो से सीधे चलाएं)</option>
+            </select>
+          </div>
+
+          <div class="form-group" id="ytInputGroup" style="display:none;">
+            <label>YouTube भजन लिंक:</label>
+            <input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=...">
+          </div>
+        </div>
 
         <h4 style="color:var(--gold); margin-bottom:8px;">पेमेंट और बैंक सेटिंग्स:</h4>
         <div class="form-group">
@@ -597,15 +613,32 @@
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
-        <div class="form-group">
-          <label>यूट्यूब भजन लिंक (यहाँ जो भी लिंक डालेंगे वो हमेशा फिक्स रहेगा):</label>
-          <input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=...">
-        </div>
 
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
-      <!-- Admin Sec 2: Devotional Blog Post Manager -->
+      <!-- Admin Sec 2: Playlist Manager (Auto Google Drive Direct Convertor) -->
+      <div id="admPlaylist" class="adm-sec">
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ प्लेलिस्ट में नया भजन जोड़ें (Google Drive या MP3)</h4>
+        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">
+          ⚡ <b>Google Drive लिंक सपोर्ट:</b> आप अपने 5 TB Google Drive से सीधा शेयर लिंक यहाँ पेस्ट कर सकते हैं। सिस्टम अपने-आप उसे फ़ास्ट स्ट्रीमिंग ऑडियो लिंक में बदल देगा!
+        </p>
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
+          <input type="text" id="newSongTitle" placeholder="भजन का नाम (उदा: दुर्गा आरती)">
+          <input type="text" id="newSongUrl" placeholder="Google Drive शेयर लिंक या सीधा MP3 लिंक *">
+        </div>
+        <button class="btn-main" onclick="addNewPlaylistSong()">+ प्लेलिस्ट में जोड़ें</button>
+
+        <h4 style="color:var(--gold); margin:18px 0 8px;">भजन प्लेलिस्ट (एक के बाद एक लगातार बजने वाले गाने):</h4>
+        <div class="table-responsive">
+          <table id="admPlaylistTable">
+            <thead><tr><th>क्रम</th><th>भजन नाम</th><th>ऑडियो लिंक</th><th>हटाएं</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Admin Sec 3: Devotional Blog Post Manager -->
       <div id="admBlogAdm" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नई भक्ति कथा / दर्शन पोस्ट जोड़ें</h4>
         <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
@@ -636,7 +669,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 3: Products -->
+      <!-- Admin Sec 4: Products -->
       <div id="admProd" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट जोड़ें</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
@@ -657,7 +690,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Coupons -->
+      <!-- Admin Sec 5: Coupons -->
       <div id="admCoup" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नया कूपन बनाएँ</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
@@ -673,7 +706,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 5: Orders -->
+      <!-- Admin Sec 6: Orders -->
       <div id="admOrd" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स</h4>
         <div class="table-responsive">
@@ -684,7 +717,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 6: Donations -->
+      <!-- Admin Sec 7: Donations -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
           <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
@@ -707,7 +740,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 7: Feedback & Problem Reports -->
+      <!-- Admin Sec 8: Feedback & Problem Reports -->
       <div id="admFeed" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव एवं गणेश जी सहायता समस्याएं (स्क्रीनशॉट सहित)</h4>
         <div class="table-responsive">
@@ -718,7 +751,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 8: Chat Moderator -->
+      <!-- Admin Sec 9: Chat Moderator -->
       <div id="admChatAdm" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">🛡️ लाइव चैट संदेश मॉडरेटर</h4>
         <div class="table-responsive">
@@ -790,6 +823,8 @@
     let cloudChats = [];
     let cloudFeedbacks = [];
     let cloudBlogs = [];
+    let cloudPlaylist = [];
+    let currentPlaylistIndex = 0;
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
     let pendingDonationData = null;
@@ -832,7 +867,6 @@
       if (el) el.style.display = 'none';
     }
 
-    // In-Page Lightbox Viewer for Screenshots
     function viewAdminScreenshot(dataUrl) {
       if (!dataUrl) return;
       const zoomImg = document.getElementById('previewZoomImage');
@@ -860,14 +894,35 @@
       return match ? match[1] : null;
     }
 
+    // Google Drive direct link converter
+    function parseDirectAudioUrl(rawUrl) {
+      if (!rawUrl) return "";
+      if (rawUrl.includes("drive.google.com")) {
+        const match = rawUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || rawUrl.match(/id=([a-zA-Z0-9_-]+)/);
+        if (match && match[1]) {
+          return `https://drive.google.com/uc?export=download&id=${match[1]}`;
+        }
+      }
+      return rawUrl;
+    }
+
     // =========================================================================
-    // PERSISTENT CLOUD SYNCED AUDIO ENGINE WITH SCREEN-LOCK SUPPORT
+    // DUAL-MODE AUDIO & CONTINUOUS UNLIMITED PLAYLIST ENGINE
     // =========================================================================
-    let ytPlayer = null;
-    let isMusicPlaying = false;
-    let currentYtVideoId = ""; // No hardcoded fallback song, loads latest from cloud
+    let currentAudioSourceType = "mp3";
+    let activeYtVideoId = "";
     let songPlaybackStartTime = null;
-    let isPlayerReady = false;
+    let isMusicPlaying = false;
+    let isYtPlayerReady = false;
+    let ytPlayer = null;
+    const coreAudio = document.getElementById('coreBgAudio');
+
+    coreAudio.addEventListener('ended', () => {
+      if (cloudPlaylist.length > 0) {
+        currentPlaylistIndex = (currentPlaylistIndex + 1) % cloudPlaylist.length;
+        playCurrentPlaylistItem();
+      }
+    });
 
     const tag = document.createElement('script');
     tag.src = "https://www.youtube.com/iframe_api";
@@ -877,111 +932,123 @@
     window.onYouTubeIframeAPIReady = function() {
       ytPlayer = new YT.Player('ytPlayerDiv', {
         height: '0', width: '0',
-        playerVars: { 
-          'autoplay': 0, 
-          'controls': 0, 
-          'loop': 1,
-          'enablejsapi': 1, 
-          'origin': window.location.origin
-        },
-        events: { 
+        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'enablejsapi': 1, 'origin': window.location.origin },
+        events: {
           'onReady': () => {
-            isPlayerReady = true;
-            if (currentYtVideoId) {
-              syncAndPreparePlayer();
-            }
+            isYtPlayerReady = true;
+            if (currentAudioSourceType === "yt" && activeYtVideoId) syncYouTubePlayer();
           },
           'onStateChange': (e) => {
-            if (e.data === YT.PlayerState.PLAYING) {
-              setupMediaSession();
-              const keepAudio = document.getElementById('keepAliveAudio');
-              if (keepAudio) keepAudio.play().catch(() => {});
-            }
-          },
-          'onError': () => {}
+            if (e.data === YT.PlayerState.PLAYING) setupMediaSession();
+          }
         }
       });
     };
 
+    function toggleAudioModeInputs() {
+      const mode = document.getElementById('admAudioModeSelect').value;
+      document.getElementById('ytInputGroup').style.display = (mode === 'yt') ? 'block' : 'none';
+    }
+
     function setupMediaSession() {
       if ('mediaSession' in navigator) {
+        const currentSong = (cloudPlaylist.length > 0) ? cloudPlaylist[currentPlaylistIndex]?.title : "पावन दिव्य संकीर्तन";
         navigator.mediaSession.metadata = new MediaMetadata({
-          title: "🚩 पावन दिव्य संकीर्तन / भजन",
+          title: `🚩 ${currentSong || "माँ दुर्गा भजन"}`,
           artist: "Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति",
           album: "श्री दुर्गा पूजा लाइव दरबार",
           artwork: [{ src: "ganesh.png", sizes: "512x512", type: "image/png" }]
         });
         navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
         navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
+        navigator.mediaSession.setActionHandler('nexttrack', () => {
+          if (cloudPlaylist.length > 0) {
+            currentPlaylistIndex = (currentPlaylistIndex + 1) % cloudPlaylist.length;
+            playCurrentPlaylistItem();
+          }
+        });
       }
     }
 
-    function calculateCurrentPlaybackSecond() {
+    function playCurrentPlaylistItem() {
+      if (cloudPlaylist.length === 0) return;
+      const song = cloudPlaylist[currentPlaylistIndex];
+      if (!song || !song.url) return;
+
+      try {
+        if (ytPlayer && isYtPlayerReady) ytPlayer.pauseVideo();
+      } catch(e) {}
+
+      coreAudio.src = parseDirectAudioUrl(song.url);
+      coreAudio.play().then(() => {
+        isMusicPlaying = true;
+        setupMediaSession();
+        document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
+      }).catch(() => {});
+    }
+
+    function calculateElapsedSeconds() {
       if (!songPlaybackStartTime) return 0;
       const elapsed = Math.floor((Date.now() - songPlaybackStartTime) / 1000);
       let totalDuration = 300;
-      try {
-        if (ytPlayer && typeof ytPlayer.getDuration === 'function') {
-          totalDuration = ytPlayer.getDuration() || 300;
-        }
-      } catch(e) {}
-      return elapsed % Math.max(30, Math.floor(totalDuration));
+      if (currentAudioSourceType === "mp3" && coreAudio && coreAudio.duration && !isNaN(coreAudio.duration) && coreAudio.duration > 0) {
+        totalDuration = coreAudio.duration;
+      } else if (currentAudioSourceType === "yt" && ytPlayer && typeof ytPlayer.getDuration === 'function') {
+        totalDuration = ytPlayer.getDuration() || 300;
+      }
+      return elapsed % Math.max(10, Math.floor(totalDuration));
     }
 
-    function syncAndPreparePlayer() {
-      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) return;
-      const seekSec = calculateCurrentPlaybackSecond();
+    function syncYouTubePlayer() {
+      if (!ytPlayer || !isYtPlayerReady || !activeYtVideoId) return;
+      const seek = calculateElapsedSeconds();
       try {
         if (typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
         if (typeof ytPlayer.setVolume === 'function') ytPlayer.setVolume(100);
 
-        const loadedVideoData = ytPlayer.getVideoData ? ytPlayer.getVideoData() : null;
-        if (!loadedVideoData || loadedVideoData.video_id !== currentYtVideoId) {
+        const loaded = ytPlayer.getVideoData ? ytPlayer.getVideoData() : null;
+        if (!loaded || loaded.video_id !== activeYtVideoId) {
           if (isMusicPlaying) {
-            ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+            ytPlayer.loadVideoById({ videoId: activeYtVideoId, startSeconds: seek });
           } else {
-            ytPlayer.cueVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
+            ytPlayer.cueVideoById({ videoId: activeYtVideoId, startSeconds: seek });
           }
         } else {
-          ytPlayer.seekTo(seekSec, true);
+          ytPlayer.seekTo(seek, true);
         }
       } catch(e) {}
     }
 
     function startMusicPlayback() {
-      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) return;
-      const seekSeconds = calculateCurrentPlaybackSecond();
-      try {
-        if (typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
-        if (typeof ytPlayer.setVolume === 'function') ytPlayer.setVolume(100);
-
-        ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSeconds });
-        ytPlayer.playVideo();
-        
-        const keepAudio = document.getElementById('keepAliveAudio');
-        if (keepAudio) keepAudio.play().catch(() => {});
-        setupMediaSession();
-      } catch(e) {}
-
-      isMusicPlaying = true;
-      const btnTxt = document.getElementById('musicBtnTxt');
-      if (btnTxt) btnTxt.innerText = "संगीत रोकें";
+      if (currentAudioSourceType === "mp3") {
+        if (cloudPlaylist.length === 0) {
+          showAppToast("प्लेलिस्ट में कोई MP3 गाना उपलब्ध नहीं है! एडमिन पैनल से जोड़ें।");
+          return;
+        }
+        playCurrentPlaylistItem();
+      } else {
+        if (!activeYtVideoId || !ytPlayer || !isYtPlayerReady) return;
+        try { coreAudio.pause(); } catch(e) {}
+        const seekSec = calculateElapsedSeconds();
+        try {
+          if (typeof ytPlayer.unMute === 'function') ytPlayer.unMute();
+          if (typeof ytPlayer.setVolume === 'function') ytPlayer.setVolume(100);
+          ytPlayer.loadVideoById({ videoId: activeYtVideoId, startSeconds: seekSec });
+          ytPlayer.playVideo();
+          isMusicPlaying = true;
+          setupMediaSession();
+          document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
+        } catch(e) {}
+      }
     }
 
     function toggleBackgroundMusic() {
       const btnTxt = document.getElementById('musicBtnTxt');
-      if (!ytPlayer || !isPlayerReady || !currentYtVideoId) {
-        showAppToast("भजन लिंक लोड हो रहा है, कृपया 2 सेकंड बाद दबाएँ।");
-        return;
-      }
       if (!isMusicPlaying) {
         startMusicPlayback();
       } else {
-        try { 
-          ytPlayer.pauseVideo(); 
-          const keepAudio = document.getElementById('keepAliveAudio');
-          if (keepAudio) keepAudio.pause();
-        } catch(e) {}
+        try { coreAudio.pause(); } catch(e) {}
+        try { if (ytPlayer && isYtPlayerReady) ytPlayer.pauseVideo(); } catch(e) {}
         isMusicPlaying = false;
         if (btnTxt) btnTxt.innerText = "Play Music";
       }
@@ -991,9 +1058,7 @@
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
       hasUserInteracted = true;
-      try { 
-        startMusicPlayback(); 
-      } catch(e) {}
+      try { startMusicPlayback(); } catch(e) {}
       ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, handleFirstUserInteraction));
     }
     ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true }));
@@ -1082,28 +1147,32 @@
 
     // --- Firestore Sync Listeners ---
     if (db) {
-      // PERSISTENT LIVE SYNC OF SONG LINK & TIMESTAMPS
+      db.collection("playlist").orderBy("timeNumber", "asc").onSnapshot(snap => {
+        cloudPlaylist = [];
+        snap.forEach(doc => cloudPlaylist.push({ id: doc.id, ...doc.data() }));
+        renderAdminPlaylist();
+      }, err => {});
+
       db.collection("settings").doc("music_room").onSnapshot(doc => {
         if (doc.exists) {
           const data = doc.data();
-          if (data.videoId) {
-            const hasChanged = currentYtVideoId !== data.videoId;
-            currentYtVideoId = data.videoId;
-            songPlaybackStartTime = data.startedAt || Date.now();
+          currentAudioSourceType = data.sourceType || "mp3";
+          songPlaybackStartTime = data.startedAt || Date.now();
 
+          const modeSelect = document.getElementById('admAudioModeSelect');
+          if (modeSelect) {
+            modeSelect.value = currentAudioSourceType;
+            toggleAudioModeInputs();
+          }
+
+          if (currentAudioSourceType === "yt") {
+            const hasChanged = activeYtVideoId !== data.videoId;
+            activeYtVideoId = data.videoId || "";
             const admYt = document.getElementById('admYtLink');
-            if (admYt && !admYt.value) {
-              admYt.value = `https://www.youtube.com/watch?v=${data.videoId}`;
+            if (admYt && !admYt.value && activeYtVideoId) {
+              admYt.value = `https://www.youtube.com/watch?v=${activeYtVideoId}`;
             }
-
-            if (isPlayerReady) {
-              if (hasChanged && isMusicPlaying) {
-                const seekSec = calculateCurrentPlaybackSecond();
-                ytPlayer.loadVideoById({ videoId: currentYtVideoId, startSeconds: seekSec });
-              } else {
-                syncAndPreparePlayer();
-              }
-            }
+            if (hasChanged && isMusicPlaying) startMusicPlayback();
           }
         }
       }, err => {});
@@ -1121,10 +1190,6 @@
             document.getElementById('admWaPhone').value = s.wa;
             document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
             document.getElementById('ftrWa').innerText = `+${s.wa}`;
-          }
-          if (s.yt && !currentYtVideoId) {
-            const extracted = extractVideoId(s.yt);
-            if (extracted) currentYtVideoId = extracted;
           }
         }
       }, err => {});
@@ -1199,6 +1264,47 @@
         renderDonationFeaturedBlogs();
         renderAdminBlogs();
       }, err => {});
+    }
+
+    // --- PLAYLIST MANAGER HANDLERS ---
+    function addNewPlaylistSong() {
+      if (!db) return;
+      const title = document.getElementById('newSongTitle').value.trim() || "पावन भजन";
+      const rawUrl = document.getElementById('newSongUrl').value.trim();
+
+      if (!rawUrl) {
+        showAppToast("कृपया Google Drive या सीधा MP3 लिंक दर्ज करें!");
+        return;
+      }
+
+      const finalDirectUrl = parseDirectAudioUrl(rawUrl);
+
+      db.collection("playlist").add({
+        title, 
+        url: finalDirectUrl,
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast("✅ भजन सफलतापूर्वक प्लेलिस्ट में जुड़ गया!");
+        document.getElementById('newSongTitle').value = '';
+        document.getElementById('newSongUrl').value = '';
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
+    }
+
+    function renderAdminPlaylist() {
+      const tb = document.querySelector('#admPlaylistTable tbody');
+      if (!tb) return;
+      if (cloudPlaylist.length === 0) {
+        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">अभी प्लेलिस्ट में कोई गाना नहीं है। ऊपर फ़ॉर्म से जोड़ें।</td></tr>`;
+        return;
+      }
+      tb.innerHTML = cloudPlaylist.map((s, idx) => `
+        <tr>
+          <td>${idx + 1}</td>
+          <td><b>${s.title}</b></td>
+          <td><small style="color:var(--gold);">${s.url.length > 40 ? s.url.substring(0, 40) + '...' : s.url}</small></td>
+          <td><button onclick="db.collection('playlist').doc('${s.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+        </tr>
+      `).join('');
     }
 
     // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
@@ -1639,7 +1745,7 @@
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        name, salutation: "none", address: city, phone: phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1812,30 +1918,28 @@
       `).join('');
     }
 
-    // PERSISTENT ADMIN AUDIO SAVE
     function saveAdminSettings() {
+      const selectedMode = document.getElementById('admAudioModeSelect').value;
       const ytLink = document.getElementById('admYtLink').value.trim();
-      const extractedId = extractVideoId(ytLink);
+      const ytVidId = extractVideoId(ytLink) || "";
 
-      const batchData = {
+      const batchSettings = {
         ticker: document.getElementById('admTickerText').value,
         upi: document.getElementById('admUpiId').value,
         razorpay: document.getElementById('admRazorpayKey').value,
-        wa: document.getElementById('admWaPhone').value,
-        yt: ytLink
+        wa: document.getElementById('admWaPhone').value
       };
 
-      db.collection("settings").doc("main").set(batchData, { merge: true }).then(() => {
-        if (extractedId) {
-          db.collection("settings").doc("music_room").set({
-            videoId: extractedId,
-            startedAt: Date.now()
-          }, { merge: true }).then(() => {
-            showAppToast("✅ नया भजन लिंक हमेशा के लिए फिक्स हो गया!");
-          });
-        } else {
-          showAppToast("सेटिंग्स सुरक्षित हुईं!");
-        }
+      db.collection("settings").doc("main").set(batchSettings, { merge: true }).then(() => {
+        const audioSyncData = {
+          sourceType: selectedMode,
+          videoId: ytVidId,
+          startedAt: Date.now()
+        };
+
+        db.collection("settings").doc("music_room").set(audioSyncData, { merge: true }).then(() => {
+          showAppToast("✅ सभी सेटिंग्स सुरक्षित हो गईं!");
+        });
       });
     }
 
@@ -1891,6 +1995,7 @@
       `).join('');
     }
 
+    // --- LEGAL & CONTACT MODAL LOGIC ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
