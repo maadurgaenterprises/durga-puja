@@ -121,6 +121,7 @@
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
     .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
     .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; }
+    .footer-link-btn:hover { color: #fff; }
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
@@ -408,6 +409,17 @@
     </div>
   </div>
 
+  <!-- POPUP: PRODUCT DETAILS MODAL -->
+  <div class="custom-popup-overlay" id="productDetailModal">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
+      <h3 style="color:var(--gold); margin-bottom:8px;" id="modalProdTitle"></h3>
+      <div id="modalProdMedia" style="margin-bottom:12px; text-align:center;"></div>
+      <div style="font-size:14px; color:var(--gold); font-weight:bold; margin-bottom:8px;" id="modalProdPrice"></div>
+      <div style="font-size:12px; color:#ffcdd2; line-height:1.7; white-space:pre-line; background:rgba(0,0,0,0.4); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.2);" id="modalProdDesc"></div>
+      <button class="btn-main" onclick="closeModal('productDetailModal')" style="margin-top:16px;">बंद करें</button>
+    </div>
+  </div>
+
   <!-- POPUP: FEEDBACK MODAL -->
   <div class="custom-popup-overlay" id="feedbackModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left;">
@@ -641,7 +653,7 @@
         <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px;">
           <input type="text" id="newBlogAuthor" placeholder="लेखक / समिति (उदा: श्री दुर्गा पूजा सेवा समिति)">
-          <input type="text" id="newBlogImg" placeholder="फोटो का सीधा URL लिंक">
+          <input type="text" id="newBlogImg" placeholder="फोटो का सीधा URL लिंक (उदा: catbox.moe लिंक)">
         </div>
         <div class="form-group" style="margin-top:6px;">
           <label>यूट्यूब वीडियो लिंक (यदि वीडियो पोस्ट हो):</label>
@@ -666,18 +678,24 @@
         </div>
       </div>
 
-      <!-- Admin Sec 4: Products -->
+      <!-- Admin Sec 4: Products (Enhanced with Full Description) -->
       <div id="admProd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट जोड़ें</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया प्रोडक्ट / प्रसाद जोड़ें</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-          <input type="text" id="newPName" placeholder="सामग्री का नाम *">
+          <input type="text" id="newPName" placeholder="सामग्री का नाम (उदा: Prasad Dana) *">
           <input type="number" id="newPPrice" placeholder="कीमत (₹) *">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:6px 0;">
-          <input type="text" id="newPCat" placeholder="कैटेगरी">
-          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी">
+          <input type="text" id="newPCat" placeholder="कैटेगरी (उदा: Prasad)">
+          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी (उदा: 500g Pack)">
         </div>
-        <input type="text" id="newPImg" placeholder="फोटो URL लिंक" style="margin-bottom:6px;">
+        <div class="form-group">
+          <input type="text" id="newPImg" placeholder="फोटो का सीधा URL लिंक (उदा: catbox.moe लिंक)">
+        </div>
+        <div class="form-group">
+          <label>उत्पाद का पूरा विवरण (Brand, Shelf life, Weight, Features etc.):</label>
+          <textarea id="newPDesc" placeholder="Brand: TRINETRA&#10;Shelf life: 6 Months&#10;Weight: 500gm&#10;Description: Prasad Dana is very good for health..." style="height:90px;"></textarea>
+        </div>
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में जोड़ें</button>
         <div class="table-responsive" style="margin-top:14px;">
           <table id="admProdTable">
@@ -903,7 +921,7 @@
     }
 
     // =========================================================================
-    // TRUE GLOBAL LIVE RADIO SYNC AUDIO ENGINE
+    // TRUE GLOBAL LIVE RADIO SYNC AUDIO ENGINE (FIXES PAUSE/RESUME FROM BEGINNING)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -985,12 +1003,21 @@
         const directUrl = parseDirectAudioUrl(targetSong.url);
         if (coreAudio.src !== directUrl) {
           coreAudio.src = directUrl;
-        }
-        coreAudio.currentTime = seekSec;
-        coreAudio.play().then(() => {
+          coreAudio.currentTime = seekSec;
+          coreAudio.play().then(() => {
+            setupMediaSession();
+            document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
+          }).catch(() => {});
+        } else {
+          // If paused and resumed, check if paused and just play without resetting to 0
+          if (coreAudio.paused) {
+            coreAudio.play().catch(() => {});
+          } else {
+            coreAudio.currentTime = seekSec;
+          }
           setupMediaSession();
           document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
-        }).catch(() => {});
+        }
       } else {
         if (!activeYtVideoId || !ytPlayer || !isYtPlayerReady) return;
         try { coreAudio.pause(); } catch(e) {}
@@ -1114,10 +1141,10 @@
         cloudPlaylist = [];
         snap.forEach(doc => cloudPlaylist.push({ id: doc.id, ...doc.data() }));
         renderAdminPlaylist();
+        renderStoreProducts(); // update store view
         if (isMusicPlaying) applyGlobalSyncPlayback();
       }, err => {});
 
-      // GLOBAL LIVE RADIO SYNC LISTENER
       db.collection("settings").doc("music_room").onSnapshot(doc => {
         if (doc.exists) {
           const data = doc.data();
@@ -1269,6 +1296,25 @@
           <td><button onclick="db.collection('playlist').doc('${s.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
+    }
+
+    // --- PRODUCT DETAILS MODAL VIEW ---
+    function openProductDetails(prodId) {
+      const p = cloudProducts.find(item => item.id === prodId);
+      if (!p) return;
+
+      document.getElementById('modalProdTitle').innerText = p.name;
+      document.getElementById('modalProdPrice').innerText = `कीमत: ₹${p.price}`;
+      
+      const mediaBox = document.getElementById('modalProdMedia');
+      if (p.img) {
+        mediaBox.innerHTML = `<img src="${p.img}" style="max-height:220px; width:100%; object-fit:cover; border-radius:8px; border:1px solid rgba(255,215,0,0.3);">`;
+      } else {
+        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">📦</div>`;
+      }
+
+      document.getElementById('modalProdDesc').innerText = p.description || "इस उत्पाद के लिए कोई अतिरिक्त विवरण उपलब्ध नहीं है।";
+      openModal('productDetailModal');
     }
 
     // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
@@ -1856,71 +1902,75 @@
       if (cBox) cBox.innerHTML = cats.map(c => `<span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">${c === 'all' ? 'सभी' : c}</span>`).join('');
     }
     function filterCategory(cat) { activeCategory = cat; renderCategories(); renderStoreProducts(); }
+    
     function renderStoreProducts() {
       const g = document.getElementById('fullStoreGrid');
       if (!g) return;
       const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
       g.innerHTML = filtered.map(p => `
-        <div class="p-card">
+        <div class="p-card" onclick="openProductDetails('${p.id}')" style="cursor:pointer;">
           <img src="${p.img || 'https://via.placeholder.com/200'}">
           <div class="p-title">${p.name}</div>
           <div class="p-price">₹${p.price}</div>
-          <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+          <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
         </div>
       `).join('');
     }
+
     function renderSuggestedProducts() {
       const sg = document.getElementById('suggestedGrid');
       if (!sg) return;
       sg.innerHTML = cloudProducts.slice(0, 4).map(p => `
-        <div class="p-card">
+        <div class="p-card" onclick="openProductDetails('${p.id}')" style="cursor:pointer;">
           <img src="${p.img || 'https://via.placeholder.com/200'}">
           <div class="p-title">${p.name}</div>
           <div class="p-price">₹${p.price}</div>
-          <button class="btn-buy" onclick="openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+          <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
         </div>
       `).join('');
     }
 
-    function saveAdminSettings() {
-      const selectedMode = document.getElementById('admAudioModeSelect').value;
-      const ytLink = document.getElementById('admYtLink').value.trim();
-      const ytVidId = extractVideoId(ytLink) || "";
-
-      const batchSettings = {
-        ticker: document.getElementById('admTickerText').value,
-        upi: document.getElementById('admUpiId').value,
-        razorpay: document.getElementById('admRazorpayKey').value,
-        wa: document.getElementById('admWaPhone').value
-      };
-
-      db.collection("settings").doc("main").set(batchSettings, { merge: true }).then(() => {
-        const audioSyncData = {
-          sourceType: selectedMode,
-          videoId: ytVidId,
-          startedAt: Date.now()
-        };
-
-        db.collection("settings").doc("music_room").set(audioSyncData, { merge: true }).then(() => {
-          showAppToast("✅ सभी सेटिंग्स सुरक्षित हो गईं!");
-        });
-      });
-    }
-
+    // --- SAVE PRODUCT WITH FULL DESCRIPTION ---
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
-      if (!name || !price) return;
-      db.collection("products").add({ name, price: Number(price), category: document.getElementById('newPCat').value.trim() || 'सामान्य', img: document.getElementById('newPImg').value.trim(), timeNumber: Date.now() })
-        .then(() => { showAppToast("प्रोडक्ट जुड़ गया!"); document.getElementById('newPName').value = ''; document.getElementById('newPPrice').value = ''; });
+      const cat = document.getElementById('newPCat').value.trim() || 'प्रसाद';
+      const subCat = document.getElementById('newPSubCat').value.trim() || '';
+      const img = document.getElementById('newPImg').value.trim();
+      const desc = document.getElementById('newPDesc').value.trim();
+
+      if (!name || !price) {
+        showAppToast("कृपया उत्पाद का नाम और कीमत अवश्य भरें!");
+        return;
+      }
+
+      db.collection("products").add({
+        name,
+        price: Number(price),
+        category: cat,
+        subCategory: subCat,
+        img: img,
+        description: desc,
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast("✅ नया प्रोडक्ट सफलतापूव्रक स्टोर में जुड़ गया!");
+        document.getElementById('newPName').value = '';
+        document.getElementById('newPPrice').value = '';
+        document.getElementById('newPCat').value = '';
+        document.getElementById('newPSubCat').value = '';
+        document.getElementById('newPImg').value = '';
+        document.getElementById('newPDesc').value = '';
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
+
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
       tb.innerHTML = cloudProducts.map(p => `
-        <tr><td><img src="${p.img || ''}" width="30"></td><td>${p.name}</td><td>${p.category || '—'}</td><td>₹${p.price}</td><td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px;">हटाएं</button></td></tr>
+        <tr><td><img src="${p.img || ''}" width="30"></td><td>${p.name}</td><td>${p.category || '—'}</td><td>₹${p.price}</td><td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td></tr>
       `).join('');
     }
+
     function saveNewCoupon() {
       const code = document.getElementById('newCCode').value.trim().toUpperCase();
       const dis = document.getElementById('newCDiscount').value.trim();
@@ -2010,7 +2060,7 @@
       const doc = legalDocs[type];
       if (!doc) return;
       const h = document.getElementById('legalHeading');
-      const b = document.getElementById('legalBodyText');
+      const b = document.getElementById('legalBodyTest');
       const p = document.getElementById('legalPage');
       if (h && b && p) {
         h.innerText = doc.title;
