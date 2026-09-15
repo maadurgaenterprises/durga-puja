@@ -26,7 +26,7 @@
     .auth-btn { background: var(--gold); border: none; color: #000; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
     .menu-hamburger-btn { background: none; border: 1px solid rgba(255,215,0,0.4); color: var(--gold); font-size: 18px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
-    /* Side Drawer */
+    /* Side Navigation Drawer */
     .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 260px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9000; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; margin-bottom: 15px; }
     .drawer-item { display: block; width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 12px 10px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 6px; margin-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.15); }
@@ -36,9 +36,9 @@
     header h1 { font-size: 22px; color: var(--gold); text-shadow: 0 0 15px rgba(255,215,0,0.5); }
     header p { color: #ffcdd2; font-size: 12px; margin-top: 3px; }
 
-    /* Smooth Running Ticker */
+    /* Running Ticker */
     .ticker-wrap { background: rgba(255, 215, 0, 0.1); border-top: 1px solid rgba(255, 215, 0, 0.25); border-bottom: 1px solid rgba(255, 215, 0, 0.25); padding: 7px 0; overflow: hidden; }
-    .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 30s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
+    .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 32s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
     @keyframes scrollTicker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
     .main-wrap { max-width: 900px; width: 100%; margin: 15px auto; padding: 0 12px; flex: 1; }
@@ -63,7 +63,7 @@
     .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-    /* Blog Cards */
+    /* Devotional Blog Post Cards */
     .blog-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
     @media (min-width: 650px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
     .blog-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.25); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
@@ -95,7 +95,7 @@
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 6000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
 
-    /* Dynamic QR */
+    /* Dynamic QR Box */
     .qr-box-wrapper { background: #fff; padding: 15px; border-radius: 10px; display: inline-block; margin: 10px 0; }
     .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
     .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
@@ -113,9 +113,9 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Legal & Contact Modal */
+    /* Dedicated Legal & Contact Modal */
     .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 7000; overflow-y: auto; padding: 25px 15px; }
-    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.3); }
+    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.3); position: relative; }
 
     /* Sticky Footer */
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
@@ -124,57 +124,42 @@
     .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
-    /* ========================================================
-       CGI DIVINE GLOWING GANESHA AI BOT FLOATING BUTTON
-    ======================================================== */
-    .ganesha-floating-bot {
+    /* --- GANESH JI DIVINE GLOW FLOATING BUTTON (COMPACT & RADIANT) --- */
+    .ganesh-float-btn {
       position: fixed;
       bottom: 22px;
-      right: 18px;
-      width: 68px;
-      height: 68px;
+      right: 20px;
+      width: 54px;
+      height: 54px;
       border-radius: 50%;
-      background: radial-gradient(circle, #ffe082 0%, #ff8f00 70%, #b71c1c 100%);
+      z-index: 5500;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;
-      cursor: pointer;
-      z-index: 9999;
-      box-shadow: 0 0 25px #ffd700, 0 0 50px rgba(255, 215, 0, 0.6), inset 0 0 15px #fff;
-      animation: divineCgiPulse 2.4s infinite ease-in-out;
+      background: radial-gradient(circle at center, rgba(255, 235, 59, 0.45) 0%, rgba(255, 152, 0, 0.25) 45%, rgba(0, 0, 0, 0) 75%);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.85), 0 0 35px rgba(255, 140, 0, 0.65);
+      animation: divineGlowPulse 2.8s infinite alternate ease-in-out;
+      border: none;
+      outline: none;
       user-select: none;
-      border: 2px solid #fff;
     }
-    .ganesha-floating-bot svg {
-      width: 44px;
-      height: 44px;
-      filter: drop-shadow(0 0 8px #fff);
-    }
-    @keyframes divineCgiPulse {
-      0% {
-        transform: scale(1);
-        box-shadow: 0 0 20px #ffd700, 0 0 35px rgba(255, 143, 0, 0.7), inset 0 0 10px #fff;
-      }
-      50% {
-        transform: scale(1.08);
-        box-shadow: 0 0 35px #ffe082, 0 0 65px rgba(255, 215, 0, 0.9), inset 0 0 20px #fff;
-      }
-      100% {
-        transform: scale(1);
-        box-shadow: 0 0 20px #ffd700, 0 0 35px rgba(255, 143, 0, 0.7), inset 0 0 10px #fff;
-      }
-    }
-    .ganesha-pulse-ring {
-      position: absolute;
-      top: -8px; left: -8px; right: -8px; bottom: -8px;
-      border-radius: 50%;
-      border: 2px solid rgba(255, 215, 0, 0.7);
-      animation: ringSpread 2.4s infinite ease-out;
+    .ganesh-float-btn img {
+      width: 48px;
+      height: 48px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 6px #ffd700);
       pointer-events: none;
     }
-    @keyframes ringSpread {
-      0% { transform: scale(0.9); opacity: 1; }
-      100% { transform: scale(1.5); opacity: 0; }
+    @keyframes divineGlowPulse {
+      0% {
+        transform: scale(0.96);
+        box-shadow: 0 0 14px rgba(255, 215, 0, 0.75), 0 0 25px rgba(255, 152, 0, 0.45);
+      }
+      100% {
+        transform: scale(1.05);
+        box-shadow: 0 0 22px rgba(255, 235, 59, 0.95), 0 0 45px rgba(255, 111, 0, 0.85);
+      }
     }
   </style>
 </head>
@@ -187,19 +172,13 @@
   <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
   <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
 
-  <!-- CGI Divine Glowing Ganesha Floating AI Bot -->
-  <div class="ganesha-floating-bot" onclick="openModal('ganeshaBotModal')" title="श्री गणेश AI सहायता केंद्र (समस्या साझा करें)">
-    <div class="ganesha-pulse-ring"></div>
-    <!-- Divine Golden Ganesha SVG Icon -->
-    <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path d="M50 15 C42 15 36 21 36 29 C36 34 39 39 43 41 C41 46 39 52 39 60 C39 74 48 83 50 85 C52 83 61 74 61 60 C61 52 59 46 57 41 C61 39 64 34 64 29 C64 21 58 15 50 15 Z" fill="#fff" opacity="0.95"/>
-      <path d="M50 20 C46 20 42 24 42 29 C42 34 45 38 49 39 L49 65 C49 68 51 72 55 72 C58 72 60 69 60 66 C60 62 56 60 54 60 C53 60 52 61 52 62" stroke="#b71c1c" stroke-width="3" stroke-linecap="round"/>
-      <circle cx="50" cy="25" r="3.5" fill="#ffd700"/>
-      <path d="M40 32 Q32 30 28 38 Q25 45 32 50 Q38 52 42 47" stroke="#ffd700" stroke-width="3" fill="#ffecb3"/>
-      <path d="M60 32 Q68 30 72 38 Q75 45 68 50 Q62 52 58 47" stroke="#ffd700" stroke-width="3" fill="#ffecb3"/>
-      <circle cx="50" cy="18" r="2" fill="#d32f2f"/>
-    </svg>
-  </div>
+  <!-- Hidden Problem Screenshot Picker -->
+  <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
+
+  <!-- --- DIVINE FLOATING GANESH JI BUTTON --- -->
+  <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
+    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" alt="श्री गणेश जी">
+  </button>
 
   <!-- Top Bar -->
   <div class="top-bar">
@@ -285,7 +264,7 @@
         <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
-      <!-- FEATURED BLOGS SHOWN ON DONATION PAGE -->
+      <!-- FEATURED POSTS ON DONATION PAGE -->
       <div id="donationFeaturedBlogSec" style="display:none; margin-bottom:20px;">
         <h3 class="sec-heading">🌸 विशेष पावन कथा व दर्शन</h3>
         <div class="blog-grid" id="donationFeaturedBlogList"></div>
@@ -306,13 +285,13 @@
       <div class="product-grid" id="fullStoreGrid"></div>
     </div>
 
-    <!-- PANEL 3: BLOGS -->
+    <!-- PANEL 3: DEVOTIONAL BLOG / STORIES PAGE -->
     <div id="panelBlog" style="display:none;">
       <h3 class="sec-heading">📖 पावन भक्ति कथाएँ, दर्शन एवं ब्लॉग</h3>
       <div class="blog-grid" id="publicFullBlogList"></div>
     </div>
 
-    <!-- PANEL 4: DIRECTORY -->
+    <!-- PANEL 4: DONOR DIRECTORY -->
     <div id="panelDirectory" class="card" style="display:none;">
       <h2 id="txtDirTitle">📜 सार्वजनिक सहयोग सूची (पारदर्शी बोर्ड)</h2>
       <input type="text" id="dirSearch" onkeyup="searchPublicDonors()" placeholder="🔍 नाम या शहर से खोजें..." style="margin-bottom:12px;">
@@ -326,7 +305,7 @@
       </div>
     </div>
 
-    <!-- PANEL 5: CHAT -->
+    <!-- PANEL 5: WHATSAPP STYLE CHAT -->
     <div id="panelChat" style="display:none;">
       <div class="insta-chat-box">
         <div class="insta-chat-header">
@@ -359,36 +338,43 @@
 
   </div>
 
-  <!-- POPUP: GANESHA AI HELP BOT MODAL -->
-  <div class="custom-popup-overlay" id="ganeshaBotModal">
-    <div class="custom-popup-box" style="max-width:440px; text-align:left; border: 2px solid #ffd700; background:#180003;">
-      <div style="display:flex; align-items:center; gap:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px; margin-bottom:12px;">
-        <span style="font-size:26px;">🐘</span>
-        <div>
-          <b style="color:var(--gold); font-size:14px;">श्री गणेश AI सहायता केंद्र</b>
-          <p style="font-size:10px; color:#ffcdd2;">दानकर्ता व ग्राहक समस्या समाधान विंडो</p>
+  <!-- POPUP: GANESH JI PROBLEM / SUPPORT REPORTING MODAL WITH SCREENSHOT UPLOAD -->
+  <div class="custom-popup-overlay" id="problemSupportModal">
+    <div class="custom-popup-box" style="max-width:460px; text-align:left;">
+      <div style="text-align:center; margin-bottom:10px;">
+        <span style="font-size:24px;">🚩 ॐ गं गणपतये नमः 🚩</span>
+        <h3 style="color:var(--gold); font-size:16px; margin-top:3px;">समस्या निवारण एवं सहायता केंद्र</h3>
+        <p style="font-size:11px; color:#ffcdd2;">भुगतान, ऑर्डर या पोर्टल संबंधी समस्या बताएं, तत्काल समाधान होगा।</p>
+      </div>
+
+      <div style="background:rgba(0,0,0,0.5); padding:14px; border-radius:10px; border:1px solid rgba(255,215,0,0.3);">
+        <label>आपका शुभ नाम *</label>
+        <input type="text" id="probCustName" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
+
+        <label>व्हाट्सएप मोबाइल नंबर *</label>
+        <input type="tel" id="probCustPhone" placeholder="संपर्क हेतु मोबाइल नंबर" style="margin-bottom:8px;">
+
+        <label>समस्या का विवरण *</label>
+        <textarea id="probCustMsg" placeholder="अपनी समस्या या प्रश्न विस्तार से लिखें..." style="height:65px; margin-bottom:8px;"></textarea>
+
+        <!-- Screenshot Upload Preview Row -->
+        <label>स्क्रीनशॉट या फोटो (वैकल्पिक):</label>
+        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
+          <button type="button" onclick="document.getElementById('problemScreenPicker').click()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
+            📷 फोटो / स्क्रीनशॉट चुनें
+          </button>
+          <span id="probImgStatusTxt" style="font-size:11px; color:#81c784;"></span>
         </div>
+        <div id="probImgPreviewBox" style="margin-bottom:10px;"></div>
+
+        <button class="btn-main" onclick="submitProblemTicket()">समस्या भेजें (Submit)</button>
       </div>
 
-      <p style="font-size:12px; color:#e0e0e0; line-height:1.5; margin-bottom:10px;">
-        जय श्री गणेश! यदि आपको दान, पेमेंट, UTR, स्टोर या डिलीवरी में कोई भी कठिनाई आ रही है, तो कृपया नीचे अपना संदेश दर्ज करें। यह सीधे समिति अध्यक्ष तक पहुँचेगा:
-      </p>
-
-      <div class="form-group">
-        <label>आपका शुभ नाम / फोन नंबर:</label>
-        <input type="text" id="botUserName" placeholder="नाम या मोबाइल नंबर">
-      </div>
-      <div class="form-group">
-        <label>अपनी समस्या या प्रश्न यहाँ विस्तार से लिखें *:</label>
-        <textarea id="botUserIssue" placeholder="जैसे: पेमेंट कट गया पर UTR में समस्या आ रही है..." style="height:75px;"></textarea>
-      </div>
-
-      <button class="btn-main" onclick="submitGaneshaBotIssue()">समस्या भेजें (Submit Help)</button>
-      <button onclick="closeModal('ganeshaBotModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
+      <button onclick="closeModal('problemSupportModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें (Cancel)</button>
     </div>
   </div>
 
-  <!-- POPUP: BLOG READER -->
+  <!-- POPUP: BLOG READER MODAL -->
   <div class="custom-popup-overlay" id="blogReaderModal">
     <div class="custom-popup-box" style="max-width:540px; text-align:left; max-height:85vh; overflow-y:auto;">
       <h3 style="color:var(--gold); margin-bottom:6px;" id="readerBlogTitle"></h3>
@@ -399,7 +385,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FEEDBACK -->
+  <!-- POPUP: FEEDBACK MODAL -->
   <div class="custom-popup-overlay" id="feedbackModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
@@ -421,7 +407,7 @@
     </div>
   </div>
 
-  <!-- LEGAL & CONTACT MODAL -->
+  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
   <div class="legal-page" id="legalPage">
     <div class="legal-container">
       <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
@@ -557,13 +543,12 @@
 
       <div class="admin-tabs">
         <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स व पेमेंट</button>
-        <button class="adm-tab" onclick="switchAdm('admBotIssues')">🙏 भक्त सहायता (AI Bot)</button>
         <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 भक्ति ब्लॉग / कथाएँ</button>
         <button class="adm-tab" onclick="switchAdm('admProd')">🛍️ प्रोडक्ट्स व सजेस्टेड</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🏷️ डिस्काउंट कूपन्स</button>
         <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स व OTP</button>
         <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन व मोबाइल रसीद</button>
-        <button class="adm-tab" onclick="switchAdm('admFeed')">💬 भक्त सुझाव</button>
+        <button class="adm-tab" onclick="switchAdm('admFeed')">💬 भक्त सुझाव व समस्या</button>
         <button class="adm-tab" onclick="switchAdm('admChatAdm')">🛡️ चैट मॉडरेटर</button>
       </div>
 
@@ -585,25 +570,9 @@
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
         <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
-        <div class="form-group"><label>यूट्यूब भजन लिंक (स्थायी रूप से बजने हेतु):</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
+        <div class="form-group"><label>यूट्यूब भजन लिंक:</label><input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=..."></div>
 
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
-        
-        <!-- 3-Second Green Notification Box for Settings Saved -->
-        <div id="settingsSaveSuccessAlert" style="display:none; background:#1b5e20; border:1px solid #4caf50; color:#c8e6c9; padding:10px; border-radius:6px; text-align:center; font-weight:bold; margin-top:10px; font-size:13px;">
-          ✅ सेटिंग्स सफलतापूर्वक क्लाउड में सुरक्षित हो गई हैं!
-        </div>
-      </div>
-
-      <!-- Admin Sec 1.5: Ganesha AI Bot Inquiries Tab -->
-      <div id="admBotIssues" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">🙏 श्री गणेश AI सहायता केंद्र — भक्तों/ग्राहकों की प्राप्त समस्याएँ</h4>
-        <div class="table-responsive">
-          <table id="admBotTable">
-            <thead><tr><th>तारीख</th><th>भक्त/ग्राहक</th><th>कठिनाई / समस्या विवरण</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
       </div>
 
       <!-- Admin Sec 2: Devotional Blog Post Manager -->
@@ -676,7 +645,7 @@
 
       <!-- Admin Sec 5: Orders -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स (नाम पर क्लिक करके पता व फोन देखें)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
             <thead><tr><th>तारीख</th><th>ग्राहक नाम</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>OTP व टिक</th><th>स्थिति</th><th>सम्मति</th><th>हटाएं</th></tr></thead>
@@ -699,7 +668,7 @@
           </div>
           <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें</button>
         </div>
-        <h4 style="color:var(--gold); margin-bottom:8px;">दानदाता सूची (मोबाइल नंबर व WhatsApp रसीद सहित)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">दानदाता सूची (WhatsApp रसीद सहित)</h4>
         <div class="table-responsive">
           <table id="admDonTable">
             <thead><tr><th>तारीख</th><th>दानदाता नाम</th><th>मोबाइल नंबर</th><th>स्थान</th><th>राशि</th><th>UTR</th><th>व्हाट्सएप रसीद</th><th>हटाएं</th></tr></thead>
@@ -708,12 +677,12 @@
         </div>
       </div>
 
-      <!-- Admin Sec 7: Feedback Moderator -->
+      <!-- Admin Sec 7: Feedback & Problem Reports (With Screenshots) -->
       <div id="admFeed" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव व रिव्यू मॉडरेटर</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव एवं गणेश जी सहायता समस्याएं (स्क्रीनशॉट सहित)</h4>
         <div class="table-responsive">
           <table id="admFeedTable">
-            <thead><tr><th>तारीख</th><th>भक्त नाम</th><th>रेटिंग</th><th>सुझाव संदेश</th><th>पिन (Pin ⭐)</th><th>हटाएं</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>नाम / फोन</th><th>प्रकार</th><th>विवरण</th><th>स्क्रीनशॉट</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -791,10 +760,10 @@
     let cloudChats = [];
     let cloudFeedbacks = [];
     let cloudBlogs = [];
-    let cloudBotIssues = [];
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
     let pendingDonationData = null;
+    let selectedProblemImageBase64 = null;
 
     function toggleSideNav() {
       const d = document.getElementById('sideNavDrawer');
@@ -811,7 +780,9 @@
       const target = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
       if (target) target.style.display = 'block';
       if (event && event.target) event.target.classList.add('active');
-      if (tab === 'chat') setTimeout(scrollChatToBottom, 150);
+      if (tab === 'chat') {
+        setTimeout(scrollChatToBottom, 150);
+      }
     }
 
     function showAppToast(msg) {
@@ -847,10 +818,10 @@
       return match ? match[1] : null;
     }
 
-    // --- REALTIME SYNCED & RELIABLE AD-FREE AUDIO ENGINE ---
+    // --- INSTAGRAM WEBVIEW COMPATIBLE AUDIO PLAYER ---
     let ytPlayer = null;
     let isMusicPlaying = false;
-    let currentYtVideoId = ""; // Determined dynamically from Firebase
+    let currentYtVideoId = "ChC8RMdyvhk";
     let songPlaybackStartTime = null;
 
     const tag = document.createElement('script');
@@ -859,13 +830,11 @@
     if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
 
     window.onYouTubeIframeAPIReady = function() {
-      // First try to load video from memory or fallback
-      const initialVid = currentYtVideoId || "ChC8RMdyvhk";
       try {
         ytPlayer = new YT.Player('ytPlayerDiv', {
-          height: '0', width: '0', videoId: initialVid,
+          height: '0', width: '0', videoId: currentYtVideoId,
           playerVars: { 
-            'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': initialVid,
+            'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId,
             'enablejsapi': 1, 'origin': window.location.origin
           },
           events: { 
@@ -906,7 +875,7 @@
     function startMusicPlayback() {
       if (!ytPlayer || typeof ytPlayer.playVideo !== 'function') return;
       const linkInInput = document.getElementById('admYtLink') ? document.getElementById('admYtLink').value : '';
-      const resolvedId = extractVideoId(linkInInput) || currentYtVideoId || "ChC8RMdyvhk";
+      const resolvedId = extractVideoId(linkInInput) || currentYtVideoId;
 
       if (!songPlaybackStartTime && db) {
         const startTime = Date.now();
@@ -951,12 +920,14 @@
     function handleFirstUserInteraction() {
       if (hasUserInteracted) return;
       hasUserInteracted = true;
-      try { startMusicPlayback(); } catch(e) {}
+      try { 
+        startMusicPlayback(); 
+      } catch(e) {}
       ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, handleFirstUserInteraction));
     }
     ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true }));
 
-    // Presence
+    // --- Presence ---
     function updateOnlinePresence() {
       if (!db) return;
       db.collection("presence").doc(MY_CLIENT_ID).set({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => {});
@@ -977,7 +948,7 @@
       }, err => {});
     }
 
-    // Auth
+    // --- Auth Listener ---
     if (auth) {
       auth.onAuthStateChanged(user => {
         currentUser = user;
@@ -1095,14 +1066,16 @@
         renderAdminChat();
       }, err => {});
 
+      // Feedbacks & Support Problems Sync
       db.collection("feedbacks").onSnapshot(snap => {
         cloudFeedbacks = [];
         snap.forEach(doc => cloudFeedbacks.push({ id: doc.id, ...doc.data() }));
-        cloudFeedbacks.sort((a,b) => (b.pinned ? 1 : 0) - (a.pinned ? 1 : 0));
+        cloudFeedbacks.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
         renderPublicFeedbacks();
         renderAdminFeedbacks();
       }, err => {});
 
+      // Devotional Blogs Sync
       db.collection("blogs").orderBy("timeNumber", "desc").onSnapshot(snap => {
         cloudBlogs = [];
         snap.forEach(doc => cloudBlogs.push({ id: doc.id, ...doc.data() }));
@@ -1111,22 +1084,12 @@
         renderAdminBlogs();
       }, err => {});
 
-      // Ganesha AI Bot Inquiries Sync
-      db.collection("bot_issues").orderBy("timeNumber", "desc").onSnapshot(snap => {
-        cloudBotIssues = [];
-        snap.forEach(doc => cloudBotIssues.push({ id: doc.id, ...doc.data() }));
-        renderAdminBotIssues();
-      }, err => {});
-
       db.collection("settings").doc("main").onSnapshot(doc => {
         if (doc.exists) {
           const s = doc.data();
-          // Keep custom ticker smoothly
-          if (s.ticker !== undefined) {
-            window.customAdminTickerText = s.ticker.trim();
-            refreshTicker();
-            const att = document.getElementById('admTickerText');
-            if (att) att.value = s.ticker;
+          if (s.ticker) {
+            document.getElementById('liveTicker').innerText = s.ticker;
+            document.getElementById('admTickerText').value = s.ticker;
           }
           if (s.upi) document.getElementById('admUpiId').value = s.upi;
           if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
@@ -1135,58 +1098,54 @@
             document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
             document.getElementById('ftrWa').innerText = `+${s.wa}`;
           }
-          if (s.yt) {
-            document.getElementById('admYtLink').value = s.yt;
-            const extracted = extractVideoId(s.yt);
-            if (extracted && extracted !== currentYtVideoId) {
-              currentYtVideoId = extracted;
-              if (ytPlayer && typeof ytPlayer.cueVideoById === 'function') {
-                ytPlayer.cueVideoById(currentYtVideoId);
-              }
-            }
-          }
         }
       }, err => {});
     }
 
-    // --- GANESHA AI HELP BOT HANDLER ---
-    function submitGaneshaBotIssue() {
-      if (!db) return;
-      const userName = document.getElementById('botUserName').value.trim() || (currentUser ? currentUser.displayName : "अज्ञात भक्त/ग्राहक");
-      const issue = document.getElementById('botUserIssue').value.trim();
+    // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
+    function handleProblemImageSelected(event) {
+      const file = event.target.files[0];
+      if (!file) return;
 
-      if (!issue) {
-        showAppToast("कृपया अपनी समस्या या प्रश्न अवश्य लिखें!");
-        return;
-      }
-
-      db.collection("bot_issues").add({
-        userName,
-        issue,
-        timeNumber: Date.now(),
-        date: new Date().toLocaleDateString('hi-IN') + ' ' + new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
-      }).then(() => {
-        closeModal('ganeshaBotModal');
-        showAppToast("🙏 श्री गणेश जी की कृपा से आपकी समस्या समिति तक सुरक्षित पहुँच गई है! शीघ्र समाधान होगा।");
-        document.getElementById('botUserIssue').value = '';
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        selectedProblemImageBase64 = e.target.result;
+        document.getElementById('probImgStatusTxt').innerText = "✓ फोटो चुनी गई";
+        document.getElementById('probImgPreviewBox').innerHTML = `<img src="${selectedProblemImageBase64}" style="max-height:80px; border-radius:6px; border:1px solid var(--gold);">`;
+      };
+      reader.readAsDataURL(file);
     }
 
-    function renderAdminBotIssues() {
-      const tb = document.querySelector('#admBotTable tbody');
-      if (!tb) return;
-      if (cloudBotIssues.length === 0) {
-        tb.innerHTML = "<tr><td colspan='4' style='text-align:center; color:#aaa;'>अभी कोई सहायता अनुरोध नहीं है।</td></tr>";
+    function submitProblemTicket() {
+      if (!db) return;
+      const name = document.getElementById('probCustName').value.trim();
+      const phone = document.getElementById('probCustPhone').value.trim();
+      const msg = document.getElementById('probCustMsg').value.trim();
+
+      if (!name || !phone || !msg) {
+        showAppToast("कृपया नाम, मोबाइल नंबर और समस्या का विवरण पूरा भरें!");
         return;
       }
-      tb.innerHTML = cloudBotIssues.map(b => `
-        <tr>
-          <td>${b.date || '—'}</td>
-          <td><b>${b.userName || '—'}</b></td>
-          <td style="color:#ffcdd2;">${b.issue || ''}</td>
-          <td><button onclick="db.collection('bot_issues').doc('${b.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
+
+      db.collection("feedbacks").add({
+        name: name,
+        phone: phone,
+        message: msg,
+        type: "सहायता / समस्या रिपोर्ट",
+        rating: 5,
+        screenshot: selectedProblemImageBase64 || "",
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast("✅ आपकी समस्या सुरक्षित दर्ज हो गई है। हमारी टीम आपसे तुरंत संपर्क करेगी।");
+        document.getElementById('probCustName').value = '';
+        document.getElementById('probCustPhone').value = '';
+        document.getElementById('probCustMsg').value = '';
+        selectedProblemImageBase64 = null;
+        document.getElementById('probImgStatusTxt').innerText = "";
+        document.getElementById('probImgPreviewBox').innerHTML = "";
+        closeModal('problemSupportModal');
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     // --- DEVOTIONAL BLOG LOGIC ---
@@ -1210,7 +1169,7 @@
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("✅ पावन कथा व ब्लॉग सफलतापूर्वक प्रकाशित हुआ!");
+        showAppToast("✅ पावन कथा व ब्लॉग प्रकाशित हुआ!");
         document.getElementById('newBlogTitle').value = '';
         document.getElementById('newBlogImg').value = '';
         document.getElementById('newBlogVideo').value = '';
@@ -1251,7 +1210,7 @@
       const box = document.getElementById('publicFullBlogList');
       if (!box) return;
       if (cloudBlogs.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column:1/-1; padding:30px;">अभी कोई पावन कथा या ब्लॉग प्रकाशित नहीं हुआ है।</p>`;
+        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column:1/-1; padding:30px;">अभी कोई पावन कथा या ब्लॉग प्रकाशित नहीं हुआ है। जल्द ही दर्शन होंगे!</p>`;
         return;
       }
       box.innerHTML = renderBlogCardsHtml(cloudBlogs);
@@ -1276,7 +1235,7 @@
       if (!blog) return;
 
       document.getElementById('readerBlogTitle').innerText = blog.title;
-      document.getElementById('readerBlogMeta').innerText = `दिनांक: ${blog.date || ''} | लेखक: ${blog.author || 'समिति'}`;
+      document.getElementById('readerBlogMeta').innerText = `दिनांक: ${blog.date || ''} | लेखक/स्रोत: ${blog.author || 'श्री दुर्गा पूजा सेवा समिति'}`;
       
       const mediaBox = document.getElementById('readerBlogMedia');
       const vidId = extractVideoId(blog.video);
@@ -1316,7 +1275,7 @@
       `).join('');
     }
 
-    // --- WHATSAPP-STYLE CHAT ---
+    // --- WHATSAPP-STYLE LIVE SATSANG CHAT ---
     let mediaRecorder = null;
     let audioChunks = [];
     let isRecording = false;
@@ -1474,7 +1433,7 @@
       }
 
       db.collection("feedbacks").add({
-        name, rating: Number(rating), message: msg, pinned: false,
+        name, rating: Number(rating), message: msg, type: "पब्लिक फीडबैक",
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
@@ -1487,26 +1446,20 @@
     function renderPublicFeedbacks() {
       const box = document.getElementById('publicFeedbackList');
       if (!box) return;
-      if (cloudFeedbacks.length === 0) {
+      const filtered = cloudFeedbacks.filter(f => f.type !== "सहायता / समस्या रिपोर्ट");
+      if (filtered.length === 0) {
         box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
         return;
       }
-      box.innerHTML = cloudFeedbacks.map(f => `
+      box.innerHTML = filtered.map(f => `
         <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
           <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
-            <span>${f.name} ${f.pinned ? '⭐' : ''}</span>
+            <span>${f.name}</span>
             <span>${'⭐'.repeat(f.rating || 5)}</span>
           </div>
           <p style="color:#ffcdd2;">${f.message}</p>
         </div>
       `).join('');
-    }
-
-    function togglePinFeedback(id, currentStatus) {
-      if (!db) return;
-      db.collection("feedbacks").doc(id).update({ pinned: !currentStatus }).then(() => {
-        showAppToast("स्टेटस अपडेट हुआ!");
-      });
     }
 
     function renderAdminFeedbacks() {
@@ -1515,13 +1468,11 @@
       tb.innerHTML = cloudFeedbacks.map(f => `
         <tr>
           <td>${f.date || '—'}</td>
-          <td><b>${f.name || '—'}</b></td>
-          <td>${'⭐'.repeat(f.rating || 5)}</td>
+          <td><b>${f.name || '—'}</b><br><small>${f.phone || ''}</small></td>
+          <td><span style="color:${f.type === 'सहायता / समस्या रिपोर्ट' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'फीडबैक'}</span></td>
           <td>${f.message}</td>
           <td>
-            <button onclick="togglePinFeedback('${f.id}', ${f.pinned || false})" style="background:${f.pinned ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
-              ${f.pinned ? '⭐ Pinned' : 'Pin करें'}
-            </button>
+            ${f.screenshot ? `<a href="${f.screenshot}" target="_blank"><img src="${f.screenshot}" style="width:40px; height:40px; object-fit:cover; border-radius:4px; border:1px solid var(--gold);"></a>` : '—'}
           </td>
           <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
@@ -1687,21 +1638,13 @@
       new QRCode(container, { text: upiString, width: 170, height: 170, colorDark: "#000000", colorLight: "#ffffff" });
     }
 
-    // Refresh Ticker Smoothly (Custom or Default)
     function refreshTicker() {
       const t = document.getElementById('liveTicker');
       if (!t) return;
-      
-      const customText = window.customAdminTickerText || "";
-      const defaultBase = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸";
-      const baseToUse = customText ? customText : defaultBase;
-
-      if (cloudDonations.length === 0) {
-        t.innerText = baseToUse;
-        return;
-      }
+      const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸";
+      if (cloudDonations.length === 0) { t.innerText = base; return; }
       const recent = cloudDonations.slice(0, 8).map(d => `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`).join(' | ');
-      t.innerText = recent + " | " + baseToUse;
+      t.innerText = recent + " | " + base;
     }
 
     function renderPublicDonors() {
@@ -1769,43 +1712,15 @@
         </div>
       `).join('');
     }
-
-    // --- SAVE ADMIN SETTINGS WITH 3-SECOND GREEN NOTIFICATION ALERT ---
     function saveAdminSettings() {
-      const newYt = document.getElementById('admYtLink').value.trim();
-      const extractedVid = extractVideoId(newYt);
-      const newTicker = document.getElementById('admTickerText').value;
-
-      const payload = {
-        ticker: newTicker,
-        paymentMode: document.getElementById('admPaymentMode').value,
+      db.collection("settings").doc("main").set({
+        ticker: document.getElementById('admTickerText').value,
         upi: document.getElementById('admUpiId').value,
         razorpay: document.getElementById('admRazorpayKey').value,
         wa: document.getElementById('admWaPhone').value,
-        yt: newYt
-      };
-
-      db.collection("settings").doc("main").set(payload, { merge: true }).then(() => {
-        // Reset room clock only if video is actually changed
-        if (extractedVid && extractedVid !== currentYtVideoId) {
-          currentYtVideoId = extractedVid;
-          db.collection("settings").doc("music_room").set({
-            startedAt: Date.now(),
-            videoId: extractedVid
-          }, { merge: true });
-        }
-
-        // Show Green Success Alert for exactly 3 seconds
-        const alertBox = document.getElementById('settingsSaveSuccessAlert');
-        if (alertBox) {
-          alertBox.style.display = 'block';
-          setTimeout(() => {
-            alertBox.style.display = 'none';
-          }, 3000);
-        }
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+        yt: document.getElementById('admYtLink').value
+      }, { merge: true }).then(() => showAppToast("सेटिंग्स सुरक्षित हुईं!"));
     }
-
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
@@ -1858,7 +1773,6 @@
       `).join('');
     }
 
-    // --- WORKING LEGAL & CONTACT MODAL LOGIC ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
