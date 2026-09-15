@@ -125,7 +125,7 @@
     .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 6px 14px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
 
     /* ==========================================================================
-       GANESH JI 85PX ROTATING NEON SCI-FI CHAKRA & DIVINE GLOW PULSE
+       85PX GANESH JI CINEMATIC DIVINE CHAKRA & SUPERNOVA FLASH SYSTEM
        ========================================================================== */
     .ganesh-float-btn {
       position: fixed;
@@ -144,92 +144,104 @@
       user-select: none;
     }
 
-    /* 1. Spinning Neon Sci-Fi Ring Pattern (छवि 63039 जैसी घूमने वाली नियॉन चक्र रिंग्स) */
+    /* 1. Behind the scenes: Rotating Divine Ray Beams (घूमती हुई सिनेमाई प्रकाश किरणें) */
     .ganesh-float-btn::before {
       content: "";
       position: absolute;
-      width: 85px;
-      height: 85px;
+      width: 82px;
+      height: 82px;
       border-radius: 50%;
-      background: 
-        radial-gradient(circle, transparent 25%, rgba(255, 120, 0, 0.4) 27%, transparent 32%),
-        radial-gradient(circle, transparent 40%, rgba(255, 215, 0, 0.5) 43%, transparent 48%),
-        repeating-conic-gradient(
-          from 0deg,
-          #ff9800 0deg 16deg,
-          transparent 16deg 26deg,
-          #ffd700 26deg 48deg,
-          transparent 48deg 58deg,
-          #ff3d00 58deg 74deg,
-          transparent 74deg 90deg
-        );
-      box-shadow: 
-        0 0 12px rgba(255, 140, 0, 0.9),
-        0 0 24px rgba(255, 215, 0, 0.8),
-        inset 0 0 14px rgba(255, 152, 0, 0.9);
-      animation: rotateNeonChakra 5s linear infinite;
+      background: repeating-conic-gradient(
+        from 0deg,
+        rgba(255, 235, 59, 0.85) 0deg 10deg,
+        transparent 10deg 20deg,
+        rgba(255, 140, 0, 0.75) 20deg 30deg,
+        transparent 30deg 40deg
+      );
+      animation: rotateRayRays 6s linear infinite;
       z-index: 1;
+      pointer-events: none;
     }
 
-    /* 2. Miraculous Pulsing Flare (छवि 63038 जैसी कभी-कभी बहुत तेज़ चमकने वाली धूप/किरणें) */
-    .ganesh-float-btn::after {
-      content: "";
+    /* 2. Your actual Chakra PNG rotating smoothly (घूमता हुआ आपका असली चक्र) */
+    .chakra-bg-img {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      object-fit: contain;
+      z-index: 2;
+      animation: spinChakraWheel 4s linear infinite;
+      filter: drop-shadow(0 0 10px #ff9800) drop-shadow(0 0 16px #ffd700);
+      pointer-events: none;
+    }
+
+    /* 3. Ganesh Ji Idol Perfectly Proportioned in Center */
+    .ganesh-idol-img {
+      position: relative;
+      width: 62px;
+      height: 62px;
+      object-fit: contain;
+      z-index: 4;
+      filter: drop-shadow(0 2px 6px rgba(0, 0, 0, 0.85));
+      pointer-events: none;
+    }
+
+    /* 4. Multi-Stage Cinematic Miracle Flare (चमत्कारी प्रकाश जो कभी-कभी तीव्र होकर गणेश जी को ढंकता है) */
+    .divine-flare-overlay {
       position: absolute;
       width: 85px;
       height: 85px;
       border-radius: 50%;
-      background: radial-gradient(circle at center, #ffffff 0%, rgba(255, 240, 100, 0.95) 30%, rgba(255, 140, 0, 0.8) 55%, transparent 75%);
-      z-index: 2;
-      animation: miracleFlarePulse 3.8s ease-in-out infinite alternate;
+      z-index: 5;
       pointer-events: none;
+      animation: cinematicMiracleBurst 5.5s ease-in-out infinite;
     }
 
-    /* 3. Ganesh Ji Idol in Front */
-    .ganesh-float-btn img {
-      position: relative;
-      width: 66px;
-      height: 66px;
-      object-fit: contain;
-      z-index: 3;
-      filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.75));
-      pointer-events: none;
-      transition: opacity 0.3s ease;
-    }
-
-    /* Clockwise 360 Rotation */
-    @keyframes rotateNeonChakra {
+    @keyframes spinChakraWheel {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
 
-    /* Divine Miracle Light Flash (रोशनी कम-ज्यादा और कभी-कभी बहुत तेज़ होकर गणेश जी को ढंकना) */
-    @keyframes miracleFlarePulse {
+    @keyframes rotateRayRays {
+      0% { transform: rotate(360deg); }
+      100% { transform: rotate(0deg); }
+    }
+
+    /* Multi-Stage Dynamic Lighting Animation */
+    @keyframes cinematicMiracleBurst {
       0% {
-        opacity: 0.35;
-        transform: scale(0.88);
-        box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+        opacity: 0.15;
+        background: radial-gradient(circle at center, rgba(255, 255, 255, 0.6) 0%, transparent 60%);
+        transform: scale(0.85);
+        box-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
       }
-      50% {
-        opacity: 0.75;
+      30% {
+        opacity: 0.5;
+        background: radial-gradient(circle at center, rgba(255, 235, 59, 0.8) 0%, rgba(255, 87, 34, 0.4) 50%, transparent 70%);
         transform: scale(1.05);
-        box-shadow: 0 0 35px rgba(255, 215, 0, 0.85), 0 0 50px rgba(255, 100, 0, 0.7);
+        box-shadow: 0 0 25px rgba(255, 215, 0, 0.7), 0 0 45px rgba(255, 87, 34, 0.5);
       }
-      85% {
-        opacity: 0.92;
-        transform: scale(1.25);
-        box-shadow: 0 0 55px #ffffff, 0 0 85px #ffb300, 0 0 110px #ff3d00;
+      65% {
+        opacity: 0.3;
+        transform: scale(0.95);
       }
-      /* चरम चमत्कार क्षण: तीव्र प्रकाश चारों ओर फैलकर गणेश जी को दिव्य तेज में छिपा देता है */
-      95% {
+      /* चरम चमत्कार क्षण: तीव्र व्हाइट-गोल्ड ब्लास्ट जिससे गणेश जी दिव्य तेज में विलीन होकर पुनः दिखते हैं */
+      88% {
+        opacity: 0.98;
+        background: radial-gradient(circle at center, #ffffff 40%, #ffeb3b 65%, #ff5722 85%);
+        transform: scale(1.35);
+        box-shadow: 0 0 50px #ffffff, 0 0 85px #ffeb3b, 0 0 120px #ff3d00;
+      }
+      94% {
         opacity: 1;
-        transform: scale(1.38);
-        background: radial-gradient(circle at center, #ffffff 30%, #fff7a0 55%, rgba(255, 140, 0, 0.95) 80%);
-        box-shadow: 0 0 75px #ffffff, 0 0 110px #ffd700, 0 0 140px #ff5722;
+        background: radial-gradient(circle at center, #ffffff 60%, rgba(255, 215, 0, 0.95) 85%);
+        transform: scale(1.42);
+        box-shadow: 0 0 70px #ffffff, 0 0 110px #ffd700, 0 0 150px #ff6f00;
       }
       100% {
-        opacity: 0.4;
-        transform: scale(0.9);
-        box-shadow: 0 0 18px rgba(255, 140, 0, 0.6);
+        opacity: 0.15;
+        transform: scale(0.85);
+        box-shadow: 0 0 10px rgba(255, 152, 0, 0.3);
       }
     }
   </style>
@@ -244,9 +256,16 @@
   <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
   <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
 
-  <!-- --- 85PX GANESH JI BUTTON WITH ROTATING NEON SCI-FI CHAKRA & MIRACLE FLARE --- -->
+  <!-- --- 85PX GANESH JI CINEMATIC BUTTON (WITH YOUR CHAKRA.PNG + ROTATING LIGHT) --- -->
   <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
-    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" alt="श्री गणेश जी">
+    <!-- 1. Rotating Real Chakra Image -->
+    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="दिव्य चक्र">
+    
+    <!-- 2. Sacred Ganesh Ji Idol (Center Proportioned) -->
+    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="श्री गणेश जी">
+    
+    <!-- 3. Dynamic Miracle Flare Flash Layer -->
+    <div class="divine-flare-overlay"></div>
   </button>
 
   <!-- Top Bar -->
@@ -902,8 +921,12 @@
         ytPlayer = new YT.Player('ytPlayerDiv', {
           height: '0', width: '0', videoId: currentYtVideoId,
           playerVars: { 
-            'autoplay': 0, 'controls': 0, 'loop': 1, 'playlist': currentYtVideoId,
-            'enablejsapi': 1, 'origin': window.location.origin
+            'autoplay': 0, 
+            'controls': 0, 
+            'loop': 1, 
+            'playlist': currentYtVideoId,
+            'enablejsapi': 1, 
+            'origin': window.location.origin
           },
           events: { 
             'onReady': onPlayerReadySync,
@@ -1118,6 +1141,7 @@
         renderAdminOrders();
       }, err => {});
 
+      // 1-Hour Chat Purge
       db.collection("chats").orderBy("timeNumber", "asc").onSnapshot(snap => {
         const now = Date.now();
         const oneHourMs = 60 * 60 * 1000;
@@ -1608,7 +1632,7 @@
       if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        name, salutation: "none", address: city, phone: phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
@@ -1841,7 +1865,6 @@
       `).join('');
     }
 
-    // --- WORKING LEGAL & CONTACT MODAL LOGIC ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
@@ -1849,7 +1872,7 @@
           <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा संचालित है।</p>
           <p><b>2. सेवा व सहयोग:</b> वेबसाइट पर किया जाने वाला सहयोग पूर्णतः स्वैच्छिक एवं धार्मिक/जनकल्याणकारी कार्यों हेतु है।</p>
           <p><b>3. उत्पाद एवं सेवाएँ:</b> भक्ति स्टोर में उपलब्ध सामग्री की डिलीवरी 3 से 7 कार्य दिवसों में की जाती है।</p>
-          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय एवं शिष्ट भाषा का उपयोग करें।</p>
+          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय भाषा का उपयोग करें।</p>
         ` 
       },
       privacy: { 
@@ -1863,8 +1886,8 @@
       refund: { 
         title: "Refund Policy (रिफंड एवं वापसी नीति)", 
         content: `
-          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य (Non-Refundable) है।</p>
-          <p><b>2. स्टोर सामग्री:</b> भक्ति स्टोर से मँगाए गए सामान में दोष होने पर 2 दिनों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
+          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य है।</p>
+          <p><b>2. स्टोर सामग्री:</b> सामग्री में दोष होने पर 2 दिनों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
         ` 
       },
       shipping: { 
