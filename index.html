@@ -173,7 +173,7 @@
 </head>
 <body>
 
-  <!-- Pure Ad-Free HTML5 MP3 Continuous Audio Stream Engine -->
+  <!-- Pure Ad-Free HTML5 MP3 Continuous Live Radio Stream Engine (Seekbar Locked) -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
   <!-- Pickers -->
@@ -424,7 +424,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER & CLEAN UI) -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (CLEAN UI & WORKING SLIDER) -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -496,7 +496,7 @@
         <div class="form-group">
           <label>भुगतान माध्यम चुनें *</label>
           <select id="dlvPayMode" onchange="togglePaymentModeView()">
-            <!-- Dynamically populated based on product specific pay toggles -->
+            <!-- Dynamically populated based on product options -->
           </select>
         </div>
 
@@ -527,6 +527,35 @@
       </div>
 
       <button onclick="closeModal('checkoutModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- POPUP: EDIT PRODUCT MODAL (ADMIN) -->
+  <div class="custom-popup-overlay" id="editProductModal">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
+      <h3 style="color:var(--gold); margin-bottom:12px;">✏️ प्रोडक्ट एडिट करें</h3>
+      <input type="hidden" id="editProdId">
+      
+      <div class="form-group"><label>सामग्री का नाम:</label><input type="text" id="editPName"></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+        <div class="form-group"><label>कीमत (₹):</label><input type="number" id="editPPrice"></div>
+        <div class="form-group"><label>कैटेगरी:</label><input type="text" id="editPCat"></div>
+      </div>
+      <div class="form-group"><label>मुख्य फोटो URL:</label><input type="text" id="editPImg"></div>
+      <div class="form-group"><label>विवरण (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
+
+      <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
+        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">पेमेंट तरीके:</label>
+        <div style="display:flex; gap:14px; font-size:12px;">
+          <label><input type="checkbox" id="editPayUpi"> UPI / QR</label>
+          <label><input type="checkbox" id="editPayCod"> COD</label>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:12px;">
+        <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">सेव करें</button>
+        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
+      </div>
     </div>
   </div>
 
@@ -592,7 +621,7 @@
     </div>
   </div>
 
-  <!-- DONATION PAYMENT MODAL -->
+  <!-- DONATION PAYMENT MODAL (WITH AUDIO DUCKING) -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
@@ -611,7 +640,7 @@
     </div>
   </div>
 
-  <!-- CELEBRATION MODAL (WITH AUDIO DUCKING TO 20%) -->
+  <!-- CELEBRATION MODAL (WITH WELCOME SOUND & DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -638,7 +667,7 @@
         <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 भक्ति ब्लॉग</button>
         <button class="adm-tab" onclick="switchAdm('admProdAdd')">➕ नया प्रोडक्ट जोड़ें</button>
         <button class="adm-tab" onclick="switchAdm('admProdManage')">📋 स्टोर इन्वेंटरी व स्टॉक</button>
-        <button class="adm-tab" onclick="switchAdm('admOffers')">🏷️ ऑफर व डिस्काउंट</button>
+        <button class="adm-tab" onclick="switchAdm('admOffers')">🏷️ ऑफर व डिस्काउंट कंट्रोल</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🎫 कूपन्स</button>
         <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स</button>
         <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन</button>
@@ -655,7 +684,7 @@
           <div class="form-group">
             <label style="color:var(--gold); font-weight:bold;">ऑडियो माध्यम (Audio Source):</label>
             <select id="admAudioModeSelect" onchange="toggleAudioModeInputs()">
-              <option value="mp3">MP3 Stream (ग्लोबल लाइव सिंक प्लेलिस्ट)</option>
+              <option value="mp3">MP3 Stream (24 घंटे लाइव रेडियो सिंक)</option>
               <option value="yt">YouTube Link (YouTube वीडियो)</option>
             </select>
           </div>
@@ -759,21 +788,21 @@
         <div class="form-group">
           <label>अतिरिक्त उत्पाद तस्वीरें (Multiple Images):</label>
           <div id="extraProductPhotosContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
-            <input type="text" class="extra-prod-img-url" placeholder="एडिशनल फोटो URL लिंक #1">
+            <input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">
           </div>
           <button type="button" onclick="addExtraProductPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ और फोटो URL जोड़ें</button>
         </div>
 
         <div class="form-group">
           <label>उत्पाद का पूरा विवरण:</label>
-          <textarea id="newPDesc" placeholder="Brand: TRINETRA&#10;Shelf life: 6 Months&#10;Weight: 500gm..." style="height:90px;"></textarea>
+          <textarea id="newPDesc" placeholder="Brand: TRINETRA&#10;Shelf life: 6 Months..." style="height:90px;"></textarea>
         </div>
 
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
           <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">इस प्रोडक्ट पर कौन से पेमेंट तरीके उपलब्ध हों:</label>
-          <div style="display:flex; gap:14px; flex-wrap:wrap; font-size:12px;">
-            <label style="cursor:pointer;"><input type="checkbox" id="prodPayUpi" checked style="width:14px; height:14px;"> UPI / QR</label>
-            <label style="cursor:pointer;"><input type="checkbox" id="prodPayCod" checked style="width:14px; height:14px;"> Cash on Delivery (COD)</label>
+          <div style="display:flex; gap:14px; font-size:12px;">
+            <label><input type="checkbox" id="prodPayUpi" checked> UPI / QR</label>
+            <label><input type="checkbox" id="prodPayCod" checked> Cash on Delivery (COD)</label>
           </div>
         </div>
 
@@ -789,23 +818,25 @@
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में नया प्रोडक्ट जोड़ें</button>
       </div>
 
-      <!-- Admin Sec 5: Product Inventory & Stock Management (With Search Bar) -->
+      <!-- Admin Sec 5: Product Inventory with SKU Search & Edit/Delete -->
       <div id="admProdManage" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल</h4>
-        <div class="form-group" style="margin-bottom:10px;">
-          <input type="text" id="adminProdSearchInput" onkeyup="filterAdminProductsTable()" placeholder="🔍 नाम या सीरियल नंबर (SKU) से खोजें..." style="background:#000; border-color:var(--gold);">
+        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search)</h4>
+        <div class="form-group" style="margin-bottom:12px;">
+          <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="🔍 नाम या सीरियल नंबर (SKU) से खोजें..." style="background:#000; border:1px solid var(--gold); color:var(--gold);">
         </div>
         <div class="table-responsive">
           <table id="admProdTable">
-            <thead><tr><th>एस.नंबर</th><th>फोटो</th><th>नाम</th><th>स्टॉक व स्टेटस</th><th>कीमत</th><th>एक्शन</th></tr></thead>
+            <thead><tr><th>एस.नंबर (SKU)</th><th>फोटो</th><th>नाम</th><th>स्टॉक व स्टेटस</th><th>कीमत</th><th>एक्शन</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 6: Offers & Discount Control -->
+      <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
       <div id="admOffers" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
+        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं। यदि किसी प्रोडक्ट पर पहले से डिस्काउंट या कूपन है, तो सिस्टम आपको सूचित करेगा।</p>
+        
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
             <label>ऑफर समाप्त होने का समय (काउंटडाउन टाइमर):</label>
@@ -817,7 +848,7 @@
         <h4 style="color:var(--gold); margin:14px 0 8px;">उत्पाद वार डिस्काउंट ऑफर मैनेजर:</h4>
         <div class="table-responsive">
           <table id="admOffersTable">
-            <thead><tr><th>उत्पाद</th><th>मूल कीमत</th><th>स्पेशल छूट (%)</th><th>एक्शन</th></tr></thead>
+            <thead><tr><th>उत्पाद (SKU)</th><th>मूल कीमत</th><th>स्पेशल छूट (%)</th><th>एक्शन</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -886,6 +917,35 @@
     </div>
   </div>
 
+  <!-- POPUP: EDIT PRODUCT MODAL (ADMIN) -->
+  <div class="custom-popup-overlay" id="editProductModal">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
+      <h3 style="color:var(--gold); margin-bottom:12px;">✏️ प्रोडक्ट एडिट करें</h3>
+      <input type="hidden" id="editProdId">
+      
+      <div class="form-group"><label>सामग्री का नाम:</label><input type="text" id="editPName"></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
+        <div class="form-group"><label>कीमत (₹):</label><input type="number" id="editPPrice"></div>
+        <div class="form-group"><label>कैटेगरी:</label><input type="text" id="editPCat"></div>
+      </div>
+      <div class="form-group"><label>मुख्य फोटो URL:</label><input type="text" id="editPImg"></div>
+      <div class="form-group"><label>विवरण (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
+
+      <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
+        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">पेमेंट तरीके:</label>
+        <div style="display:flex; gap:14px; font-size:12px;">
+          <label><input type="checkbox" id="editPayUpi"> UPI / QR</label>
+          <label><input type="checkbox" id="editPayCod"> COD</label>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; margin-top:12px;">
+        <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">सेव करें</button>
+        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
+      </div>
+    </div>
+  </div>
+
   <!-- FIXED STICKY FOOTER -->
   <footer>
     <div style="max-width:900px; margin:0 auto;">
@@ -908,27 +968,6 @@
       <p style="margin-top:15px; font-size:11px; color:#777;">© 2026 Maa Durga Enterprises. सर्वाधिकार सुरक्षित।</p>
     </div>
   </footer>
-
-  <!-- EDIT PRODUCT MODAL -->
-  <div class="custom-popup-overlay" id="editProductModal">
-    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto;">
-      <h3 style="color:var(--gold); margin-bottom:10px; text-align:center;">✏️ प्रोडक्ट संपादित करें (Edit Product)</h3>
-      <input type="hidden" id="editProdId">
-      
-      <div class="form-group"><label>सामग्री का नाम *</label><input type="text" id="editPName"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-        <div class="form-group"><label>कीमत (₹) *</label><input type="number" id="editPPrice"></div>
-        <div class="form-group"><label>कैटेगरी</label><input type="text" id="editPCat"></div>
-      </div>
-      <div class="form-group"><label>मुख्य फोटो URL</label><input type="text" id="editPImg"></div>
-      <div class="form-group"><label>विवरण</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
-
-      <div style="display:flex; gap:10px; margin-top:14px;">
-        <button class="btn-main" onclick="updateProductChanges()" style="flex:2;">बदलाव सेव करें</button>
-        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
-      </div>
-    </div>
-  </div>
 
   <script>
     const OWNER_EMAIL = "yugampal23@gmail.com";
@@ -1066,14 +1105,14 @@
       if (!container) return;
       const input = document.createElement('input');
       input.type = 'text';
-      input.className = 'extra-prod-img-url';
+      input.className = 'extra-prod-prod-url';
       input.placeholder = `एडिशनल फोटो URL लिंक #${container.children.length + 1}`;
       input.style.marginTop = '4px';
       container.appendChild(input);
     }
 
     // =========================================================================
-    // LOCKED LIVE RADIO STREAM & AUDIO DUCKING (20% VOLUME ON WELCOME)
+    // TRUE LIVE RADIO SYNC ENGINE WITH DUCKING & LOCKED SEEKBAR
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1081,6 +1120,14 @@
     let currentAudioSourceType = "mp3";
     let activeYtVideoId = "";
     const coreAudio = document.getElementById('coreBgAudio');
+
+    // Prevent user from scrubbing/seeking timeline
+    coreAudio.addEventListener('seeking', () => {
+      const expectedTime = calculateLiveSeekTime();
+      if (Math.abs(coreAudio.currentTime - expectedTime) > 2) {
+        coreAudio.currentTime = expectedTime;
+      }
+    });
 
     coreAudio.addEventListener('ended', () => {
       if (cloudPlaylist.length > 0 && db) {
@@ -1124,12 +1171,10 @@
           album: "श्री दुर्गा पूजा लाइव दरबार",
           artwork: [{ src: "ganesh.png", sizes: "512x512", type: "image/png" }]
         });
-        // Locked live stream: disable scrubbing action handlers to prevent user seeking
+        navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
+        navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
+        // Disable seeking from notification
         try {
-          navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
-          navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
-          navigator.mediaSession.setActionHandler('seekbackward', null);
-          navigator.mediaSession.setActionHandler('seekforward', null);
           navigator.mediaSession.setActionHandler('seekto', null);
         } catch(e) {}
       }
@@ -1406,7 +1451,7 @@
       db.collection("feedbacks").onSnapshot(snap => {
         cloudFeedbacks = [];
         snap.forEach(doc => cloudFeedbacks.push({ id: doc.id, ...doc.data() }));
-        cloudFeedbacks.sort((a,b) => (b.timeNumber || 0) - (b.timeNumber || 0));
+        cloudFeedbacks.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
         renderPublicFeedbacks();
         renderAdminFeedbacks();
       }, err => {});
@@ -1829,6 +1874,47 @@
       db.collection("orders").doc(orderId).update({ showOtpToUser: isVisible }).then(() => {
         showAppToast(isVisible ? "🔑 OTP अब ग्राहक को दिखने लगा है!" : "🔒 OTP ग्राहक से छिपा दिया गया है!");
       });
+    }
+
+    // --- EDIT PRODUCT MODAL (ADMIN) ---
+    function openEditProductModal(prodId) {
+      const p = cloudProducts.find(item => item.id === prodId);
+      if (!p) return;
+
+      document.getElementById('editProdId').value = p.id;
+      document.getElementById('editPName').value = p.name || '';
+      document.getElementById('editPPrice').value = p.price || 0;
+      document.getElementById('editPCat').value = p.category || '';
+      document.getElementById('editPImg').value = p.img || '';
+      document.getElementById('editPDesc').value = p.description || '';
+      document.getElementById('editPayUpi').checked = p.payUpi !== false;
+      document.getElementById('editPayCod').checked = p.payCod !== false;
+
+      openModal('editProductModal');
+    }
+
+    function saveEditedProduct() {
+      if (!db) return;
+      const id = document.getElementById('editProdId').value;
+      const name = document.getElementById('editPName').value.trim();
+      const price = Number(document.getElementById('editPPrice').value);
+      const cat = document.getElementById('editPCat').value.trim();
+      const img = document.getElementById('editPImg').value.trim();
+      const desc = document.getElementById('editPDesc').value.trim();
+      const payUpi = document.getElementById('editPayUpi').checked;
+      const payCod = document.getElementById('editPayCod').checked;
+
+      if (!name || !price) {
+        showAppToast("नाम और कीमत आवश्यक हैं!");
+        return;
+      }
+
+      db.collection("products").doc(id).update({
+        name, price, category: cat, img, description: desc, payUpi, payCod
+      }).then(() => {
+        closeModal('editProductModal');
+        showAppToast("✅ प्रोडक्ट सफलतापूर्वक अपडेट हो गया!");
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
@@ -2315,7 +2401,23 @@
       });
     }
 
-    // --- AUDIO DUCKING (20% VOLUME ON WELCOME POPUP) ---
+    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND ---
+    const welcomeAudio = new Audio("welcome.MP3");
+    function playWelcomeSoundWithDucking() {
+      // Duck background audio to 30%
+      if (coreAudio && !coreAudio.paused) {
+        coreAudio.volume = 0.3;
+      }
+      welcomeAudio.currentTime = 0;
+      welcomeAudio.play().then(() => {
+        welcomeAudio.onended = () => {
+          if (coreAudio) coreAudio.volume = 1.0;
+        };
+      }).catch(() => {
+        if (coreAudio) coreAudio.volume = 1.0;
+      });
+    }
+
     function openDonationModal() {
       const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
       const sal = document.getElementById('donSalutation')?.value || 'none';
@@ -2391,7 +2493,7 @@
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
         closeModal('donationModal');
-        showAppToast("✅ आपका पावन सहयोग सप्रेम स्वीकार हुआ!");
+        triggerCelebration(pendingDonationData.name, pendingDonationData.cause, pendingDonationData.amount, pendingDonationData.salutation);
         document.getElementById('donName').value = '';
         document.getElementById('donAmount').value = '';
         document.getElementById('donPhone').value = '';
@@ -2448,26 +2550,23 @@
       });
     }
 
-    // Audio Ducking Implementation
-    const elevenLabsAudio = new Audio("welcome.MP3");
-    elevenLabsAudio.onplay = () => { if(coreAudio) coreAudio.volume = 0.2; };
-    elevenLabsAudio.onended = () => { if(coreAudio) coreAudio.volume = 1.0; };
-
     function triggerCelebration(name, cause, amount, salutation) {
       const dName = formatDonorName(name, salutation);
       document.getElementById('celDonorName').innerText = `${dName},`;
       document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए समिति आपका हार्दिक स्वागत करती है!`;
       document.getElementById('celebrationModal').style.display = 'flex';
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
-      setTimeout(() => {
-        elevenLabsAudio.play().catch(() => {});
-      }, 300);
-      setTimeout(() => closeCelebrationModal(), 9000);
+      
+      // Trigger welcome sound with ducking
+      playWelcomeSoundWithDucking();
+
+      setTimeout(() => closeCelebrationModal(), 10000);
     }
 
     function closeCelebrationModal() {
       closeModal('celebrationModal');
-      try { elevenLabsAudio.pause(); if(coreAudio) coreAudio.volume = 1.0; } catch(e) {}
+      try { welcomeAudio.pause(); } catch(e) {}
+      if (coreAudio) coreAudio.volume = 1.0;
     }
 
     function renderCategories() {
@@ -2538,6 +2637,7 @@
       }
     }
 
+    // --- SAVE PRODUCT ---
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
@@ -2551,7 +2651,7 @@
       const payCod = document.getElementById('prodPayCod').checked;
 
       const extraImgs = [];
-      document.querySelectorAll('.extra-prod-img-url').forEach(input => {
+      document.querySelectorAll('.extra-prod-prod-url').forEach(input => {
         const val = input.value.trim();
         if (val) extraImgs.push(val);
       });
@@ -2561,7 +2661,10 @@
         return;
       }
 
+      const skuCode = "SKU-" + Math.floor(1000 + Math.random() * 9000);
+
       db.collection("products").add({
+        sku: skuCode,
         name,
         price: Number(price),
         category: cat,
@@ -2576,7 +2679,7 @@
         discountPercent: 0,
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("✅ नया प्रोडक्ट स्टोर में जुड़ गया!");
+        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
         document.getElementById('newPName').value = '';
         document.getElementById('newPPrice').value = '';
         document.getElementById('newPCat').value = '';
@@ -2585,81 +2688,43 @@
         document.getElementById('newPDesc').value = '';
         document.getElementById('newPOnDonation').checked = false;
         document.getElementById('newPInStock').checked = true;
-        document.getElementById('extraProductPhotosContainer').innerHTML = `<input type="text" class="extra-prod-img-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
+        document.getElementById('extraProductPhotosContainer').innerHTML = `<input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
-      if (cloudProducts.length === 0) {
-        tb.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#aaa;">स्टोर में अभी कोई प्रोडक्ट नहीं है। 'नया प्रोडक्ट जोड़ें' टैब से जोड़ें।</td></tr>`;
+      const query = (document.getElementById('adminInventorySearch')?.value || '').toLowerCase().trim();
+
+      const filtered = cloudProducts.filter(p => {
+        const pName = (p.name || '').toLowerCase();
+        const pSku = (p.sku || '').toLowerCase();
+        return pName.includes(query) || pSku.includes(query);
+      });
+
+      if (filtered.length === 0) {
+        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला।</td></tr>`;
         return;
       }
-      tb.innerHTML = cloudProducts.map((p, idx) => `
+
+      tb.innerHTML = filtered.map(p => `
         <tr>
+          <td><b style="color:var(--gold);">${p.sku || 'SKU-0000'}</b></td>
           <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
-          <td><b>${p.name}</b><br><small style="color:var(--gold);">SKU: SKU-${(idx+1).toString().padStart(3, '0')}</small></td>
+          <td><b>${p.name}</b></td>
           <td>
-            <button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;" title="स्टॉक चालू/बंद करें">
+            <button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
               ${p.inStock !== false ? '🟢 In Stock' : '🔴 Out of Stock'}
-            </button>
-            <button onclick="toggleProductOnDonation('${p.id}', ${p.showOnDonation || false})" style="background:${p.showOnDonation ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer; margin-left:4px;">
-              ${p.showOnDonation ? '⭐ सजेस्टेड' : 'हिडन'}
             </button>
           </td>
           <td>₹${p.price}</td>
           <td>
-            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-right:4px;" title="एडिट करें">✏️</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer;" title="डिलीट करें">🗑️</button>
+            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
+            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
           </td>
         </tr>
       `).join('');
-    }
-
-    function filterAdminProductsTable() {
-      const q = document.getElementById('adminProdSearchInput').value.toLowerCase().trim();
-      const rows = document.querySelectorAll('#admProdTable tbody tr');
-      rows.forEach(r => {
-        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
-
-    function openEditProductModal(prodId) {
-      const p = cloudProducts.find(item => item.id === prodId);
-      if (!p) return;
-      document.getElementById('editProdId').value = p.id;
-      document.getElementById('editPName').value = p.name || '';
-      document.getElementById('editPPrice').value = p.price || '';
-      document.getElementById('editPCat').value = p.category || '';
-      document.getElementById('editPImg').value = p.img || '';
-      document.getElementById('editPDesc').value = p.description || '';
-      openModal('editProductModal');
-    }
-
-    function updateProductChanges() {
-      const id = document.getElementById('editProdId').value;
-      const name = document.getElementById('editPName').value.trim();
-      const price = document.getElementById('editPPrice').value.trim();
-      const cat = document.getElementById('editPCat').value.trim();
-      const img = document.getElementById('editPImg').value.trim();
-      const desc = document.getElementById('editPDesc').value.trim();
-
-      if (!id || !name || !price) {
-        showAppToast("नाम और कीमत आवश्यक हैं!");
-        return;
-      }
-
-      db.collection("products").doc(id).update({
-        name,
-        price: Number(price),
-        category: cat,
-        img: img,
-        description: desc
-      }).then(() => {
-        closeModal('editProductModal');
-        showAppToast("✅ प्रोडक्ट सफलतापूर्वक अपडेट हो गया!");
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function renderAdminOffers() {
@@ -2671,7 +2736,7 @@
       }
       tb.innerHTML = cloudProducts.map(p => `
         <tr>
-          <td><b>${p.name}</b><br><small>मूल कीमत: ₹${p.price}</small></td>
+          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku || ''}</small></td>
           <td>₹${p.price}</td>
           <td>
             <input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" min="0" max="90" style="width:70px; padding:4px;" placeholder="%">
