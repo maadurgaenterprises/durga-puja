@@ -15,19 +15,25 @@
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <style>
-    :root { --gold: #ffd700; --red: #d32f2f; --bg: #120002; --card-bg: rgba(255, 255, 255, 0.05); }
+    :root { 
+      --gold: #ffd700; 
+      --red: #d32f2f; 
+      --bg: #120002; 
+      --card-bg: rgba(255, 255, 255, 0.05); 
+      --green: #4caf50;
+    }
     * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
     body { background: radial-gradient(circle at top, #2d0005 0%, var(--bg) 100%); color: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
     
     /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.7); border-bottom: 1px solid rgba(255,215,0,0.25); position: relative; z-index: 10; }
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.85); border-bottom: 1px solid rgba(255,215,0,0.3); position: relative; z-index: 1000; }
     .music-btn { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
     .top-right-nav { display: flex; align-items: center; gap: 10px; }
-    .auth-btn { background: var(--gold); border: none; color: #000; padding: 6px 14px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; }
+    .auth-btn { background: var(--gold); border: none; color: #000; padding: 7px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-block; }
     .menu-hamburger-btn { background: none; border: 1px solid rgba(255,215,0,0.4); color: var(--gold); font-size: 18px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
     /* Side Navigation Drawer */
-    .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 260px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9000; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.8); }
+    .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 270px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9999; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.9); }
     .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; margin-bottom: 15px; }
     .drawer-item { display: block; width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 12px 10px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 6px; margin-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.15); }
     .drawer-item:hover, .drawer-item.active { background: rgba(255,215,0,0.15); color: var(--gold); }
@@ -41,14 +47,14 @@
     .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 32s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
     @keyframes scrollTicker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-    .main-wrap { max-width: 900px; width: 100%; margin: 15px auto; padding: 0 12px; flex: 1; }
+    .main-wrap { max-width: 920px; width: 100%; margin: 15px auto; padding: 0 12px; flex: 1; }
     .card { background: var(--card-bg); border: 1px solid rgba(255,215,0,0.25); border-radius: 14px; padding: 18px; backdrop-filter: blur(8px); margin-bottom: 24px; }
     .card h2 { text-align: center; color: var(--gold); font-size: 18px; margin-bottom: 14px; }
     .form-group { margin-bottom: 11px; }
     label { display: block; font-size: 12px; color: #ffcdd2; margin-bottom: 4px; }
     input, select, textarea { width: 100%; padding: 11px; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,215,0,0.3); border-radius: 7px; color: #fff; font-size: 13px; outline: none; }
     input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-    .btn-main { width: 100%; padding: 12px; background: linear-gradient(45deg, #d32f2f, #ff6f00); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(211,47,47,0.4); }
+    .btn-main { width: 100%; padding: 12px; background: linear-gradient(45deg, #d32f2f, #ff6f00); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(211,47,47,0.4); text-align: center; }
 
     /* Store Grid */
     .sec-heading { font-size: 18px; color: var(--gold); margin: 20px 0 12px; text-align: center; }
@@ -91,9 +97,9 @@
     .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 24px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
     .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
-    /* Popups */
-    .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 9500; justify-content: center; align-items: center; padding: 15px; }
-    .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 440px; width: 100%; text-align: center; box-shadow: 0 0 25px rgba(255,215,0,0.3); }
+    /* Popups and Overlays */
+    .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
+    .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; z-index: 10001; }
 
     /* Dynamic QR Box */
     .qr-box-wrapper { background: #fff; padding: 15px; border-radius: 10px; display: inline-block; margin: 10px 0; }
@@ -104,7 +110,7 @@
     #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
     .admin-inner { max-width: 980px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
     .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.25); }
-    .adm-tab { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .adm-tab { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; white-space: nowrap; }
     .adm-tab.active { background: var(--gold); color: #000; font-weight: bold; }
     .adm-sec { display: none; }
     .adm-sec.active { display: block; }
@@ -173,7 +179,7 @@
 </head>
 <body>
 
-  <!-- Pure Ad-Free HTML5 MP3 Continuous Live Radio Stream Engine (Strictly Locked) -->
+  <!-- Background Continuous Live Stream Audio -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
   <!-- Pickers -->
@@ -194,7 +200,7 @@
     </button>
     <div class="top-right-nav">
       <div id="navAuthArea">
-        <button class="auth-btn" onclick="openLoginModal()" id="navLoginTxt">लॉगिन / साइन-अप</button>
+        <button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">लॉगिन / साइन-अप</button>
       </div>
       <button class="menu-hamburger-btn" onclick="toggleSideNav()">☰</button>
     </div>
@@ -424,7 +430,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER) -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -548,6 +554,70 @@
     </div>
   </div>
 
+  <!-- LOGIN POPUP (Direct Modal Fix) -->
+  <div class="custom-popup-overlay" id="loginModal">
+    <div class="custom-popup-box">
+      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
+      <p style="font-size:12px; color:#ffcdd2; margin-bottom:16px;">अपने Google खाते से आसानी से लॉगिन करें:</p>
+      <button type="button" class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
+      </button>
+      <br><button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- ADMIN PASS MODAL -->
+  <div class="custom-popup-overlay" id="adminPassModal">
+    <div class="custom-popup-box">
+      <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
+      <p style="font-size:12px; color:#ffcdd2; margin-bottom:12px;">खाता: <b>yugampal23@gmail.com</b><br>कृपया मास्टर पासवर्ड दर्ज करें:</p>
+      <input type="password" id="ownerPassInput" placeholder="Master Password" style="margin-bottom:12px;">
+      <button class="btn-main" onclick="verifyOwnerPassword()">प्रवेश करें</button>
+      <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- ADMIN INSPECT MODAL -->
+  <div class="custom-popup-overlay" id="adminInspectModal">
+    <div class="custom-popup-box" style="text-align:left; max-width:440px;">
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
+      <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;"></div>
+      <button class="btn-main" onclick="closeModal('adminInspectModal')">बंद करें</button>
+    </div>
+  </div>
+
+  <!-- DONATION PAYMENT MODAL -->
+  <div class="custom-popup-overlay" id="donationModal">
+    <div class="custom-popup-box" style="text-align:left; max-width:440px;">
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
+      <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
+      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox"></div>
+      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
+      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
+    </div>
+  </div>
+
+  <!-- NOTIFY POPUP -->
+  <div class="custom-popup-overlay" id="notifyPopup">
+    <div class="custom-popup-box">
+      <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
+      <button class="btn-main" onclick="closeModal('notifyPopup')">ठीक है (OK)</button>
+    </div>
+  </div>
+
+  <!-- CELEBRATION MODAL (WITH EXACT WELCOME AUDIO & 50% DUCKING) -->
+  <div class="custom-popup-overlay" id="celebrationModal">
+    <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
+      <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
+      <h3 id="celDonorName" style="color:#fff; font-size:17px; margin-bottom:10px;"></h3>
+      <p id="celMsg" style="font-size:14px; line-height: 1.6; color:#ffcdd2;"></p>
+      <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
+        🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
+      </p>
+      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
+    </div>
+  </div>
+
   <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
   <div id="adminPortal">
     <div class="admin-inner">
@@ -569,7 +639,7 @@
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings -->
+      <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
@@ -600,7 +670,7 @@
             </select>
           </div>
           <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-          <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+          <div class="form-group"><label>Razorpay Key ID (यदि उपयोग हो):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
         </div>
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
@@ -1107,7 +1177,6 @@
             document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
           }).catch(() => {});
         } else {
-          // Force jump to exact live server timeline even after pause/resume
           coreAudio.currentTime = seekSec;
           if (coreAudio.paused) {
             coreAudio.play().catch(() => {});
@@ -1189,7 +1258,7 @@
           }
           if (drwOrders) drwOrders.style.display = "block";
         } else {
-          navArea.innerHTML = `<button class="auth-btn" onclick="openLoginModal()">लॉगिन / साइन-अप</button>`;
+          navArea.innerHTML = `<button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">लॉगिन / साइन-अप</button>`;
           if (drwOrders) drwOrders.style.display = "none";
         }
         renderCustomerOrders();
@@ -1387,7 +1456,7 @@
 
       if (timerSec) timerSec.style.display = 'block';
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       if (clockEl) {
@@ -1866,7 +1935,7 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // --- BLOG LOGIC ---
+    // --- DEVOTIONAL BLOG LOGIC ---
     function saveNewBlogPost() {
       if (!db) return;
       const title = document.getElementById('newBlogTitle').value.trim();
@@ -2304,7 +2373,7 @@
       });
     }
 
-    // --- EXACT DUCKING & AUTO-CLOSE WELCOME AUDIO ENGINE ---
+    // --- DUCKING AUDIO ENGINE (AUTO CLOSE ON END & RESTORE 100% VOLUME) ---
     const welcomeAudio = new Audio("welcome.MP3");
     function playWelcomeSoundWithDucking() {
       if (coreAudio && !coreAudio.paused) {
@@ -2313,8 +2382,8 @@
       welcomeAudio.currentTime = 0;
       welcomeAudio.play().then(() => {
         welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0; // Restore to 100%
-          closeModal('celebrationModal'); // Auto close popup when audio ends
+          if (coreAudio) coreAudio.volume = 1.0; // Restore 100%
+          closeModal('celebrationModal'); // Auto close popup
         };
       }).catch(() => {
         if (coreAudio) coreAudio.volume = 1.0;
@@ -2520,7 +2589,7 @@
                 <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
                 <div class="p-title">${p.name}</div>
                 <div class="p-price">${ph}</div>
-                <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
+                <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
               </div>
             `;
           }).join('');
@@ -2621,7 +2690,7 @@
           <td>₹${p.price}</td>
           <td>
             <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
+            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
           </td>
         </tr>
       `).join('');
