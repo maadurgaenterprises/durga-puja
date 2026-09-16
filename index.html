@@ -180,7 +180,7 @@
 </head>
 <body>
 
-  <!-- Background Continuous Live Stream Audio -->
+  <!-- Pure Ad-Free HTML5 MP3 Continuous Live Radio Stream Engine (Strictly Locked) -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
   <!-- Pickers -->
@@ -431,7 +431,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER) -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -555,7 +555,7 @@
     </div>
   </div>
 
-  <!-- LOGIN POPUP -->
+  <!-- LOGIN POPUP (Direct Modal Fix) -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
@@ -606,7 +606,7 @@
     </div>
   </div>
 
-  <!-- CELEBRATION MODAL (WITH EXACT WELCOME AUDIO & 50% DUCKING) -->
+  <!-- CELEBRATION MODAL (WITH WELCOME SOUND & 50% DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -616,6 +616,37 @@
         🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
       </p>
       <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
+    </div>
+  </div>
+
+  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
+  <div class="legal-page" id="legalPage">
+    <div class="legal-container">
+      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
+      <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
+      <div id="legalBodyText"></div>
+    </div>
+  </div>
+
+  <!-- POPUP: FEEDBACK MODAL -->
+  <div class="custom-popup-overlay" id="feedbackModal">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left;">
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
+      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;">
+        <label>आपका शुभ नाम:</label>
+        <input type="text" id="fbNameInput" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
+        <label>रेटिंग चुनें:</label>
+        <select id="fbRatingInput" style="margin-bottom:8px;">
+          <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+          <option value="4">⭐⭐⭐⭐ 4 Star</option>
+          <option value="3">⭐⭐⭐ 3 Star</option>
+        </select>
+        <label>अपना पावन अनुभव या सुझाव लिखें:</label>
+        <textarea id="fbMsgInput" placeholder="सुझाव यहाँ लिखें..." style="height:60px; margin-bottom:10px;"></textarea>
+        <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
+      </div>
+      <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
+      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
     </div>
   </div>
 
@@ -885,35 +916,6 @@
     </div>
   </div>
 
-  <!-- POPUP: EDIT PRODUCT MODAL (ADMIN) -->
-  <div class="custom-popup-overlay" id="editProductModal">
-    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
-      <h3 style="color:var(--gold); margin-bottom:12px;">✏️ प्रोडक्ट एडिट करें</h3>
-      <input type="hidden" id="editProdId">
-      
-      <div class="form-group"><label>सामग्री का नाम:</label><input type="text" id="editPName"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-        <div class="form-group"><label>कीमत (₹):</label><input type="number" id="editPPrice"></div>
-        <div class="form-group"><label>कैटेगरी:</label><input type="text" id="editPCat"></div>
-      </div>
-      <div class="form-group"><label>मुख्य फोटो URL:</label><input type="text" id="editPImg"></div>
-      <div class="form-group"><label>विवरण (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
-
-      <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
-        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">पेमेंट तरीके:</label>
-        <div style="display:flex; gap:14px; font-size:12px;">
-          <label><input type="checkbox" id="editPayUpi"> UPI / QR</label>
-          <label><input type="checkbox" id="editPayCod"> COD</label>
-        </div>
-      </div>
-
-      <div style="display:flex; gap:10px; margin-top:12px;">
-        <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">सेव करें</button>
-        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
-      </div>
-    </div>
-  </div>
-
   <!-- FIXED STICKY FOOTER -->
   <footer>
     <div style="max-width:900px; margin:0 auto;">
@@ -1082,7 +1084,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE (CONTINUOUS PLAYLIST AUTO-NEXT & REPEAT LOOP)
+    // TRUE LIVE RADIO SYNC ENGINE (50% DUCKING & EXACT RESUME TIME)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1098,14 +1100,9 @@
       }
     });
 
-    // Advance to next song in playlist automatically
-    function playNextSongInContinuousLoop() {
-      if (cloudPlaylist.length === 0) return;
-      const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
-      globalRoomState.songIndex = nextIdx;
-      globalRoomState.startedAt = Date.now();
-
-      if (db) {
+    coreAudio.addEventListener('ended', () => {
+      if (cloudPlaylist.length > 0 && db) {
+        const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
         db.collection("settings").doc("music_room").set({
           songIndex: nextIdx,
           startedAt: Date.now(),
@@ -1113,12 +1110,6 @@
           sourceType: "mp3"
         }, { merge: true }).catch(() => {});
       }
-
-      applyGlobalSyncPlayback();
-    }
-
-    coreAudio.addEventListener('ended', () => {
-      playNextSongInContinuousLoop();
     });
 
     const ytScriptTag = document.createElement('script');
@@ -1401,11 +1392,13 @@
         let autoSkuNum = 101;
         snap.forEach(doc => {
           const d = doc.data();
+          // Guarantee an SKU exists even for old products
           const finalSku = d.sku || ("SKU-" + autoSkuNum++);
           cloudProducts.push({ id: doc.id, sku: finalSku, ...d });
         });
         renderCategories();
         renderStoreProducts();
+        renderSuggestedProducts();
         renderAdminProducts();
         renderAdminOffers();
       }, err => {});
@@ -1523,7 +1516,7 @@
       `).join('');
     }
 
-    // --- PRODUCT DETAILS MODAL ---
+    // --- FLIPKART STYLE PRODUCT DETAILS & WORKING SLIDER ---
     let activeCheckoutProduct = null;
     let appliedDiscountPercent = 0;
     let currentCalculatedPrice = 0;
@@ -2392,7 +2385,7 @@
       });
     }
 
-    // --- DUCKING AUDIO ENGINE (AUTO CLOSE ON END & RESTORE 100% VOLUME) ---
+    // --- EXACT DUCKING & AUTO-CLOSE WELCOME AUDIO ENGINE ---
     const welcomeAudio = new Audio("welcome.MP3");
     function playWelcomeSoundWithDucking() {
       if (coreAudio && !coreAudio.paused) {
@@ -2401,8 +2394,8 @@
       welcomeAudio.currentTime = 0;
       welcomeAudio.play().then(() => {
         welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0; // Restore to 100%
-          closeModal('celebrationModal'); // Auto close popup when welcome audio ends
+          if (coreAudio) coreAudio.volume = 1.0; // Restore 100%
+          closeModal('celebrationModal'); // Auto close popup when audio ends
         };
       }).catch(() => {
         if (coreAudio) coreAudio.volume = 1.0;
@@ -2659,7 +2652,7 @@
         discountPercent: 0,
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (${skuCode})`);
+        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
         document.getElementById('newPName').value = '';
         document.getElementById('newPPrice').value = '';
         document.getElementById('newPCat').value = '';
@@ -2759,7 +2752,7 @@
       tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
     }
 
-    // --- LEGAL & CONTACT MODAL LOGIC ---
+    // --- LEGAL & CONTACT MODAL LOGIC (FIXED) ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
