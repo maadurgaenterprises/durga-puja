@@ -424,7 +424,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER) -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -1009,7 +1009,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE WITH 50% DUCKING & AUTO-JUMP TO LIVE TIME
+    // TRUE LIVE RADIO SYNC ENGINE (50% DUCKING & EXACT RESUME TIME)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1018,10 +1018,9 @@
     let activeYtVideoId = "";
     const coreAudio = document.getElementById('coreBgAudio');
 
-    // Prevent scrubbing, always force live server timeline
     coreAudio.addEventListener('seeking', () => {
       const expectedTime = calculateLiveSeekTime();
-      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.5) {
+      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.0) {
         coreAudio.currentTime = expectedTime;
       }
     });
@@ -1108,7 +1107,7 @@
             document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
           }).catch(() => {});
         } else {
-          // Always jump to live time, preventing lagging behind
+          // Force jump to exact live server timeline even after pause/resume
           coreAudio.currentTime = seekSec;
           if (coreAudio.paused) {
             coreAudio.play().catch(() => {});
@@ -1198,7 +1197,11 @@
       });
     }
 
-    function openLoginModal() { document.getElementById('loginModal').style.display = 'flex'; }
+    function openLoginModal() { 
+      const m = document.getElementById('loginModal');
+      if (m) m.style.display = 'flex'; 
+    }
+
     function loginWithGoogle() {
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
@@ -1308,7 +1311,10 @@
 
       db.collection("products").onSnapshot(snap => {
         cloudProducts = [];
-        snap.forEach(doc => cloudProducts.push({ id: doc.id, ...doc.data() }));
+        snap.forEach(doc => {
+          const d = doc.data();
+          cloudProducts.push({ id: doc.id, ...d });
+        });
         renderCategories();
         renderStoreProducts();
         renderSuggestedProducts();
@@ -2298,7 +2304,7 @@
       });
     }
 
-    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND (AUTO CLOSE ON END) ---
+    // --- EXACT DUCKING & AUTO-CLOSE WELCOME AUDIO ENGINE ---
     const welcomeAudio = new Audio("welcome.MP3");
     function playWelcomeSoundWithDucking() {
       if (coreAudio && !coreAudio.paused) {
@@ -2307,8 +2313,8 @@
       welcomeAudio.currentTime = 0;
       welcomeAudio.play().then(() => {
         welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0;
-          closeModal('celebrationModal'); // Auto close popup when welcome audio finishes
+          if (coreAudio) coreAudio.volume = 1.0; // Restore to 100%
+          closeModal('celebrationModal'); // Auto close popup when audio ends
         };
       }).catch(() => {
         if (coreAudio) coreAudio.volume = 1.0;
@@ -2514,7 +2520,7 @@
                 <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
                 <div class="p-title">${p.name}</div>
                 <div class="p-price">${ph}</div>
-                <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+                <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
               </div>
             `;
           }).join('');
