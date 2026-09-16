@@ -2,428 +2,198 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title id="siteDocTitle">Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति</title>
   
-  <!-- External Helper Libraries: Razorpay, Confetti, and QR Engine -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
-  <!-- Firebase Modular Compat SDKs -->
+  <!-- Firebase SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <style>
-    /* =========================================================================
-       MODULE 1: ENTERPRISE PALETTE, VARIABLES & CORE RESET
-       ========================================================================= */
     :root { 
       --gold: #ffd700; 
-      --gold-dim: rgba(255, 215, 0, 0.35);
-      --gold-dark: #b89700;
-      --gold-glow: rgba(255, 215, 0, 0.55);
       --red: #d32f2f; 
-      --red-bright: #ff1744;
-      --red-dark: #8b0000;
       --bg: #120002; 
-      --bg-gradient: radial-gradient(circle at top, #2e0006 0%, #120002 100%);
       --card-bg: rgba(255, 255, 255, 0.05); 
-      --card-border: rgba(255, 215, 0, 0.22);
       --green: #4caf50;
-      --green-light: #81c784;
-      --green-dark: #2e7d32;
-      --glass-dark: rgba(18, 0, 2, 0.95);
-      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+    body { background: radial-gradient(circle at top, #2d0005 0%, var(--bg) 100%); color: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
     
-    *, *::before, *::after { 
-      box-sizing: border-box; 
-      margin: 0; 
-      padding: 0; 
-      font-family: var(--font-main); 
-      -webkit-tap-highlight-color: transparent;
-    }
-    
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body { 
-      background: var(--bg-gradient); 
-      color: #ffffff; 
-      min-height: 100vh; 
-      display: flex; 
-      flex-direction: column; 
-      overflow-x: hidden; 
-      position: relative; 
-    }
-
-    /* Custom Scrollbars */
-    ::-webkit-scrollbar {
-      width: 6px;
-      height: 6px;
-    }
-    ::-webkit-scrollbar-track {
-      background: rgba(0, 0, 0, 0.6);
-    }
-    ::-webkit-scrollbar-thumb {
-      background: var(--gold-dim);
-      border-radius: 3px;
-    }
-    ::-webkit-scrollbar-thumb:hover {
-      background: var(--gold);
-    }
-
-    /* =========================================================================
-       MODULE 2: TOP APP BAR & HEADER PRESENTATION
-       ========================================================================= */
-    .top-bar { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      padding: 11px 16px; 
-      background: rgba(10, 0, 2, 0.96); 
-      border-bottom: 1px solid var(--gold-dim); 
-      position: sticky;
-      top: 0;
-      z-index: 2500; 
-      backdrop-filter: blur(12px);
-    }
-    .music-btn { 
-      background: rgba(255, 215, 0, 0.15); 
-      border: 1px solid var(--gold); 
-      color: var(--gold); 
-      padding: 7px 14px; 
-      border-radius: 20px; 
-      font-size: 12px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      display: inline-flex; 
-      align-items: center; 
-      gap: 6px; 
-      transition: all 0.25s ease;
-    }
-    .music-btn:active {
-      transform: scale(0.95);
-      background: var(--gold);
-      color: #000;
-    }
-    .top-right-nav { 
-      display: flex; 
-      align-items: center; 
-      gap: 12px; 
-    }
-    .auth-btn { 
-      background: var(--gold); 
-      border: none; 
-      color: #000000; 
-      padding: 7px 16px; 
-      border-radius: 20px; 
-      font-size: 12px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      display: inline-block; 
-      box-shadow: 0 2px 10px rgba(255, 215, 0, 0.35);
-      transition: all 0.2s ease;
-    }
-    .auth-btn:active {
-      transform: scale(0.95);
-    }
-    .menu-hamburger-btn { 
-      background: none; 
-      border: 1px solid var(--gold-dim); 
-      color: var(--gold); 
-      font-size: 20px; 
-      padding: 4px 11px; 
-      border-radius: 6px; 
-      cursor: pointer; 
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
+    /* Top Bar */
+    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.85); border-bottom: 1px solid rgba(255,215,0,0.3); position: relative; z-index: 1000; }
+    .music-btn { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+    .top-right-nav { display: flex; align-items: center; gap: 10px; }
+    .auth-btn { background: var(--gold); border: none; color: #000; padding: 7px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-block; }
+    .menu-hamburger-btn { background: none; border: 1px solid rgba(255,215,0,0.4); color: var(--gold); font-size: 18px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
 
     /* Side Navigation Drawer */
-    .side-nav-drawer { 
-      display: none; 
-      position: fixed; 
-      top: 0; 
-      right: 0; 
-      width: 285px; 
-      height: 100%; 
-      background: #190004; 
-      border-left: 2px solid var(--gold); 
-      z-index: 9999; 
-      padding: 24px 18px; 
-      box-shadow: -10px 0 35px rgba(0,0,0,0.95); 
-    }
-    .drawer-header { 
-      display: flex; 
-      justify-content: space-between; 
-      align-items: center; 
-      border-bottom: 1px solid var(--gold-dim); 
-      padding-bottom: 12px; 
-      margin-bottom: 20px; 
-    }
-    .drawer-item { 
-      display: block; 
-      width: 100%; 
-      text-align: left; 
-      background: none; 
-      border: none; 
-      color: #ffffff; 
-      padding: 13px 12px; 
-      font-size: 14px; 
-      font-weight: 600; 
-      cursor: pointer; 
-      border-radius: 6px; 
-      margin-bottom: 8px; 
-      border-bottom: 1px dashed rgba(255,215,0,0.15); 
-      transition: all 0.2s;
-    }
-    .drawer-item:hover, .drawer-item.active { 
-      background: rgba(255,215,0,0.15); 
-      color: var(--gold); 
-      padding-left: 16px;
-    }
+    .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 270px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9999; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.9); }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; margin-bottom: 15px; }
+    .drawer-item { display: block; width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 12px 10px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 6px; margin-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.15); }
+    .drawer-item:hover, .drawer-item.active { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Main Branding Header */
-    header { text-align: center; padding: 22px 12px 10px; }
-    header h1 { font-size: 24px; color: var(--gold); text-shadow: 0 0 16px var(--gold-glow); letter-spacing: 0.5px; }
-    header p { color: #ffcdd2; font-size: 13px; margin-top: 4px; }
+    header { text-align: center; padding: 18px 12px 8px; }
+    header h1 { font-size: 22px; color: var(--gold); text-shadow: 0 0 15px rgba(255,215,0,0.5); }
+    header p { color: #ffcdd2; font-size: 12px; margin-top: 3px; }
 
-    /* Continuous Ticker */
-    .ticker-wrap { 
-      background: rgba(255, 215, 0, 0.1); 
-      border-top: 1px solid var(--gold-dim); 
-      border-bottom: 1px solid var(--gold-dim); 
-      padding: 8px 0; 
-      overflow: hidden; 
-    }
-    .ticker-content { 
-      white-space: nowrap; 
-      display: inline-block; 
-      animation: scrollTicker 32s linear infinite; 
-      font-size: 13px; 
-      color: var(--gold); 
-      font-weight: 600; 
-    }
+    /* Running Ticker */
+    .ticker-wrap { background: rgba(255, 215, 0, 0.1); border-top: 1px solid rgba(255, 215, 0, 0.25); border-bottom: 1px solid rgba(255, 215, 0, 0.25); padding: 7px 0; overflow: hidden; }
+    .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 32s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
+    @keyframes scrollTicker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-    /* =========================================================================
-       MODULE 3: MAIN LAYOUT, FORM INPUTS & BUTTONS
-       ========================================================================= */
-    .main-wrap { 
-      max-width: 950px; 
-      width: 100%; 
-      margin: 16px auto; 
-      padding: 0 14px; 
-      flex: 1; 
-    }
-    .card { 
-      background: var(--card-bg); 
-      border: 1px solid var(--card-border); 
-      border-radius: 14px; 
-      padding: 22px; 
-      backdrop-filter: blur(8px); 
-      margin-bottom: 24px; 
-      box-shadow: 0 4px 25px rgba(0,0,0,0.55);
-    }
-    .card h2 { text-align: center; color: var(--gold); font-size: 19px; margin-bottom: 16px; }
-    .form-group { margin-bottom: 13px; }
-    label { display: block; font-size: 12px; color: #ffcdd2; margin-bottom: 5px; font-weight: 600; }
-    input, select, textarea { 
-      width: 100%; 
-      padding: 12px; 
-      background: rgba(0,0,0,0.65); 
-      border: 1px solid var(--gold-dim); 
-      border-radius: 8px; 
-      color: #fff; 
-      font-size: 13px; 
-      outline: none; 
-      transition: border-color 0.25s, box-shadow 0.25s;
-    }
-    input:focus, select:focus, textarea:focus { 
-      border-color: var(--gold); 
-      box-shadow: 0 0 8px rgba(255,215,0,0.3);
-    }
-    .btn-main { 
-      width: 100%; 
-      padding: 13px; 
-      background: linear-gradient(45deg, #d32f2f, #ff6f00); 
-      border: none; 
-      border-radius: 8px; 
-      color: #fff; 
-      font-size: 15px; 
-      font-weight: 700; 
-      cursor: pointer; 
-      box-shadow: 0 4px 15px rgba(211,47,47,0.45); 
-      text-align: center; 
-      transition: all 0.2s ease;
-    }
-    .btn-main:active {
-      transform: scale(0.98);
-      filter: brightness(1.1);
-    }
+    .main-wrap { max-width: 920px; width: 100%; margin: 15px auto; padding: 0 12px; flex: 1; }
+    .card { background: var(--card-bg); border: 1px solid rgba(255,215,0,0.25); border-radius: 14px; padding: 18px; backdrop-filter: blur(8px); margin-bottom: 24px; }
+    .card h2 { text-align: center; color: var(--gold); font-size: 18px; margin-bottom: 14px; }
+    .form-group { margin-bottom: 11px; }
+    label { display: block; font-size: 12px; color: #ffcdd2; margin-bottom: 4px; }
+    input, select, textarea { width: 100%; padding: 11px; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,215,0,0.3); border-radius: 7px; color: #fff; font-size: 13px; outline: none; }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
+    .btn-main { width: 100%; padding: 12px; background: linear-gradient(45deg, #d32f2f, #ff6f00); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(211,47,47,0.4); text-align: center; }
 
-    /* =========================================================================
-       MODULE 4: STORE & PRODUCT CARD PRESENTATION
-       ========================================================================= */
-    .sec-heading { font-size: 18px; color: var(--gold); margin: 24px 0 14px; text-align: center; font-weight: 700; }
+    /* Store Grid */
+    .sec-heading { font-size: 18px; color: var(--gold); margin: 20px 0 12px; text-align: center; }
     .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; }
-    .cat-chip { background: rgba(255,255,255,0.08); border: 1px solid var(--gold-dim); color: #fff; padding: 6px 14px; border-radius: 18px; font-size: 12px; cursor: pointer; white-space: nowrap; }
+    .cat-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); color: #fff; padding: 5px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; }
     .cat-chip.active { background: var(--gold); color: #000; font-weight: bold; }
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
-    @media (min-width: 650px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
-    .p-card { 
-      background: rgba(255,255,255,0.03); 
-      border: 1px solid rgba(255,215,0,0.2); 
-      border-radius: 12px; 
-      padding: 12px; 
-      text-align: center; 
-      display: flex; 
-      flex-direction: column; 
-      justify-content: space-between; 
-      cursor: pointer; 
-      transition: transform 0.2s, border-color 0.2s;
-    }
-    .p-card:active { transform: scale(0.98); }
-    .p-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; background: #222; }
+    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+    @media (min-width: 650px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; } }
+    .p-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.18); border-radius: 10px; padding: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .p-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; background: #222; }
     .p-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 2px; }
-    .p-sku { font-size: 10px; color: var(--gold); margin-bottom: 4px; font-weight: 700; letter-spacing: 0.5px; }
-    .p-price { font-size: 16px; color: var(--gold); font-weight: 800; margin-bottom: 8px; }
-    .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    .p-sku { font-size: 10px; color: var(--gold); margin-bottom: 4px; font-weight: bold; }
+    .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
+    .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-    /* =========================================================================
-       MODULE 5: DEVOTIONAL BLOGS, POSTS & CARDS
-       ========================================================================= */
+    /* Devotional Blog Post Cards */
     .blog-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
     @media (min-width: 650px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
-    .blog-card { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+    .blog-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.25); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
     .blog-card img, .blog-card iframe { width: 100%; height: 180px; object-fit: cover; border: none; background: #222; }
-    .blog-content { padding: 14px; flex: 1; display: flex; flex-direction: column; }
+    .blog-content { padding: 12px; flex: 1; display: flex; flex-direction: column; }
     .blog-title { font-size: 15px; font-weight: bold; color: var(--gold); margin-bottom: 6px; }
     .blog-desc { font-size: 12px; color: #ffcdd2; line-height: 1.5; margin-bottom: 10px; flex: 1; }
     .blog-meta { font-size: 10px; color: #aaa; margin-bottom: 8px; }
-    .blog-btn { align-self: flex-start; background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+    .blog-btn { align-self: flex-start; background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
-    /* =========================================================================
-       MODULE 6: LIVE CHAT (HIGH Z-INDEX & WORKING ACTION BAR)
-       ========================================================================= */
-    .insta-chat-input-bar { 
-      padding: 10px 12px; 
-      background: #080001; 
-      display: flex; 
-      align-items: center; 
-      gap: 8px; 
-      border-top: 1px solid var(--gold-dim); 
-      position: relative; 
-      z-index: 7500 !important; 
-    }
-    .insta-chat-input-bar input { 
-      flex: 1; 
-      background: rgba(255,255,255,0.08); 
-      border: 1px solid var(--gold-dim); 
-      border-radius: 24px; 
-      padding: 11px 16px; 
-      color: #fff; 
-      font-size: 13px; 
-      outline: none; 
-    }
-    .insta-action-btn { 
-      background: rgba(255,215,0,0.12); 
-      border: 1px solid var(--gold-dim); 
-      border-radius: 50%; 
-      color: var(--gold); 
-      font-size: 18px; 
-      cursor: pointer; 
-      width: 40px; 
-      height: 40px; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      flex-shrink: 0;
-      touch-action: manipulation;
-    }
-    .insta-action-btn:active {
-      transform: scale(0.92);
-      background: var(--gold);
-      color: #000;
-    }
+    /* WhatsApp Style Chat */
+    .insta-chat-box { background: #0c0204; border: 1px solid rgba(255,215,0,0.3); border-radius: 14px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
+    .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
+    .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: radial-gradient(circle at center, #180004 0%, #080001 100%); }
+    .msg-row { display: flex; width: 100%; }
+    .msg-row.sent { justify-content: flex-end; }
+    .msg-row.received { justify-content: flex-start; }
+    .insta-msg-bubble { padding: 9px 13px; border-radius: 12px; font-size: 13px; max-width: 82%; word-break: break-word; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.4); position: relative; }
+    .msg-row.sent .insta-msg-bubble { background: linear-gradient(135deg, #2e4d25 0%, #1c3b16 100%); border: 1px solid #4caf50; border-top-right-radius: 2px; color: #e8f5e9; text-align: left; }
+    .msg-row.sent .insta-msg-sender { color: #a5d6a7; font-weight: bold; font-size: 11px; margin-bottom: 2px; }
+    .msg-row.received .insta-msg-bubble { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,215,0,0.25); border-top-left-radius: 2px; color: #fff; text-align: left; }
+    .msg-row.received .insta-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 2px; }
+    .msg-meta { font-size: 9px; color: #aaa; margin-left: 8px; float: right; margin-top: 5px; }
+    .insta-chat-input-bar { padding: 10px 12px; background: rgba(0,0,0,0.85); display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,215,0,0.2); }
+    .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 24px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
+    .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
-    /* =========================================================================
-       MODULE 7: FOOTER & DEDICATED LEGAL LINK BAR
-       ========================================================================= */
-    footer { 
-      padding: 28px 15px 25px; 
-      background: #060001; 
-      border-top: 1px solid var(--card-border); 
-      margin-top: auto; 
-      font-size: 12px; 
-      text-align: center; 
-      width: 100%; 
-      position: relative; 
-      z-index: 100; 
-    }
-    .footer-links { 
-      display: flex; 
-      justify-content: center; 
-      gap: 14px; 
-      flex-wrap: wrap; 
-      margin: 14px 0; 
-    }
-    .footer-link-btn { 
-      background: none; 
-      border: none; 
-      color: var(--gold); 
-      text-decoration: underline; 
-      cursor: pointer; 
-      font-size: 12px; 
-      font-weight: 500; 
-      padding: 5px; 
-    }
+    /* Popups and Overlays */
+    .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
+    .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; z-index: 10001; }
+
+    /* Dynamic QR Box */
+    .qr-box-wrapper { background: #fff; padding: 15px; border-radius: 10px; display: inline-block; margin: 10px 0; }
+    .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+    .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+
+    /* Admin Portal */
+    #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
+    .admin-inner { max-width: 980px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
+    .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.25); }
+    .adm-tab { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .adm-tab.active { background: var(--gold); color: #000; font-weight: bold; }
+    .adm-sec { display: none; }
+    .adm-sec.active { display: block; }
+    .table-responsive { overflow-x: auto; }
+    table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
+    th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
+    th { background: rgba(255,215,0,0.15); color: var(--gold); }
+
+    /* Dedicated Fullscreen Legal & Contact Modal */
+    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); z-index: 10005; overflow-y: auto; padding: 25px 15px; }
+    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; }
+
+    /* Sticky Footer */
+    footer { padding: 25px 15px 25px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; position: relative; z-index: 10; }
+    .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
+    .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; padding: 4px; }
     .footer-link-btn:hover { color: #fff; }
-    .footer-action-btns { 
-      display: flex; 
-      justify-content: center; 
-      gap: 10px; 
-      flex-wrap: wrap; 
-      margin-top: 14px; 
+    .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+    .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 7px 16px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+
+    /* Ganesh Ji Clean Fire Floating Button */
+    .ganesh-float-btn {
+      position: fixed;
+      bottom: 22px;
+      right: 18px;
+      width: 76px;
+      height: 76px;
+      z-index: 5500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: none;
+      background: transparent;
+      outline: none;
+      user-select: none;
     }
-    .ftr-pill-btn { 
-      background: rgba(255,215,0,0.18); 
-      border: 1px solid var(--gold); 
-      color: var(--gold); 
-      padding: 7px 16px; 
-      border-radius: 20px; 
-      text-decoration: none; 
-      font-size: 12px; 
-      font-weight: bold; 
-      cursor: pointer; 
-      display: inline-flex; 
-      align-items: center; 
-      gap: 5px; 
+    .chakra-bg-img {
+      position: absolute;
+      width: 72px;
+      height: 72px;
+      object-fit: contain;
+      z-index: 1;
+      animation: spinChakraWheel 4.5s linear infinite, fireAuraBreath 2.8s ease-in-out infinite alternate;
+      pointer-events: none;
+    }
+    .ganesh-idol-img {
+      position: relative;
+      width: 56px;
+      height: 56px;
+      object-fit: contain;
+      z-index: 2;
+      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.85));
+      pointer-events: none;
+    }
+    @keyframes spinChakraWheel {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes fireAuraBreath {
+      0% { filter: drop-shadow(0 0 4px #ff3d00) drop-shadow(0 0 8px #ff9100); }
+      50% { filter: drop-shadow(0 0 6px #ff6d00) drop-shadow(0 0 12px #ffd700); }
+      100% { filter: drop-shadow(0 0 8px #ff1744) drop-shadow(0 0 16px #ff9800) drop-shadow(0 0 20px #ffd600); }
     }
   </style>
 </head>
 <body>
 
-  <!-- Hidden Audio Stream Engine -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
-  <!-- Pickers with Direct Element References -->
-  <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(this)">
-  <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(this)">
+  <!-- Pickers -->
+  <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
+  <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
   <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
 
-  <!-- Floating Ganesh Ji Button -->
+  <!-- GANESH JI BUTTON -->
   <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
-    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="चक्र">
-    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="गणेश जी">
+    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="दिव्य चक्र">
+    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="श्री गणेश जी">
   </button>
 
-  <!-- Top App Navigation -->
+  <!-- Top Bar -->
   <div class="top-bar">
     <button class="music-btn" id="musicToggleBtn" onclick="toggleBackgroundMusic()">
       🚩 <span id="musicBtnTxt">Play Music</span>
@@ -436,10 +206,10 @@
     </div>
   </div>
 
-  <!-- Side Navigation Drawer Menu -->
+  <!-- Side Navigation Drawer -->
   <div class="side-nav-drawer" id="sideNavDrawer">
     <div class="drawer-header">
-      <b style="color:var(--gold); font-size:15px;">🚩 नेविगेशन मेनू</b>
+      <b style="color:var(--gold); font-size:14px;">🚩 नेविगेशन मेनू</b>
       <button onclick="toggleSideNav()" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
     </div>
     <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span>सहयोग फॉर्म</span></button>
@@ -507,7 +277,7 @@
         <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
-      <!-- FEATURED POSTS ON DONATION PAGE WITH COUNTDOWN -->
+      <!-- FEATURED POSTS ON DONATION PAGE WITH TIMER -->
       <div id="donationFeaturedBlogSec" style="display:none; margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <h3 class="sec-heading" style="margin:0;">🌸 विशेष पावन कथा व दर्शन</h3>
@@ -524,7 +294,7 @@
       </div>
     </div>
 
-    <!-- PANEL 2: DEVOTIONAL E-COMMERCE STORE -->
+    <!-- PANEL 2: STORE -->
     <div id="panelStore" style="display:none;">
       <h3 class="sec-heading" id="txtStoreTitle">माँ दुर्गा एंटरप्राइजेज — पावन भक्ति स्टोर</h3>
       <div class="category-scroll" id="catScroll">
@@ -533,13 +303,13 @@
       <div class="product-grid" id="fullStoreGrid"></div>
     </div>
 
-    <!-- PANEL 3: DEVOTIONAL BLOGS & STORIES -->
+    <!-- PANEL 3: DEVOTIONAL BLOG / STORIES PAGE -->
     <div id="panelBlog" style="display:none;">
       <h3 class="sec-heading">📖 पावन भक्ति कथाएँ, दर्शन एवं ब्लॉग</h3>
       <div class="blog-grid" id="publicFullBlogList"></div>
     </div>
 
-    <!-- PANEL 4: PUBLIC DONOR DIRECTORY -->
+    <!-- PANEL 4: DONOR DIRECTORY -->
     <div id="panelDirectory" class="card" style="display:none;">
       <h2 id="txtDirTitle">📜 सार्वजनिक सहयोग सूची (पारदर्शी बोर्ड)</h2>
       <input type="text" id="dirSearch" onkeyup="searchPublicDonors()" placeholder="🔍 नाम या शहर से खोजें..." style="margin-bottom:12px;">
@@ -553,7 +323,7 @@
       </div>
     </div>
 
-    <!-- PANEL 5: WHATSAPP-STYLE LIVE CHAT -->
+    <!-- PANEL 5: WHATSAPP STYLE CHAT -->
     <div id="panelChat" style="display:none;">
       <div class="insta-chat-box">
         <div class="insta-chat-header">
@@ -569,16 +339,16 @@
         <div class="insta-messages-area" id="globalChatContainer"></div>
 
         <div class="insta-chat-input-bar">
-          <input type="text" id="chatInputMsg" placeholder="संदेश लिखें..." onkeydown="if(event.key==='Enter'){ event.preventDefault(); sendGlobalChatMessage(); }">
-          <button type="button" class="insta-action-btn" id="micBtn" onclick="toggleVoiceRecording()" title="वॉइस रिकॉर्ड करें">🎙️</button>
-          <button type="button" class="insta-action-btn" onclick="openCameraApp()" title="कैमरा खोलें">📷</button>
-          <button type="button" class="insta-action-btn" onclick="openFileStorage()" title="फ़ाइल चुनें">📁</button>
-          <button type="button" class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
+          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो या फाइल भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
+          <button class="insta-action-btn" onclick="toggleVoiceRecording()" id="micBtn" title="वॉयस नोट भेजें">🎙️</button>
+          <button class="insta-action-btn" onclick="openCameraApp()" title="कैमरा से फोटो लें">📷</button>
+          <button class="insta-action-btn" onclick="openFileStorage()" title="स्टोरेज से फाइल/फोटो चुनें">📁</button>
+          <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
         </div>
       </div>
     </div>
 
-    <!-- PANEL 6: MY ORDERS DASHBOARD -->
+    <!-- PANEL 6: MY ORDERS -->
     <div id="panelOrders" class="card" style="display:none;">
       <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
@@ -648,7 +418,7 @@
     </div>
   </div>
 
-  <!-- POPUP: DEVOTIONAL BLOG READER -->
+  <!-- POPUP: BLOG READER MODAL -->
   <div class="custom-popup-overlay" id="blogReaderModal">
     <div class="custom-popup-box" style="max-width:540px; text-align:left; max-height:85vh; overflow-y:auto;">
       <h3 style="color:var(--gold); margin-bottom:6px;" id="readerBlogTitle"></h3>
@@ -660,7 +430,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS WITH IMAGE SLIDER -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -681,7 +451,7 @@
     </div>
   </div>
 
-  <!-- POPUP: MULTI-STEP CHECKOUT MODAL -->
+  <!-- POPUP: CHECKOUT MODAL -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:480px; max-height:88vh; overflow-y:auto;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:6px;" id="chkTitle">📦 सुरक्षित ऑर्डर चेकआउट</h3>
@@ -784,19 +554,19 @@
     </div>
   </div>
 
-  <!-- POPUP: GOOGLE AUTH LOGIN MODAL -->
+  <!-- LOGIN POPUP -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
       <p style="font-size:12px; color:#ffcdd2; margin-bottom:16px;">अपने Google खाते से आसानी से लॉगिन करें:</p>
       <button type="button" class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18" alt="Google"> Google से लॉगिन करें
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
       </button>
       <br><button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- POPUP: MASTER PASSWORD AUTH MODAL -->
+  <!-- ADMIN PASS MODAL -->
   <div class="custom-popup-overlay" id="adminPassModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
@@ -807,7 +577,7 @@
     </div>
   </div>
 
-  <!-- POPUP: RECORD INSPECTION MODAL -->
+  <!-- ADMIN INSPECT MODAL -->
   <div class="custom-popup-overlay" id="adminInspectModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
@@ -816,7 +586,7 @@
     </div>
   </div>
 
-  <!-- POPUP: SECURE DONATION GATEWAY MODAL -->
+  <!-- DONATION PAYMENT MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
@@ -827,7 +597,7 @@
     </div>
   </div>
 
-  <!-- POPUP: APPLICATION TOAST NOTIFICATION -->
+  <!-- NOTIFY POPUP -->
   <div class="custom-popup-overlay" id="notifyPopup">
     <div class="custom-popup-box">
       <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
@@ -835,7 +605,7 @@
     </div>
   </div>
 
-  <!-- POPUP: CELEBRATION CONGRATS MODAL -->
+  <!-- CELEBRATION MODAL (WITH WELCOME SOUND & 50% DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -848,16 +618,16 @@
     </div>
   </div>
 
-  <!-- DEDICATED FULLSCREEN LEGAL MODAL -->
+  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
   <div class="legal-page" id="legalPage">
     <div class="legal-container">
-      <button type="button" onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
+      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
       <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
       <div id="legalBodyText"></div>
     </div>
   </div>
 
-  <!-- POPUP: FEEDBACK SUBMISSION MODAL -->
+  <!-- POPUP: FEEDBACK MODAL -->
   <div class="custom-popup-overlay" id="feedbackModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
@@ -875,7 +645,7 @@
         <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
       </div>
       <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
-      <button type="button" onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
+      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
     </div>
   </div>
 
@@ -900,7 +670,7 @@
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings -->
+      <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
@@ -958,7 +728,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 3: Devotional Stories Manager -->
+      <!-- Admin Sec 3: Blog Manager -->
       <div id="admBlogAdm" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">+ नई भक्ति कथा / दर्शन पोस्ट जोड़ें</h4>
         <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
@@ -1046,7 +816,7 @@
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में नया प्रोडक्ट जोड़ें</button>
       </div>
 
-      <!-- Admin Sec 5: Inventory Manager with SKU Search -->
+      <!-- Admin Sec 5: Product Inventory with SKU Search & Edit Control -->
       <div id="admProdManage" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search & Edit)</h4>
         <div class="form-group" style="margin-bottom:12px;">
@@ -1060,7 +830,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 6: Offers & Discount Control -->
+      <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
       <div id="admOffers" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
         <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं।</p>
@@ -1098,7 +868,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 8: Customer Orders & 5-Stage Control -->
+      <!-- Admin Sec 8: Orders -->
       <div id="admOrd" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स व 5-स्टेज डिलीवरी कंट्रोल</h4>
         <div class="table-responsive">
@@ -1109,7 +879,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 9: Offline/Cash Donations -->
+      <!-- Admin Sec 9: Donations -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
           <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
@@ -1132,7 +902,7 @@
         </div>
       </div>
 
-      <!-- Admin Sec 10: Feedback & Problems -->
+      <!-- Admin Sec 10: Feedback -->
       <div id="admFeed" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव व समस्याएं</h4>
         <div class="table-responsive">
@@ -1145,9 +915,9 @@
     </div>
   </div>
 
-  <!-- FIXED STICKY FOOTER -->
+  <!-- FIXED STICKY FOOTER WITH WORKING CLICK HANDLERS -->
   <footer>
-    <div style="max-width:920px; margin:0 auto; position:relative; z-index:100;">
+    <div style="max-width:900px; margin:0 auto; position:relative; z-index:100;">
       <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
       <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
@@ -1168,9 +938,6 @@
     </div>
   </footer>
 
-  <!-- =========================================================================
-       MODULE 8: JAVASCRIPT CORE ENGINE & LOGIC
-       ========================================================================= -->
   <script>
     const OWNER_EMAIL = "yugampal23@gmail.com";
     const OWNER_MASTER_PASS = "durga@2004";
@@ -1198,7 +965,7 @@
       db = firebase.firestore();
       googleProvider = new firebase.auth.GoogleAuthProvider();
     } catch(e) {
-      console.error("Firebase Initialization Error:", e);
+      console.error("Firebase init error:", e);
     }
 
     let currentUser = null;
@@ -1316,7 +1083,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE (AUTO NEXT LOOP & AUTO RESUME)
+    // TRUE LIVE RADIO SYNC ENGINE (CONTINUOUS PLAYLIST AUTO-NEXT & REPEAT LOOP)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1554,7 +1321,7 @@
       if (target) target.classList.add('active');
     }
 
-    // --- Firestore Realtime Data Binding Listeners ---
+    // --- Firestore Sync Listeners ---
     if (db) {
       db.collection("playlist").orderBy("timeNumber", "asc").onSnapshot(snap => {
         cloudPlaylist = [];
@@ -1689,6 +1456,33 @@
       }, err => {});
     }
 
+    // --- OFFER COUNTDOWN TIMER ---
+    setInterval(() => {
+      if (!globalOfferExpiryTime) {
+        const timerSec = document.getElementById('offerCountdownTimer');
+        if (timerSec) timerSec.style.display = 'none';
+        return;
+      }
+      const now = Date.now();
+      const diff = globalOfferExpiryTime - now;
+      const clockEl = document.getElementById('timerClockTxt');
+      const timerSec = document.getElementById('offerCountdownTimer');
+
+      if (diff <= 0) {
+        if (timerSec) timerSec.style.display = 'none';
+        return;
+      }
+
+      if (timerSec) timerSec.style.display = 'block';
+      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+      if (clockEl) {
+        clockEl.innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      }
+    }, 1000);
+
     function addNewPlaylistSong() {
       if (!db) return;
       const title = document.getElementById('newSongTitle').value.trim() || "पावन भजन";
@@ -1729,7 +1523,7 @@
       `).join('');
     }
 
-    // --- FLIPKART STYLE PRODUCT MODAL WITH WORKING SLIDER ---
+    // --- FLIPKART STYLE PRODUCT DETAILS & WORKING SLIDER ---
     let activeCheckoutProduct = null;
     let appliedDiscountPercent = 0;
     let currentCalculatedPrice = 0;
@@ -1958,7 +1752,7 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // --- FLIPKART STYLE TRACKING TIMELINE MODAL ---
+    // --- FLIPKART STYLE TRACKING MODAL ---
     function openOrderTrackingModal(orderId) {
       const order = cloudOrders.find(o => o.id === orderId);
       if (!order) return;
@@ -2073,7 +1867,7 @@
       });
     }
 
-    // --- SAVE PRODUCT TO FIRESTORE ---
+    // --- SAVE PRODUCT ---
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
@@ -2115,7 +1909,7 @@
         discountPercent: 0,
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (${skuCode})`);
+        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
         document.getElementById('newPName').value = '';
         document.getElementById('newPPrice').value = '';
         document.getElementById('newPCat').value = '';
@@ -2209,559 +2003,49 @@
       if (!code || !dis) return;
       db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => { showAppToast("कूपन बना!"); document.getElementById('newCCode').value = ''; document.getElementById('newCDiscount').value = ''; });
     }
-
     function renderAdminCoupons() {
       const tb = document.querySelector('#admCoupTable tbody');
       if (!tb) return;
       tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
     }
 
-    // --- CHAT FILE INPUT TRIGGER FUNCTIONS ---
-    function openFileStorage() {
-      const picker = document.getElementById('hiddenFilePicker');
-      if (picker) picker.click();
-    }
-
-    function openCameraApp() {
-      const picker = document.getElementById('hiddenCameraPicker');
-      if (picker) picker.click();
-    }
-
-    function handleFileSelected(inputElement) {
-      const file = inputElement.files && inputElement.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const fileDataUrl = e.target.result;
-        if (file.type.startsWith('image/')) {
-          sendGlobalChatMessage(`<img src="${fileDataUrl}" style="max-width:100%; max-height:220px; border-radius:8px; display:block;">`);
-        } else if (file.type.startsWith('video/')) {
-          sendGlobalChatMessage(`<video src="${fileDataUrl}" controls style="max-width:100%; max-height:220px; border-radius:8px; display:block;"></video>`);
-        } else if (file.type.startsWith('audio/')) {
-          sendGlobalChatMessage(`<audio src="${fileDataUrl}" controls style="width:100%; max-width:260px;"></audio>`, true);
-        } else {
-          sendGlobalChatMessage(`📄 <a href="${fileDataUrl}" download="${file.name}" style="color:var(--gold); text-decoration:underline; font-weight:bold;">डाउनलोड: ${file.name}</a>`);
-        }
-        inputElement.value = '';
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // --- SATSANG LIVE CHAT ENGINE ---
-    let mediaRecorder = null;
-    let audioChunks = [];
-    let isRecording = false;
-
-    function sendGlobalChatMessage(customContent = null, isVoice = false) {
-      if (!db) return;
-      const msgInput = document.getElementById('chatInputMsg');
-      const text = customContent !== null ? customContent : (msgInput ? msgInput.value.trim() : '');
-      if (!text) return;
-
-      const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "अज्ञात भक्त";
-      const senderEmail = (currentUser && currentUser.email) ? currentUser.email : "anonymous";
-
-      db.collection("chats").add({
-        senderClientId: MY_CLIENT_ID,
-        name: senderName,
-        email: senderEmail,
-        message: text,
-        isVoiceNote: isVoice,
-        timeNumber: Date.now(),
-        dateStr: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
-      }).then(() => {
-        if (msgInput && customContent === null) msgInput.value = '';
-        setTimeout(scrollChatToBottom, 80);
-      }).catch(e => showAppToast(e.message));
-    }
-
-    function scrollChatToBottom() {
-      const box = document.getElementById('globalChatContainer');
-      if (box) box.scrollTop = box.scrollHeight;
-    }
-
-    function toggleVoiceRecording() {
-      if (!isRecording) {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          showAppToast("ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
-          return;
-        }
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
-          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-          mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-            const reader = new FileReader();
-            reader.onload = function(e) {
-              sendGlobalChatMessage(`<audio src="${e.target.result}" controls style="width:100%; max-width:240px;"></audio>`, true);
-            };
-            reader.readAsDataURL(audioBlob);
-          };
-          mediaRecorder.start();
-          isRecording = true;
-          const micBtn = document.getElementById('micBtn');
-          if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = '🔴'; }
-          showAppToast("🎙️ रिकॉर्डिंग शुरू... दोबारा दबाकर भेजें।");
-        }).catch(() => showAppToast("माइक्रोफोन की अनुमति आवश्यक है!"));
-      } else {
-        if (mediaRecorder) mediaRecorder.stop();
-        isRecording = false;
-        const micBtn = document.getElementById('micBtn');
-        if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = '🎙️'; }
-      }
-    }
-
-    let pressTimer = null;
-    function handleMsgTouchStart(chatId, senderClientId, msgEmail) {
-      pressTimer = setTimeout(() => {
-        const isOwner = currentUser && currentUser.email && currentUser.email.toLowerCase() === OWNER_EMAIL.toLowerCase();
-        const isMyMsg = (senderClientId && senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email === msgEmail);
-        
-        if (isMyMsg || isOwner) {
-          if (confirm("क्या आप इस संदेश को हमेशा के लिए डिलीट करना चाहते हैं?")) {
-            db.collection("chats").doc(chatId).delete().then(() => showAppToast("संदेश डिलीट हुआ!"));
-          }
-        } else {
-          showAppToast("आप केवल अपना भेजा हुआ संदेश डिलीट कर सकते हैं!");
-        }
-      }, 700);
-    }
-
-    function handleMsgTouchEnd() { clearTimeout(pressTimer); }
-
-    function renderGlobalChat() {
-      const box = document.getElementById('globalChatContainer');
-      if (!box) return;
-
-      box.innerHTML = cloudChats.map(c => {
-        const isSentByMe = (c.senderClientId && c.senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email && currentUser.email === c.email);
-        const alignmentClass = isSentByMe ? "sent" : "received";
-        const displayName = isSentByMe ? "आप (You)" : (c.name || "अज्ञात भक्त");
-
-        return `
-          <div class="msg-row ${alignmentClass}"
-               ontouchstart="handleMsgTouchStart('${c.id}', '${c.senderClientId || ''}', '${c.email || ''}')" 
-               ontouchend="handleMsgTouchEnd()" 
-               onmousedown="handleMsgTouchStart('${c.id}', '${c.senderClientId || ''}', '${c.email || ''}')" 
-               onmouseup="handleMsgTouchEnd()">
-            <div class="insta-msg-bubble" title="मैसेज डिलीट करने हेतु 2-3 सेकंड दबाकर रखें">
-              <div class="insta-msg-sender">${displayName}</div>
-              <div>${c.message || ''}</div>
-              <span class="msg-meta">${c.dateStr || ''}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      scrollChatToBottom();
-    }
-
-    function renderAdminChat() {
-      const tb = document.querySelector('#admChatTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudChats.map(c => `
-        <tr>
-          <td>${c.dateStr || '—'}</td>
-          <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
-          <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
-          <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
-    }
-
-    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND (AUTO CLOSE ON END) ---
-    const welcomeAudio = new Audio("welcome.MP3");
-    function playWelcomeSoundWithDucking() {
-      if (coreAudio && !coreAudio.paused) {
-        coreAudio.volume = 0.5; // Duck to 50%
-      }
-      welcomeAudio.currentTime = 0;
-      welcomeAudio.play().then(() => {
-        welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0;
-          closeModal('celebrationModal'); // Automatically close popup when welcome audio completes
-        };
-      }).catch(() => {
-        if (coreAudio) coreAudio.volume = 1.0;
-      });
-    }
-
-    function openDonationModal() {
-      const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
-      const sal = document.getElementById('donSalutation')?.value || 'none';
-      const amt = document.getElementById('donAmount')?.value.trim();
-      const cause = document.getElementById('donCause')?.value;
-      const city = document.getElementById('donCity')?.value.trim();
-      const phone = document.getElementById('donPhone')?.value.trim();
-
-      if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
-      if (!phone || phone.length < 10) { showAppToast("कृपया रसीद प्राप्त करने के लिए 10-अंकीय व्हाट्सएप नंबर दर्ज करें!"); return; }
-
-      pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
-
-      document.getElementById('donModalInfo').innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
-      
-      const payMode = appSettingsMain.paymentMode || 'upi';
-      const donBox = document.getElementById('donPaymentBox');
-
-      if (payMode === 'cod') {
-        donBox.innerHTML = `<p style="color:#81c784; font-size:13px; font-weight:bold;">सहयोग हेतु नकद (Cash) स्वीकार है।</p>`;
-      } else {
-        donBox.innerHTML = `
-          <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 QR स्कैन करें या ऐप खोलें:</p>
-          <div class="upi-app-badges"><span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
-          <div style="display: flex; justify-content: center; margin: 10px 0;"><div class="qr-box-wrapper" id="donationQrContainer"></div></div>
-          <p style="font-size:10px; color:#ccc;">(राशि अपने आप फिक्स है)</p>
-          <div style="margin-top:10px; text-align:left;">
-            <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
-            <input type="text" id="donUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
-          </div>
-        `;
-        generateDynamicQrCode('donationQrContainer', amt);
-      }
-
-      document.getElementById('donationModal').style.display = 'flex';
-    }
-
-    function openDirectUpiApp() {
-      if (!pendingDonationData) return;
-      const upiId = document.getElementById('admUpiId')?.value || "paytm.s20g6r2@pty";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${pendingDonationData.amount}&cu=INR`;
-    }
-
-    function submitSecureDonation() {
-      if (!pendingDonationData || !db) return;
-      const payMode = appSettingsMain.paymentMode || 'upi';
-      let utr = "DONATION_" + Date.now().toString().slice(-6);
-
-      if (payMode === 'upi') {
-        utr = document.getElementById('donUtrInput')?.value.trim();
-        if (!utr || utr.length < 12) {
-          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
-          return;
-        }
-        const dupOrd = cloudOrders.find(o => o.utr === utr);
-        const dupDon = cloudDonations.find(d => d.utr === utr);
-        if (dupOrd || dupDon) {
-          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
-          return;
-        }
-      }
-
-      db.collection("donations").add({
-        name: pendingDonationData.name,
-        salutation: pendingDonationData.salutation,
-        address: pendingDonationData.address,
-        phone: pendingDonationData.phone,
-        amount: pendingDonationData.amount,
-        cause: pendingDonationData.cause,
-        utr: utr,
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        closeModal('donationModal');
-        triggerCelebration(pendingDonationData.name, pendingDonationData.cause, pendingDonationData.amount, pendingDonationData.salutation);
-        document.getElementById('donName').value = '';
-        document.getElementById('donAmount').value = '';
-        document.getElementById('donPhone').value = '';
-        document.getElementById('donCity').value = '';
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    function inspectRecord(type, id) {
-      let item = null;
-      let html = "";
-      if (type === 'order') {
-        item = cloudOrders.find(o => o.id === id);
-        if (!item) return;
-        html = `<b>📦 ऑर्डर विवरण:</b><br>• नाम: ${item.userName}<br>• फोन: ${item.phone}<br>• सामग्री: ${item.productName}<br>• राशि: ₹${item.amount}<br>• पता: ${item.fullAddress}<br>• UTR: ${item.utr}`;
-      } else if (type === 'donation') {
-        item = cloudDonations.find(d => d.id === id);
-        if (!item) return;
-        html = `<b>💵 दान विवरण:</b><br>• नाम: ${formatDonorName(item.name, item.salutation)}<br>• फोन: ${item.phone || 'उपलब्ध नहीं'}<br>• उद्देश्य: ${item.cause}<br>• राशि: ₹${item.amount}<br>• स्थान: ${item.address}<br>• UTR: ${item.utr}`;
-      }
-      document.getElementById('inspectContentBox').innerHTML = html;
-      document.getElementById('adminInspectModal').style.display = 'flex';
-    }
-
-    function generateDynamicQrCode(containerId, amount) {
-      const container = document.getElementById(containerId);
-      if (!container) return;
-      container.innerHTML = "";
-      const upiId = document.getElementById('admUpiId')?.value || "paytm.s20g6r2@pty";
-      const upiString = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${amount}&cu=INR`;
-      new QRCode(container, { text: upiString, width: 170, height: 170, colorDark: "#000000", colorLight: "#ffffff" });
-    }
-
-    function refreshTicker() {
-      const t = document.getElementById('liveTicker');
-      if (!t) return;
-      const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸";
-      if (cloudDonations.length === 0) { t.innerText = base; return; }
-      const recent = cloudDonations.slice(0, 8).map(d => `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`).join(' | ');
-      t.innerText = recent + " | " + base;
-    }
-
-    function renderPublicDonors() {
-      const b = document.getElementById('publicDonorBody');
-      if (!b) return;
-      b.innerHTML = cloudDonations.map(d => `
-        <tr><td>${d.date}</td><td><b>${formatDonorName(d.name, d.salutation)}</b></td><td>${d.address || '—'}</td><td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td><td>${d.cause}</td></tr>
-      `).join('');
-    }
-
-    function searchPublicDonors() {
-      const q = document.getElementById('dirSearch')?.value.toLowerCase().trim() || '';
-      document.querySelectorAll('#publicDonorBody tr').forEach(r => {
-        r.style.display = r.innerText.toLowerCase().includes(q) ? '' : 'none';
-      });
-    }
-
-    function triggerCelebration(name, cause, amount, salutation) {
-      const dName = formatDonorName(name, salutation);
-      document.getElementById('celDonorName').innerText = `${dName},`;
-      document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए समिति आपका हार्दिक स्वागत करती है!`;
-      document.getElementById('celebrationModal').style.display = 'flex';
-      try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
-      
-      playWelcomeSoundWithDucking();
-    }
-
-    function closeCelebrationModal() {
-      closeModal('celebrationModal');
-      try { welcomeAudio.pause(); } catch(e) {}
-      if (coreAudio) coreAudio.volume = 1.0;
-    }
-
-    function renderCategories() {
-      const cats = ['all'];
-      cloudProducts.forEach(p => { if (p.category && !cats.includes(p.category)) cats.push(p.category); });
-      const cBox = document.getElementById('catScroll');
-      if (cBox) cBox.innerHTML = cats.map(c => `<span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">${c === 'all' ? 'सभी' : c}</span>`).join('');
-    }
-    function filterCategory(cat) { activeCategory = cat; renderCategories(); renderStoreProducts(); }
-    
-    function renderStoreProducts() {
-      const g = document.getElementById('fullStoreGrid');
-      if (!g) return;
-      const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
-      g.innerHTML = filtered.map(p => {
-        let displayPrice = p.price;
-        let priceHtml = `₹${p.price}`;
-        if (p.discountPercent && p.discountPercent > 0) {
-          displayPrice = Math.round(p.price - (p.price * p.discountPercent) / 100);
-          priceHtml = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${displayPrice}`;
-        }
-
-        let stockBadge = p.inStock === false ? `<div style="color:#ff5252; font-size:11px; font-weight:bold; margin-bottom:4px;">❌ Out of Stock</div>` : '';
-        let btnDisabled = p.inStock === false ? `style="background:#444; color:#aaa; cursor:not-allowed;" disabled` : '';
-        let btnText = p.inStock === false ? `स्टॉक में नहीं` : `🛒 अभी खरीदें`;
-
-        return `
-          <div class="p-card" onclick="openProductDetails('${p.id}')">
-            <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
-            <div class="p-title">${p.name}</div>
-            <div class="p-sku">SKU: ${p.sku}</div>
-            ${stockBadge}
-            <div class="p-price">${priceHtml}</div>
-            <button class="btn-buy" ${btnDisabled} onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
-          </div>
-        `;
-      }).join('');
-
-      const sg = document.getElementById('suggestedGrid');
-      if (sg) {
-        const suggested = cloudProducts.filter(p => p.showOnDonation === true);
-        const listToRender = suggested.length > 0 ? suggested : cloudProducts.slice(0, 4);
-        sg.innerHTML = listToRender.map(p => {
-          let dp = p.price;
-          let ph = `₹${p.price}`;
-          if (p.discountPercent && p.discountPercent > 0) {
-            dp = Math.round(p.price - (p.price * p.discountPercent) / 100);
-            ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${dp}`;
-          }
-          return `
-            <div class="p-card" onclick="openProductDetails('${p.id}')">
-              <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
-              <div class="p-title">${p.name}</div>
-              <div class="p-sku">SKU: ${p.sku}</div>
-              <div class="p-price">${ph}</div>
-              <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
-            </div>
-          `;
-        }).join('');
-      }
-    }
-
-    function saveAdminCashDonation() {
-      if (!db) return;
-      const name = document.getElementById('admCashName')?.value.trim();
-      const phone = document.getElementById('admCashPhone')?.value.trim() || '';
-      const city = document.getElementById('admCashCity')?.value.trim() || '';
-      const amt = document.getElementById('admCashAmt')?.value.trim();
-
-      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
-
-      db.collection("donations").add({
-        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        showAppToast("✅ सहयोग दर्ज हुआ!");
-        document.getElementById('admCashName').value = '';
-        document.getElementById('admCashPhone').value = '';
-        document.getElementById('admCashAmt').value = '';
-      });
-    }
-
-    function renderAdminDonations() {
-      const tb = document.querySelector('#admDonTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudDonations.map(d => {
-        const dName = formatDonorName(d.name, d.salutation);
-        const phone = d.phone || '';
-        return `
-          <tr>
-            <td>${d.date}</td>
-            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${dName}</b></td>
-            <td><b style="color:#81c784;">${phone ? '📞 ' + phone : '—'}</b></td>
-            <td>${d.address || '—'}</td>
-            <td>₹${d.amount}</td>
-            <td>${d.utr || 'VERIFIED'}</td>
-            <td>
-              ${phone ? `
-                <button onclick="sendWhatsAppReceipt('${phone}', '${d.name}', '${d.amount}', '${d.cause}', '${d.utr || 'VERIFIED'}', '${d.date}')" style="background:#25D366; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                  📲 WhatsApp
-                </button>
-              ` : '<span style="color:#777;">नंबर नहीं</span>'}
-            </td>
-            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function sendWhatsAppReceipt(phone, name, amount, cause, utr, date) {
-      if (!phone) {
-        showAppToast("दानदाता का मोबाइल नंबर उपलब्ध नहीं है!");
-        return;
-      }
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const finalPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
-      
-      const receiptMsg = encodeURIComponent(
-        `🚩 *श्री दुर्गा पूजा सेवा समिति & Maa Durga Enterprises* 🚩\n\n` +
-        `सादर प्रणाम, *${name}* जी,\n` +
-        `माँ भगवती के पावन कार्य हेतु आपका सहयोग सप्रेम प्राप्त हुआ।\n\n` +
-        `🧾 *पावन सहयोग रसीद:* \n` +
-        `• उद्देश्य: ${cause}\n` +
-        `• सहयोग राशि: ₹${amount}\n` +
-        `• UTR / Ref No: ${utr}\n` +
-        `• दिनांक: ${date}\n\n` +
-        `🌸 माँ दुर्गा जी की कृपा आप और आपके समस्त परिवार पर सदैव बनी रहे। जय माता दी! 🌸`
-      );
-
-      window.open(`https://wa.me/${finalPhone}?text=${receiptMsg}`, '_blank');
-    }
-
-    function submitPublicFeedback() {
-      if (!db) return;
-      const name = document.getElementById('fbNameInput').value.trim() || "श्रद्धालु भक्त";
-      const rating = document.getElementById('fbRatingInput').value;
-      const msg = document.getElementById('fbMsgInput').value.trim();
-
-      if (!msg) {
-        showAppToast("कृपया अपना संदेश या अनुभव लिखें!");
-        return;
-      }
-
-      db.collection("feedbacks").add({
-        name, rating: Number(rating), message: msg, type: "पब्लिक फीडबैक",
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
-        document.getElementById('fbMsgInput').value = '';
-        closeModal('feedbackModal');
-      }).catch(e => showAppToast(e.message));
-    }
-
-    function renderPublicFeedbacks() {
-      const box = document.getElementById('publicFeedbackList');
-      if (!box) return;
-      const filtered = cloudFeedbacks.filter(f => f.type !== "सहायता / समस्या रिपोर्ट");
-      if (filtered.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
-        return;
-      }
-      box.innerHTML = filtered.map(f => `
-        <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
-            <span>${f.name}</span>
-            <span>${'⭐'.repeat(f.rating || 5)}</span>
-          </div>
-          <p style="color:#ffcdd2;">${f.message}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderAdminFeedbacks() {
-      const tb = document.querySelector('#admFeedTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudFeedbacks.map(f => `
-        <tr>
-          <td>${f.date || '—'}</td>
-          <td><b>${f.name || '—'}</b><br><small>${f.phone || ''}</small></td>
-          <td><span style="color:${f.type === 'सहायता / समस्या रिपोर्ट' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'फीडबैक'}</span></td>
-          <td>${f.message}</td>
-          <td>
-            ${f.screenshot ? `<img src="${f.screenshot}" onclick="viewAdminScreenshot('${f.screenshot}')" style="width:42px; height:42px; object-fit:cover; border-radius:4px; border:2px solid var(--gold); cursor:pointer;" title="बड़ा देखने के लिए क्लिक करें">` : '—'}
-          </td>
-          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
-    }
-
-    // --- LEGAL & CONTACT MODAL LOGIC (DIRECT BINDINGS) ---
+    // --- LEGAL & CONTACT MODAL LOGIC (FIXED) ---
     const legalDocs = {
       terms: { 
         title: "Terms & Conditions (नियम एवं शर्तें)", 
         content: `
-          <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा जन-कल्याण एवं पावन भंडारा सेवा हेतु संचालित है।</p>
+          <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा संचालित है।</p>
           <p><b>2. सेवा व सहयोग:</b> वेबसाइट पर किया जाने वाला सहयोग पूर्णतः स्वैच्छिक एवं धार्मिक/जनकल्याणकारी कार्यों हेतु है।</p>
           <p><b>3. उत्पाद एवं सेवाएँ:</b> भक्ति स्टोर में उपलब्ध सामग्री की डिलीवरी 3 से 7 कार्य दिवसों में की जाती है।</p>
-          <p><b>4. आचरण:</b> लाइव सत्संग चर्चा में केवल भक्तिमय, शालीन और आदरणीय भाषा का ही उपयोग करें।</p>
+          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय भाषा का उपयोग करें।</p>
         ` 
       },
       privacy: { 
         title: "Privacy Policy (गोपनीयता नीति)", 
         content: `
-          <p><b>1. डेटा सुरक्षा:</b> हम आपके नाम, मोबाइल नंबर व पते की पूर्ण गोपनीयता बनाए रखने के लिए वचनबद्ध हैं।</p>
+          <p><b>1. डेटा सुरक्षा:</b> हम आपके नाम, मोबाइल नंबर व पते की गोपनीयता का पूर्ण सम्मान करते हैं।</p>
           <p><b>2. उपयोग:</b> आपका नंबर केवल ऑर्डर डिलीवरी, OTP सत्यापन एवं सहयोग रसीद प्रेषित करने हेतु उपयोग किया जाता है।</p>
-          <p><b>3. सुरक्षा:</b> आपकी कोई भी निजी जानकारी किसी भी बाहरी प्रचार या तीसरे पक्ष के साथ साझा नहीं की जाती।</p>
+          <p><b>3. सुरक्षा:</b> आपकी कोई भी निजी जानकारी किसी तीसरे पक्ष के साथ साझा नहीं की जाती।</p>
         ` 
       },
       refund: { 
         title: "Refund Policy (रिफंड एवं वापसी नीति)", 
         content: `
-          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं अखंड भंडारे हेतु दिया गया स्वैच्छिक आर्थिक सहयोग गैर-वापसीयोग्य (Non-refundable) है।</p>
-          <p><b>2. स्टोर सामग्री:</b> सामग्री में कोई दोष या खराबी होने पर पार्सल मिलने के 48 घंटों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
+          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य है।</p>
+          <p><b>2. स्टोर सामग्री:</b> सामग्री में दोष होने पर 2 दिनों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
         ` 
       },
       shipping: { 
         title: "Shipping Policy (डिलीवरी नीति)", 
         content: `
-          <p><b>1. डिलीवरी समय:</b> ऑर्डर कन्फर्म होने के 3 से 7 कार्य दिवसों में पार्सल आपके दिए गए पते पर सुरक्षित पहुँचाया जाता है।</p>
-          <p><b>2. सुरक्षित OTP सिस्टम:</b> डिलीवरी प्रतिनिधि को सामान प्राप्त करते समय अपना गुप्त डिलीवरी OTP बताना अनिवार्य है।</p>
+          <p><b>1. डिलीवरी समय:</b> ऑर्डर कन्फर्म होने के 3 से 7 कार्य दिवसों में पार्सल आपके पते पर सुरक्षित पहुँचाया जाता है।</p>
+          <p><b>2. सुरक्षित OTP सिस्टम:</b> डिलीवरी प्रतिनिधि को सामान प्राप्त करते समय अपना गुप्त OTP बताना अनिवार्य है।</p>
         ` 
       },
       contact: {
         title: "Contact Us (संपर्क विवरण)",
         content: `
-          <p style="margin-bottom:12px;">श्री दुर्गा पूजा सेवा समिति एवं Maa Durga Enterprises से संपर्क करने हेतु आधिकारिक विवरण:</p>
+          <p style="margin-bottom:12px;">श्री दुर्गा पूजा सेवा समिति एवं Maa Durga Enterprises से संपर्क करने हेतु विवरण:</p>
           <div style="background:rgba(255,215,0,0.08); border:1px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:12px;">
             <p style="margin-bottom:10px;">📞 <b>मोबाइल / व्हाट्सएप:</b> <a href="tel:+919120226597" style="color:var(--gold); font-weight:bold; text-decoration:none;">+91 9120226597</a></p>
             <p style="margin-bottom:10px;">✉️ <b>ईमेल आईडी:</b> <a href="mailto:yugampal23@gmail.com" style="color:var(--gold); font-weight:bold; text-decoration:none;">yugampal23@gmail.com</a></p>
