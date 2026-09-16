@@ -65,7 +65,8 @@
     @media (min-width: 650px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; } }
     .p-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.18); border-radius: 10px; padding: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
     .p-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; background: #222; }
-    .p-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 3px; }
+    .p-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 2px; }
+    .p-sku { font-size: 10px; color: var(--gold); margin-bottom: 4px; font-weight: bold; }
     .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
     .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
@@ -98,7 +99,7 @@
     .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
     /* Popups and Overlays */
-    .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
+    .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; z-index: 10001; }
 
     /* Dynamic QR Box */
@@ -119,9 +120,9 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Dedicated Legal & Contact Modal */
-    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.85); backdrop-filter: blur(6px); z-index: 7000; overflow-y: auto; padding: 25px 15px; }
-    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.3); position: relative; }
+    /* Dedicated Fullscreen Legal & Contact Modal */
+    .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); z-index: 10005; overflow-y: auto; padding: 25px 15px; }
+    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; }
 
     /* Sticky Footer */
     footer { padding: 25px 15px 20px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; }
@@ -430,7 +431,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER) -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -554,7 +555,7 @@
     </div>
   </div>
 
-  <!-- LOGIN POPUP (Direct Modal Fix) -->
+  <!-- LOGIN POPUP -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
       <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
@@ -753,7 +754,7 @@
         </div>
 
         <div class="form-group">
-          <label>अतिरिक्त उत्पाद तस्वीरें (Multiple Images):</label>
+          <label>अतिरिक्त उत्पाद तस्वीरें (Multiple Images for Slider):</label>
           <div id="extraProductPhotosContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
             <input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">
           </div>
@@ -962,7 +963,9 @@
       auth = firebase.auth();
       db = firebase.firestore();
       googleProvider = new firebase.auth.GoogleAuthProvider();
-    } catch(e) {}
+    } catch(e) {
+      console.error("Firebase init error:", e);
+    }
 
     let currentUser = null;
     let cloudDonations = [];
@@ -995,7 +998,7 @@
       });
       const target = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
       if (target) target.style.display = 'block';
-      if (event && event.target) event.target.classList.add('active');
+      if (window.event && window.event.target) window.event.target.classList.add('active');
       if (tab === 'chat') {
         setTimeout(scrollChatToBottom, 150);
       }
@@ -1079,7 +1082,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE (50% DUCKING & EXACT RESUME TIME)
+    // TRUE LIVE RADIO SYNC ENGINE (CONTINUOUS PLAYLIST AUTO-NEXT & REPEAT LOOP)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1090,14 +1093,19 @@
 
     coreAudio.addEventListener('seeking', () => {
       const expectedTime = calculateLiveSeekTime();
-      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.0) {
+      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.2) {
         coreAudio.currentTime = expectedTime;
       }
     });
 
-    coreAudio.addEventListener('ended', () => {
-      if (cloudPlaylist.length > 0 && db) {
-        const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
+    // Advance to next song in playlist automatically
+    function playNextSongInContinuousLoop() {
+      if (cloudPlaylist.length === 0) return;
+      const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
+      globalRoomState.songIndex = nextIdx;
+      globalRoomState.startedAt = Date.now();
+
+      if (db) {
         db.collection("settings").doc("music_room").set({
           songIndex: nextIdx,
           startedAt: Date.now(),
@@ -1105,12 +1113,18 @@
           sourceType: "mp3"
         }, { merge: true }).catch(() => {});
       }
+
+      applyGlobalSyncPlayback();
+    }
+
+    coreAudio.addEventListener('ended', () => {
+      playNextSongInContinuousLoop();
     });
 
-    const tag = document.createElement('script');
-    tag.src = "https://www.youtube.com/iframe_api";
+    const ytScriptTag = document.createElement('script');
+    ytScriptTag.src = "https://www.youtube.com/iframe_api";
     const firstScript = document.getElementsByTagName('script')[0];
-    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(tag, firstScript);
+    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(ytScriptTag, firstScript);
 
     window.onYouTubeIframeAPIReady = function() {
       ytPlayer = new YT.Player('ytPlayerDiv', {
@@ -1272,6 +1286,10 @@
     }
 
     function loginWithGoogle() {
+      if (!auth || !googleProvider) {
+        showAppToast("प्रमाणीकरण सेवा उपलब्ध नहीं है!");
+        return;
+      }
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
         if (res.user && res.user.email && res.user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
@@ -1298,7 +1316,7 @@
     function switchAdm(id) {
       document.querySelectorAll('.adm-tab').forEach(b => b.classList.remove('active'));
       document.querySelectorAll('.adm-sec').forEach(s => s.classList.remove('active'));
-      if (event && event.target) event.target.classList.add('active');
+      if (window.event && window.event.target) window.event.target.classList.add('active');
       const target = document.getElementById(id);
       if (target) target.classList.add('active');
     }
@@ -1380,13 +1398,14 @@
 
       db.collection("products").onSnapshot(snap => {
         cloudProducts = [];
+        let autoSkuNum = 101;
         snap.forEach(doc => {
           const d = doc.data();
-          cloudProducts.push({ id: doc.id, ...d });
+          const finalSku = d.sku || ("SKU-" + autoSkuNum++);
+          cloudProducts.push({ id: doc.id, sku: finalSku, ...d });
         });
         renderCategories();
         renderStoreProducts();
-        renderSuggestedProducts();
         renderAdminProducts();
         renderAdminOffers();
       }, err => {});
@@ -1456,7 +1475,7 @@
 
       if (timerSec) timerSec.style.display = 'block';
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
+      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       if (clockEl) {
@@ -1504,7 +1523,7 @@
       `).join('');
     }
 
-    // --- FLIPKART STYLE PRODUCT DETAILS & WORKING SLIDER ---
+    // --- PRODUCT DETAILS MODAL ---
     let activeCheckoutProduct = null;
     let appliedDiscountPercent = 0;
     let currentCalculatedPrice = 0;
@@ -1965,7 +1984,7 @@
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("✅ पावन कथा व गैलरी प्रकाशित हुई!");
+        showAppToast("✅ पावन कथा प्रकाशित हुई!");
         document.getElementById('newBlogTitle').value = '';
         document.getElementById('newBlogImg').value = '';
         document.getElementById('newBlogVideo').value = '';
@@ -2382,8 +2401,8 @@
       welcomeAudio.currentTime = 0;
       welcomeAudio.play().then(() => {
         welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0; // Restore 100%
-          closeModal('celebrationModal'); // Auto close popup
+          if (coreAudio) coreAudio.volume = 1.0; // Restore to 100%
+          closeModal('celebrationModal'); // Auto close popup when welcome audio ends
         };
       }).catch(() => {
         if (coreAudio) coreAudio.volume = 1.0;
@@ -2566,6 +2585,7 @@
           <div class="p-card" onclick="openProductDetails('${p.id}')">
             <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
             <div class="p-title">${p.name}</div>
+            <div class="p-sku">SKU: ${p.sku}</div>
             ${stockBadge}
             <div class="p-price">${priceHtml}</div>
             <button class="btn-buy" ${btnDisabled} onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
@@ -2576,33 +2596,24 @@
       const sg = document.getElementById('suggestedGrid');
       if (sg) {
         const suggested = cloudProducts.filter(p => p.showOnDonation === true);
-        if (suggested.length > 0) {
-          sg.innerHTML = suggested.map(p => {
-            let dp = p.price;
-            let ph = `₹${p.price}`;
-            if (p.discountPercent && p.discountPercent > 0) {
-              dp = Math.round(p.price - (p.price * p.discountPercent) / 100);
-              ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${dp}`;
-            }
-            return `
-              <div class="p-card" onclick="openProductDetails('${p.id}')">
-                <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
-                <div class="p-title">${p.name}</div>
-                <div class="p-price">${ph}</div>
-                <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
-              </div>
-            `;
-          }).join('');
-        } else {
-          sg.innerHTML = cloudProducts.slice(0, 4).map(p => `
+        const listToRender = suggested.length > 0 ? suggested : cloudProducts.slice(0, 4);
+        sg.innerHTML = listToRender.map(p => {
+          let dp = p.price;
+          let ph = `₹${p.price}`;
+          if (p.discountPercent && p.discountPercent > 0) {
+            dp = Math.round(p.price - (p.price * p.discountPercent) / 100);
+            ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${dp}`;
+          }
+          return `
             <div class="p-card" onclick="openProductDetails('${p.id}')">
               <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
               <div class="p-title">${p.name}</div>
-              <div class="p-price">₹${p.price}</div>
+              <div class="p-sku">SKU: ${p.sku}</div>
+              <div class="p-price">${ph}</div>
               <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
             </div>
-          `).join('');
-        }
+          `;
+        }).join('');
       }
     }
 
@@ -2648,7 +2659,7 @@
         discountPercent: 0,
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
+        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (${skuCode})`);
         document.getElementById('newPName').value = '';
         document.getElementById('newPPrice').value = '';
         document.getElementById('newPCat').value = '';
@@ -2673,13 +2684,13 @@
       });
 
       if (filtered.length === 0) {
-        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला।</td></tr>`;
+        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला। ऊपर 'नया प्रोडक्ट जोड़ें' से जोड़ें।</td></tr>`;
         return;
       }
 
       tb.innerHTML = filtered.map(p => `
         <tr>
-          <td><b style="color:var(--gold);">${p.sku || 'SKU-0000'}</b></td>
+          <td><b style="color:var(--gold);">${p.sku}</b></td>
           <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
           <td><b>${p.name}</b></td>
           <td>
@@ -2705,7 +2716,7 @@
       }
       tb.innerHTML = cloudProducts.map(p => `
         <tr>
-          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku || ''}</small></td>
+          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku}</small></td>
           <td>₹${p.price}</td>
           <td>
             <input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" min="0" max="90" style="width:70px; padding:4px;" placeholder="%">
