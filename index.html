@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title id="siteDocTitle">Maa Durga Enterprises | à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿</title>
+  <title id="siteDocTitle">Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति</title>
   
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -119,9 +119,6 @@
     table { width: 100%; border-collapse: collapse; font-size: 11px; margin-top: 8px; }
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
-    .md-offer-product-row:hover { background: rgba(255,215,0,0.06); }
-    #offerProductPicker::-webkit-scrollbar { width: 6px; }
-    #offerProductPicker::-webkit-scrollbar-thumb { background: rgba(255,215,0,0.35); border-radius: 10px; }
 
     /* Dedicated Fullscreen Legal & Contact Modal */
     .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); z-index: 10005; overflow-y: auto; padding: 25px 15px; }
@@ -192,47 +189,47 @@
   <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
 
   <!-- GANESH JI BUTTON -->
-  <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="à¤¶à¥à¤°à¥€ à¤—à¤£à¥‡à¤¶ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤µ à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤¨à¤¿à¤µà¤¾à¤°à¤£">
-    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="à¤¦à¤¿à¤µà¥à¤¯ à¤šà¤•à¥à¤°">
-    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="à¤¶à¥à¤°à¥€ à¤—à¤£à¥‡à¤¶ à¤œà¥€">
+  <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
+    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="दिव्य चक्र">
+    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="श्री गणेश जी">
   </button>
 
   <!-- Top Bar -->
   <div class="top-bar">
     <button class="music-btn" id="musicToggleBtn" onclick="toggleBackgroundMusic()">
-      ðŸš© <span id="musicBtnTxt">Play Music</span>
+      🚩 <span id="musicBtnTxt">Play Music</span>
     </button>
     <div class="top-right-nav">
       <div id="navAuthArea">
-        <button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">à¤²à¥‰à¤—à¤¿à¤¨ / à¤¸à¤¾à¤‡à¤¨-à¤…à¤ª</button>
+        <button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">लॉगिन / साइन-अप</button>
       </div>
-      <button class="menu-hamburger-btn" onclick="toggleSideNav()">â˜°</button>
+      <button class="menu-hamburger-btn" onclick="toggleSideNav()">☰</button>
     </div>
   </div>
 
   <!-- Side Navigation Drawer -->
   <div class="side-nav-drawer" id="sideNavDrawer">
     <div class="drawer-header">
-      <b style="color:var(--gold); font-size:14px;">ðŸš© à¤¨à¥‡à¤µà¤¿à¤—à¥‡à¤¶à¤¨ à¤®à¥‡à¤¨à¥‚</b>
-      <button onclick="toggleSideNav()" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">âœ–</button>
+      <b style="color:var(--gold); font-size:14px;">🚩 नेविगेशन मेनू</b>
+      <button onclick="toggleSideNav()" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
     </div>
-    <button class="drawer-item active" onclick="switchNav('donate')">ðŸ™ <span>à¤¸à¤¹à¤¯à¥‹à¤— à¤«à¥‰à¤°à¥à¤®</span></button>
-    <button class="drawer-item" onclick="switchNav('store')">ðŸ›ï¸ <span>à¤­à¤•à¥à¤¤à¤¿ à¤¸à¥à¤Ÿà¥‹à¤°</span></button>
-    <button class="drawer-item" onclick="switchNav('blog')">ðŸ“– <span>à¤ªà¤¾à¤µà¤¨ à¤•à¤¥à¤¾à¤à¤ à¤µ à¤¬à¥à¤²à¥‰à¤—</span></button>
-    <button class="drawer-item" onclick="switchNav('directory')">ðŸ“œ <span>à¤¸à¤¾à¤°à¥à¤µà¤œà¤¨à¤¿à¤• à¤¸à¥‚à¤šà¥€</span></button>
-    <button class="drawer-item" onclick="switchNav('chat')">ðŸ’¬ <span>à¤­à¤•à¥à¤¤ à¤²à¤¾à¤‡à¤µ à¤šà¥ˆà¤Ÿ</span></button>
-    <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">ðŸ“¦ <span>à¤®à¥‡à¤°à¥‡ à¤‘à¤°à¥à¤¡à¤°à¥à¤¸</span></button>
+    <button class="drawer-item active" onclick="switchNav('donate')">🙏 <span>सहयोग फॉर्म</span></button>
+    <button class="drawer-item" onclick="switchNav('store')">🛍️ <span>भक्ति स्टोर</span></button>
+    <button class="drawer-item" onclick="switchNav('blog')">📖 <span>पावन कथाएँ व ब्लॉग</span></button>
+    <button class="drawer-item" onclick="switchNav('directory')">📜 <span>सार्वजनिक सूची</span></button>
+    <button class="drawer-item" onclick="switchNav('chat')">💬 <span>भक्त लाइव चैट</span></button>
+    <button class="drawer-item" id="drwOrdersItem" onclick="switchNav('orders')" style="display:none;">📦 <span>मेरे ऑर्डर्स</span></button>
   </div>
 
   <header>
-    <h1 id="hdrTitle">ðŸš© à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿ ðŸš©</h1>
-    <p id="hdrSub">Maa Durga Enterprises | 12 à¤®à¤¾à¤¹ à¤œà¤¨-à¤•à¤²à¥à¤¯à¤¾à¤£ à¤à¤µà¤‚ à¤ªà¤¾à¤µà¤¨ à¤¸à¥‡à¤µà¤¾ à¤ªà¥‹à¤°à¥à¤Ÿà¤²</p>
+    <h1 id="hdrTitle">🚩 श्री दुर्गा पूजा सेवा समिति 🚩</h1>
+    <p id="hdrSub">Maa Durga Enterprises | 12 माह जन-कल्याण एवं पावन सेवा पोर्टल</p>
   </header>
 
   <!-- Running Ticker -->
   <div class="ticker-wrap">
     <div class="ticker-content" id="liveTicker">
-      ðŸš© Maa Durga Enterprises | à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿ ðŸš© à¤…à¤–à¤‚à¤¡ à¤­à¤‚à¤¡à¤¾à¤°à¤¾ à¤à¤µà¤‚ 12 à¤®à¤¾à¤¹ à¤ªà¤¾à¤µà¤¨ à¤¸à¥‡à¤µà¤¾ à¤ªà¥‹à¤°à¥à¤Ÿà¤² ðŸŒ¸ à¤®à¤¾à¤ à¤­à¤—à¤µà¤¤à¥€ à¤†à¤ª à¤¸à¤­à¥€ à¤ªà¤° à¤…à¤ªà¤¨à¥€ à¤…à¤¸à¥€à¤® à¤•à¥ƒà¤ªà¤¾ à¤¬à¤¨à¤¾à¤ à¤°à¤–à¥‡à¤‚ ðŸŒ¸
+      🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸
     </div>
   </div>
 
@@ -241,86 +238,86 @@
     <!-- PANEL 1: DONATION FORM -->
     <div id="panelDonate">
       <div class="card">
-        <h2 id="txtDonateTitle">à¤ªà¤¾à¤µà¤¨ à¤¸à¥‡à¤µà¤¾ à¤¸à¤¹à¤¯à¥‹à¤— / à¤¦à¤¾à¤¨ (à¤…à¤ªà¤¨à¥€ à¤‡à¤šà¥à¤›à¤¾à¤¨à¥à¤¸à¤¾à¤°)</h2>
+        <h2 id="txtDonateTitle">पावन सेवा सहयोग / दान (अपनी इच्छानुसार)</h2>
         <div class="form-group">
-          <label id="lblCause">à¤¸à¤¹à¤¯à¥‹à¤— à¤•à¤¾ à¤•à¤¾à¤°à¤£ à¤šà¥à¤¨à¥‡à¤‚</label>
+          <label id="lblCause">सहयोग का कारण चुनें</label>
           <select id="donCause">
-            <option value="à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤à¤µà¤‚ à¤…à¤–à¤‚à¤¡ à¤­à¤‚à¤¡à¤¾à¤°à¤¾">à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤à¤µà¤‚ à¤…à¤–à¤‚à¤¡ à¤­à¤‚à¤¡à¤¾à¤°à¤¾</option>
-            <option value="à¤†à¤ªà¤¦à¤¾ à¤à¤µà¤‚ à¤¬à¤¾à¤¢à¤¼ à¤ªà¥€à¤¡à¤¼à¤¿à¤¤ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾">à¤†à¤ªà¤¦à¤¾ à¤à¤µà¤‚ à¤¬à¤¾à¤¢à¤¼ à¤ªà¥€à¤¡à¤¼à¤¿à¤¤ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾</option>
-            <option value="à¤¦à¥ˆà¤¨à¤¿à¤• à¤…à¤¨à¥à¤¨à¤¦à¤¾à¤¨ à¤à¤µà¤‚ à¤—à¥Œ-à¤¸à¥‡à¤µà¤¾">à¤¦à¥ˆà¤¨à¤¿à¤• à¤…à¤¨à¥à¤¨à¤¦à¤¾à¤¨ à¤à¤µà¤‚ à¤—à¥Œ-à¤¸à¥‡à¤µà¤¾</option>
-            <option value="à¤…à¤¨à¥à¤¯ à¤§à¤¾à¤°à¥à¤®à¤¿à¤• à¤•à¤¾à¤°à¥à¤¯">à¤…à¤¨à¥à¤¯ à¤§à¤¾à¤°à¥à¤®à¤¿à¤• à¤•à¤¾à¤°à¥à¤¯</option>
+            <option value="श्री दुर्गा पूजा एवं अखंड भंडारा">श्री दुर्गा पूजा एवं अखंड भंडारा</option>
+            <option value="आपदा एवं बाढ़ पीड़ित सहायता">आपदा एवं बाढ़ पीड़ित सहायता</option>
+            <option value="दैनिक अन्नदान एवं गौ-सेवा">दैनिक अन्नदान एवं गौ-सेवा</option>
+            <option value="अन्य धार्मिक कार्य">अन्य धार्मिक कार्य</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label id="lblSalutation">à¤¸à¤‚à¤¬à¥‹à¤§à¤¨ à¤šà¥à¤¨à¥‡à¤‚ (à¤µà¥ˆà¤•à¤²à¥à¤ªà¤¿à¤•)</label>
+          <label id="lblSalutation">संबोधन चुनें (वैकल्पिक)</label>
           <select id="donSalutation">
-            <option value="none" selected>à¤•à¥‹à¤ˆ à¤¨à¤¹à¥€à¤‚ (à¤¸à¥€à¤§à¥‡ à¤¨à¤¾à¤® à¤µ à¤œà¥€)</option>
-            <option value="shree">à¤¶à¥à¤°à¥€ (à¤ªà¥à¤°à¥à¤·)</option>
-            <option value="shrimati">à¤¶à¥à¤°à¥€à¤®à¤¤à¥€ (à¤®à¤¹à¤¿à¤²à¤¾)</option>
-            <option value="kumari">à¤•à¥à¤®à¤¾à¤°à¥€ / à¤¸à¥à¤¶à¥à¤°à¥€ (à¤•à¤¨à¥à¤¯à¤¾)</option>
+            <option value="none" selected>कोई नहीं (सीधे नाम व जी)</option>
+            <option value="shree">श्री (पुरुष)</option>
+            <option value="shrimati">श्रीमती (महिला)</option>
+            <option value="kumari">कुमारी / सुश्री (कन्या)</option>
           </select>
         </div>
 
         <div class="form-group">
-          <label id="lblName">à¤¶à¥à¤­ à¤¨à¤¾à¤® *</label>
-          <input type="text" id="donName" placeholder="à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚">
+          <label id="lblName">शुभ नाम *</label>
+          <input type="text" id="donName" placeholder="नाम दर्ज करें">
         </div>
         <div class="form-group">
-          <label id="lblCity">à¤¸à¥à¤¥à¤¾à¤¨ / à¤¶à¤¹à¤° / à¤—à¤¾à¤à¤µ</label>
-          <input type="text" id="donCity" placeholder="à¤œà¥ˆà¤¸à¥‡: à¤ªà¥à¤°à¤¤à¤¾à¤ªà¤—à¤¢à¤¼">
+          <label id="lblCity">स्थान / शहर / गाँव</label>
+          <input type="text" id="donCity" placeholder="जैसे: प्रतापगढ़">
         </div>
         <div class="form-group">
-          <label id="lblPhone">à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° (à¤°à¤¸à¥€à¤¦ à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤ à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥) *</label>
-          <input type="tel" id="donPhone" placeholder="10-à¤…à¤‚à¤•à¥€à¤¯ à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚">
+          <label id="lblPhone">व्हाट्सएप मोबाइल नंबर (रसीद प्राप्त करने हेतु) *</label>
+          <input type="tel" id="donPhone" placeholder="10-अंकीय व्हाट्सएप नंबर दर्ज करें">
         </div>
         <div class="form-group">
-          <label id="lblAmount">à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¾à¤¶à¤¿ (â‚¹) *</label>
-          <input type="number" id="donAmount" placeholder="à¤°à¤¾à¤¶à¤¿ (â‚¹)">
+          <label id="lblAmount">सहयोग राशि (₹) *</label>
+          <input type="number" id="donAmount" placeholder="राशि (₹)">
         </div>
-        <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">à¤¸à¤¹à¤¯à¥‹à¤— à¤•à¤°à¥‡à¤‚ (Pay Now)</button>
+        <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
       <!-- FEATURED POSTS ON DONATION PAGE WITH TIMER -->
       <div id="donationFeaturedBlogSec" style="display:none; margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <h3 class="sec-heading" style="margin:0;">ðŸŒ¸ à¤µà¤¿à¤¶à¥‡à¤· à¤ªà¤¾à¤µà¤¨ à¤•à¤¥à¤¾ à¤µ à¤¦à¤°à¥à¤¶à¤¨</h3>
+          <h3 class="sec-heading" style="margin:0;">🌸 विशेष पावन कथा व दर्शन</h3>
           <div id="offerCountdownTimer" style="background:rgba(211,47,47,0.2); border:1px solid var(--red); color:#ff8a80; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:bold;">
-            â³ à¤‘à¤«à¤° à¤¸à¤®à¤¾à¤ªà¥à¤¤: <span id="timerClockTxt">00:00:00</span>
+            ⏳ ऑफर समाप्त: <span id="timerClockTxt">00:00:00</span>
           </div>
         </div>
         <div class="blog-grid" id="donationFeaturedBlogList"></div>
       </div>
 
       <div id="suggestedSec">
-        <h3 class="sec-heading" id="txtSuggestedTitle">ðŸŒŸ à¤…à¤¨à¥à¤¶à¤‚à¤¸à¤¿à¤¤ à¤à¤µà¤‚ à¤ªà¤¾à¤µà¤¨ à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ (Suggested Items)</h3>
+        <h3 class="sec-heading" id="txtSuggestedTitle">🌟 अनुशंसित एवं पावन सामग्री (Suggested Items)</h3>
         <div class="product-grid" id="suggestedGrid"></div>
       </div>
     </div>
 
     <!-- PANEL 2: STORE -->
     <div id="panelStore" style="display:none;">
-      <h3 class="sec-heading" id="txtStoreTitle">à¤®à¤¾à¤ à¤¦à¥à¤°à¥à¤—à¤¾ à¤à¤‚à¤Ÿà¤°à¤ªà¥à¤°à¤¾à¤‡à¤œà¥‡à¤œ â€” à¤ªà¤¾à¤µà¤¨ à¤­à¤•à¥à¤¤à¤¿ à¤¸à¥à¤Ÿà¥‹à¤°</h3>
+      <h3 class="sec-heading" id="txtStoreTitle">माँ दुर्गा एंटरप्राइजेज — पावन भक्ति स्टोर</h3>
       <div class="category-scroll" id="catScroll">
-        <span class="cat-chip active" onclick="filterCategory('all')">à¤¸à¤­à¥€ (All)</span>
+        <span class="cat-chip active" onclick="filterCategory('all')">सभी (All)</span>
       </div>
       <div class="product-grid" id="fullStoreGrid"></div>
     </div>
 
     <!-- PANEL 3: DEVOTIONAL BLOG / STORIES PAGE -->
     <div id="panelBlog" style="display:none;">
-      <h3 class="sec-heading">ðŸ“– à¤ªà¤¾à¤µà¤¨ à¤­à¤•à¥à¤¤à¤¿ à¤•à¤¥à¤¾à¤à¤, à¤¦à¤°à¥à¤¶à¤¨ à¤à¤µà¤‚ à¤¬à¥à¤²à¥‰à¤—</h3>
+      <h3 class="sec-heading">📖 पावन भक्ति कथाएँ, दर्शन एवं ब्लॉग</h3>
       <div class="blog-grid" id="publicFullBlogList"></div>
     </div>
 
     <!-- PANEL 4: DONOR DIRECTORY -->
     <div id="panelDirectory" class="card" style="display:none;">
-      <h2 id="txtDirTitle">ðŸ“œ à¤¸à¤¾à¤°à¥à¤µà¤œà¤¨à¤¿à¤• à¤¸à¤¹à¤¯à¥‹à¤— à¤¸à¥‚à¤šà¥€ (à¤ªà¤¾à¤°à¤¦à¤°à¥à¤¶à¥€ à¤¬à¥‹à¤°à¥à¤¡)</h2>
-      <input type="text" id="dirSearch" onkeyup="searchPublicDonors()" placeholder="ðŸ” à¤¨à¤¾à¤® à¤¯à¤¾ à¤¶à¤¹à¤° à¤¸à¥‡ à¤–à¥‹à¤œà¥‡à¤‚..." style="margin-bottom:12px;">
+      <h2 id="txtDirTitle">📜 सार्वजनिक सहयोग सूची (पारदर्शी बोर्ड)</h2>
+      <input type="text" id="dirSearch" onkeyup="searchPublicDonors()" placeholder="🔍 नाम या शहर से खोजें..." style="margin-bottom:12px;">
       <div class="table-responsive">
         <table>
           <thead>
-            <tr><th>à¤¤à¤¾à¤°à¥€à¤–</th><th>à¤¦à¤¾à¤¨à¤¦à¤¾à¤¤à¤¾</th><th>à¤¸à¥à¤¥à¤¾à¤¨</th><th>à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¾à¤¶à¤¿</th><th>à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯</th></tr>
+            <tr><th>तारीख</th><th>दानदाता</th><th>स्थान</th><th>सहयोग राशि</th><th>उद्देश्य</th></tr>
           </thead>
           <tbody id="publicDonorBody"></tbody>
         </table>
@@ -332,29 +329,29 @@
       <div class="insta-chat-box">
         <div class="insta-chat-header">
           <div>
-            <b style="color:var(--gold); font-size:15px;">ðŸ’¬ à¤­à¤•à¥à¤¤ à¤²à¤¾à¤‡à¤µ à¤¸à¤¤à¥à¤¸à¤‚à¤— à¤šà¤°à¥à¤šà¤¾</b>
-            <p style="font-size:10px; color:#aaa;">à¤†à¤ªà¤•à¤¾ à¤¸à¤‚à¤¦à¥‡à¤¶ à¤¦à¤¾à¤à¤ (Right), à¤¬à¤¾à¤•à¥€ à¤­à¤•à¥à¤¤à¥‹à¤‚ à¤•à¤¾ à¤¬à¤¾à¤à¤ (Left) | 1 à¤˜à¤‚à¤Ÿà¥‡ à¤®à¥‡à¤‚ à¤‘à¤Ÿà¥‹-à¤•à¥à¤²à¥€à¤¨</p>
+            <b style="color:var(--gold); font-size:15px;">💬 भक्त लाइव सत्संग चर्चा</b>
+            <p style="font-size:10px; color:#aaa;">आपका संदेश दाएँ (Right), बाकी भक्तों का बाएँ (Left) | 1 घंटे में ऑटो-क्लीन</p>
           </div>
           <div style="background:rgba(76,175,80,0.2); border:1px solid #4caf50; color:#81c784; padding:4px 10px; border-radius:12px; font-size:11px; font-weight:bold;">
-            ðŸŸ¢ <span id="onlineUsersCount">1</span> à¤‘à¤¨à¤²à¤¾à¤‡à¤¨
+            🟢 <span id="onlineUsersCount">1</span> ऑनलाइन
           </div>
         </div>
 
         <div class="insta-messages-area" id="globalChatContainer"></div>
 
         <div class="insta-chat-input-bar">
-          <input type="text" id="chatInputMsg" placeholder="à¤¸à¤‚à¤¦à¥‡à¤¶, à¤«à¥‹à¤Ÿà¥‹ à¤¯à¤¾ à¤«à¤¾à¤‡à¤² à¤­à¥‡à¤œà¥‡à¤‚..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
-          <button class="insta-action-btn" onclick="toggleVoiceRecording()" id="micBtn" title="à¤µà¥‰à¤¯à¤¸ à¤¨à¥‹à¤Ÿ à¤­à¥‡à¤œà¥‡à¤‚">ðŸŽ™ï¸</button>
-          <button class="insta-action-btn" onclick="openCameraApp()" title="à¤•à¥ˆà¤®à¤°à¤¾ à¤¸à¥‡ à¤«à¥‹à¤Ÿà¥‹ à¤²à¥‡à¤‚">ðŸ“·</button>
-          <button class="insta-action-btn" onclick="openFileStorage()" title="à¤¸à¥à¤Ÿà¥‹à¤°à¥‡à¤œ à¤¸à¥‡ à¤«à¤¾à¤‡à¤²/à¤«à¥‹à¤Ÿà¥‹ à¤šà¥à¤¨à¥‡à¤‚">ðŸ“</button>
-          <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="à¤­à¥‡à¤œà¥‡à¤‚">ðŸ“¤</button>
+          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो या फाइल भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
+          <button class="insta-action-btn" onclick="toggleVoiceRecording()" id="micBtn" title="वॉयस नोट भेजें">🎙️</button>
+          <button class="insta-action-btn" onclick="openCameraApp()" title="कैमरा से फोटो लें">📷</button>
+          <button class="insta-action-btn" onclick="openFileStorage()" title="स्टोरेज से फाइल/फोटो चुनें">📁</button>
+          <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
         </div>
       </div>
     </div>
 
     <!-- PANEL 6: MY ORDERS -->
     <div id="panelOrders" class="card" style="display:none;">
-      <h2 id="txtMyOrdersTitle">ðŸ“¦ à¤®à¥‡à¤°à¥‡ à¤‘à¤°à¥à¤¡à¤°à¥à¤¸ à¤à¤µà¤‚ à¤²à¤¾à¤‡à¤µ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸</h2>
+      <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
     </div>
 
@@ -363,9 +360,9 @@
   <!-- POPUP: FLIPKART STYLE ORDER TRACKING TIMELINE MODAL -->
   <div class="custom-popup-overlay" id="orderTrackModal">
     <div class="custom-popup-box" style="max-width:450px; text-align:left; max-height:85vh; overflow-y:auto;">
-      <h3 style="color:var(--gold); margin-bottom:10px; text-align:center;">ðŸ“ à¤‘à¤°à¥à¤¡à¤° à¤²à¤¾à¤‡à¤µ à¤Ÿà¥à¤°à¥ˆà¤•à¤¿à¤‚à¤—</h3>
+      <h3 style="color:var(--gold); margin-bottom:10px; text-align:center;">📍 ऑर्डर लाइव ट्रैकिंग</h3>
       <div id="trackModalContent" style="margin-bottom:14px;"></div>
-      <button class="btn-main" onclick="closeModal('orderTrackModal')">à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button class="btn-main" onclick="closeModal('orderTrackModal')">बंद करें</button>
     </div>
   </div>
 
@@ -373,50 +370,50 @@
   <div class="custom-popup-overlay" id="problemSupportModal">
     <div class="custom-popup-box" style="max-width:460px; text-align:left;">
       <div style="text-align:center; margin-bottom:10px;">
-        <span style="font-size:24px;">ðŸš© à¥ à¤—à¤‚ à¤—à¤£à¤ªà¤¤à¤¯à¥‡ à¤¨à¤®à¤ƒ ðŸš©</span>
-        <h3 style="color:var(--gold); font-size:16px; margin-top:3px;">à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤¨à¤¿à¤µà¤¾à¤°à¤£ à¤à¤µà¤‚ à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ à¤•à¥‡à¤‚à¤¦à¥à¤°</h3>
-        <p style="font-size:11px; color:#ffcdd2;">à¤­à¥à¤—à¤¤à¤¾à¤¨, à¤‘à¤°à¥à¤¡à¤° à¤¯à¤¾ à¤ªà¥‹à¤°à¥à¤Ÿà¤² à¤¸à¤‚à¤¬à¤‚à¤§à¥€ à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤¬à¤¤à¤¾à¤à¤‚, à¤¤à¤¤à¥à¤•à¤¾à¤² à¤¸à¤®à¤¾à¤§à¤¾à¤¨ à¤¹à¥‹à¤—à¤¾à¥¤</p>
+        <span style="font-size:24px;">🚩 ॐ गं गणपतये नमः 🚩</span>
+        <h3 style="color:var(--gold); font-size:16px; margin-top:3px;">समस्या निवारण एवं सहायता केंद्र</h3>
+        <p style="font-size:11px; color:#ffcdd2;">भुगतान, ऑर्डर या पोर्टल संबंधी समस्या बताएं, तत्काल समाधान होगा।</p>
       </div>
 
       <div style="background:rgba(0,0,0,0.5); padding:14px; border-radius:10px; border:1px solid rgba(255,215,0,0.3);">
-        <label>à¤†à¤ªà¤•à¤¾ à¤¶à¥à¤­ à¤¨à¤¾à¤® *</label>
-        <input type="text" id="probCustName" placeholder="à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚" style="margin-bottom:8px;">
+        <label>आपका शुभ नाम *</label>
+        <input type="text" id="probCustName" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
 
-        <label>à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° *</label>
-        <input type="tel" id="probCustPhone" placeholder="à¤¸à¤‚à¤ªà¤°à¥à¤• à¤¹à¥‡à¤¤à¥ à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤°" style="margin-bottom:8px;">
+        <label>व्हाट्सएप मोबाइल नंबर *</label>
+        <input type="tel" id="probCustPhone" placeholder="संपर्क हेतु मोबाइल नंबर" style="margin-bottom:8px;">
 
-        <label>à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤•à¤¾ à¤µà¤¿à¤µà¤°à¤£ *</label>
-        <textarea id="probCustMsg" placeholder="à¤…à¤ªà¤¨à¥€ à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤¯à¤¾ à¤ªà¥à¤°à¤¶à¥à¤¨ à¤µà¤¿à¤¸à¥à¤¤à¤¾à¤° à¤¸à¥‡ à¤²à¤¿à¤–à¥‡à¤‚..." style="height:65px; margin-bottom:8px;"></textarea>
+        <label>समस्या का विवरण *</label>
+        <textarea id="probCustMsg" placeholder="अपनी समस्या या प्रश्न विस्तार से लिखें..." style="height:65px; margin-bottom:8px;"></textarea>
 
-        <label>à¤¸à¥à¤•à¥à¤°à¥€à¤¨à¤¶à¥‰à¤Ÿ à¤¯à¤¾ à¤«à¥‹à¤Ÿà¥‹ (à¤µà¥ˆà¤•à¤²à¥à¤ªà¤¿à¤•):</label>
+        <label>स्क्रीनशॉट या फोटो (वैकल्पिक):</label>
         <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
           <button type="button" onclick="document.getElementById('problemScreenPicker').click()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
-            ðŸ“· à¤«à¥‹à¤Ÿà¥‹ / à¤¸à¥à¤•à¥à¤°à¥€à¤¨à¤¶à¥‰à¤Ÿ à¤šà¥à¤¨à¥‡à¤‚
+            📷 फोटो / स्क्रीनशॉट चुनें
           </button>
           <span id="probImgStatusTxt" style="font-size:11px; color:#81c784;"></span>
         </div>
         <div id="probImgPreviewBox" style="margin-bottom:10px;"></div>
 
-        <button class="btn-main" onclick="submitProblemTicket()">à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤­à¥‡à¤œà¥‡à¤‚ (Submit)</button>
+        <button class="btn-main" onclick="submitProblemTicket()">समस्या भेजें (Submit)</button>
       </div>
 
-      <button onclick="closeModal('problemSupportModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚ (Cancel)</button>
+      <button onclick="closeModal('problemSupportModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें (Cancel)</button>
     </div>
   </div>
 
   <!-- POPUP: SAFE SCREENSHOT VIEWER -->
   <div class="custom-popup-overlay" id="imagePreviewModal">
     <div class="custom-popup-box" style="max-width:550px; padding:15px; position:relative;">
-      <h3 style="color:var(--gold); margin-bottom:10px; font-size:15px;">ðŸ” à¤«à¥‹à¤Ÿà¥‹ à¤ªà¥à¤°à¥€à¤µà¥à¤¯à¥‚</h3>
+      <h3 style="color:var(--gold); margin-bottom:10px; font-size:15px;">🔍 फोटो प्रीव्यू</h3>
       <div style="max-height:68vh; overflow-y:auto; border-radius:8px; background:#000; border:1px solid rgba(255,215,0,0.3); padding:4px;">
         <img id="previewZoomImage" src="" style="width:100%; height:auto; display:block; border-radius:6px;">
       </div>
       <div style="display:flex; gap:10px; margin-top:12px;">
         <a id="downloadScreenshotBtn" href="" download="image.png" class="btn-main" style="text-decoration:none; padding:10px; display:inline-block; font-size:13px; flex:1;">
-          â¬‡ï¸ à¤«à¤¼à¥‹à¤Ÿà¥‹ à¤¡à¤¾à¤‰à¤¨à¤²à¥‹à¤¡ à¤•à¤°à¥‡à¤‚
+          ⬇️ फ़ोटो डाउनलोड करें
         </a>
         <button type="button" onclick="closeModal('imagePreviewModal')" class="btn-main" style="background:#444; flex:1; padding:10px; font-size:13px;">
-          à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚
+          बंद करें
         </button>
       </div>
     </div>
@@ -430,7 +427,7 @@
       <div id="readerBlogMedia" style="margin-bottom:12px;"></div>
       <div id="readerBlogGallery" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:12px;"></div>
       <div id="readerBlogText" style="font-size:13px; color:#ffcdd2; line-height:1.7; white-space:pre-line;"></div>
-      <button class="btn-main" onclick="closeModal('blogReaderModal')" style="margin-top:16px;">à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button class="btn-main" onclick="closeModal('blogReaderModal')" style="margin-top:16px;">बंद करें</button>
     </div>
   </div>
 
@@ -439,7 +436,7 @@
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
         <h3 style="color:var(--gold); font-size:16px;" id="modalProdTitle"></h3>
-        <button onclick="closeModal('productDetailModal')" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">âœ–</button>
+        <button onclick="closeModal('productDetailModal')" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
       </div>
 
       <div id="modalProdMedia" style="margin-bottom:10px; text-align:center; background:#000; border-radius:8px; padding:6px; border:1px solid rgba(255,215,0,0.3);"></div>
@@ -458,93 +455,93 @@
   <!-- POPUP: CHECKOUT MODAL -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:480px; max-height:88vh; overflow-y:auto;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:6px;" id="chkTitle">ðŸ“¦ à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤‘à¤°à¥à¤¡à¤° à¤šà¥‡à¤•à¤†à¤‰à¤Ÿ</h3>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:6px;" id="chkTitle">📦 सुरक्षित ऑर्डर चेकआउट</h3>
       <div style="font-size:12px; color:#ffcdd2; text-align:center; margin-bottom:14px;" id="chkProdSummary"></div>
 
       <div id="checkoutStep1">
-        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">à¤šà¤°à¤£ 1: à¤¸à¤‚à¤ªà¥‚à¤°à¥à¤£ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤ªà¤¤à¤¾ (Delivery Address)</h4>
+        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 1: संपूर्ण डिलीवरी पता (Delivery Address)</h4>
         
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>à¤ªà¥‚à¤°à¤¾ à¤¨à¤¾à¤® *</label><input type="text" id="dlvName" placeholder="à¤†à¤ªà¤•à¤¾ à¤ªà¥‚à¤°à¤¾ à¤¨à¤¾à¤®"></div>
-          <div class="form-group"><label>à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° *</label><input type="tel" id="dlvPhone" placeholder="10-à¤…à¤‚à¤•à¥€à¤¯ à¤¨à¤‚à¤¬à¤°"></div>
+          <div class="form-group"><label>पूरा नाम *</label><input type="text" id="dlvName" placeholder="आपका पूरा नाम"></div>
+          <div class="form-group"><label>मोबाइल नंबर *</label><input type="tel" id="dlvPhone" placeholder="10-अंकीय नंबर"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>à¤à¤•à¥à¤¸à¥à¤Ÿà¥à¤°à¤¾ à¤®à¥‹à¤¬à¤¾à¤‡à¤² (à¤µà¥ˆà¤•à¤²à¥à¤ªà¤¿à¤•)</label><input type="tel" id="dlvAltPhone" placeholder="à¤¦à¥‚à¤¸à¤°à¤¾ à¤¸à¤‚à¤ªà¤°à¥à¤• à¤¨à¤‚à¤¬à¤°"></div>
-          <div class="form-group"><label>à¤ªà¤¿à¤¨à¤•à¥‹à¤¡ (Pincode) *</label><input type="number" id="dlvPincode" placeholder="6-à¤…à¤‚à¤• à¤ªà¤¿à¤¨"></div>
+          <div class="form-group"><label>एक्स्ट्रा मोबाइल (वैकल्पिक)</label><input type="tel" id="dlvAltPhone" placeholder="दूसरा संपर्क नंबर"></div>
+          <div class="form-group"><label>पिनकोड (Pincode) *</label><input type="number" id="dlvPincode" placeholder="6-अंक पिन"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>à¤®à¤•à¤¾à¤¨ à¤¨à¤‚à¤¬à¤° / à¤«à¥à¤²à¥ˆà¤Ÿ *</label><input type="text" id="dlvHouse" placeholder="à¤¹à¤¾à¤‰à¤¸ à¤¨à¤‚ / à¤¬à¤¿à¤²à¥à¤¡à¤¿à¤‚à¤—"></div>
-          <div class="form-group"><label>à¤°à¥‹à¤¡ / à¤—à¤²à¥€ à¤•à¤¾ à¤¨à¤¾à¤® *</label><input type="text" id="dlvRoad" placeholder="à¤°à¥‹à¤¡ / à¤¸à¥à¤Ÿà¥à¤°à¥€à¤Ÿ"></div>
+          <div class="form-group"><label>मकान नंबर / फ्लैट *</label><input type="text" id="dlvHouse" placeholder="हाउस नं / बिल्डिंग"></div>
+          <div class="form-group"><label>रोड / गली का नाम *</label><input type="text" id="dlvRoad" placeholder="रोड / स्ट्रीट"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>à¤à¤°à¤¿à¤¯à¤¾ / à¤®à¥‹à¤¹à¤²à¥à¤²à¤¾ *</label><input type="text" id="dlvArea" placeholder="à¤‡à¤²à¤¾à¤•à¤¾ / à¤•à¥‰à¤²à¥‹à¤¨à¥€"></div>
-          <div class="form-group"><label>à¤¶à¤¹à¤° / à¤Ÿà¤¾à¤‰à¤¨ (City) *</label><input type="text" id="dlvCity" placeholder="à¤¶à¤¹à¤° à¤•à¤¾ à¤¨à¤¾à¤®"></div>
+          <div class="form-group"><label>एरिया / मोहल्ला *</label><input type="text" id="dlvArea" placeholder="इलाका / कॉलोनी"></div>
+          <div class="form-group"><label>शहर / टाउन (City) *</label><input type="text" id="dlvCity" placeholder="शहर का नाम"></div>
         </div>
 
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>à¤œà¤¼à¤¿à¤²à¤¾ (District) *</label><input type="text" id="dlvDist" placeholder="à¤œà¤¼à¤¿à¤²à¤¾"></div>
-          <div class="form-group"><label>à¤°à¤¾à¤œà¥à¤¯ (State) *</label><input type="text" id="dlvState" value="Uttar Pradesh"></div>
+          <div class="form-group"><label>ज़िला (District) *</label><input type="text" id="dlvDist" placeholder="ज़िला"></div>
+          <div class="form-group"><label>राज्य (State) *</label><input type="text" id="dlvState" value="Uttar Pradesh"></div>
         </div>
 
-        <button class="btn-main" onclick="goToCheckoutStep2()" style="margin-top:10px;">à¤†à¤—à¥‡ à¤¬à¤¢à¤¼à¥‡à¤‚ (Next: Payment)</button>
+        <button class="btn-main" onclick="goToCheckoutStep2()" style="margin-top:10px;">आगे बढ़ें (Next: Payment)</button>
       </div>
 
       <div id="checkoutStep2" style="display:none;">
-        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">à¤šà¤°à¤£ 2: à¤­à¥à¤—à¤¤à¤¾à¤¨ à¤•à¤¾ à¤¤à¤°à¥€à¤•à¤¾ à¤µ à¤•à¥‚à¤ªà¤¨</h4>
+        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 2: भुगतान का तरीका व कूपन</h4>
         
         <div class="form-group">
-          <label>à¤­à¥à¤—à¤¤à¤¾à¤¨ à¤®à¤¾à¤§à¥à¤¯à¤® à¤šà¥à¤¨à¥‡à¤‚ *</label>
+          <label>भुगतान माध्यम चुनें *</label>
           <select id="dlvPayMode" onchange="togglePaymentModeView()"></select>
         </div>
 
         <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold); margin:8px 0;">
           <div style="display:flex; gap:6px;">
-            <input type="text" id="chkCouponInput" placeholder="Discount Code (à¤•à¥‚à¤ªà¤¨ à¤•à¥‹à¤¡)" style="text-transform:uppercase;">
-            <button type="button" class="btn-main" onclick="applyStoreCoupon()" style="width:auto; padding:0 12px; font-size:12px;">à¤²à¤¾à¤—à¥‚ à¤•à¤°à¥‡à¤‚</button>
+            <input type="text" id="chkCouponInput" placeholder="Discount Code (कूपन कोड)" style="text-transform:uppercase;">
+            <button type="button" class="btn-main" onclick="applyStoreCoupon()" style="width:auto; padding:0 12px; font-size:12px;">लागू करें</button>
           </div>
           <p id="couponMsg" style="font-size:11px; color:#81c784; margin-top:4px; display:none;"></p>
         </div>
 
         <div style="font-size:15px; font-weight:bold; color:var(--gold); text-align:right; margin-bottom:10px;">
-          à¤…à¤‚à¤¤à¤¿à¤® à¤¦à¥‡à¤¯ à¤°à¤¾à¤¶à¤¿: <span id="finalCheckoutAmt">â‚¹0</span>
+          अंतिम देय राशि: <span id="finalCheckoutAmt">₹0</span>
         </div>
 
         <div id="checkoutUpiBox" style="background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(255,215,0,0.3); text-align:center; display:none;">
-          <p style="font-size:11px; color:var(--gold); font-weight:bold; margin-bottom:4px;">ðŸ“² QR à¤¸à¥à¤•à¥ˆà¤¨ à¤•à¤°à¥‡à¤‚ à¤¯à¤¾ à¤à¤ª à¤–à¥‹à¤²à¥‡à¤‚:</p>
-          <div class="upi-app-badges"><span class="upi-badge" onclick="openStoreUpiApp()">Paytm / GPay / PhonePe à¤–à¥‹à¤²à¥‡à¤‚</span></div>
+          <p style="font-size:11px; color:var(--gold); font-weight:bold; margin-bottom:4px;">📲 QR स्कैन करें या ऐप खोलें:</p>
+          <div class="upi-app-badges"><span class="upi-badge" onclick="openStoreUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
           <div style="display: flex; justify-content: center; margin: 6px 0;"><div class="qr-box-wrapper" id="dynamicQrContainer"></div></div>
           <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *" style="margin-top:6px;">
         </div>
 
         <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-main" onclick="document.getElementById('checkoutStep2').style.display='none'; document.getElementById('checkoutStep1').style.display='block';" style="background:#444; flex:1;">à¤ªà¥€à¤›à¥‡ à¤œà¤¾à¤à¤‚</button>
-          <button type="button" class="btn-main" onclick="confirmStoreOrderFinal()" style="flex:2;">à¤‘à¤°à¥à¤¡à¤° à¤•à¤¨à¥à¤«à¤°à¥à¤® à¤•à¤°à¥‡à¤‚</button>
+          <button type="button" class="btn-main" onclick="document.getElementById('checkoutStep2').style.display='none'; document.getElementById('checkoutStep1').style.display='block';" style="background:#444; flex:1;">पीछे जाएं</button>
+          <button type="button" class="btn-main" onclick="confirmStoreOrderFinal()" style="flex:2;">ऑर्डर कन्फर्म करें</button>
         </div>
       </div>
 
-      <button onclick="closeModal('checkoutModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button onclick="closeModal('checkoutModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
   <!-- POPUP: EDIT PRODUCT MODAL (ADMIN) -->
   <div class="custom-popup-overlay" id="editProductModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
-      <h3 style="color:var(--gold); margin-bottom:12px;">âœï¸ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤à¤¡à¤¿à¤Ÿ à¤•à¤°à¥‡à¤‚</h3>
+      <h3 style="color:var(--gold); margin-bottom:12px;">✏️ प्रोडक्ट एडिट करें</h3>
       <input type="hidden" id="editProdId">
       
-      <div class="form-group"><label>à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤•à¤¾ à¤¨à¤¾à¤®:</label><input type="text" id="editPName"></div>
+      <div class="form-group"><label>सामग्री का नाम:</label><input type="text" id="editPName"></div>
       <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-        <div class="form-group"><label>à¤•à¥€à¤®à¤¤ (â‚¹):</label><input type="number" id="editPPrice"></div>
-        <div class="form-group"><label>à¤•à¥ˆà¤Ÿà¥‡à¤—à¤°à¥€:</label><input type="text" id="editPCat"></div>
+        <div class="form-group"><label>कीमत (₹):</label><input type="number" id="editPPrice"></div>
+        <div class="form-group"><label>कैटेगरी:</label><input type="text" id="editPCat"></div>
       </div>
-      <div class="form-group"><label>à¤®à¥à¤–à¥à¤¯ à¤«à¥‹à¤Ÿà¥‹ URL:</label><input type="text" id="editPImg"></div>
-      <div class="form-group"><label>à¤µà¤¿à¤µà¤°à¤£ (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
+      <div class="form-group"><label>मुख्य फोटो URL:</label><input type="text" id="editPImg"></div>
+      <div class="form-group"><label>विवरण (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
 
       <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
-        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">à¤ªà¥‡à¤®à¥‡à¤‚à¤Ÿ à¤¤à¤°à¥€à¤•à¥‡:</label>
+        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">पेमेंट तरीके:</label>
         <div style="display:flex; gap:14px; font-size:12px;">
           <label><input type="checkbox" id="editPayUpi"> UPI / QR</label>
           <label><input type="checkbox" id="editPayCod"> COD</label>
@@ -552,8 +549,8 @@
       </div>
 
       <div style="display:flex; gap:10px; margin-top:12px;">
-        <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">à¤¸à¥‡à¤µ à¤•à¤°à¥‡à¤‚</button>
-        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚</button>
+        <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">सेव करें</button>
+        <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
       </div>
     </div>
   </div>
@@ -561,43 +558,43 @@
   <!-- LOGIN POPUP (Direct Modal Fix) -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:18px;">ðŸ‘¤ <span>à¤²à¥‰à¤—à¤¿à¤¨ / à¤¸à¤¾à¤‡à¤¨-à¤…à¤ª</span></h3>
-      <p style="font-size:12px; color:#ffcdd2; margin-bottom:16px;">à¤…à¤ªà¤¨à¥‡ Google à¤–à¤¾à¤¤à¥‡ à¤¸à¥‡ à¤†à¤¸à¤¾à¤¨à¥€ à¤¸à¥‡ à¤²à¥‰à¤—à¤¿à¤¨ à¤•à¤°à¥‡à¤‚:</p>
+      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
+      <p style="font-size:12px; color:#ffcdd2; margin-bottom:16px;">अपने Google खाते से आसानी से लॉगिन करें:</p>
       <button type="button" class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google à¤¸à¥‡ à¤²à¥‰à¤—à¤¿à¤¨ à¤•à¤°à¥‡à¤‚
+        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
       </button>
-      <br><button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <br><button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
   <!-- ADMIN PASS MODAL -->
   <div class="custom-popup-overlay" id="adminPassModal">
     <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:10px;">ðŸ” Owner Verification</h3>
-      <p style="font-size:12px; color:#ffcdd2; margin-bottom:12px;">à¤–à¤¾à¤¤à¤¾: <b>yugampal23@gmail.com</b><br>à¤•à¥ƒà¤ªà¤¯à¤¾ à¤®à¤¾à¤¸à¥à¤Ÿà¤° à¤ªà¤¾à¤¸à¤µà¤°à¥à¤¡ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚:</p>
+      <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
+      <p style="font-size:12px; color:#ffcdd2; margin-bottom:12px;">खाता: <b>yugampal23@gmail.com</b><br>कृपया मास्टर पासवर्ड दर्ज करें:</p>
       <input type="password" id="ownerPassInput" placeholder="Master Password" style="margin-bottom:12px;">
-      <button class="btn-main" onclick="verifyOwnerPassword()">à¤ªà¥à¤°à¤µà¥‡à¤¶ à¤•à¤°à¥‡à¤‚</button>
-      <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button class="btn-main" onclick="verifyOwnerPassword()">प्रवेश करें</button>
+      <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
   <!-- ADMIN INSPECT MODAL -->
   <div class="custom-popup-overlay" id="adminInspectModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">ðŸ” à¤¸à¤‚à¤ªà¥‚à¤°à¥à¤£ à¤µà¤¿à¤µà¤°à¤£ (Inspect Record)</h3>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
       <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;"></div>
-      <button class="btn-main" onclick="closeModal('adminInspectModal')">à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button class="btn-main" onclick="closeModal('adminInspectModal')">बंद करें</button>
     </div>
   </div>
 
   <!-- DONATION PAYMENT MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">ðŸ™ à¤ªà¤¾à¤µà¤¨ à¤¸à¤¹à¤¯à¥‹à¤— à¤­à¥à¤—à¤¤à¤¾à¤¨</h3>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
       <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox"></div>
-      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">à¤¸à¤¹à¤¯à¥‹à¤— à¤•à¤¨à¥à¤«à¤°à¥à¤® à¤•à¤°à¥‡à¤‚ (Confirm)</button>
-      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">à¤°à¤¦à¥à¤¦ à¤•à¤°à¥‡à¤‚</button>
+      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
+      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
@@ -605,27 +602,27 @@
   <div class="custom-popup-overlay" id="notifyPopup">
     <div class="custom-popup-box">
       <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
-      <button class="btn-main" onclick="closeModal('notifyPopup')">à¤ à¥€à¤• à¤¹à¥ˆ (OK)</button>
+      <button class="btn-main" onclick="closeModal('notifyPopup')">ठीक है (OK)</button>
     </div>
   </div>
 
   <!-- CELEBRATION MODAL (WITH WELCOME SOUND & 50% DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
-      <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">ðŸŽ‰ à¤œà¤¯ à¤®à¤¾à¤¤à¤¾ à¤¦à¥€! ðŸŽ‰</h1>
+      <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
       <h3 id="celDonorName" style="color:#fff; font-size:17px; margin-bottom:10px;"></h3>
       <p id="celMsg" style="font-size:14px; line-height: 1.6; color:#ffcdd2;"></p>
       <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
-        ðŸŒ¸ à¤®à¤¾à¤ à¤­à¤—à¤µà¤¤à¥€ à¤•à¤¾ à¤†à¤¶à¥€à¤°à¥à¤µà¤¾à¤¦ à¤†à¤ª à¤”à¤° à¤†à¤ªà¤•à¥‡ à¤ªà¥‚à¤°à¥‡ à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤ªà¤° à¤¸à¤¦à¥ˆà¤µ à¤¬à¤¨à¥€ à¤°à¤¹à¥‡à¥¤ ðŸŒ¸
+        🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
       </p>
-      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">à¤œà¤¯ à¤®à¤¾à¤¤à¤¾ à¤¦à¥€</button>
+      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
     </div>
   </div>
 
   <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
   <div class="legal-page" id="legalPage">
     <div class="legal-container">
-      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚ âœ–</button>
+      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
       <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
       <div id="legalBodyText"></div>
     </div>
@@ -634,22 +631,22 @@
   <!-- POPUP: FEEDBACK MODAL -->
   <div class="custom-popup-overlay" id="feedbackModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">ðŸŒŸ à¤­à¤•à¥à¤¤ à¤¸à¥à¤à¤¾à¤µ à¤à¤µà¤‚ à¤…à¤¨à¥à¤­à¤µ</h3>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;">
-        <label>à¤†à¤ªà¤•à¤¾ à¤¶à¥à¤­ à¤¨à¤¾à¤®:</label>
-        <input type="text" id="fbNameInput" placeholder="à¤¨à¤¾à¤® à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚" style="margin-bottom:8px;">
-        <label>à¤°à¥‡à¤Ÿà¤¿à¤‚à¤— à¤šà¥à¤¨à¥‡à¤‚:</label>
+        <label>आपका शुभ नाम:</label>
+        <input type="text" id="fbNameInput" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
+        <label>रेटिंग चुनें:</label>
         <select id="fbRatingInput" style="margin-bottom:8px;">
-          <option value="5">â­â­â­â­â­ 5 Star</option>
-          <option value="4">â­â­â­â­ 4 Star</option>
-          <option value="3">â­â­â­ 3 Star</option>
+          <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+          <option value="4">⭐⭐⭐⭐ 4 Star</option>
+          <option value="3">⭐⭐⭐ 3 Star</option>
         </select>
-        <label>à¤…à¤ªà¤¨à¤¾ à¤ªà¤¾à¤µà¤¨ à¤…à¤¨à¥à¤­à¤µ à¤¯à¤¾ à¤¸à¥à¤à¤¾à¤µ à¤²à¤¿à¤–à¥‡à¤‚:</label>
-        <textarea id="fbMsgInput" placeholder="à¤¸à¥à¤à¤¾à¤µ à¤¯à¤¹à¤¾à¤ à¤²à¤¿à¤–à¥‡à¤‚..." style="height:60px; margin-bottom:10px;"></textarea>
-        <button class="btn-main" onclick="submitPublicFeedback()">à¤¸à¥à¤à¤¾à¤µ à¤­à¥‡à¤œà¥‡à¤‚ (Submit)</button>
+        <label>अपना पावन अनुभव या सुझाव लिखें:</label>
+        <textarea id="fbMsgInput" placeholder="सुझाव यहाँ लिखें..." style="height:60px; margin-bottom:10px;"></textarea>
+        <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
       </div>
       <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
-      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚ (Close)</button>
+      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
     </div>
   </div>
 
@@ -657,47 +654,47 @@
   <div id="adminPortal">
     <div class="admin-inner">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px; margin-bottom:12px;">
-        <h3 style="color:var(--gold); font-size:16px;">ðŸ‘‘ à¤¸à¤‚à¤ªà¥‚à¤°à¥à¤£ à¤®à¤¾à¤²à¤¿à¤• à¤•à¤‚à¤Ÿà¥à¤°à¥‹à¤² à¤¸à¥‡à¤‚à¤Ÿà¤° (yugampal23@gmail.com)</h3>
-        <button onclick="document.getElementById('adminPortal').style.display='none'" style="background:#d32f2f; color:#fff; border:none; padding:5px 12px; border-radius:4px; cursor:pointer;">à¤ªà¥‹à¤°à¥à¤Ÿà¤² à¤¬à¤‚à¤¦ à¤•à¤°à¥‡à¤‚ âœ–</button>
+        <h3 style="color:var(--gold); font-size:16px;">👑 संपूर्ण मालिक कंट्रोल सेंटर (yugampal23@gmail.com)</h3>
+        <button onclick="document.getElementById('adminPortal').style.display='none'" style="background:#d32f2f; color:#fff; border:none; padding:5px 12px; border-radius:4px; cursor:pointer;">पोर्टल बंद करें ✖</button>
       </div>
 
       <div class="admin-tabs">
-        <button class="adm-tab active" onclick="switchAdm('admSet')">âš™ï¸ à¤¸à¥‡à¤Ÿà¤¿à¤‚à¤—à¥à¤¸</button>
-        <button class="adm-tab" onclick="switchAdm('admPlaylist')">ðŸŽµ à¤­à¤œà¤¨ à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ</button>
-        <button class="adm-tab" onclick="switchAdm('admBlogAdm')">ðŸ“– à¤­à¤•à¥à¤¤à¤¿ à¤¬à¥à¤²à¥‰à¤—</button>
-        <button class="adm-tab" onclick="switchAdm('admProdAdd')">âž• à¤¨à¤¯à¤¾ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
-        <button class="adm-tab" onclick="switchAdm('admProdManage')">ðŸ“‹ à¤¸à¥à¤Ÿà¥‹à¤° à¤‡à¤¨à¥à¤µà¥‡à¤‚à¤Ÿà¤°à¥€ à¤µ à¤¸à¥à¤Ÿà¥‰à¤•</button>
-        <button class="adm-tab" onclick="switchAdm('admOffers')">ðŸ·ï¸ à¤‘à¤«à¤° à¤µ à¤¡à¤¿à¤¸à¥à¤•à¤¾à¤‰à¤‚à¤Ÿ à¤•à¤‚à¤Ÿà¥à¤°à¥‹à¤²</button>
-        <button class="adm-tab" onclick="switchAdm('admCoup')">ðŸŽ« à¤•à¥‚à¤ªà¤¨à¥à¤¸</button>
-        <button class="adm-tab" onclick="switchAdm('admOrd')">ðŸ“¦ à¤—à¥à¤°à¤¾à¤¹à¤• à¤‘à¤°à¥à¤¡à¤°à¥à¤¸</button>
-        <button class="adm-tab" onclick="switchAdm('admDon')">ðŸ’µ à¤¡à¥‹à¤¨à¥‡à¤¶à¤¨</button>
-        <button class="adm-tab" onclick="switchAdm('admFeed')">ðŸ’¬ à¤¸à¥à¤à¤¾à¤µ</button>
+        <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स</button>
+        <button class="adm-tab" onclick="switchAdm('admPlaylist')">🎵 भजन प्लेलिस्ट</button>
+        <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 भक्ति ब्लॉग</button>
+        <button class="adm-tab" onclick="switchAdm('admProdAdd')">➕ नया प्रोडक्ट जोड़ें</button>
+        <button class="adm-tab" onclick="switchAdm('admProdManage')">📋 स्टोर इन्वेंटरी व स्टॉक</button>
+        <button class="adm-tab" onclick="switchAdm('admOffers')">🏷️ ऑफर व डिस्काउंट कंट्रोल</button>
+        <button class="adm-tab" onclick="switchAdm('admCoup')">🎫 कूपन्स</button>
+        <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स</button>
+        <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन</button>
+        <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
       <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
       <div id="admSet" class="adm-sec active">
-        <h4 style="color:var(--gold); margin-bottom:8px;">à¤¸à¥à¤•à¥à¤°à¥€à¤¨ à¤ªà¤° à¤šà¤²à¤¨à¥‡ à¤µà¤¾à¤²à¤¾ à¤¸à¤‚à¤¦à¥‡à¤¶:</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
 
-        <h4 style="color:var(--gold); margin-bottom:8px;">ðŸŽµ à¤‘à¤¡à¤¿à¤¯à¥‹ à¤®à¥‹à¤¡ à¤šà¥à¤¨à¥‡à¤‚:</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">🎵 ऑडियो मोड चुनें:</h4>
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
-            <label style="color:var(--gold); font-weight:bold;">à¤‘à¤¡à¤¿à¤¯à¥‹ à¤®à¤¾à¤§à¥à¤¯à¤® (Audio Source):</label>
+            <label style="color:var(--gold); font-weight:bold;">ऑडियो माध्यम (Audio Source):</label>
             <select id="admAudioModeSelect" onchange="toggleAudioModeInputs()">
-              <option value="mp3">MP3 Stream (24 à¤˜à¤‚à¤Ÿà¥‡ à¤²à¤¾à¤‡à¤µ à¤°à¥‡à¤¡à¤¿à¤¯à¥‹ à¤¸à¤¿à¤‚à¤•)</option>
-              <option value="yt">YouTube Link (YouTube à¤µà¥€à¤¡à¤¿à¤¯à¥‹)</option>
+              <option value="mp3">MP3 Stream (24 घंटे लाइव रेडियो सिंक)</option>
+              <option value="yt">YouTube Link (YouTube वीडियो)</option>
             </select>
           </div>
           <div class="form-group" id="ytInputGroup" style="display:none;">
-            <label>YouTube à¤­à¤œà¤¨ à¤²à¤¿à¤‚à¤•:</label>
+            <label>YouTube भजन लिंक:</label>
             <input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=...">
           </div>
         </div>
 
-        <h4 style="color:var(--gold); margin-bottom:8px;">ðŸ’³ à¤ªà¥‡à¤®à¥‡à¤‚à¤Ÿ à¤—à¥‡à¤Ÿà¤µà¥‡ à¤®à¥‹à¤¡ à¤µ à¤•à¥€ (Key) à¤¸à¥‡à¤Ÿà¤¿à¤‚à¤—à¥à¤¸:</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">💳 पेमेंट गेटवे मोड व की (Key) सेटिंग्स:</h4>
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
-            <label>à¤ªà¥‡à¤®à¥‡à¤‚à¤Ÿ à¤•à¤¾ à¤®à¥à¤–à¥à¤¯ à¤¤à¤°à¥€à¤•à¤¾ à¤šà¥à¤¨à¥‡à¤‚:</label>
+            <label>पेमेंट का मुख्य तरीका चुनें:</label>
             <select id="admPaymentMode">
               <option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>
               <option value="razorpay">Razorpay Auto Gateway</option>
@@ -705,28 +702,28 @@
             </select>
           </div>
           <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-          <div class="form-group"><label>Razorpay Key ID (à¤¯à¤¦à¤¿ à¤‰à¤ªà¤¯à¥‹à¤— à¤¹à¥‹):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+          <div class="form-group"><label>Razorpay Key ID (यदि उपयोग हो):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
         </div>
 
-        <h4 style="color:var(--gold); margin:14px 0 8px;">à¤¸à¥‹à¤¶à¤² à¤²à¤¿à¤‚à¤•à¥à¤¸:</h4>
-        <div class="form-group"><label>à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª à¤¨à¤‚à¤¬à¤° (10 à¤…à¤‚à¤•):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
+        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
+        <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
 
-        <button class="btn-main" onclick="saveAdminSettings()">à¤¸à¥‡à¤Ÿà¤¿à¤‚à¤—à¥à¤¸ à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤•à¤°à¥‡à¤‚</button>
+        <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
       <!-- Admin Sec 2: Playlist Manager -->
       <div id="admPlaylist" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ à¤®à¥‡à¤‚ à¤¨à¤¯à¤¾ à¤­à¤œà¤¨ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ प्लेलिस्ट में नया भजन जोड़ें</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-          <input type="text" id="newSongTitle" placeholder="à¤­à¤œà¤¨ à¤•à¤¾ à¤¨à¤¾à¤® (à¤‰à¤¦à¤¾: à¤¦à¥à¤°à¥à¤—à¤¾ à¤†à¤°à¤¤à¥€)">
-          <input type="text" id="newSongUrl" placeholder="Google Drive à¤¶à¥‡à¤¯à¤° à¤²à¤¿à¤‚à¤• (https://...) *">
+          <input type="text" id="newSongTitle" placeholder="भजन का नाम (उदा: दुर्गा आरती)">
+          <input type="text" id="newSongUrl" placeholder="Google Drive शेयर लिंक (https://...) *">
         </div>
-        <button class="btn-main" onclick="addNewPlaylistSong()">+ à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ à¤®à¥‡à¤‚ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
+        <button class="btn-main" onclick="addNewPlaylistSong()">+ प्लेलिस्ट में जोड़ें</button>
 
-        <h4 style="color:var(--gold); margin:18px 0 8px;">à¤­à¤œà¤¨ à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ:</h4>
+        <h4 style="color:var(--gold); margin:18px 0 8px;">भजन प्लेलिस्ट:</h4>
         <div class="table-responsive">
           <table id="admPlaylistTable">
-            <thead><tr><th>à¤•à¥à¤°à¤®</th><th>à¤­à¤œà¤¨ à¤¨à¤¾à¤®</th><th>à¤‘à¤¡à¤¿à¤¯à¥‹ à¤²à¤¿à¤‚à¤•</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>क्रम</th><th>भजन नाम</th><th>ऑडियो लिंक</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -734,39 +731,39 @@
 
       <!-- Admin Sec 3: Blog Manager -->
       <div id="admBlogAdm" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ à¤¨à¤ˆ à¤­à¤•à¥à¤¤à¤¿ à¤•à¤¥à¤¾ / à¤¦à¤°à¥à¤¶à¤¨ à¤ªà¥‹à¤¸à¥à¤Ÿ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</h4>
-        <div class="form-group"><label>à¤•à¤¥à¤¾ / à¤ªà¥‹à¤¸à¥à¤Ÿ à¤¶à¥€à¤°à¥à¤·à¤• *</label><input type="text" id="newBlogTitle" placeholder="à¤œà¥ˆà¤¸à¥‡: à¤®à¤¾à¤ à¤­à¤—à¤µà¤¤à¥€ à¤•à¤¾ à¤¨à¥Œ à¤°à¥‚à¤ªà¥‹à¤‚ à¤•à¤¾ à¤®à¤¹à¤¾à¤¤à¥à¤®à¥à¤¯"></div>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ नई भक्ति कथा / दर्शन पोस्ट जोड़ें</h4>
+        <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:6px;">
-          <input type="text" id="newBlogAuthor" placeholder="à¤²à¥‡à¤–à¤• / à¤¸à¤®à¤¿à¤¤à¤¿">
-          <input type="text" id="newBlogImg" placeholder="à¤®à¥à¤–à¥à¤¯ à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤•">
+          <input type="text" id="newBlogAuthor" placeholder="लेखक / समिति">
+          <input type="text" id="newBlogImg" placeholder="मुख्य फोटो URL लिंक">
         </div>
         
         <div class="form-group">
-          <label>à¤…à¤¤à¤¿à¤°à¤¿à¤•à¥à¤¤ à¤¤à¤¸à¥à¤µà¥€à¤°à¥‡à¤‚:</label>
+          <label>अतिरिक्त तस्वीरें:</label>
           <div id="extraPhotoInputsContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
-            <input type="text" class="extra-img-url" placeholder="à¤à¤¡à¤¿à¤¶à¤¨à¤² à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤• #1">
+            <input type="text" class="extra-img-url" placeholder="एडिशनल फोटो URL लिंक #1">
           </div>
-          <button type="button" onclick="addExtraPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ à¤”à¤° à¤«à¥‹à¤Ÿà¥‹ URL à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
+          <button type="button" onclick="addExtraPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ और फोटो URL जोड़ें</button>
         </div>
 
         <div class="form-group" style="margin-top:6px;">
-          <label>à¤¯à¥‚à¤Ÿà¥à¤¯à¥‚à¤¬ à¤µà¥€à¤¡à¤¿à¤¯à¥‹ à¤²à¤¿à¤‚à¤•:</label>
+          <label>यूट्यूब वीडियो लिंक:</label>
           <input type="text" id="newBlogVideo" placeholder="https://www.youtube.com/watch?v=...">
         </div>
         <div class="form-group">
-          <label>à¤ªà¥‚à¤°à¥€ à¤•à¤¥à¤¾ à¤µà¤¿à¤µà¤°à¤£ *:</label>
-          <textarea id="newBlogBody" placeholder="à¤ªà¥‚à¤°à¥€ à¤•à¤¹à¤¾à¤¨à¥€..." style="height:110px;"></textarea>
+          <label>पूरी कथा विवरण *:</label>
+          <textarea id="newBlogBody" placeholder="पूरी कहानी..." style="height:110px;"></textarea>
         </div>
         <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold);">
           <input type="checkbox" id="newBlogOnDonation" style="width:18px; height:18px; cursor:pointer;">
-          <label for="newBlogOnDonation" style="margin:0; color:#fff; font-weight:bold; cursor:pointer;">â­ à¤¡à¥‹à¤¨à¥‡à¤¶à¤¨ à¤ªà¥‡à¤œ à¤ªà¤° à¤¦à¤¿à¤–à¤¾à¤à¤‚</label>
+          <label for="newBlogOnDonation" style="margin:0; color:#fff; font-weight:bold; cursor:pointer;">⭐ डोनेशन पेज पर दिखाएं</label>
         </div>
-        <button class="btn-main" onclick="saveNewBlogPost()">+ à¤¬à¥à¤²à¥‰à¤— à¤ªà¥à¤°à¤•à¤¾à¤¶à¤¿à¤¤ à¤•à¤°à¥‡à¤‚</button>
+        <button class="btn-main" onclick="saveNewBlogPost()">+ ब्लॉग प्रकाशित करें</button>
 
-        <h4 style="color:var(--gold); margin:18px 0 8px;">à¤ªà¥à¤°à¤•à¤¾à¤¶à¤¿à¤¤ à¤¬à¥à¤²à¥‰à¤— à¤¸à¥‚à¤šà¥€</h4>
+        <h4 style="color:var(--gold); margin:18px 0 8px;">प्रकाशित ब्लॉग सूची</h4>
         <div class="table-responsive">
           <table id="admBlogTable">
-            <thead><tr><th>à¤¤à¤¾à¤°à¥€à¤–</th><th>à¤¶à¥€à¤°à¥à¤·à¤•</th><th>à¤¡à¥‹à¤¨à¥‡à¤¶à¤¨ à¤ªà¥‡à¤œ?</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>शीर्षक</th><th>डोनेशन पेज?</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -774,34 +771,34 @@
 
       <!-- Admin Sec 4: Add New Product -->
       <div id="admProdAdd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:10px;">+ à¤¨à¤¯à¤¾ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ / à¤ªà¥à¤°à¤¸à¤¾à¤¦ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</h4>
+        <h4 style="color:var(--gold); margin-bottom:10px;">+ नया प्रोडक्ट / प्रसाद जोड़ें</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-          <input type="text" id="newPName" placeholder="à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤•à¤¾ à¤¨à¤¾à¤® (à¤‰à¤¦à¤¾: Prasad Dana) *">
-          <input type="number" id="newPPrice" placeholder="à¤•à¥€à¤®à¤¤ (â‚¹) *">
+          <input type="text" id="newPName" placeholder="सामग्री का नाम (उदा: Prasad Dana) *">
+          <input type="number" id="newPPrice" placeholder="कीमत (₹) *">
         </div>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:6px 0;">
-          <input type="text" id="newPCat" placeholder="à¤•à¥ˆà¤Ÿà¥‡à¤—à¤°à¥€ (à¤‰à¤¦à¤¾: Grocery)">
-          <input type="text" id="newPSubCat" placeholder="à¤¸à¤¬-à¤•à¥ˆà¤Ÿà¥‡à¤—à¤°à¥€ (à¤‰à¤¦à¤¾: 500g Pack)">
+          <input type="text" id="newPCat" placeholder="कैटेगरी (उदा: Grocery)">
+          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी (उदा: 500g Pack)">
         </div>
         <div class="form-group">
-          <input type="text" id="newPImg" placeholder="à¤®à¥à¤–à¥à¤¯ à¤«à¥‹à¤Ÿà¥‹ à¤•à¤¾ à¤¸à¥€à¤§à¤¾ URL à¤²à¤¿à¤‚à¤•">
+          <input type="text" id="newPImg" placeholder="मुख्य फोटो का सीधा URL लिंक">
         </div>
 
         <div class="form-group">
-          <label>à¤…à¤¤à¤¿à¤°à¤¿à¤•à¥à¤¤ à¤‰à¤¤à¥à¤ªà¤¾à¤¦ à¤¤à¤¸à¥à¤µà¥€à¤°à¥‡à¤‚ (Multiple Images for Slider):</label>
+          <label>अतिरिक्त उत्पाद तस्वीरें (Multiple Images for Slider):</label>
           <div id="extraProductPhotosContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
-            <input type="text" class="extra-prod-prod-url" placeholder="à¤à¤¡à¤¿à¤¶à¤¨à¤² à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤• #1">
+            <input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">
           </div>
-          <button type="button" onclick="addExtraProductPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ à¤”à¤° à¤«à¥‹à¤Ÿà¥‹ URL à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
+          <button type="button" onclick="addExtraProductPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ और फोटो URL जोड़ें</button>
         </div>
 
         <div class="form-group">
-          <label>à¤‰à¤¤à¥à¤ªà¤¾à¤¦ à¤•à¤¾ à¤ªà¥‚à¤°à¤¾ à¤µà¤¿à¤µà¤°à¤£:</label>
+          <label>उत्पाद का पूरा विवरण:</label>
           <textarea id="newPDesc" placeholder="Brand: TRINETRA&#10;Shelf life: 6 Months..." style="height:90px;"></textarea>
         </div>
 
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
-          <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">à¤‡à¤¸ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤ªà¤° à¤•à¥Œà¤¨ à¤¸à¥‡ à¤ªà¥‡à¤®à¥‡à¤‚à¤Ÿ à¤¤à¤°à¥€à¤•à¥‡ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¹à¥‹à¤‚:</label>
+          <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">इस प्रोडक्ट पर कौन से पेमेंट तरीके उपलब्ध हों:</label>
           <div style="display:flex; gap:14px; font-size:12px;">
             <label><input type="checkbox" id="prodPayUpi" checked> UPI / QR</label>
             <label><input type="checkbox" id="prodPayCod" checked> Cash on Delivery (COD)</label>
@@ -810,78 +807,47 @@
 
         <div style="display:flex; gap:14px; align-items:center; margin-bottom:12px; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold);">
           <label style="cursor:pointer; display:flex; align-items:center; gap:6px; margin:0;">
-            <input type="checkbox" id="newPInStock" checked style="width:18px; height:18px;"> ðŸŸ¢ à¤¸à¥à¤Ÿà¥‰à¤• à¤®à¥‡à¤‚ à¤‰à¤ªà¤²à¤¬à¥à¤§
+            <input type="checkbox" id="newPInStock" checked style="width:18px; height:18px;"> 🟢 स्टॉक में उपलब्ध
           </label>
           <label style="cursor:pointer; display:flex; align-items:center; gap:6px; margin:0; margin-left:15px;">
-            <input type="checkbox" id="newPOnDonation" style="width:18px; height:18px;"> â­ à¤¡à¥‹à¤¨à¥‡à¤¶à¤¨ à¤ªà¥‡à¤œ à¤¸à¤œà¥‡à¤¸à¥à¤Ÿà¥‡à¤¡
+            <input type="checkbox" id="newPOnDonation" style="width:18px; height:18px;"> ⭐ डोनेशन पेज सजेस्टेड
           </label>
         </div>
 
-        <button class="btn-main" onclick="saveNewProduct()">+ à¤¸à¥à¤Ÿà¥‹à¤° à¤®à¥‡à¤‚ à¤¨à¤¯à¤¾ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
+        <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में नया प्रोडक्ट जोड़ें</button>
       </div>
 
       <!-- Admin Sec 5: Product Inventory with SKU Search & Edit Control -->
       <div id="admProdManage" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ðŸ“‹ à¤¸à¥à¤Ÿà¥‹à¤° à¤‡à¤¨à¥à¤µà¥‡à¤‚à¤Ÿà¤°à¥€, à¤¸à¥à¤Ÿà¥‰à¤• à¤µ à¤¸à¤°à¥à¤š à¤•à¤‚à¤Ÿà¥à¤°à¥‹à¤² (SKU Search & Edit)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search & Edit)</h4>
         <div class="form-group" style="margin-bottom:12px;">
-          <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="ðŸ” à¤¨à¤¾à¤® à¤¯à¤¾ à¤¸à¥€à¤°à¤¿à¤¯à¤² à¤¨à¤‚à¤¬à¤° (SKU) à¤¸à¥‡ à¤–à¥‹à¤œà¥‡à¤‚..." style="background:#000; border:1px solid var(--gold); color:var(--gold);">
+          <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="🔍 नाम या सीरियल नंबर (SKU) से खोजें..." style="background:#000; border:1px solid var(--gold); color:var(--gold);">
         </div>
         <div class="table-responsive">
           <table id="admProdTable">
-            <thead><tr><th>à¤à¤¸.à¤¨à¤‚à¤¬à¤° (SKU)</th><th>à¤«à¥‹à¤Ÿà¥‹</th><th>à¤¨à¤¾à¤®</th><th>à¤¸à¥à¤Ÿà¥‰à¤• à¤µ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸</th><th>à¤•à¥€à¤®à¤¤</th><th>à¤à¤•à¥à¤¶à¤¨</th></tr></thead>
+            <thead><tr><th>एस.नंबर (SKU)</th><th>फोटो</th><th>नाम</th><th>स्टॉक व स्टेटस</th><th>कीमत</th><th>एक्शन</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
       </div>
 
-      <!-- Admin Sec 6: ADVANCED OFFER MANAGER -->
+      <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
       <div id="admOffers" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ðŸ·ï¸ à¤¸à¥à¤ªà¥‡à¤¶à¤² à¤‘à¤«à¤° à¤µ à¤¡à¤¿à¤¸à¥à¤•à¤¾à¤‰à¤‚à¤Ÿ à¤•à¤‚à¤Ÿà¥à¤°à¥‹à¤²</h4>
-        <p style="font-size:11px; color:#ffcdd2; line-height:1.5; margin-bottom:12px;">
-          à¤¯à¤¹à¤¾à¤ à¤†à¤ª Holi Special, Diwali Special, Navratri Special à¤¯à¤¾ à¤…à¤ªà¤¨à¤¾ à¤•à¥‹à¤ˆ à¤­à¥€ à¤‘à¤«à¤° à¤¬à¤¨à¤¾ à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤
-          à¤¹à¤° à¤‘à¤«à¤° à¤®à¥‡à¤‚ à¤…à¤ªà¤¨à¥‡ à¤®à¤¨à¤šà¤¾à¤¹à¥‡ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤šà¥à¤¨à¥‡à¤‚ à¤”à¤° à¤¹à¤° à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤•à¤¾ à¤…à¤²à¤— Discount % à¤°à¤–à¥‡à¤‚à¥¤
-        </p>
-        <input type="hidden" id="editingOfferId" value="">
-
+        <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
+        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं।</p>
+        
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
-            <label>à¤‘à¤«à¤° à¤•à¤¾ à¤¨à¤¾à¤® / Title *</label>
-            <input type="text" id="newOfferTitle" placeholder="ðŸª” Diwali Special Offer">
+            <label>ऑफर समाप्त होने का समय (काउंटडाउन टाइमर):</label>
+            <input type="datetime-local" id="admOfferExpiryInput">
           </div>
-          <div class="form-group">
-            <label>à¤‘à¤«à¤° à¤•à¤¾ à¤µà¤¿à¤µà¤°à¤£</label>
-            <textarea id="newOfferDescription" rows="2" placeholder="à¤šà¥à¤¨à¤¿à¤‚à¤¦à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤ªà¤° à¤µà¤¿à¤¶à¥‡à¤· à¤›à¥‚à¤Ÿ"></textarea>
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:7px;">
-            <div class="form-group">
-              <label>à¤¶à¥à¤°à¥‚ à¤¹à¥‹à¤¨à¥‡ à¤•à¤¾ à¤¸à¤®à¤¯ *</label>
-              <input type="datetime-local" id="newOfferStart">
-            </div>
-            <div class="form-group">
-              <label>à¤¸à¤®à¤¾à¤ªà¥à¤¤ à¤¹à¥‹à¤¨à¥‡ à¤•à¤¾ à¤¸à¤®à¤¯ *</label>
-              <input type="datetime-local" id="newOfferEnd">
-            </div>
-          </div>
-          <div style="display:flex; gap:8px; align-items:center; background:rgba(0,0,0,0.25); padding:8px; border-radius:6px; margin-bottom:10px;">
-            <input type="checkbox" id="newOfferActive" checked style="width:18px; height:18px;">
-            <label for="newOfferActive" style="margin:0; color:#fff; font-weight:bold; cursor:pointer;">ðŸŸ¢ à¤‘à¤«à¤° Active à¤°à¤–à¥‡à¤‚</label>
-          </div>
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:7px; gap:8px;">
-            <label style="color:var(--gold); font-weight:bold; margin:0;">à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤šà¥à¤¨à¥‡à¤‚ à¤”à¤° Discount % à¤¡à¤¾à¤²à¥‡à¤‚</label>
-            <button type="button" onclick="toggleAllOfferProducts()" style="background:rgba(255,215,0,0.12); border:1px solid var(--gold); color:var(--gold); padding:5px 8px; border-radius:5px; font-size:10px; cursor:pointer; white-space:nowrap;">â˜‘ï¸ à¤¸à¤­à¥€ à¤šà¥à¤¨à¥‡à¤‚</button>
-          </div>
-          <input type="text" id="offerProductSearch" placeholder="ðŸ” Product name à¤¯à¤¾ SKU à¤¸à¥‡ à¤–à¥‹à¤œà¥‡à¤‚..." style="margin-bottom:8px;">
-          <div id="offerProductPicker" style="max-height:330px; overflow-y:auto; border:1px solid rgba(255,215,0,0.25); border-radius:7px; background:#080001;"></div>
-          <div style="display:flex; gap:8px; margin-top:12px;">
-            <button class="btn-main" onclick="saveAdvancedOffer()" style="flex:2;">ðŸ’¾ à¤‘à¤«à¤° à¤¸à¥‡à¤µ à¤•à¤°à¥‡à¤‚</button>
-            <button type="button" onclick="resetOfferForm()" style="flex:1; background:#444; color:#fff; border:none; border-radius:8px; font-weight:bold; cursor:pointer;">à¤¨à¤¯à¤¾ / Reset</button>
-          </div>
+          <button class="btn-main" onclick="saveAdminSettings()" style="margin-top:6px;">टाइमर सेव करें</button>
         </div>
 
-        <h4 style="color:var(--gold); margin:14px 0 8px;">ðŸ“‹ à¤¬à¤¨à¤¾à¤ à¤—à¤ à¤‘à¤«à¤°</h4>
+        <h4 style="color:var(--gold); margin:14px 0 8px;">उत्पाद वार डिस्काउंट ऑफर मैनेजर:</h4>
         <div class="table-responsive">
-          <table id="advancedOffersTable">
-            <thead><tr><th>à¤‘à¤«à¤°</th><th>à¤¸à¤®à¤¯</th><th>Products</th><th>Status</th><th>Action</th></tr></thead>
+          <table id="admOffersTable">
+            <thead><tr><th>उत्पाद (SKU)</th><th>मूल कीमत</th><th>स्पेशल छूट (%)</th><th>एक्शन</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -889,15 +855,15 @@
 
       <!-- Admin Sec 7: Coupons -->
       <div id="admCoup" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ à¤¨à¤¯à¤¾ à¤•à¥‚à¤ªà¤¨ à¤¬à¤¨à¤¾à¤à¤</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया कूपन बनाएँ</h4>
         <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
-          <input type="text" id="newCCode" placeholder="à¤•à¥‹à¤¡ (à¤‰à¤¦à¤¾: JAY40)" style="text-transform:uppercase;">
-          <input type="number" id="newCDiscount" placeholder="à¤›à¥‚à¤Ÿ % (à¤‰à¤¦à¤¾: 40)">
+          <input type="text" id="newCCode" placeholder="कोड (उदा: JAY40)" style="text-transform:uppercase;">
+          <input type="number" id="newCDiscount" placeholder="छूट % (उदा: 40)">
         </div>
-        <button class="btn-main" onclick="saveNewCoupon()">+ à¤•à¥‚à¤ªà¤¨ à¤¸à¥‡à¤µ à¤•à¤°à¥‡à¤‚</button>
+        <button class="btn-main" onclick="saveNewCoupon()">+ कूपन सेव करें</button>
         <div class="table-responsive" style="margin-top:12px;">
           <table id="admCoupTable">
-            <thead><tr><th>à¤•à¥‹à¤¡</th><th>à¤›à¥‚à¤Ÿ %</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>कोड</th><th>छूट %</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -905,10 +871,10 @@
 
       <!-- Admin Sec 8: Orders -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">à¤—à¥à¤°à¤¾à¤¹à¤• à¤‘à¤°à¥à¤¡à¤°à¥à¤¸ à¤µ 5-à¤¸à¥à¤Ÿà¥‡à¤œ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤•à¤‚à¤Ÿà¥à¤°à¥‹à¤²</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स व 5-स्टेज डिलीवरी कंट्रोल</h4>
         <div class="table-responsive">
           <table id="admOrdTable">
-            <thead><tr><th>à¤¤à¤¾à¤°à¥€à¤–</th><th>à¤—à¥à¤°à¤¾à¤¹à¤•</th><th>à¤¸à¤¾à¤®à¤—à¥à¤°à¥€</th><th>à¤°à¥à¤ªà¤¯à¥‡</th><th>UTR</th><th>à¤²à¤¾à¤‡à¤µ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ (5 à¤¸à¥à¤Ÿà¥‡à¤œ)</th><th>OTP à¤¦à¥ƒà¤¶à¥à¤¯</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>लाइव स्टेटस (5 स्टेज)</th><th>OTP दृश्य</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -917,21 +883,21 @@
       <!-- Admin Sec 9: Donations -->
       <div id="admDon" class="adm-sec">
         <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
-          <h4 style="color:var(--gold); margin-bottom:6px;">ðŸ’µ à¤¨à¤•à¤¦ à¤¦à¤¾à¤¨ à¤à¤‚à¤Ÿà¥à¤°à¥€ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</h4>
+          <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="text" id="admCashName" placeholder="à¤¦à¤¾à¤¨à¤¦à¤¾à¤¤à¤¾ à¤•à¤¾ à¤¨à¤¾à¤® *">
-            <input type="tel" id="admCashPhone" placeholder="à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤°">
+            <input type="text" id="admCashName" placeholder="दानदाता का नाम *">
+            <input type="tel" id="admCashPhone" placeholder="मोबाइल नंबर">
           </div>
           <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="text" id="admCashCity" placeholder="à¤¸à¥à¤¥à¤¾à¤¨">
-            <input type="number" id="admCashAmt" placeholder="à¤°à¤¾à¤¶à¤¿ (â‚¹) *">
+            <input type="text" id="admCashCity" placeholder="स्थान">
+            <input type="number" id="admCashAmt" placeholder="राशि (₹) *">
           </div>
-          <button class="btn-main" onclick="saveAdminCashDonation()">+ à¤²à¤¾à¤‡à¤µ à¤¬à¥‹à¤°à¥à¤¡ à¤®à¥‡à¤‚ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚</button>
+          <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें</button>
         </div>
-        <h4 style="color:var(--gold); margin-bottom:8px;">à¤¦à¤¾à¤¨à¤¦à¤¾à¤¤à¤¾ à¤¸à¥‚à¤šà¥€</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">दानदाता सूची</h4>
         <div class="table-responsive">
           <table id="admDonTable">
-            <thead><tr><th>à¤¤à¤¾à¤°à¥€à¤–</th><th>à¤¦à¤¾à¤¨à¤¦à¤¾à¤¤à¤¾ à¤¨à¤¾à¤®</th><th>à¤®à¥‹à¤¬à¤¾à¤‡à¤²</th><th>à¤¸à¥à¤¥à¤¾à¤¨</th><th>à¤°à¤¾à¤¶à¤¿</th><th>UTR</th><th>à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>दानदाता नाम</th><th>मोबाइल</th><th>स्थान</th><th>राशि</th><th>UTR</th><th>व्हाट्सएप</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -939,10 +905,10 @@
 
       <!-- Admin Sec 10: Feedback -->
       <div id="admFeed" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ðŸ’¬ à¤­à¤•à¥à¤¤ à¤¸à¥à¤à¤¾à¤µ à¤µ à¤¸à¤®à¤¸à¥à¤¯à¤¾à¤à¤‚</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव व समस्याएं</h4>
         <div class="table-responsive">
           <table id="admFeedTable">
-            <thead><tr><th>à¤¤à¤¾à¤°à¥€à¤–</th><th>à¤¨à¤¾à¤® / à¤«à¥‹à¤¨</th><th>à¤ªà¥à¤°à¤•à¤¾à¤°</th><th>à¤µà¤¿à¤µà¤°à¤£</th><th>à¤¸à¥à¤•à¥à¤°à¥€à¤¨à¤¶à¥‰à¤Ÿ</th><th>à¤¹à¤Ÿà¤¾à¤à¤‚</th></tr></thead>
+            <thead><tr><th>तारीख</th><th>नाम / फोन</th><th>प्रकार</th><th>विवरण</th><th>स्क्रीनशॉट</th><th>हटाएं</th></tr></thead>
             <tbody></tbody>
           </table>
         </div>
@@ -953,23 +919,23 @@
   <!-- FIXED STICKY FOOTER -->
   <footer>
     <div style="max-width:900px; margin:0 auto;">
-      <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿, à¤ªà¥à¤°à¤¤à¤¾à¤ªà¤—à¤¢à¤¼ (à¤‰.à¤ªà¥à¤°.)</p>
-      <p style="color:#ffcdd2; font-size:12px;">ðŸ“ž WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | ðŸ“· Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
+      <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
+      <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
       <div class="footer-links">
         <button type="button" class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
         <button type="button" class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
         <button type="button" class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
         <button type="button" class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
-        <button type="button" class="footer-link-btn" onclick="openLegal('contact')">Contact Us (à¤¸à¤‚à¤ªà¤°à¥à¤• à¤•à¤°à¥‡à¤‚)</button>
+        <button type="button" class="footer-link-btn" onclick="openLegal('contact')">Contact Us (संपर्क करें)</button>
       </div>
 
       <div class="footer-action-btns">
-        <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" class="ftr-pill-btn">â­ Google à¤ªà¤° à¤°à¤¿à¤µà¥à¤¯à¥‚ à¤¦à¥‡à¤‚</a>
-        <button type="button" class="ftr-pill-btn" onclick="openModal('feedbackModal')">âœï¸ à¤¸à¥à¤à¤¾à¤µ / Feedback à¤¦à¥‡à¤‚</button>
+        <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" class="ftr-pill-btn">⭐ Google पर रिव्यू दें</a>
+        <button type="button" class="ftr-pill-btn" onclick="openModal('feedbackModal')">✍️ सुझाव / Feedback दें</button>
       </div>
 
-      <p style="margin-top:15px; font-size:11px; color:#777;">Â© 2026 Maa Durga Enterprises. à¤¸à¤°à¥à¤µà¤¾à¤§à¤¿à¤•à¤¾à¤° à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤à¥¤</p>
+      <p style="margin-top:15px; font-size:11px; color:#777;">© 2026 Maa Durga Enterprises. सर्वाधिकार सुरक्षित।</p>
     </div>
   </footer>
 
@@ -1011,7 +977,6 @@
     let cloudChats = [];
     let cloudFeedbacks = [];
     let cloudBlogs = [];
-    let cloudOffers = [];
     let cloudPlaylist = [];
     let globalRoomState = { songIndex: 0, startedAt: Date.now(), isPlaying: false };
     let activeCategory = 'all';
@@ -1071,11 +1036,11 @@
 
     function formatDonorName(name, salutation) {
       const clean = (name || "").trim();
-      if (!clean) return "à¤¶à¥à¤°à¤¦à¥à¤§à¤¾à¤²à¥ à¤­à¤•à¥à¤¤";
-      if (salutation === 'shree') return `à¤¶à¥à¤°à¥€ ${clean} à¤œà¥€`;
-      if (salutation === 'shrimati') return `à¤¶à¥à¤°à¥€à¤®à¤¤à¥€ ${clean} à¤œà¥€`;
-      if (salutation === 'kumari') return `à¤•à¥à¤®à¤¾à¤°à¥€ ${clean} à¤œà¥€`;
-      return `${clean} à¤œà¥€`;
+      if (!clean) return "श्रद्धालु भक्त";
+      if (salutation === 'shree') return `श्री ${clean} जी`;
+      if (salutation === 'shrimati') return `श्रीमती ${clean} जी`;
+      if (salutation === 'kumari') return `कुमारी ${clean} जी`;
+      return `${clean} जी`;
     }
 
     function extractVideoId(url) {
@@ -1102,7 +1067,7 @@
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'extra-img-url';
-      input.placeholder = `à¤à¤¡à¤¿à¤¶à¤¨à¤² à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤• #${container.children.length + 1}`;
+      input.placeholder = `एडिशनल फोटो URL लिंक #${container.children.length + 1}`;
       input.style.marginTop = '4px';
       container.appendChild(input);
     }
@@ -1113,7 +1078,7 @@
       const input = document.createElement('input');
       input.type = 'text';
       input.className = 'extra-prod-prod-url';
-      input.placeholder = `à¤à¤¡à¤¿à¤¶à¤¨à¤² à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤• #${container.children.length + 1}`;
+      input.placeholder = `एडिशनल फोटो URL लिंक #${container.children.length + 1}`;
       input.style.marginTop = '4px';
       container.appendChild(input);
     }
@@ -1170,11 +1135,11 @@
 
     function setupMediaSession() {
       if ('mediaSession' in navigator) {
-        const currentSong = (cloudPlaylist.length > 0 && cloudPlaylist[globalRoomState.songIndex]) ? cloudPlaylist[globalRoomState.songIndex].title : "à¤ªà¤¾à¤µà¤¨ à¤¦à¤¿à¤µà¥à¤¯ à¤¸à¤‚à¤•à¥€à¤°à¥à¤¤à¤¨";
+        const currentSong = (cloudPlaylist.length > 0 && cloudPlaylist[globalRoomState.songIndex]) ? cloudPlaylist[globalRoomState.songIndex].title : "पावन दिव्य संकीर्तन";
         navigator.mediaSession.metadata = new MediaMetadata({
-          title: `ðŸš© ${currentSong}`,
-          artist: "Maa Durga Enterprises | à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿",
-          album: "à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤²à¤¾à¤‡à¤µ à¤¦à¤°à¤¬à¤¾à¤°",
+          title: `🚩 ${currentSong}`,
+          artist: "Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति",
+          album: "श्री दुर्गा पूजा लाइव दरबार",
           artwork: [{ src: "ganesh.png", sizes: "512x512", type: "image/png" }]
         });
         navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
@@ -1214,7 +1179,7 @@
           coreAudio.currentTime = seekSec;
           coreAudio.play().then(() => {
             setupMediaSession();
-            document.getElementById('musicBtnTxt').innerText = "à¤¸à¤‚à¤—à¥€à¤¤ à¤°à¥‹à¤•à¥‡à¤‚";
+            document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
           }).catch(() => {});
         } else {
           coreAudio.currentTime = seekSec;
@@ -1222,7 +1187,7 @@
             coreAudio.play().catch(() => {});
           }
           setupMediaSession();
-          document.getElementById('musicBtnTxt').innerText = "à¤¸à¤‚à¤—à¥€à¤¤ à¤°à¥‹à¤•à¥‡à¤‚";
+          document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
         }
       } else {
         if (!activeYtVideoId || !ytPlayer || !isYtPlayerReady) return;
@@ -1231,7 +1196,7 @@
           ytPlayer.loadVideoById({ videoId: activeYtVideoId, startSeconds: seekSec });
           ytPlayer.playVideo();
           setupMediaSession();
-          document.getElementById('musicBtnTxt').innerText = "à¤¸à¤‚à¤—à¥€à¤¤ à¤°à¥‹à¤•à¥‡à¤‚";
+          document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
         } catch(e) {}
       }
     }
@@ -1298,7 +1263,7 @@
           }
           if (drwOrders) drwOrders.style.display = "block";
         } else {
-          navArea.innerHTML = `<button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">à¤²à¥‰à¤—à¤¿à¤¨ / à¤¸à¤¾à¤‡à¤¨-à¤…à¤ª</button>`;
+          navArea.innerHTML = `<button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">लॉगिन / साइन-अप</button>`;
           if (drwOrders) drwOrders.style.display = "none";
         }
         renderCustomerOrders();
@@ -1313,7 +1278,7 @@
 
     function loginWithGoogle() {
       if (!auth || !googleProvider) {
-        showAppToast("à¤ªà¥à¤°à¤®à¤¾à¤£à¥€à¤•à¤°à¤£ à¤¸à¥‡à¤µà¤¾ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆ!");
+        showAppToast("प्रमाणीकरण सेवा उपलब्ध नहीं है!");
         return;
       }
       auth.signInWithPopup(googleProvider).then(res => {
@@ -1335,7 +1300,7 @@
         closeModal('adminPassModal');
         document.getElementById('adminPortal').style.display = 'block';
       } else {
-        showAppToast("à¤—à¤²à¤¤ à¤®à¤¾à¤¸à¥à¤Ÿà¤° à¤ªà¤¾à¤¸à¤µà¤°à¥à¤¡!");
+        showAppToast("गलत मास्टर पासवर्ड!");
       }
     }
 
@@ -1433,19 +1398,10 @@
         });
         renderCategories();
         renderStoreProducts();
+        renderSuggestedProducts();
         renderAdminProducts();
         renderAdminOffers();
       }, err => {});
-
-      // Named offers are stored separately so existing product data stays untouched.
-      db.collection("offers").onSnapshot(snap => {
-        cloudOffers = [];
-        snap.forEach(doc => cloudOffers.push({ id: doc.id, ...doc.data() }));
-        cloudOffers.sort((a, b) => (Number(b.updatedTime || b.createdTime || 0) - Number(a.updatedTime || a.createdTime || 0)));
-        renderStoreProducts();
-        renderAdminProducts();
-        renderAdminOffers();
-      }, err => console.warn("Offers listener error:", err));
 
       db.collection("coupons").onSnapshot(snap => {
         cloudCoupons = [];
@@ -1522,11 +1478,11 @@
 
     function addNewPlaylistSong() {
       if (!db) return;
-      const title = document.getElementById('newSongTitle').value.trim() || "à¤ªà¤¾à¤µà¤¨ à¤­à¤œà¤¨";
+      const title = document.getElementById('newSongTitle').value.trim() || "पावन भजन";
       const rawUrl = document.getElementById('newSongUrl').value.trim();
 
       if (!rawUrl) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ Google Drive à¤¯à¤¾ à¤¸à¥€à¤§à¤¾ MP3 à¤²à¤¿à¤‚à¤• à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚!");
+        showAppToast("कृपया Google Drive या सीधा MP3 लिंक दर्ज करें!");
         return;
       }
 
@@ -1537,17 +1493,17 @@
         url: finalDirectUrl,
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("âœ… à¤­à¤œà¤¨ à¤¸à¤«à¤²à¤¤à¤¾à¤ªà¥‚à¤°à¥à¤µà¤• à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ à¤®à¥‡à¤‚ à¤œà¥à¤¡à¤¼ à¤—à¤¯à¤¾!");
+        showAppToast("✅ भजन सफलतापूर्वक प्लेलिस्ट में जुड़ गया!");
         document.getElementById('newSongTitle').value = '';
         document.getElementById('newSongUrl').value = '';
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function renderAdminPlaylist() {
       const tb = document.querySelector('#admPlaylistTable tbody');
       if (!tb) return;
       if (cloudPlaylist.length === 0) {
-        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">à¤…à¤­à¥€ à¤ªà¥à¤²à¥‡à¤²à¤¿à¤¸à¥à¤Ÿ à¤®à¥‡à¤‚ à¤•à¥‹à¤ˆ à¤—à¤¾à¤¨à¤¾ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¥¤ à¤Šà¤ªà¤° à¤«à¤¼à¥‰à¤°à¥à¤® à¤¸à¥‡ à¤œà¥‹à¤¡à¤¼à¥‡à¤‚à¥¤</td></tr>`;
+        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">अभी प्लेलिस्ट में कोई गाना नहीं है। ऊपर फ़ॉर्म से जोड़ें।</td></tr>`;
         return;
       }
       tb.innerHTML = cloudPlaylist.map((s, idx) => `
@@ -1555,7 +1511,7 @@
           <td>${idx + 1}</td>
           <td><b>${s.title}</b></td>
           <td><small style="color:var(--gold);">${s.url.length > 40 ? s.url.substring(0, 40) + '...' : s.url}</small></td>
-          <td><button onclick="db.collection('playlist').doc('${s.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td>
+          <td><button onclick="db.collection('playlist').doc('${s.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
@@ -1574,15 +1530,13 @@
       
       let finalDisplayPrice = p.price;
       let offerBadgeHtml = "";
-      const effectiveDiscount = getEffectiveProductDiscount(p);
-      const activeOffer = getBestActiveOfferForProduct(p);
-      if (effectiveDiscount > 0) {
-        const discountedAmt = Math.round(p.price - (p.price * effectiveDiscount) / 100);
+      if (p.discountPercent && p.discountPercent > 0) {
+        const discountedAmt = Math.round(p.price - (p.price * p.discountPercent) / 100);
         finalDisplayPrice = discountedAmt;
-        offerBadgeHtml = activeOffer ? `ðŸ·ï¸ ${activeOffer.title} â€¢ ${effectiveDiscount}% à¤›à¥‚à¤Ÿ` : `ðŸ”¥ ${effectiveDiscount}% à¤•à¥€ à¤›à¥‚à¤Ÿ (Special Offer)`;
-        document.getElementById('modalProdPrice').innerHTML = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:6px;">â‚¹${p.price}</span> â‚¹${discountedAmt}`;
+        offerBadgeHtml = `🔥 ${p.discountPercent}% की छूट (Special Offer)`;
+        document.getElementById('modalProdPrice').innerHTML = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:6px;">₹${p.price}</span> ₹${discountedAmt}`;
       } else {
-        document.getElementById('modalProdPrice').innerText = `à¤•à¥€à¤®à¤¤: â‚¹${p.price}`;
+        document.getElementById('modalProdPrice').innerText = `कीमत: ₹${p.price}`;
       }
       document.getElementById('modalOfferBadge').innerText = offerBadgeHtml;
 
@@ -1602,15 +1556,15 @@
           <img src="${imgUrl}" style="width:65px; height:65px; object-fit:cover; border-radius:6px; border:2px solid ${i === 0 ? 'var(--gold)' : 'rgba(255,215,0,0.3)'}; cursor:pointer;" onclick="document.getElementById('mainZoomPic').src='${imgUrl}'; document.querySelectorAll('#modalProdGallery img').forEach(img=>img.style.borderColor='rgba(255,215,0,0.3)'); this.style.borderColor='var(--gold)';" onerror="this.onerror=null; this.src='https://via.placeholder.com/100';">
         `).join('');
       } else {
-        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">ðŸ“¦</div>`;
+        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">📦</div>`;
       }
 
-      document.getElementById('modalProdDesc').innerText = p.description || "à¤‡à¤¸ à¤‰à¤¤à¥à¤ªà¤¾à¤¦ à¤•à¥‡ à¤²à¤¿à¤ à¤•à¥‹à¤ˆ à¤…à¤¤à¤¿à¤°à¤¿à¤•à¥à¤¤ à¤µà¤¿à¤µà¤°à¤£ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¥¤";
+      document.getElementById('modalProdDesc').innerText = p.description || "इस उत्पाद के लिए कोई अतिरिक्त विवरण उपलब्ध नहीं है।";
 
       if (p.inStock === false) {
-        buyBtnArea.innerHTML = `<button class="btn-main" style="background:#444; color:#aaa; cursor:not-allowed;" disabled>âŒ à¤†à¤‰à¤Ÿ à¤‘à¤«à¤¼ à¤¸à¥à¤Ÿà¥‰à¤• (Out of Stock)</button>`;
+        buyBtnArea.innerHTML = `<button class="btn-main" style="background:#444; color:#aaa; cursor:not-allowed;" disabled>❌ आउट ऑफ़ स्टॉक (Out of Stock)</button>`;
       } else {
-        buyBtnArea.innerHTML = `<button class="btn-main" onclick="proceedToCheckoutFromModal()">ðŸ›’ à¤…à¤­à¥€ à¤–à¤°à¥€à¤¦à¥‡à¤‚ (Buy Now)</button>`;
+        buyBtnArea.innerHTML = `<button class="btn-main" onclick="proceedToCheckoutFromModal()">🛒 अभी खरीदें (Buy Now)</button>`;
       }
 
       openModal('productDetailModal');
@@ -1621,13 +1575,12 @@
       if (!activeCheckoutProduct || activeCheckoutProduct.inStock === false) return;
 
       let basePrice = activeCheckoutProduct.price;
-      const effectiveDiscount = getEffectiveProductDiscount(activeCheckoutProduct);
-      if (effectiveDiscount > 0) {
-        basePrice = Math.round(basePrice - (basePrice * effectiveDiscount) / 100);
+      if (activeCheckoutProduct.discountPercent && activeCheckoutProduct.discountPercent > 0) {
+        basePrice = Math.round(basePrice - (basePrice * activeCheckoutProduct.discountPercent) / 100);
       }
 
-      document.getElementById('chkTitle').innerText = `ðŸ“¦ à¤‘à¤°à¥à¤¡à¤°: ${activeCheckoutProduct.name}`;
-      document.getElementById('chkProdSummary').innerHTML = `à¤®à¥‚à¤²à¥à¤¯: <b style="color:var(--gold);">â‚¹${basePrice}</b>`;
+      document.getElementById('chkTitle').innerText = `📦 ऑर्डर: ${activeCheckoutProduct.name}`;
+      document.getElementById('chkProdSummary').innerHTML = `मूल्य: <b style="color:var(--gold);">₹${basePrice}</b>`;
       
       document.getElementById('dlvName').value = currentUser && currentUser.displayName ? currentUser.displayName : '';
       document.getElementById('dlvPhone').value = '';
@@ -1643,7 +1596,7 @@
 
       appliedDiscountPercent = 0;
       currentCalculatedPrice = basePrice;
-      document.getElementById('finalCheckoutAmt').innerText = `â‚¹${currentCalculatedPrice}`;
+      document.getElementById('finalCheckoutAmt').innerText = `₹${currentCalculatedPrice}`;
 
       const payModeSelect = document.getElementById('dlvPayMode');
       payModeSelect.innerHTML = "";
@@ -1655,7 +1608,7 @@
         payModeSelect.innerHTML += `<option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>`;
       }
       if (allowCod) {
-        payModeSelect.innerHTML += `<option value="cod">Cash on Delivery (COD - à¤¨à¤—à¤¦ à¤­à¥à¤—à¤¤à¤¾à¤¨)</option>`;
+        payModeSelect.innerHTML += `<option value="cod">Cash on Delivery (COD - नगद भुगतान)</option>`;
       }
 
       document.getElementById('checkoutStep1').style.display = 'block';
@@ -1667,7 +1620,7 @@
       const p = cloudProducts.find(item => item.id === prodId);
       if (!p) return;
       if (p.inStock === false) {
-        showAppToast("âš ï¸ à¤¯à¤¹ à¤‰à¤¤à¥à¤ªà¤¾à¤¦ à¤µà¤°à¥à¤¤à¤®à¤¾à¤¨ à¤®à¥‡à¤‚ à¤†à¤‰à¤Ÿ à¤‘à¤«à¤¼ à¤¸à¥à¤Ÿà¥‰à¤• à¤¹à¥ˆ!");
+        showAppToast("⚠️ यह उत्पाद वर्तमान में आउट ऑफ़ स्टॉक है!");
         return;
       }
       activeCheckoutProduct = p;
@@ -1683,11 +1636,11 @@
       const dist = document.getElementById('dlvDist').value.trim();
 
       if (!name || !phone || !pin || !house || !city || !dist) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¸à¤­à¥€ à¤†à¤µà¤¶à¥à¤¯à¤• à¤à¤¡à¥à¤°à¥‡à¤¸ à¤«à¤¼à¥€à¤²à¥à¤¡ à¤­à¤°à¥‡à¤‚!");
+        showAppToast("कृपया सभी आवश्यक एड्रेस फ़ील्ड भरें!");
         return;
       }
       if (phone.length < 10) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¸à¤¹à¥€ 10-à¤…à¤‚à¤•à¥€à¤¯ à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚!");
+        showAppToast("कृपया सही 10-अंकीय मोबाइल नंबर दर्ज करें!");
         return;
       }
 
@@ -1716,14 +1669,14 @@
 
       const coupon = cloudCoupons.find(c => c.code === codeInput);
       if (!coupon) {
-        showAppToast("à¤…à¤®à¤¾à¤¨à¥à¤¯ (Invalid) à¤•à¥‚à¤ªà¤¨ à¤•à¥‹à¤¡!");
+        showAppToast("अमान्य (Invalid) कूपन कोड!");
         return;
       }
 
       const userEmail = currentUser ? currentUser.email : (localStorage.getItem('guest_email') || 'guest_' + MY_CLIENT_ID);
       const usedKey = `coupon_used_${userEmail}_${codeInput}`;
       if (localStorage.getItem(usedKey) === 'true') {
-        showAppToast("âš ï¸ à¤¯à¤¹ à¤•à¥‚à¤ªà¤¨ à¤•à¥‹à¤¡ à¤‡à¤¸ à¤†à¤ˆà¤¡à¥€ à¤ªà¤° à¤ªà¤¹à¤²à¥‡ à¤¹à¥€ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤¿à¤¯à¤¾ à¤œà¤¾ à¤šà¥à¤•à¤¾ à¤¹à¥ˆ!");
+        showAppToast("⚠️ यह कूपन कोड इस आईडी पर पहले ही उपयोग किया जा चुका है!");
         return;
       }
 
@@ -1731,8 +1684,8 @@
       const discountAmount = Math.round((currentCalculatedPrice * appliedDiscountPercent) / 100);
       currentCalculatedPrice = Math.max(0, currentCalculatedPrice - discountAmount);
 
-      document.getElementById('finalCheckoutAmt').innerText = `â‚¹${currentCalculatedPrice}`;
-      msgEl.innerText = `âœ“ ${appliedDiscountPercent}% à¤•à¥‚à¤ªà¤¨ à¤›à¥‚à¤Ÿ à¤²à¤¾à¤—à¥‚ à¤¹à¥à¤ˆ!`;
+      document.getElementById('finalCheckoutAmt').innerText = `₹${currentCalculatedPrice}`;
+      msgEl.innerText = `✓ ${appliedDiscountPercent}% कूपन छूट लागू हुई!`;
       msgEl.style.display = 'block';
 
       localStorage.setItem(usedKey, 'true');
@@ -1756,12 +1709,12 @@
       if (payMode === 'upi') {
         utr = document.getElementById('chkUtrInput').value.trim();
         if (!utr || utr.length < 12) {
-          showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤­à¥à¤—à¤¤à¤¾à¤¨ à¤•à¥‡ à¤¬à¤¾à¤¦ à¤¸à¤¹à¥€ 12-à¤…à¤‚à¤•à¥€à¤¯ UPI Ref / UTR à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚!");
+          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UPI Ref / UTR नंबर दर्ज करें!");
           return;
         }
         const dup = cloudOrders.find(o => o.utr === utr);
         if (dup) {
-          showAppToast("âš ï¸ à¤¯à¤¹ UTR à¤¨à¤‚à¤¬à¤° à¤ªà¤¹à¤²à¥‡ à¤¹à¥€ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤¿à¤¯à¤¾ à¤œà¤¾ à¤šà¥à¤•à¤¾ à¤¹à¥ˆ!");
+          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
           return;
         }
       } else {
@@ -1785,11 +1738,11 @@
         showOtpToUser: false,
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
-        status: "à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—"
+        status: "पेंडिंग"
       }).then(() => {
         closeModal('checkoutModal');
-        showAppToast("ðŸŽ‰ à¤¬à¤§à¤¾à¤ˆ à¤¹à¥‹! à¤†à¤ªà¤•à¤¾ à¤‘à¤°à¥à¤¡à¤° à¤¸à¤«à¤²à¤¤à¤¾ à¤ªà¥‚à¤°à¥à¤µà¤• à¤²à¥‡ à¤²à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆà¥¤ à¤œà¤²à¥à¤¦ à¤¹à¥€ à¤¹à¤®à¤¾à¤°à¥€ à¤Ÿà¥€à¤® à¤†à¤ªà¤¸à¥‡ à¤¸à¤‚à¤ªà¤°à¥à¤• à¤•à¤°à¥‡à¤—à¥€à¥¤ à¤§à¤¨à¥à¤¯à¤µà¤¾à¤¦à¥¤");
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+        showAppToast("🎉 बधाई हो! आपका ऑर्डर सफलता पूर्वक ले लिया गया है। जल्द ही हमारी टीम आपसे संपर्क करेगी। धन्यवाद।");
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     // --- FLIPKART STYLE TRACKING MODAL ---
@@ -1797,8 +1750,8 @@
       const order = cloudOrders.find(o => o.id === orderId);
       if (!order) return;
 
-      const currentStatus = order.status || "à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—";
-      const stages = ["à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—", "à¤•à¤¨à¥à¤«à¤¼à¤°à¥à¤®", "à¤¶à¤¿à¤ª à¤¹à¥à¤†", "à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤•à¥‡ à¤²à¤¿à¤ à¤¨à¤¿à¤•à¤²à¤¾", "à¤¡à¤¿à¤²à¥€à¤µà¤°"];
+      const currentStatus = order.status || "पेंडिंग";
+      const stages = ["पेंडिंग", "कन्फ़र्म", "शिप हुआ", "डिलीवरी के लिए निकला", "डिलीवर"];
       let currentIndex = stages.indexOf(currentStatus);
       if (currentIndex === -1) currentIndex = 0;
 
@@ -1814,7 +1767,7 @@
             </div>
             <div>
               <b style="font-size:14px; color:${isDone ? '#fff' : '#aaa'};">${st}</b>
-              <p style="font-size:11px; color:#aaa;">${isDone ? 'à¤¸à¥à¤¥à¤¿à¤¤à¤¿ à¤¸à¤•à¥à¤°à¤¿à¤¯ / à¤…à¤ªà¤¡à¥‡à¤Ÿà¥‡à¤¡' : 'à¤ªà¥à¤°à¤¤à¥€à¤•à¥à¤·à¤¾ à¤®à¥‡à¤‚...'}</p>
+              <p style="font-size:11px; color:#aaa;">${isDone ? 'स्थिति सक्रिय / अपडेटेड' : 'प्रतीक्षा में...'}</p>
             </div>
           </div>
         `;
@@ -1823,8 +1776,8 @@
       let otpBlock = "";
       if (order.showOtpToUser && order.otp) {
         otpBlock = `<div style="background:rgba(76,175,80,0.15); border:1px solid #4caf50; padding:10px; border-radius:8px; margin-top:12px; text-align:center;">
-          <b style="color:#81c784; font-size:14px;">ðŸ”‘ à¤—à¥à¤ªà¥à¤¤ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ OTP: ${order.otp}</b>
-          <p style="font-size:10px; color:#ccc;">à¤¸à¤¾à¤®à¤¾à¤¨ à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤ à¤•à¤°à¤¤à¥‡ à¤¸à¤®à¤¯ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤¬à¥‰à¤¯ à¤•à¥‹ à¤¯à¤¹ OTP à¤¬à¤¤à¤¾à¤à¤‚à¥¤</p>
+          <b style="color:#81c784; font-size:14px;">🔑 गुप्त डिलीवरी OTP: ${order.otp}</b>
+          <p style="font-size:10px; color:#ccc;">सामान प्राप्त करते समय डिलीवरी बॉय को यह OTP बताएं।</p>
         </div>`;
       }
 
@@ -1833,7 +1786,7 @@
           <img src="${order.productImg || 'https://via.placeholder.com/60'}" width="50" height="50" style="object-fit:cover; border-radius:6px;" onerror="this.style.display='none'">
           <div>
             <b style="color:var(--gold); font-size:13px;">${order.productName}</b>
-            <p style="font-size:11px; color:#ffcdd2;">à¤®à¥‚à¤²à¥à¤¯: â‚¹${order.amount} | à¤¦à¤¿à¤¨à¤¾à¤‚à¤•: ${order.date}</p>
+            <p style="font-size:11px; color:#ffcdd2;">मूल्य: ₹${order.amount} | दिनांक: ${order.date}</p>
           </div>
         </div>
         <div style="padding:4px 10px;">${timelineHtml}</div>
@@ -1847,16 +1800,16 @@
       if (!cont || !currentUser) return;
       const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
       if (my.length === 0) {
-        cont.innerHTML = `<p style="color:#aaa; text-align:center; padding:15px;">à¤†à¤ªà¤•à¤¾ à¤•à¥‹à¤ˆ à¤‘à¤°à¥à¤¡à¤° à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¤¾à¥¤</p>`;
+        cont.innerHTML = `<p style="color:#aaa; text-align:center; padding:15px;">आपका कोई ऑर्डर नहीं मिला।</p>`;
         return;
       }
       cont.innerHTML = my.map(o => `
-        <div onclick="openOrderTrackingModal('${o.id}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.25); padding:12px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer;" title="à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ à¤¦à¥‡à¤–à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ à¤•à¥à¤²à¤¿à¤• à¤•à¤°à¥‡à¤‚">
+        <div onclick="openOrderTrackingModal('${o.id}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.25); padding:12px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer;" title="स्टेटस देखने हेतु क्लिक करें">
           <img src="${o.productImg || 'https://via.placeholder.com/60'}" width="60" height="60" style="object-fit:cover; border-radius:8px; border:1px solid var(--gold);" onerror="this.onerror=null; this.src='https://via.placeholder.com/60';">
           <div style="flex:1;">
             <b style="color:var(--gold); font-size:14px; display:block; margin-bottom:3px;">${o.productName}</b>
-            <p style="font-size:12px; color:#ffcdd2;">à¤µà¤°à¥à¤¤à¤®à¤¾à¤¨ à¤¸à¥à¤¥à¤¿à¤¤à¤¿: <b style="color:#81c784;">${o.status || 'à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—'}</b></p>
-            <small style="color:#aaa;">à¤•à¥à¤²à¤¿à¤• à¤•à¤°à¤•à¥‡ à¤µà¤¿à¤¸à¥à¤¤à¥ƒà¤¤ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ (Flipkart à¤¸à¥à¤Ÿà¤¾à¤‡à¤²) à¤¦à¥‡à¤–à¥‡à¤‚ âž”</small>
+            <p style="font-size:12px; color:#ffcdd2;">वर्तमान स्थिति: <b style="color:#81c784;">${o.status || 'पेंडिंग'}</b></p>
+            <small style="color:#aaa;">क्लिक करके विस्तृत स्टेटस (Flipkart स्टाइल) देखें ➔</small>
           </div>
         </div>
       `).join('');
@@ -1870,21 +1823,21 @@
           <td>${o.date}</td>
           <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
           <td>${o.productName}</td>
-          <td>â‚¹${o.amount}</td>
+          <td>₹${o.amount}</td>
           <td>${o.utr}</td>
           <td>
             <select id="admStat_${o.id}" onchange="updateOrderStatus('${o.id}')" style="background:#000; color:var(--gold); border:1px solid var(--gold); padding:4px; border-radius:4px;">
-              <option value="à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—" ${o.status === 'à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤—' ? 'selected' : ''}>à¤ªà¥‡à¤‚à¤¡à¤¿à¤‚à¤— (Default)</option>
-              <option value="à¤•à¤¨à¥à¤«à¤¼à¤°à¥à¤®" ${o.status === 'à¤•à¤¨à¥à¤«à¤¼à¤°à¥à¤®' ? 'selected' : ''}>à¤•à¤¨à¥à¤«à¤¼à¤°à¥à¤®</option>
-              <option value="à¤¶à¤¿à¤ª à¤¹à¥à¤†" ${o.status === 'à¤¶à¤¿à¤ª à¤¹à¥à¤†' ? 'selected' : ''}>à¤¶à¤¿à¤ª à¤¹à¥à¤†</option>
-              <option value="à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤•à¥‡ à¤²à¤¿à¤ à¤¨à¤¿à¤•à¤²à¤¾" ${o.status === 'à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤•à¥‡ à¤²à¤¿à¤ à¤¨à¤¿à¤•à¤²à¤¾' ? 'selected' : ''}>à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤•à¥‡ à¤²à¤¿à¤ à¤¨à¤¿à¤•à¤²à¤¾</option>
-              <option value="à¤¡à¤¿à¤²à¥€à¤µà¤°" ${o.status === 'à¤¡à¤¿à¤²à¥€à¤µà¤°' ? 'selected' : ''}>à¤¡à¤¿à¤²à¥€à¤µà¤°</option>
+              <option value="पेंडिंग" ${o.status === 'पेंडिंग' ? 'selected' : ''}>पेंडिंग (Default)</option>
+              <option value="कन्फ़र्म" ${o.status === 'कन्फ़र्म' ? 'selected' : ''}>कन्फ़र्म</option>
+              <option value="शिप हुआ" ${o.status === 'शिप हुआ' ? 'selected' : ''}>शिप हुआ</option>
+              <option value="डिलीवरी के लिए निकला" ${o.status === 'डिलीवरी के लिए निकला' ? 'selected' : ''}>डिलीवरी के लिए निकला</option>
+              <option value="डिलीवर" ${o.status === 'डिलीवर' ? 'selected' : ''}>डिलीवर</option>
             </select>
           </td>
           <td>
-            <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''} onchange="updateOrderOtpVisibility('${o.id}')" style="width:16px; height:16px; cursor:pointer;" title="à¤Ÿà¤¿à¤• à¤•à¤°à¤¨à¥‡ à¤ªà¤° à¤—à¥à¤°à¤¾à¤¹à¤• à¤•à¥‹ OTP à¤¦à¤¿à¤–à¥‡à¤—à¤¾">
+            <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''} onchange="updateOrderOtpVisibility('${o.id}')" style="width:16px; height:16px; cursor:pointer;" title="टिक करने पर ग्राहक को OTP दिखेगा">
           </td>
-          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">ðŸ—‘ï¸</button></td>
+          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">🗑️</button></td>
         </tr>
       `).join('');
     }
@@ -1894,7 +1847,7 @@
       if (!selectEl || !db) return;
       const newStatus = selectEl.value;
       db.collection("orders").doc(orderId).update({ status: newStatus }).then(() => {
-        showAppToast("âœ… à¤‘à¤°à¥à¤¡à¤° à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¹à¥à¤†!");
+        showAppToast("✅ ऑर्डर स्टेटस अपडेट हुआ!");
       });
     }
 
@@ -1903,7 +1856,7 @@
       if (!chkEl || !db) return;
       const isVisible = chkEl.checked;
       db.collection("orders").doc(orderId).update({ showOtpToUser: isVisible }).then(() => {
-        showAppToast(isVisible ? "ðŸ”‘ OTP à¤…à¤¬ à¤—à¥à¤°à¤¾à¤¹à¤• à¤•à¥‹ à¤¦à¤¿à¤–à¤¨à¥‡ à¤²à¤—à¤¾ à¤¹à¥ˆ!" : "ðŸ”’ OTP à¤—à¥à¤°à¤¾à¤¹à¤• à¤¸à¥‡ à¤›à¤¿à¤ªà¤¾ à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆ!");
+        showAppToast(isVisible ? "🔑 OTP अब ग्राहक को दिखने लगा है!" : "🔒 OTP ग्राहक से छिपा दिया गया है!");
       });
     }
 
@@ -1936,7 +1889,7 @@
       const payCod = document.getElementById('editPayCod').checked;
 
       if (!name || !price) {
-        showAppToast("à¤¨à¤¾à¤® à¤”à¤° à¤•à¥€à¤®à¤¤ à¤†à¤µà¤¶à¥à¤¯à¤• à¤¹à¥ˆà¤‚!");
+        showAppToast("नाम और कीमत आवश्यक हैं!");
         return;
       }
 
@@ -1944,8 +1897,8 @@
         name, price, category: cat, img, description: desc, payUpi, payCod
       }).then(() => {
         closeModal('editProductModal');
-        showAppToast("âœ… à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤¸à¤«à¤²à¤¤à¤¾à¤ªà¥‚à¤°à¥à¤µà¤• à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¹à¥‹ à¤—à¤¯à¤¾!");
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+        showAppToast("✅ प्रोडक्ट सफलतापूर्वक अपडेट हो गया!");
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
@@ -1956,7 +1909,7 @@
       const reader = new FileReader();
       reader.onload = function(e) {
         selectedProblemImageBase64 = e.target.result;
-        document.getElementById('probImgStatusTxt').innerText = "âœ“ à¤«à¥‹à¤Ÿà¥‹ à¤šà¥à¤¨à¥€ à¤—à¤ˆ";
+        document.getElementById('probImgStatusTxt').innerText = "✓ फोटो चुनी गई";
         document.getElementById('probImgPreviewBox').innerHTML = `<img src="${selectedProblemImageBase64}" style="max-height:80px; border-radius:6px; border:1px solid var(--gold);">`;
       };
       reader.readAsDataURL(file);
@@ -1969,7 +1922,7 @@
       const msg = document.getElementById('probCustMsg').value.trim();
 
       if (!name || !phone || !msg) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¨à¤¾à¤®, à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° à¤”à¤° à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤•à¤¾ à¤µà¤¿à¤µà¤°à¤£ à¤ªà¥‚à¤°à¤¾ à¤­à¤°à¥‡à¤‚!");
+        showAppToast("कृपया नाम, मोबाइल नंबर और समस्या का विवरण पूरा भरें!");
         return;
       }
 
@@ -1977,13 +1930,13 @@
         name: name,
         phone: phone,
         message: msg,
-        type: "à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ / à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤°à¤¿à¤ªà¥‹à¤°à¥à¤Ÿ",
+        type: "सहायता / समस्या रिपोर्ट",
         rating: 5,
         screenshot: selectedProblemImageBase64 || "",
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("âœ… à¤†à¤ªà¤•à¥€ à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤¦à¤°à¥à¤œ à¤¹à¥‹ à¤—à¤ˆ à¤¹à¥ˆà¥¤ à¤¹à¤®à¤¾à¤°à¥€ à¤Ÿà¥€à¤® à¤†à¤ªà¤¸à¥‡ à¤¤à¥à¤°à¤‚à¤¤ à¤¸à¤‚à¤ªà¤°à¥à¤• à¤•à¤°à¥‡à¤—à¥€à¥¤");
+        showAppToast("✅ आपकी समस्या सुरक्षित दर्ज हो गई है। हमारी टीम आपसे तुरंत संपर्क करेगी।");
         document.getElementById('probCustName').value = '';
         document.getElementById('probCustPhone').value = '';
         document.getElementById('probCustMsg').value = '';
@@ -1991,14 +1944,14 @@
         document.getElementById('probImgStatusTxt').innerText = "";
         document.getElementById('probImgPreviewBox').innerHTML = "";
         closeModal('problemSupportModal');
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     // --- DEVOTIONAL BLOG LOGIC ---
     function saveNewBlogPost() {
       if (!db) return;
       const title = document.getElementById('newBlogTitle').value.trim();
-      const author = document.getElementById('newBlogAuthor').value.trim() || "à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿";
+      const author = document.getElementById('newBlogAuthor').value.trim() || "श्री दुर्गा पूजा सेवा समिति";
       const mainImg = document.getElementById('newBlogImg').value.trim();
       const video = document.getElementById('newBlogVideo').value.trim();
       const content = document.getElementById('newBlogBody').value.trim();
@@ -2011,7 +1964,7 @@
       });
 
       if (!title || !content) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¶à¥€à¤°à¥à¤·à¤• à¤”à¤° à¤ªà¥‚à¤°à¥€ à¤•à¤¹à¤¾à¤¨à¥€/à¤•à¤‚à¤Ÿà¥‡à¤‚à¤Ÿ à¤…à¤µà¤¶à¥à¤¯ à¤²à¤¿à¤–à¥‡à¤‚!");
+        showAppToast("कृपया शीर्षक और पूरी कहानी/कंटेंट अवश्य लिखें!");
         return;
       }
 
@@ -2024,14 +1977,14 @@
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("âœ… à¤ªà¤¾à¤µà¤¨ à¤•à¤¥à¤¾ à¤ªà¥à¤°à¤•à¤¾à¤¶à¤¿à¤¤ à¤¹à¥à¤ˆ!");
+        showAppToast("✅ पावन कथा प्रकाशित हुई!");
         document.getElementById('newBlogTitle').value = '';
         document.getElementById('newBlogImg').value = '';
         document.getElementById('newBlogVideo').value = '';
         document.getElementById('newBlogBody').value = '';
         document.getElementById('newBlogOnDonation').checked = false;
-        document.getElementById('extraPhotoInputsContainer').innerHTML = `<input type="text" class="extra-img-url" placeholder="à¤à¤¡à¤¿à¤¶à¤¨à¤² à¤«à¥‹à¤Ÿà¥‹ URL à¤²à¤¿à¤‚à¤• #1">`;
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+        document.getElementById('extraPhotoInputsContainer').innerHTML = `<input type="text" class="extra-img-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function renderBlogCardsHtml(blogsList) {
@@ -2043,7 +1996,7 @@
         } else if (b.img) {
           mediaHtml = `<img src="${b.img}" alt="${b.title}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/400';">`;
         } else {
-          mediaHtml = `<div style="height:140px; background:linear-gradient(135deg, #d32f2f, #ff6f00); display:flex; align-items:center; justify-content:center; font-size:35px;">ðŸš©</div>`;
+          mediaHtml = `<div style="height:140px; background:linear-gradient(135deg, #d32f2f, #ff6f00); display:flex; align-items:center; justify-content:center; font-size:35px;">🚩</div>`;
         }
 
         const shortText = b.content.length > 110 ? b.content.substring(0, 110) + '...' : b.content;
@@ -2053,9 +2006,9 @@
             ${mediaHtml}
             <div class="blog-content">
               <div class="blog-title">${b.title}</div>
-              <div class="blog-meta">ðŸ“… ${b.date || ''} | âœï¸ ${b.author || 'à¤¸à¤®à¤¿à¤¤à¤¿'}</div>
+              <div class="blog-meta">📅 ${b.date || ''} | ✍️ ${b.author || 'समिति'}</div>
               <div class="blog-desc">${shortText}</div>
-              <button class="blog-btn" onclick="openBlogReader('${b.id}')">ðŸ“– à¤ªà¥‚à¤°à¤¾ à¤ªà¤¢à¤¼à¥‡à¤‚ à¤µ à¤—à¥ˆà¤²à¤°à¥€ à¤¦à¥‡à¤–à¥‡à¤‚</button>
+              <button class="blog-btn" onclick="openBlogReader('${b.id}')">📖 पूरा पढ़ें व गैलरी देखें</button>
             </div>
           </div>
         `;
@@ -2066,7 +2019,7 @@
       const box = document.getElementById('publicFullBlogList');
       if (!box) return;
       if (cloudBlogs.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column:1/-1; padding:30px;">à¤…à¤­à¥€ à¤•à¥‹à¤ˆ à¤ªà¤¾à¤µà¤¨ à¤•à¤¥à¤¾ à¤¯à¤¾ à¤¬à¥à¤²à¥‰à¤— à¤ªà¥à¤°à¤•à¤¾à¤¶à¤¿à¤¤ à¤¨à¤¹à¥€à¤‚ à¤¹à¥à¤† à¤¹à¥ˆà¥¤ à¤œà¤²à¥à¤¦ à¤¹à¥€ à¤¦à¤°à¥à¤¶à¤¨ à¤¹à¥‹à¤‚à¤—à¥‡!</p>`;
+        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column:1/-1; padding:30px;">अभी कोई पावन कथा या ब्लॉग प्रकाशित नहीं हुआ है। जल्द ही दर्शन होंगे!</p>`;
         return;
       }
       box.innerHTML = renderBlogCardsHtml(cloudBlogs);
@@ -2091,7 +2044,7 @@
       if (!blog) return;
 
       document.getElementById('readerBlogTitle').innerText = blog.title;
-      document.getElementById('readerBlogMeta').innerText = `à¤¦à¤¿à¤¨à¤¾à¤‚à¤•: ${blog.date || ''} | à¤²à¥‡à¤–à¤•/à¤¸à¥à¤°à¥‹à¤¤: ${blog.author || 'à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿'}`;
+      document.getElementById('readerBlogMeta').innerText = `दिनांक: ${blog.date || ''} | लेखक/स्रोत: ${blog.author || 'श्री दुर्गा पूजा सेवा समिति'}`;
       
       const mediaBox = document.getElementById('readerBlogMedia');
       const galleryBox = document.getElementById('readerBlogGallery');
@@ -2108,7 +2061,7 @@
 
       if (blog.gallery && blog.gallery.length > 0) {
         galleryBox.innerHTML = blog.gallery.map(imgUrl => `
-          <img src="${imgUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,215,0,0.3); cursor:pointer;" onclick="viewAdminScreenshot('${imgUrl}')" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';" title="à¤¬à¤¡à¤¼à¤¾ à¤¦à¥‡à¤–à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤•à¥à¤²à¤¿à¤• à¤•à¤°à¥‡à¤‚">
+          <img src="${imgUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,215,0,0.3); cursor:pointer;" onclick="viewAdminScreenshot('${imgUrl}')" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';" title="बड़ा देखने के लिए क्लिक करें">
         `).join('');
       }
 
@@ -2119,14 +2072,14 @@
     function toggleBlogOnDonation(blogId, currentVal) {
       if (!db) return;
       db.collection("blogs").doc(blogId).update({ showOnDonation: !currentVal }).then(() => {
-        showAppToast("à¤¡à¥‹à¤¨à¥‡à¤¶à¤¨ à¤ªà¥‡à¤œ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¹à¥à¤†!");
+        showAppToast("डोनेशन पेज स्टेटस अपडेट हुआ!");
       });
     }
 
     function toggleProductOnDonation(prodId, currentVal) {
       if (!db) return;
       db.collection("products").doc(prodId).update({ showOnDonation: !currentVal }).then(() => {
-        showAppToast("à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤¸à¤œà¥‡à¤¸à¥à¤Ÿà¥‡à¤¡ à¤¸à¥à¤Ÿà¥‡à¤Ÿà¤¸ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¹à¥à¤†!");
+        showAppToast("प्रोडक्ट सजेस्टेड स्टेटस अपडेट हुआ!");
       });
     }
 
@@ -2134,7 +2087,7 @@
       if (!db) return;
       const newStock = currentStockVal === false ? true : false;
       db.collection("products").doc(prodId).update({ inStock: newStock }).then(() => {
-        showAppToast(newStock ? "ðŸŸ¢ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤¸à¥à¤Ÿà¥‰à¤• à¤®à¥‡à¤‚ à¤¹à¥ˆ!" : "ðŸ”´ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤†à¤‰à¤Ÿ à¤‘à¤«à¤¼ à¤¸à¥à¤Ÿà¥‰à¤• à¤•à¤° à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾!");
+        showAppToast(newStock ? "🟢 प्रोडक्ट स्टॉक में है!" : "🔴 प्रोडक्ट आउट ऑफ़ स्टॉक कर दिया गया!");
       });
     }
 
@@ -2143,14 +2096,14 @@
       if (!tb) return;
       tb.innerHTML = cloudBlogs.map(b => `
         <tr>
-          <td>${b.date || 'â€”'}</td>
+          <td>${b.date || '—'}</td>
           <td><b>${b.title}</b></td>
           <td>
             <button onclick="toggleBlogOnDonation('${b.id}', ${b.showOnDonation || false})" style="background:${b.showOnDonation ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
-              ${b.showOnDonation ? 'â­ à¤¦à¤¿à¤– à¤°à¤¹à¤¾ à¤¹à¥ˆ' : 'à¤›à¤¿à¤ªà¤¾ à¤¹à¥à¤†'}
+              ${b.showOnDonation ? '⭐ दिख रहा है' : 'छिपा हुआ'}
             </button>
           </td>
-          <td><button onclick="db.collection('blogs').doc('${b.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td>
+          <td><button onclick="db.collection('blogs').doc('${b.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
@@ -2166,7 +2119,7 @@
       const text = customContent !== null ? customContent : (msgInput ? msgInput.value.trim() : '');
       if (!text) return;
 
-      const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "à¤…à¤œà¥à¤žà¤¾à¤¤ à¤­à¤•à¥à¤¤";
+      const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "अज्ञात भक्त";
       const senderEmail = (currentUser && currentUser.email) ? currentUser.email : "anonymous";
 
       db.collection("chats").add({
@@ -2204,7 +2157,7 @@
         } else if (file.type.startsWith('audio/')) {
           sendGlobalChatMessage(`<audio src="${fileDataUrl}" controls style="width:100%; max-width:240px;"></audio>`, true);
         } else {
-          sendGlobalChatMessage(`ðŸ“„ <a href="${fileDataUrl}" download="${file.name}" style="color:var(--gold); text-decoration:underline;">à¤¡à¤¾à¤‰à¤¨à¤²à¥‹à¤¡: ${file.name}</a>`);
+          sendGlobalChatMessage(`📄 <a href="${fileDataUrl}" download="${file.name}" style="color:var(--gold); text-decoration:underline;">डाउनलोड: ${file.name}</a>`);
         }
       };
       reader.readAsDataURL(file);
@@ -2213,7 +2166,7 @@
     function toggleVoiceRecording() {
       if (!isRecording) {
         if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          showAppToast("à¤¬à¥à¤°à¤¾à¤‰à¤œà¤¼à¤° à¤µà¥‰à¤‡à¤¸ à¤°à¤¿à¤•à¥‰à¤°à¥à¤¡à¤¿à¤‚à¤— à¤¸à¤ªà¥‹à¤°à¥à¤Ÿ à¤¨à¤¹à¥€à¤‚ à¤•à¤°à¤¤à¤¾à¥¤");
+          showAppToast("ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
           return;
         }
         navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
@@ -2231,14 +2184,14 @@
           mediaRecorder.start();
           isRecording = true;
           const micBtn = document.getElementById('micBtn');
-          if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = 'ðŸ”´'; }
-          showAppToast("ðŸŽ™ï¸ à¤°à¤¿à¤•à¥‰à¤°à¥à¤¡à¤¿à¤‚à¤— à¤¶à¥à¤°à¥‚... à¤¦à¥‹à¤¬à¤¾à¤°à¤¾ à¤¦à¤¬à¤¾à¤•à¤° à¤­à¥‡à¤œà¥‡à¤‚à¥¤");
-        }).catch(() => showAppToast("à¤®à¤¾à¤‡à¤•à¥à¤°à¥‹à¤«à¥‹à¤¨ à¤•à¥€ à¤…à¤¨à¥à¤®à¤¤à¤¿ à¤†à¤µà¤¶à¥à¤¯à¤• à¤¹à¥ˆ!"));
+          if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = '🔴'; }
+          showAppToast("🎙️ रिकॉर्डिंग शुरू... दोबारा दबाकर भेजें।");
+        }).catch(() => showAppToast("माइक्रोफोन की अनुमति आवश्यक है!"));
       } else {
         if (mediaRecorder) mediaRecorder.stop();
         isRecording = false;
         const micBtn = document.getElementById('micBtn');
-        if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = 'ðŸŽ™ï¸'; }
+        if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = '🎙️'; }
       }
     }
 
@@ -2249,11 +2202,11 @@
         const isMyMsg = (senderClientId && senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email === msgEmail);
         
         if (isMyMsg || isOwner) {
-          if (confirm("à¤•à¥à¤¯à¤¾ à¤†à¤ª à¤‡à¤¸ à¤¸à¤‚à¤¦à¥‡à¤¶ à¤•à¥‹ à¤¹à¤®à¥‡à¤¶à¤¾ à¤•à¥‡ à¤²à¤¿à¤ à¤¡à¤¿à¤²à¥€à¤Ÿ à¤•à¤°à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?")) {
-            db.collection("chats").doc(chatId).delete().then(() => showAppToast("à¤¸à¤‚à¤¦à¥‡à¤¶ à¤¡à¤¿à¤²à¥€à¤Ÿ à¤¹à¥à¤†!"));
+          if (confirm("क्या आप इस संदेश को हमेशा के लिए डिलीट करना चाहते हैं?")) {
+            db.collection("chats").doc(chatId).delete().then(() => showAppToast("संदेश डिलीट हुआ!"));
           }
         } else {
-          showAppToast("à¤†à¤ª à¤•à¥‡à¤µà¤² à¤…à¤ªà¤¨à¤¾ à¤­à¥‡à¤œà¤¾ à¤¹à¥à¤† à¤¸à¤‚à¤¦à¥‡à¤¶ à¤¡à¤¿à¤²à¥€à¤Ÿ à¤•à¤° à¤¸à¤•à¤¤à¥‡ à¤¹à¥ˆà¤‚!");
+          showAppToast("आप केवल अपना भेजा हुआ संदेश डिलीट कर सकते हैं!");
         }
       }, 700);
     }
@@ -2267,7 +2220,7 @@
       box.innerHTML = cloudChats.map(c => {
         const isSentByMe = (c.senderClientId && c.senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email && currentUser.email === c.email);
         const alignmentClass = isSentByMe ? "sent" : "received";
-        const displayName = isSentByMe ? "à¤†à¤ª (You)" : (c.name || "à¤…à¤œà¥à¤žà¤¾à¤¤ à¤­à¤•à¥à¤¤");
+        const displayName = isSentByMe ? "आप (You)" : (c.name || "अज्ञात भक्त");
 
         return `
           <div class="msg-row ${alignmentClass}"
@@ -2275,7 +2228,7 @@
                ontouchend="handleMsgTouchEnd()" 
                onmousedown="handleMsgTouchStart('${c.id}', '${c.senderClientId || ''}', '${c.email || ''}')" 
                onmouseup="handleMsgTouchEnd()">
-            <div class="insta-msg-bubble" title="à¤®à¥ˆà¤¸à¥‡à¤œ à¤¡à¤¿à¤²à¥€à¤Ÿ à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ 2-3 à¤¸à¥‡à¤•à¤‚à¤¡ à¤¦à¤¬à¤¾à¤•à¤° à¤°à¤–à¥‡à¤‚">
+            <div class="insta-msg-bubble" title="मैसेज डिलीट करने हेतु 2-3 सेकंड दबाकर रखें">
               <div class="insta-msg-sender">${displayName}</div>
               <div>${c.message || ''}</div>
               <span class="msg-meta">${c.dateStr || ''}</span>
@@ -2292,10 +2245,10 @@
       if (!tb) return;
       tb.innerHTML = cloudChats.map(c => `
         <tr>
-          <td>${c.dateStr || 'â€”'}</td>
-          <td><b>${c.name || 'à¤…à¤œà¥à¤žà¤¾à¤¤ à¤­à¤•à¥à¤¤'}</b></td>
+          <td>${c.dateStr || '—'}</td>
+          <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
           <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
-          <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td>
+          <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
@@ -2303,21 +2256,21 @@
     // --- Feedback Functions ---
     function submitPublicFeedback() {
       if (!db) return;
-      const name = document.getElementById('fbNameInput').value.trim() || "à¤¶à¥à¤°à¤¦à¥à¤§à¤¾à¤²à¥ à¤­à¤•à¥à¤¤";
+      const name = document.getElementById('fbNameInput').value.trim() || "श्रद्धालु भक्त";
       const rating = document.getElementById('fbRatingInput').value;
       const msg = document.getElementById('fbMsgInput').value.trim();
 
       if (!msg) {
-        showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤…à¤ªà¤¨à¤¾ à¤¸à¤‚à¤¦à¥‡à¤¶ à¤¯à¤¾ à¤…à¤¨à¥à¤­à¤µ à¤²à¤¿à¤–à¥‡à¤‚!");
+        showAppToast("कृपया अपना संदेश या अनुभव लिखें!");
         return;
       }
 
       db.collection("feedbacks").add({
-        name, rating: Number(rating), message: msg, type: "à¤ªà¤¬à¥à¤²à¤¿à¤• à¤«à¥€à¤¡à¤¬à¥ˆà¤•",
+        name, rating: Number(rating), message: msg, type: "पब्लिक फीडबैक",
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now()
       }).then(() => {
-        showAppToast("âœ… à¤†à¤ªà¤•à¤¾ à¤¸à¥à¤à¤¾à¤µ à¤¸à¤ªà¥à¤°à¥‡à¤® à¤¸à¥à¤µà¥€à¤•à¤¾à¤° à¤¹à¥à¤†! à¤§à¤¨à¥à¤¯à¤µà¤¾à¤¦à¥¤");
+        showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
         document.getElementById('fbMsgInput').value = '';
         closeModal('feedbackModal');
       }).catch(e => showAppToast(e.message));
@@ -2326,16 +2279,16 @@
     function renderPublicFeedbacks() {
       const box = document.getElementById('publicFeedbackList');
       if (!box) return;
-      const filtered = cloudFeedbacks.filter(f => f.type !== "à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ / à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤°à¤¿à¤ªà¥‹à¤°à¥à¤Ÿ");
+      const filtered = cloudFeedbacks.filter(f => f.type !== "सहायता / समस्या रिपोर्ट");
       if (filtered.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">à¤…à¤­à¥€ à¤•à¥‹à¤ˆ à¤¸à¥à¤à¤¾à¤µ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¥¤ à¤ªà¤¹à¤²à¤¾ à¤¸à¥à¤à¤¾à¤µ à¤†à¤ª à¤¦à¥‡à¤‚!</p>`;
+        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
         return;
       }
       box.innerHTML = filtered.map(f => `
         <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
           <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
             <span>${f.name}</span>
-            <span>${'â­'.repeat(f.rating || 5)}</span>
+            <span>${'⭐'.repeat(f.rating || 5)}</span>
           </div>
           <p style="color:#ffcdd2;">${f.message}</p>
         </div>
@@ -2347,14 +2300,14 @@
       if (!tb) return;
       tb.innerHTML = cloudFeedbacks.map(f => `
         <tr>
-          <td>${f.date || 'â€”'}</td>
-          <td><b>${f.name || 'â€”'}</b><br><small>${f.phone || ''}</small></td>
-          <td><span style="color:${f.type === 'à¤¸à¤¹à¤¾à¤¯à¤¤à¤¾ / à¤¸à¤®à¤¸à¥à¤¯à¤¾ à¤°à¤¿à¤ªà¥‹à¤°à¥à¤Ÿ' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'à¤«à¥€à¤¡à¤¬à¥ˆà¤•'}</span></td>
+          <td>${f.date || '—'}</td>
+          <td><b>${f.name || '—'}</b><br><small>${f.phone || ''}</small></td>
+          <td><span style="color:${f.type === 'सहायता / समस्या रिपोर्ट' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'फीडबैक'}</span></td>
           <td>${f.message}</td>
           <td>
-            ${f.screenshot ? `<img src="${f.screenshot}" onclick="viewAdminScreenshot('${f.screenshot}')" style="width:42px; height:42px; object-fit:cover; border-radius:4px; border:2px solid var(--gold); cursor:pointer;" title="à¤¬à¤¡à¤¼à¤¾ à¤¦à¥‡à¤–à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ à¤•à¥à¤²à¤¿à¤• à¤•à¤°à¥‡à¤‚">` : 'â€”'}
+            ${f.screenshot ? `<img src="${f.screenshot}" onclick="viewAdminScreenshot('${f.screenshot}')" style="width:42px; height:42px; object-fit:cover; border-radius:4px; border:2px solid var(--gold); cursor:pointer;" title="बड़ा देखने के लिए क्लिक करें">` : '—'}
           </td>
-          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td>
+          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
         </tr>
       `).join('');
     }
@@ -2362,22 +2315,22 @@
     // --- WhatsApp Receipt Sender ---
     function sendWhatsAppReceipt(phone, name, amount, cause, utr, date) {
       if (!phone) {
-        showAppToast("à¤¦à¤¾à¤¨à¤¦à¤¾à¤¤à¤¾ à¤•à¤¾ à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆ!");
+        showAppToast("दानदाता का मोबाइल नंबर उपलब्ध नहीं है!");
         return;
       }
       const cleanPhone = phone.replace(/[^0-9]/g, '');
       const finalPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
       
       const receiptMsg = encodeURIComponent(
-        `ðŸš© *à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿ & Maa Durga Enterprises* ðŸš©\n\n` +
-        `à¤¸à¤¾à¤¦à¤° à¤ªà¥à¤°à¤£à¤¾à¤®, *${name}* à¤œà¥€,\n` +
-        `à¤®à¤¾à¤ à¤­à¤—à¤µà¤¤à¥€ à¤•à¥‡ à¤ªà¤¾à¤µà¤¨ à¤•à¤¾à¤°à¥à¤¯ à¤¹à¥‡à¤¤à¥ à¤†à¤ªà¤•à¤¾ à¤¸à¤¹à¤¯à¥‹à¤— à¤¸à¤ªà¥à¤°à¥‡à¤® à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤ à¤¹à¥à¤†à¥¤\n\n` +
-        `ðŸ§¾ *à¤ªà¤¾à¤µà¤¨ à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¸à¥€à¤¦:* \n` +
-        `â€¢ à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯: ${cause}\n` +
-        `â€¢ à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¾à¤¶à¤¿: â‚¹${amount}\n` +
-        `â€¢ UTR / Ref No: ${utr}\n` +
-        `â€¢ à¤¦à¤¿à¤¨à¤¾à¤‚à¤•: ${date}\n\n` +
-        `ðŸŒ¸ à¤®à¤¾à¤ à¤¦à¥à¤°à¥à¤—à¤¾ à¤œà¥€ à¤•à¥€ à¤•à¥ƒà¤ªà¤¾ à¤†à¤ª à¤”à¤° à¤†à¤ªà¤•à¥‡ à¤¸à¤®à¤¸à¥à¤¤ à¤ªà¤°à¤¿à¤µà¤¾à¤° à¤ªà¤° à¤¸à¤¦à¥ˆà¤µ à¤¬à¤¨à¥€ à¤°à¤¹à¥‡à¥¤ à¤œà¤¯ à¤®à¤¾à¤¤à¤¾ à¤¦à¥€! ðŸŒ¸`
+        `🚩 *श्री दुर्गा पूजा सेवा समिति & Maa Durga Enterprises* 🚩\n\n` +
+        `सादर प्रणाम, *${name}* जी,\n` +
+        `माँ भगवती के पावन कार्य हेतु आपका सहयोग सप्रेम प्राप्त हुआ।\n\n` +
+        `🧾 *पावन सहयोग रसीद:* \n` +
+        `• उद्देश्य: ${cause}\n` +
+        `• सहयोग राशि: ₹${amount}\n` +
+        `• UTR / Ref No: ${utr}\n` +
+        `• दिनांक: ${date}\n\n` +
+        `🌸 माँ दुर्गा जी की कृपा आप और आपके समस्त परिवार पर सदैव बनी रहे। जय माता दी! 🌸`
       );
 
       window.open(`https://wa.me/${finalPhone}?text=${receiptMsg}`, '_blank');
@@ -2393,18 +2346,18 @@
           <tr>
             <td>${d.date}</td>
             <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${dName}</b></td>
-            <td><b style="color:#81c784;">${phone ? 'ðŸ“ž ' + phone : 'â€”'}</b></td>
-            <td>${d.address || 'â€”'}</td>
-            <td>â‚¹${d.amount}</td>
+            <td><b style="color:#81c784;">${phone ? '📞 ' + phone : '—'}</b></td>
+            <td>${d.address || '—'}</td>
+            <td>₹${d.amount}</td>
             <td>${d.utr || 'VERIFIED'}</td>
             <td>
               ${phone ? `
                 <button onclick="sendWhatsAppReceipt('${phone}', '${d.name}', '${d.amount}', '${d.cause}', '${d.utr || 'VERIFIED'}', '${d.date}')" style="background:#25D366; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                  ðŸ“² WhatsApp
+                  📲 WhatsApp
                 </button>
-              ` : '<span style="color:#777;">à¤¨à¤‚à¤¬à¤° à¤¨à¤¹à¥€à¤‚</span>'}
+              ` : '<span style="color:#777;">नंबर नहीं</span>'}
             </td>
-            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td>
+            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
           </tr>
         `;
       }).join('');
@@ -2417,15 +2370,15 @@
       const city = document.getElementById('admCashCity')?.value.trim() || '';
       const amt = document.getElementById('admCashAmt')?.value.trim();
 
-      if (!name || !amt) { showAppToast("à¤¨à¤¾à¤® à¤µ à¤°à¤¾à¤¶à¤¿ à¤†à¤µà¤¶à¥à¤¯à¤• à¤¹à¥ˆà¤‚!"); return; }
+      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
 
       db.collection("donations").add({
-        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤à¤µà¤‚ à¤…à¤–à¤‚à¤¡ à¤­à¤‚à¤¡à¤¾à¤°à¤¾", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
         date: new Date().toLocaleDateString('hi-IN'),
         timeNumber: Date.now(),
         timestamp: firebase.firestore.FieldValue.serverTimestamp()
       }).then(() => {
-        showAppToast("âœ… à¤¸à¤¹à¤¯à¥‹à¤— à¤¦à¤°à¥à¤œ à¤¹à¥à¤†!");
+        showAppToast("✅ सहयोग दर्ज हुआ!");
         document.getElementById('admCashName').value = '';
         document.getElementById('admCashPhone').value = '';
         document.getElementById('admCashAmt').value = '';
@@ -2450,33 +2403,33 @@
     }
 
     function openDonationModal() {
-      const name = document.getElementById('donName')?.value.trim() || "à¤¶à¥à¤°à¤¦à¥à¤§à¤¾à¤²à¥ à¤­à¤•à¥à¤¤";
+      const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
       const sal = document.getElementById('donSalutation')?.value || 'none';
       const amt = document.getElementById('donAmount')?.value.trim();
       const cause = document.getElementById('donCause')?.value;
       const city = document.getElementById('donCity')?.value.trim();
       const phone = document.getElementById('donPhone')?.value.trim();
 
-      if (!amt || amt <= 0) { showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤¸à¤¹à¥€ à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¾à¤¶à¤¿ à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚à¥¤"); return; }
-      if (!phone || phone.length < 10) { showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤°à¤¸à¥€à¤¦ à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤ à¤•à¤°à¤¨à¥‡ à¤•à¥‡ à¤²à¤¿à¤ 10-à¤…à¤‚à¤•à¥€à¤¯ à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚!"); return; }
+      if (!amt || amt <= 0) { showAppToast("कृपया सही सहयोग राशि दर्ज करें।"); return; }
+      if (!phone || phone.length < 10) { showAppToast("कृपया रसीद प्राप्त करने के लिए 10-अंकीय व्हाट्सएप नंबर दर्ज करें!"); return; }
 
       pendingDonationData = { name, salutation: sal, amount: Number(amt), cause, address: city, phone };
 
-      document.getElementById('donModalInfo').innerHTML = `${cause}<br>à¤¦à¥‡à¤¯ à¤°à¤¾à¤¶à¤¿: <b style="color:var(--gold); font-size:16px;">â‚¹${amt}</b>`;
+      document.getElementById('donModalInfo').innerHTML = `${cause}<br>देय राशि: <b style="color:var(--gold); font-size:16px;">₹${amt}</b>`;
       
       const payMode = appSettingsMain.paymentMode || 'upi';
       const donBox = document.getElementById('donPaymentBox');
 
       if (payMode === 'cod') {
-        donBox.innerHTML = `<p style="color:#81c784; font-size:13px; font-weight:bold;">à¤¸à¤¹à¤¯à¥‹à¤— à¤¹à¥‡à¤¤à¥ à¤¨à¤•à¤¦ (Cash) à¤¸à¥à¤µà¥€à¤•à¤¾à¤° à¤¹à¥ˆà¥¤</p>`;
+        donBox.innerHTML = `<p style="color:#81c784; font-size:13px; font-weight:bold;">सहयोग हेतु नकद (Cash) स्वीकार है।</p>`;
       } else {
         donBox.innerHTML = `
-          <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">ðŸ“² QR à¤¸à¥à¤•à¥ˆà¤¨ à¤•à¤°à¥‡à¤‚ à¤¯à¤¾ à¤à¤ª à¤–à¥‹à¤²à¥‡à¤‚:</p>
-          <div class="upi-app-badges"><span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe à¤–à¥‹à¤²à¥‡à¤‚</span></div>
+          <p style="font-size:12px; color:var(--gold); font-weight:bold; margin-bottom:6px;">📲 QR स्कैन करें या ऐप खोलें:</p>
+          <div class="upi-app-badges"><span class="upi-badge" onclick="openDirectUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
           <div style="display: flex; justify-content: center; margin: 10px 0;"><div class="qr-box-wrapper" id="donationQrContainer"></div></div>
-          <p style="font-size:10px; color:#ccc;">(à¤°à¤¾à¤¶à¤¿ à¤…à¤ªà¤¨à¥‡ à¤†à¤ª à¤«à¤¿à¤•à¥à¤¸ à¤¹à¥ˆ)</p>
+          <p style="font-size:10px; color:#ccc;">(राशि अपने आप फिक्स है)</p>
           <div style="margin-top:10px; text-align:left;">
-            <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">à¤­à¥à¤—à¤¤à¤¾à¤¨ à¤•à¥‡ à¤¬à¤¾à¤¦ 12-à¤…à¤‚à¤•à¥€à¤¯ UTR / Ref à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚:</p>
+            <p style="font-size:11px; color:#ffcdd2; margin-bottom:4px;">भुगतान के बाद 12-अंकीय UTR / Ref नंबर दर्ज करें:</p>
             <input type="text" id="donUtrInput" placeholder="12-digit UPI Ref / UTR No. *">
           </div>
         `;
@@ -2500,13 +2453,13 @@
       if (payMode === 'upi') {
         utr = document.getElementById('donUtrInput')?.value.trim();
         if (!utr || utr.length < 12) {
-          showAppToast("à¤•à¥ƒà¤ªà¤¯à¤¾ à¤­à¥à¤—à¤¤à¤¾à¤¨ à¤•à¥‡ à¤¬à¤¾à¤¦ à¤¸à¤¹à¥€ 12-à¤…à¤‚à¤•à¥€à¤¯ UTR / Ref à¤¨à¤‚à¤¬à¤° à¤¦à¤°à¥à¤œ à¤•à¤°à¥‡à¤‚!");
+          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UTR / Ref नंबर दर्ज करें!");
           return;
         }
         const dupOrd = cloudOrders.find(o => o.utr === utr);
         const dupDon = cloudDonations.find(d => d.utr === utr);
         if (dupOrd || dupDon) {
-          showAppToast("âš ï¸ à¤¯à¤¹ UTR à¤¨à¤‚à¤¬à¤° à¤ªà¤¹à¤²à¥‡ à¤¹à¥€ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤¿à¤¯à¤¾ à¤œà¤¾ à¤šà¥à¤•à¤¾ à¤¹à¥ˆ!");
+          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
           return;
         }
       }
@@ -2529,7 +2482,7 @@
         document.getElementById('donAmount').value = '';
         document.getElementById('donPhone').value = '';
         document.getElementById('donCity').value = '';
-      }).catch(e => showAppToast("à¤¤à¥à¤°à¥à¤Ÿà¤¿: " + e.message));
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function inspectRecord(type, id) {
@@ -2538,11 +2491,11 @@
       if (type === 'order') {
         item = cloudOrders.find(o => o.id === id);
         if (!item) return;
-        html = `<b>ðŸ“¦ à¤‘à¤°à¥à¤¡à¤° à¤µà¤¿à¤µà¤°à¤£:</b><br>â€¢ à¤¨à¤¾à¤®: ${item.userName}<br>â€¢ à¤«à¥‹à¤¨: ${item.phone}<br>â€¢ à¤¸à¤¾à¤®à¤—à¥à¤°à¥€: ${item.productName}<br>â€¢ à¤°à¤¾à¤¶à¤¿: â‚¹${item.amount}<br>â€¢ à¤ªà¤¤à¤¾: ${item.fullAddress}<br>â€¢ UTR: ${item.utr}`;
+        html = `<b>📦 ऑर्डर विवरण:</b><br>• नाम: ${item.userName}<br>• फोन: ${item.phone}<br>• सामग्री: ${item.productName}<br>• राशि: ₹${item.amount}<br>• पता: ${item.fullAddress}<br>• UTR: ${item.utr}`;
       } else if (type === 'donation') {
         item = cloudDonations.find(d => d.id === id);
         if (!item) return;
-        html = `<b>ðŸ’µ à¤¦à¤¾à¤¨ à¤µà¤¿à¤µà¤°à¤£:</b><br>â€¢ à¤¨à¤¾à¤®: ${formatDonorName(item.name, item.salutation)}<br>â€¢ à¤«à¥‹à¤¨: ${item.phone || 'à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚'}<br>â€¢ à¤‰à¤¦à¥à¤¦à¥‡à¤¶à¥à¤¯: ${item.cause}<br>â€¢ à¤°à¤¾à¤¶à¤¿: â‚¹${item.amount}<br>â€¢ à¤¸à¥à¤¥à¤¾à¤¨: ${item.address}<br>â€¢ UTR: ${item.utr}`;
+        html = `<b>💵 दान विवरण:</b><br>• नाम: ${formatDonorName(item.name, item.salutation)}<br>• फोन: ${item.phone || 'उपलब्ध नहीं'}<br>• उद्देश्य: ${item.cause}<br>• राशि: ₹${item.amount}<br>• स्थान: ${item.address}<br>• UTR: ${item.utr}`;
       }
       document.getElementById('inspectContentBox').innerHTML = html;
       document.getElementById('adminInspectModal').style.display = 'flex';
@@ -2560,9 +2513,9 @@
     function refreshTicker() {
       const t = document.getElementById('liveTicker');
       if (!t) return;
-      const base = "ðŸš© Maa Durga Enterprises | à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿ ðŸš© à¤…à¤–à¤‚à¤¡ à¤­à¤‚à¤¡à¤¾à¤°à¤¾ à¤à¤µà¤‚ 12 à¤®à¤¾à¤¹ à¤ªà¤¾à¤µà¤¨ à¤¸à¥‡à¤µà¤¾ à¤ªà¥‹à¤°à¥à¤Ÿà¤² ðŸŒ¸";
+      const base = "🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸";
       if (cloudDonations.length === 0) { t.innerText = base; return; }
-      const recent = cloudDonations.slice(0, 8).map(d => `â˜… ${formatDonorName(d.name, d.salutation)} - â‚¹${d.amount} (${d.cause})`).join(' | ');
+      const recent = cloudDonations.slice(0, 8).map(d => `★ ${formatDonorName(d.name, d.salutation)} - ₹${d.amount} (${d.cause})`).join(' | ');
       t.innerText = recent + " | " + base;
     }
 
@@ -2570,7 +2523,7 @@
       const b = document.getElementById('publicDonorBody');
       if (!b) return;
       b.innerHTML = cloudDonations.map(d => `
-        <tr><td>${d.date}</td><td><b>${formatDonorName(d.name, d.salutation)}</b></td><td>${d.address || 'â€”'}</td><td style="color:var(--gold); font-weight:bold;">â‚¹${d.amount}</td><td>${d.cause}</td></tr>
+        <tr><td>${d.date}</td><td><b>${formatDonorName(d.name, d.salutation)}</b></td><td>${d.address || '—'}</td><td style="color:var(--gold); font-weight:bold;">₹${d.amount}</td><td>${d.cause}</td></tr>
       `).join('');
     }
 
@@ -2584,7 +2537,7 @@
     function triggerCelebration(name, cause, amount, salutation) {
       const dName = formatDonorName(name, salutation);
       document.getElementById('celDonorName').innerText = `${dName},`;
-      document.getElementById('celMsg').innerHTML = `${cause} à¤¹à¥‡à¤¤à¥ à¤†à¤ªà¤•à¥‡ <b>â‚¹${amount}</b> à¤•à¥‡ à¤¸à¤¹à¤¯à¥‹à¤— à¤•à¥‡ à¤²à¤¿à¤ à¤¸à¤®à¤¿à¤¤à¤¿ à¤†à¤ªà¤•à¤¾ à¤¹à¤¾à¤°à¥à¤¦à¤¿à¤• à¤¸à¥à¤µà¤¾à¤—à¤¤ à¤•à¤°à¤¤à¥€ à¤¹à¥ˆ!`;
+      document.getElementById('celMsg').innerHTML = `${cause} हेतु आपके <b>₹${amount}</b> के सहयोग के लिए समिति आपका हार्दिक स्वागत करती है!`;
       document.getElementById('celebrationModal').style.display = 'flex';
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       
@@ -2601,103 +2554,36 @@
       const cats = ['all'];
       cloudProducts.forEach(p => { if (p.category && !cats.includes(p.category)) cats.push(p.category); });
       const cBox = document.getElementById('catScroll');
-      if (cBox) cBox.innerHTML = cats.map(c => `<span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">${c === 'all' ? 'à¤¸à¤­à¥€' : c}</span>`).join('');
+      if (cBox) cBox.innerHTML = cats.map(c => `<span class="cat-chip ${c === activeCategory ? 'active' : ''}" onclick="filterCategory('${c}')">${c === 'all' ? 'सभी' : c}</span>`).join('');
     }
     function filterCategory(cat) { activeCategory = cat; renderCategories(); renderStoreProducts(); }
     
-    // --- OFFER ENGINE -------------------------------------------------------
-    function offerDateValue(value) {
-      if (!value) return null;
-      if (value && typeof value.toDate === 'function') return value.toDate();
-      const d = new Date(value);
-      return isNaN(d.getTime()) ? null : d;
-    }
-
-    function isAdvancedOfferActive(offer) {
-      if (!offer || offer.active === false) return false;
-      const now = Date.now();
-      const start = offerDateValue(offer.startAt);
-      const end = offerDateValue(offer.endAt);
-      if (start && now < start.getTime()) return false;
-      if (end && now > end.getTime()) return false;
-      return true;
-    }
-
-    function getBestActiveOfferForProduct(product) {
-      if (!product) return null;
-      const productSku = String(product.sku || '').toLowerCase();
-      let bestOffer = null;
-      let bestDiscount = -1;
-      cloudOffers.forEach(offer => {
-        if (!isAdvancedOfferActive(offer)) return;
-        const rows = Array.isArray(offer.products) ? offer.products : [];
-        const row = rows.find(r => String(r.sku || r.productId || '').toLowerCase() === productSku);
-        if (!row) return;
-        const discount = Math.max(0, Math.min(100, Number(row.discount || 0)));
-        if (discount > bestDiscount) {
-          bestDiscount = discount;
-          bestOffer = offer;
-        }
-      });
-      return bestOffer;
-    }
-
-    function getEffectiveProductDiscount(product) {
-      let best = Math.max(0, Math.min(100, Number(product?.discountPercent || 0)));
-      const productSku = String(product?.sku || '').toLowerCase();
-      cloudOffers.forEach(offer => {
-        if (!isAdvancedOfferActive(offer)) return;
-        const rows = Array.isArray(offer.products) ? offer.products : [];
-        rows.forEach(row => {
-          if (String(row.sku || row.productId || '').toLowerCase() === productSku) {
-            best = Math.max(best, Math.max(0, Math.min(100, Number(row.discount || 0))));
-          }
-        });
-      });
-      return best;
-    }
-
-    function formatOfferDate(value) {
-      const d = offerDateValue(value);
-      return d ? d.toLocaleString('en-IN', { dateStyle: 'medium', timeStyle: 'short' }) : 'â€”';
-    }
-
-    function toDateTimeLocal(value) {
-      const d = offerDateValue(value);
-      if (!d) return '';
-      const pad = n => String(n).padStart(2, '0');
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-    }
-
     function renderStoreProducts() {
       const g = document.getElementById('fullStoreGrid');
       if (!g) return;
       const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
       g.innerHTML = filtered.map(p => {
-        const effectiveDiscount = getEffectiveProductDiscount(p);
-        let displayPrice = Number(p.price || 0);
-        let priceHtml = `â‚¹${displayPrice}`;
-        const activeOffer = getBestActiveOfferForProduct(p);
-        if (effectiveDiscount > 0) {
-          displayPrice = Math.round(displayPrice - (displayPrice * effectiveDiscount) / 100);
-          priceHtml = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">â‚¹${p.price}</span> â‚¹${displayPrice}`;
+        let displayPrice = p.price;
+        let priceHtml = `₹${p.price}`;
+        if (p.discountPercent && p.discountPercent > 0) {
+          displayPrice = Math.round(p.price - (p.price * p.discountPercent) / 100);
+          priceHtml = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${displayPrice}`;
         }
-        const offerBadge = activeOffer
-          ? `<div style="color:#ffb74d; font-size:10px; font-weight:bold; margin-bottom:3px;">ðŸ·ï¸ ${activeOffer.title} â€¢ ${effectiveDiscount}% OFF</div>`
-          : (effectiveDiscount > 0 ? `<div style="color:#81c784; font-size:10px; font-weight:bold; margin-bottom:3px;">ðŸ”¥ ${effectiveDiscount}% Special Discount</div>` : '');
-        const stockBadge = p.inStock === false ? `<div style="color:#ff5252; font-size:11px; font-weight:bold; margin-bottom:4px;">âŒ Out of Stock</div>` : '';
-        const btnDisabled = p.inStock === false ? `style="background:#444; color:#aaa; cursor:not-allowed;" disabled` : '';
-        const btnText = p.inStock === false ? `à¤¸à¥à¤Ÿà¥‰à¤• à¤®à¥‡à¤‚ à¤¨à¤¹à¥€à¤‚` : `ðŸ›’ à¤…à¤­à¥€ à¤–à¤°à¥€à¤¦à¥‡à¤‚`;
+
+        let stockBadge = p.inStock === false ? `<div style="color:#ff5252; font-size:11px; font-weight:bold; margin-bottom:4px;">❌ Out of Stock</div>` : '';
+        let btnDisabled = p.inStock === false ? `style="background:#444; color:#aaa; cursor:not-allowed;" disabled` : '';
+        let btnText = p.inStock === false ? `स्टॉक में नहीं` : `🛒 अभी खरीदें`;
+
         return `
           <div class="p-card" onclick="openProductDetails('${p.id}')">
             <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
             <div class="p-title">${p.name}</div>
             <div class="p-sku">SKU: ${p.sku}</div>
             ${stockBadge}
-            ${offerBadge}
             <div class="p-price">${priceHtml}</div>
             <button class="btn-buy" ${btnDisabled} onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
-          </div>`;
+          </div>
+        `;
       }).join('');
 
       const sg = document.getElementById('suggestedGrid');
@@ -2705,268 +2591,210 @@
         const suggested = cloudProducts.filter(p => p.showOnDonation === true);
         const listToRender = suggested.length > 0 ? suggested : cloudProducts.slice(0, 4);
         sg.innerHTML = listToRender.map(p => {
-          const effectiveDiscount = getEffectiveProductDiscount(p);
-          let dp = Number(p.price || 0);
-          let ph = `â‚¹${dp}`;
-          const activeOffer = getBestActiveOfferForProduct(p);
-          if (effectiveDiscount > 0) {
-            dp = Math.round(dp - (dp * effectiveDiscount) / 100);
-            ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">â‚¹${p.price}</span> â‚¹${dp}`;
+          let dp = p.price;
+          let ph = `₹${p.price}`;
+          if (p.discountPercent && p.discountPercent > 0) {
+            dp = Math.round(p.price - (p.price * p.discountPercent) / 100);
+            ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${dp}`;
           }
-          const badge = activeOffer ? `<div style="color:#ffb74d; font-size:10px; font-weight:bold;">ðŸ·ï¸ ${activeOffer.title}</div>` : '';
-          const out = p.inStock === false;
           return `
             <div class="p-card" onclick="openProductDetails('${p.id}')">
               <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
               <div class="p-title">${p.name}</div>
               <div class="p-sku">SKU: ${p.sku}</div>
-              ${badge}
               <div class="p-price">${ph}</div>
-              <button class="btn-buy" ${out ? 'disabled style="background:#444;color:#aaa;cursor:not-allowed;"' : ''} onclick="event.stopPropagation(); openCheckout('${p.id}')">${out ? 'à¤¸à¥à¤Ÿà¥‰à¤• à¤®à¥‡à¤‚ à¤¨à¤¹à¥€à¤‚' : 'ðŸ›’ à¤…à¤­à¥€ à¤–à¤°à¥€à¤¦à¥‡à¤‚'}</button>
-            </div>`;
+              <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+            </div>
+          `;
         }).join('');
       }
+    }
+
+    // --- SAVE PRODUCT ---
+    function saveNewProduct() {
+      const name = document.getElementById('newPName').value.trim();
+      const price = document.getElementById('newPPrice').value.trim();
+      const cat = document.getElementById('newPCat').value.trim() || 'प्रसाद';
+      const subCat = document.getElementById('newPSubCat').value.trim() || '';
+      const mainImg = document.getElementById('newPImg').value.trim();
+      const desc = document.getElementById('newPDesc').value.trim();
+      const onDonation = document.getElementById('newPOnDonation').checked;
+      const inStock = document.getElementById('newPInStock').checked;
+      const payUpi = document.getElementById('prodPayUpi').checked;
+      const payCod = document.getElementById('prodPayCod').checked;
+
+      const extraImgs = [];
+      document.querySelectorAll('.extra-prod-prod-url').forEach(input => {
+        const val = input.value.trim();
+        if (val) extraImgs.push(val);
+      });
+
+      if (!name || !price) {
+        showAppToast("कृपया उत्पाद का नाम और कीमत अवश्य भरें!");
+        return;
+      }
+
+      const skuCode = "SKU-" + Math.floor(1000 + Math.random() * 9000);
+
+      db.collection("products").add({
+        sku: skuCode,
+        name,
+        price: Number(price),
+        category: cat,
+        subCategory: subCat,
+        img: mainImg,
+        gallery: extraImgs,
+        description: desc,
+        showOnDonation: onDonation,
+        inStock: inStock,
+        payUpi: payUpi,
+        payCod: payCod,
+        discountPercent: 0,
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
+        document.getElementById('newPName').value = '';
+        document.getElementById('newPPrice').value = '';
+        document.getElementById('newPCat').value = '';
+        document.getElementById('newPSubCat').value = '';
+        document.getElementById('newPImg').value = '';
+        document.getElementById('newPDesc').value = '';
+        document.getElementById('newPOnDonation').checked = false;
+        document.getElementById('newPInStock').checked = true;
+        document.getElementById('extraProductPhotosContainer').innerHTML = `<input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
       const query = (document.getElementById('adminInventorySearch')?.value || '').toLowerCase().trim();
-      let filtered = cloudProducts.filter(p => {
+
+      const filtered = cloudProducts.filter(p => {
         const pName = (p.name || '').toLowerCase();
         const pSku = (p.sku || '').toLowerCase();
         return pName.includes(query) || pSku.includes(query);
       });
-      if (!query) filtered.sort((a, b) => Number(b.inStock !== false) - Number(a.inStock !== false));
+
       if (filtered.length === 0) {
-        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa; padding:15px;">à¤•à¥‹à¤ˆ à¤ªà¥à¤°à¥‹à¤¡à¤•à¥à¤Ÿ à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¤¾à¥¤ à¤…à¤—à¤° Firebase à¤®à¥‡à¤‚ products à¤¹à¥ˆà¤‚ à¤¤à¥‹ Firebase/à¤¨à¥‡à¤Ÿà¤µà¤°à¥à¤• à¤•à¤¨à¥‡à¤•à¥à¤¶à¤¨ à¤œà¤¾à¤à¤šà¥‡à¤‚à¥¤</td></tr>`;
+        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला। ऊपर 'नया प्रोडक्ट जोड़ें' से जोड़ें।</td></tr>`;
         return;
       }
-      const inStockCount = cloudProducts.filter(p => p.inStock !== false).length;
-      const headerRow = `<tr><td colspan="6" style="color:#81c784; background:rgba(76,175,80,0.06);">ðŸ“¦ à¤•à¥à¤² Products: <b>${cloudProducts.length}</b> Â· ðŸŸ¢ In Stock: <b>${inStockCount}</b> Â· ${query ? 'ðŸ” Search Result' : 'ðŸ“‹ à¤¬à¤¿à¤¨à¤¾ Search à¤¸à¤­à¥€ Products'}</td></tr>`;
-      tb.innerHTML = headerRow + filtered.map(p => `
+
+      tb.innerHTML = filtered.map(p => `
         <tr>
           <td><b style="color:var(--gold);">${p.sku}</b></td>
           <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
           <td><b>${p.name}</b></td>
-          <td><button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">${p.inStock !== false ? 'ðŸŸ¢ In Stock' : 'ðŸ”´ Out of Stock'}</button></td>
-          <td>â‚¹${p.price}</td>
           <td>
-            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;">âœï¸</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;">ðŸ—‘ï¸</button>
+            <button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
+              ${p.inStock !== false ? '🟢 In Stock' : '🔴 Out of Stock'}
+            </button>
           </td>
-        </tr>`).join('');
-    }
-
-    function getOfferProductSearch() {
-      return (document.getElementById('offerProductSearch')?.value || '').toLowerCase().trim();
-    }
-
-    function renderOfferProductPicker() {
-      const box = document.getElementById('offerProductPicker');
-      if (!box) return;
-      const query = getOfferProductSearch();
-      const editingId = document.getElementById('editingOfferId')?.value || '';
-      const editingOffer = cloudOffers.find(o => o.id === editingId);
-      const selectedMap = {};
-      if (editingOffer && Array.isArray(editingOffer.products)) editingOffer.products.forEach(row => { selectedMap[String(row.sku)] = Number(row.discount || 0); });
-
-      let products = cloudProducts.filter(p => {
-        const name = String(p.name || '').toLowerCase();
-        const sku = String(p.sku || '').toLowerCase();
-        return !query || name.includes(query) || sku.includes(query);
-      });
-      products.sort((a, b) => Number(b.inStock !== false) - Number(a.inStock !== false));
-
-      if (!products.length) {
-        box.innerHTML = `<div style="padding:15px; text-align:center; color:#aaa;">à¤•à¥‹à¤ˆ product à¤¨à¤¹à¥€à¤‚ à¤®à¤¿à¤²à¤¾à¥¤</div>`;
-        return;
-      }
-
-      box.innerHTML = products.map(p => {
-        const sku = String(p.sku || '');
-        const checked = Object.prototype.hasOwnProperty.call(selectedMap, sku);
-        const defaultDiscount = checked ? selectedMap[sku] : Number(p.discountPercent || 0);
-        const stock = p.inStock === false ? 'ðŸ”´ Out' : 'ðŸŸ¢ Stock';
-        const safeSku = sku.replace(/\\/g,'\\\\').replace(/"/g,'&quot;');
-        return `
-          <div class="md-offer-product-row" style="display:grid; grid-template-columns:28px 1fr 78px; gap:7px; align-items:center; padding:8px; border-bottom:1px dashed rgba(255,215,0,0.15);">
-            <input type="checkbox" class="offer-product-check" data-sku="${safeSku}" ${checked ? 'checked' : ''} onchange="syncOfferDiscountInput(this)" style="width:18px;height:18px;">
-            <div><div style="font-size:12px; font-weight:bold;">${p.name || 'Unnamed Product'}</div><div style="font-size:10px; color:var(--gold);">SKU: ${sku} Â· ${stock} Â· â‚¹${p.price}</div></div>
-            <input type="number" class="offer-product-discount" data-sku="${safeSku}" value="${defaultDiscount}" min="0" max="100" step="1" ${checked ? '' : 'disabled'} placeholder="%" style="width:78px; padding:7px;">
-          </div>`;
-      }).join('');
-    }
-
-    function syncOfferDiscountInput(check) {
-      const sku = check.dataset.sku;
-      const input = document.querySelector(`.offer-product-discount[data-sku="${CSS.escape(sku)}"]`);
-      if (input) input.disabled = !check.checked;
-    }
-
-    function toggleAllOfferProducts() {
-      const checks = Array.from(document.querySelectorAll('.offer-product-check'));
-      if (!checks.length) return;
-      const shouldCheck = checks.some(c => !c.checked);
-      checks.forEach(c => { c.checked = shouldCheck; syncOfferDiscountInput(c); });
-    }
-
-    function resetOfferForm() {
-      const edit = document.getElementById('editingOfferId'); if (edit) edit.value = '';
-      const title = document.getElementById('newOfferTitle'); if (title) title.value = '';
-      const desc = document.getElementById('newOfferDescription'); if (desc) desc.value = '';
-      const start = document.getElementById('newOfferStart'); if (start) start.value = '';
-      const end = document.getElementById('newOfferEnd'); if (end) end.value = '';
-      const active = document.getElementById('newOfferActive'); if (active) active.checked = true;
-      const search = document.getElementById('offerProductSearch'); if (search) search.value = '';
-      renderOfferProductPicker();
-    }
-
-    function collectSelectedOfferProducts() {
-      return Array.from(document.querySelectorAll('.offer-product-check:checked')).map(check => {
-        const sku = check.dataset.sku;
-        const input = document.querySelector(`.offer-product-discount[data-sku="${CSS.escape(sku)}"]`);
-        const p = cloudProducts.find(item => String(item.sku || '') === String(sku));
-        return { sku, productId: p?.id || '', name: p?.name || '', discount: Math.max(0, Math.min(100, Number(input?.value || 0))) };
-      }).filter(row => row.discount > 0);
-    }
-
-    async function saveAdvancedOffer() {
-      if (!db) { showAppToast('Firebase à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¨à¤¹à¥€à¤‚ à¤¹à¥ˆà¥¤'); return; }
-      const title = (document.getElementById('newOfferTitle')?.value || '').trim();
-      const description = (document.getElementById('newOfferDescription')?.value || '').trim();
-      const startValue = document.getElementById('newOfferStart')?.value || '';
-      const endValue = document.getElementById('newOfferEnd')?.value || '';
-      const active = document.getElementById('newOfferActive')?.checked !== false;
-      const editingId = document.getElementById('editingOfferId')?.value || '';
-      const products = collectSelectedOfferProducts();
-      if (!title) { showAppToast('à¤•à¥ƒà¤ªà¤¯à¤¾ Offer Title à¤¡à¤¾à¤²à¥‡à¤‚à¥¤'); return; }
-      if (!startValue || !endValue) { showAppToast('Start à¤”à¤° End time à¤¦à¥‹à¤¨à¥‹à¤‚ à¤­à¤°à¥‡à¤‚à¥¤'); return; }
-      const startDate = new Date(startValue), endDate = new Date(endValue);
-      if (isNaN(startDate.getTime()) || isNaN(endDate.getTime()) || endDate <= startDate) { showAppToast('End time, Start time à¤•à¥‡ à¤¬à¤¾à¤¦ à¤¹à¥‹à¤¨à¤¾ à¤šà¤¾à¤¹à¤¿à¤à¥¤'); return; }
-      if (!products.length) { showAppToast('à¤•à¤® à¤¸à¥‡ à¤•à¤® à¤à¤• product à¤šà¥à¤¨à¥‡à¤‚ à¤”à¤° à¤‰à¤¸à¤•à¤¾ Discount % 0 à¤¸à¥‡ à¤…à¤§à¤¿à¤• à¤°à¤–à¥‡à¤‚à¥¤'); return; }
-      const data = { title, description, startAt: startDate.toISOString(), endAt: endDate.toISOString(), active, products, updatedTime: Date.now() };
-      try {
-        if (editingId) { await db.collection('offers').doc(editingId).set(data, { merge: true }); showAppToast('âœ… Offer à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤¹à¥‹ à¤—à¤¯à¤¾!'); }
-        else { data.createdTime = Date.now(); await db.collection('offers').add(data); showAppToast('âœ… à¤¨à¤¯à¤¾ Offer à¤¸à¥‡à¤µ à¤¹à¥‹ à¤—à¤¯à¤¾!'); }
-        resetOfferForm();
-      } catch (e) { console.error('Advanced offer save error:', e); showAppToast('âŒ Offer à¤¸à¥‡à¤µ à¤¨à¤¹à¥€à¤‚ à¤¹à¥à¤†: ' + e.message); }
-    }
-
-    function editAdvancedOffer(id) {
-      const offer = cloudOffers.find(o => o.id === id); if (!offer) return;
-      document.getElementById('editingOfferId').value = id;
-      document.getElementById('newOfferTitle').value = offer.title || '';
-      document.getElementById('newOfferDescription').value = offer.description || '';
-      document.getElementById('newOfferStart').value = toDateTimeLocal(offer.startAt);
-      document.getElementById('newOfferEnd').value = toDateTimeLocal(offer.endAt);
-      document.getElementById('newOfferActive').checked = offer.active !== false;
-      renderOfferProductPicker();
-      document.getElementById('admOffers')?.scrollIntoView({ behavior:'smooth', block:'start' });
-    }
-
-    async function toggleAdvancedOffer(id) {
-      if (!db) return;
-      const offer = cloudOffers.find(o => o.id === id); if (!offer) return;
-      try { await db.collection('offers').doc(id).set({ active: offer.active === false, updatedTime: Date.now() }, { merge:true }); showAppToast(offer.active === false ? 'â–¶ï¸ Offer à¤«à¤¿à¤° Active à¤•à¤° à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾à¥¤' : 'â¸ï¸ Offer Pause à¤•à¤° à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾à¥¤'); }
-      catch(e) { showAppToast('à¤¤à¥à¤°à¥à¤Ÿà¤¿: ' + e.message); }
-    }
-
-    async function deleteAdvancedOffer(id) {
-      if (!db) return;
-      const offer = cloudOffers.find(o => o.id === id); if (!offer) return;
-      if (!confirm(`à¤•à¥à¤¯à¤¾ à¤†à¤ª "${offer.title || 'à¤‡à¤¸ Offer'}" à¤•à¥‹ delete à¤•à¤°à¤¨à¤¾ à¤šà¤¾à¤¹à¤¤à¥‡ à¤¹à¥ˆà¤‚?`)) return;
-      try { await db.collection('offers').doc(id).delete(); showAppToast('ðŸ—‘ï¸ Offer delete à¤¹à¥‹ à¤—à¤¯à¤¾à¥¤'); }
-      catch(e) { showAppToast('à¤¤à¥à¤°à¥à¤Ÿà¤¿: ' + e.message); }
+          <td>₹${p.price}</td>
+          <td>
+            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
+            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     function renderAdminOffers() {
-      if (document.getElementById('offerProductPicker')) renderOfferProductPicker();
-      const tb = document.querySelector('#advancedOffersTable tbody');
+      const tb = document.querySelector('#admOffersTable tbody');
       if (!tb) return;
-      if (!cloudOffers.length) { tb.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#aaa; padding:15px;">à¤…à¤­à¥€ à¤•à¥‹à¤ˆ named offer à¤¨à¤¹à¥€à¤‚ à¤¬à¤¨à¤¾à¤¯à¤¾ à¤—à¤¯à¤¾ à¤¹à¥ˆà¥¤ à¤Šà¤ªà¤° à¤¸à¥‡ à¤ªà¤¹à¤²à¤¾ Offer à¤¬à¤¨à¤¾à¤à¤‚à¥¤</td></tr>`; return; }
-      tb.innerHTML = cloudOffers.map(offer => {
-        const active = isAdvancedOfferActive(offer);
-        const paused = offer.active === false;
-        const status = paused ? `<span style="color:#ff9800;font-weight:bold;">â¸ï¸ Paused</span>` : active ? `<span style="color:#4caf50;font-weight:bold;">ðŸŸ¢ Active</span>` : `<span style="color:#aaa;font-weight:bold;">âšª Scheduled / Expired</span>`;
-        return `<tr>
-          <td><b style="color:var(--gold);">${offer.title || 'Unnamed Offer'}</b>${offer.description ? `<div style="font-size:10px;color:#aaa;margin-top:3px;">${offer.description}</div>` : ''}</td>
-          <td style="white-space:nowrap;">${formatOfferDate(offer.startAt)}<br>â†’ ${formatOfferDate(offer.endAt)}</td>
-          <td>${Array.isArray(offer.products) ? offer.products.length : 0}</td>
-          <td>${status}</td>
-          <td style="white-space:nowrap;"><button onclick="editAdvancedOffer('${offer.id}')" style="background:#ff9800;color:#000;border:none;padding:4px 7px;border-radius:4px;font-weight:bold;cursor:pointer;">âœï¸</button> <button onclick="toggleAdvancedOffer('${offer.id}')" style="background:#555;color:#fff;border:none;padding:4px 7px;border-radius:4px;font-weight:bold;cursor:pointer;">${paused ? 'â–¶ï¸' : 'â¸ï¸'}</button> <button onclick="deleteAdvancedOffer('${offer.id}')" style="background:#d32f2f;color:#fff;border:none;padding:4px 7px;border-radius:4px;cursor:pointer;">ðŸ—‘ï¸</button></td>
-        </tr>`;
-      }).join('');
+      if (cloudProducts.length === 0) {
+        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">कोई प्रोडक्ट उपलब्ध नहीं है।</td></tr>`;
+        return;
+      }
+      tb.innerHTML = cloudProducts.map(p => `
+        <tr>
+          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku}</small></td>
+          <td>₹${p.price}</td>
+          <td>
+            <input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" min="0" max="90" style="width:70px; padding:4px;" placeholder="%">
+          </td>
+          <td>
+            <button onclick="applyProductDiscount('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:5px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">
+              ऑफर सेट करें
+            </button>
+          </td>
+        </tr>
+      `).join('');
     }
 
-    // Legacy single-product discount remains supported for compatibility.
     function applyProductDiscount(prodId) {
       const discInput = document.getElementById(`offerDisc_${prodId}`);
       if (!discInput || !db) return;
-      const discVal = Math.max(0, Math.min(100, Number(discInput.value) || 0));
-      db.collection('products').doc(prodId).update({ discountPercent: discVal }).then(() => showAppToast('âœ… à¤ªà¥à¤°à¤¾à¤¨à¥‡ product-level discount à¤•à¥‹ à¤…à¤ªà¤¡à¥‡à¤Ÿ à¤•à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾!')).catch(e => showAppToast('à¤¤à¥à¤°à¥à¤Ÿà¤¿: ' + e.message));
+      const discVal = Number(discInput.value) || 0;
+
+      const p = cloudProducts.find(item => item.id === prodId);
+      if (p && p.discountPercent && p.discountPercent > 0 && discVal > 0 && p.discountPercent !== discVal) {
+        if (!confirm(`⚠️ इस प्रोडक्ट पर पहले से ${p.discountPercent}% का ऑफर लगा है। क्या आप इसे बदलकर ${discVal}% करना चाहते हैं?`)) {
+          return;
+        }
+      }
+
+      db.collection("products").doc(prodId).update({ discountPercent: discVal }).then(() => {
+        showAppToast("✅ प्रोडक्ट पर विशेष ऑफर / डिस्काउंट अपडेट हो गया!");
+      });
     }
-
-    document.getElementById('offerProductSearch')?.addEventListener('input', renderOfferProductPicker);
-
-    // Named offers expire automatically in the UI without requiring a page refresh.
-    setInterval(() => { if (cloudOffers.length) { renderStoreProducts(); renderAdminOffers(); } }, 30000);
 
     function saveNewCoupon() {
       const code = document.getElementById('newCCode').value.trim().toUpperCase();
       const dis = document.getElementById('newCDiscount').value.trim();
       if (!code || !dis) return;
-      db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => { showAppToast("à¤•à¥‚à¤ªà¤¨ à¤¬à¤¨à¤¾!"); document.getElementById('newCCode').value = ''; document.getElementById('newCDiscount').value = ''; });
+      db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => { showAppToast("कूपन बना!"); document.getElementById('newCCode').value = ''; document.getElementById('newCDiscount').value = ''; });
     }
     function renderAdminCoupons() {
       const tb = document.querySelector('#admCoupTable tbody');
       if (!tb) return;
-      tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">à¤¹à¤Ÿà¤¾à¤à¤‚</button></td></tr>`).join('');
+      tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
     }
 
     // --- LEGAL & CONTACT MODAL LOGIC (FIXED) ---
     const legalDocs = {
       terms: { 
-        title: "Terms & Conditions (à¤¨à¤¿à¤¯à¤® à¤à¤µà¤‚ à¤¶à¤°à¥à¤¤à¥‡à¤‚)", 
+        title: "Terms & Conditions (नियम एवं शर्तें)", 
         content: `
-          <p><b>1. à¤ªà¤°à¤¿à¤šà¤¯:</b> à¤¯à¤¹ à¤ªà¥‹à¤°à¥à¤Ÿà¤² 'Maa Durga Enterprises' à¤à¤µà¤‚ 'à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿, à¤ªà¥à¤°à¤¤à¤¾à¤ªà¤—à¤¢à¤¼ (à¤‰.à¤ªà¥à¤°.)' à¤¦à¥à¤µà¤¾à¤°à¤¾ à¤¸à¤‚à¤šà¤¾à¤²à¤¿à¤¤ à¤¹à¥ˆà¥¤</p>
-          <p><b>2. à¤¸à¥‡à¤µà¤¾ à¤µ à¤¸à¤¹à¤¯à¥‹à¤—:</b> à¤µà¥‡à¤¬à¤¸à¤¾à¤‡à¤Ÿ à¤ªà¤° à¤•à¤¿à¤¯à¤¾ à¤œà¤¾à¤¨à¥‡ à¤µà¤¾à¤²à¤¾ à¤¸à¤¹à¤¯à¥‹à¤— à¤ªà¥‚à¤°à¥à¤£à¤¤à¤ƒ à¤¸à¥à¤µà¥ˆà¤šà¥à¤›à¤¿à¤• à¤à¤µà¤‚ à¤§à¤¾à¤°à¥à¤®à¤¿à¤•/à¤œà¤¨à¤•à¤²à¥à¤¯à¤¾à¤£à¤•à¤¾à¤°à¥€ à¤•à¤¾à¤°à¥à¤¯à¥‹à¤‚ à¤¹à¥‡à¤¤à¥ à¤¹à¥ˆà¥¤</p>
-          <p><b>3. à¤‰à¤¤à¥à¤ªà¤¾à¤¦ à¤à¤µà¤‚ à¤¸à¥‡à¤µà¤¾à¤à¤:</b> à¤­à¤•à¥à¤¤à¤¿ à¤¸à¥à¤Ÿà¥‹à¤° à¤®à¥‡à¤‚ à¤‰à¤ªà¤²à¤¬à¥à¤§ à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤•à¥€ à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ 3 à¤¸à¥‡ 7 à¤•à¤¾à¤°à¥à¤¯ à¤¦à¤¿à¤µà¤¸à¥‹à¤‚ à¤®à¥‡à¤‚ à¤•à¥€ à¤œà¤¾à¤¤à¥€ à¤¹à¥ˆà¥¤</p>
-          <p><b>4. à¤¸à¥à¤°à¤•à¥à¤·à¤¾ à¤à¤µà¤‚ à¤†à¤šà¤°à¤£:</b> à¤¸à¤¤à¥à¤¸à¤‚à¤— à¤šà¥ˆà¤Ÿ à¤®à¥‡à¤‚ à¤•à¥‡à¤µà¤² à¤­à¤•à¥à¤¤à¤¿à¤®à¤¯ à¤­à¤¾à¤·à¤¾ à¤•à¤¾ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤°à¥‡à¤‚à¥¤</p>
+          <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा संचालित है।</p>
+          <p><b>2. सेवा व सहयोग:</b> वेबसाइट पर किया जाने वाला सहयोग पूर्णतः स्वैच्छिक एवं धार्मिक/जनकल्याणकारी कार्यों हेतु है।</p>
+          <p><b>3. उत्पाद एवं सेवाएँ:</b> भक्ति स्टोर में उपलब्ध सामग्री की डिलीवरी 3 से 7 कार्य दिवसों में की जाती है।</p>
+          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय भाषा का उपयोग करें।</p>
         ` 
       },
       privacy: { 
-        title: "Privacy Policy (à¤—à¥‹à¤ªà¤¨à¥€à¤¯à¤¤à¤¾ à¤¨à¥€à¤¤à¤¿)", 
+        title: "Privacy Policy (गोपनीयता नीति)", 
         content: `
-          <p><b>1. à¤¡à¥‡à¤Ÿà¤¾ à¤¸à¥à¤°à¤•à¥à¤·à¤¾:</b> à¤¹à¤® à¤†à¤ªà¤•à¥‡ à¤¨à¤¾à¤®, à¤®à¥‹à¤¬à¤¾à¤‡à¤² à¤¨à¤‚à¤¬à¤° à¤µ à¤ªà¤¤à¥‡ à¤•à¥€ à¤—à¥‹à¤ªà¤¨à¥€à¤¯à¤¤à¤¾ à¤•à¤¾ à¤ªà¥‚à¤°à¥à¤£ à¤¸à¤®à¥à¤®à¤¾à¤¨ à¤•à¤°à¤¤à¥‡ à¤¹à¥ˆà¤‚à¥¤</p>
-          <p><b>2. à¤‰à¤ªà¤¯à¥‹à¤—:</b> à¤†à¤ªà¤•à¤¾ à¤¨à¤‚à¤¬à¤° à¤•à¥‡à¤µà¤² à¤‘à¤°à¥à¤¡à¤° à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€, OTP à¤¸à¤¤à¥à¤¯à¤¾à¤ªà¤¨ à¤à¤µà¤‚ à¤¸à¤¹à¤¯à¥‹à¤— à¤°à¤¸à¥€à¤¦ à¤ªà¥à¤°à¥‡à¤·à¤¿à¤¤ à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ à¤‰à¤ªà¤¯à¥‹à¤— à¤•à¤¿à¤¯à¤¾ à¤œà¤¾à¤¤à¤¾ à¤¹à¥ˆà¥¤</p>
-          <p><b>3. à¤¸à¥à¤°à¤•à¥à¤·à¤¾:</b> à¤†à¤ªà¤•à¥€ à¤•à¥‹à¤ˆ à¤­à¥€ à¤¨à¤¿à¤œà¥€ à¤œà¤¾à¤¨à¤•à¤¾à¤°à¥€ à¤•à¤¿à¤¸à¥€ à¤¤à¥€à¤¸à¤°à¥‡ à¤ªà¤•à¥à¤· à¤•à¥‡ à¤¸à¤¾à¤¥ à¤¸à¤¾à¤à¤¾ à¤¨à¤¹à¥€à¤‚ à¤•à¥€ à¤œà¤¾à¤¤à¥€à¥¤</p>
+          <p><b>1. डेटा सुरक्षा:</b> हम आपके नाम, मोबाइल नंबर व पते की गोपनीयता का पूर्ण सम्मान करते हैं।</p>
+          <p><b>2. उपयोग:</b> आपका नंबर केवल ऑर्डर डिलीवरी, OTP सत्यापन एवं सहयोग रसीद प्रेषित करने हेतु उपयोग किया जाता है।</p>
+          <p><b>3. सुरक्षा:</b> आपकी कोई भी निजी जानकारी किसी तीसरे पक्ष के साथ साझा नहीं की जाती।</p>
         ` 
       },
       refund: { 
-        title: "Refund Policy (à¤°à¤¿à¤«à¤‚à¤¡ à¤à¤µà¤‚ à¤µà¤¾à¤ªà¤¸à¥€ à¤¨à¥€à¤¤à¤¿)", 
+        title: "Refund Policy (रिफंड एवं वापसी नीति)", 
         content: `
-          <p><b>1. à¤¦à¤¾à¤¨ à¤à¤µà¤‚ à¤¸à¤¹à¤¯à¥‹à¤—:</b> à¤œà¤¨-à¤•à¤²à¥à¤¯à¤¾à¤£ à¤à¤µà¤‚ à¤­à¤‚à¤¡à¤¾à¤°à¥‡ à¤¹à¥‡à¤¤à¥ à¤¦à¤¿à¤¯à¤¾ à¤—à¤¯à¤¾ à¤†à¤°à¥à¤¥à¤¿à¤• à¤¸à¤¹à¤¯à¥‹à¤— à¤—à¥ˆà¤°-à¤µà¤¾à¤ªà¤¸à¥€à¤¯à¥‹à¤—à¥à¤¯ à¤¹à¥ˆà¥¤</p>
-          <p><b>2. à¤¸à¥à¤Ÿà¥‹à¤° à¤¸à¤¾à¤®à¤—à¥à¤°à¥€:</b> à¤¸à¤¾à¤®à¤—à¥à¤°à¥€ à¤®à¥‡à¤‚ à¤¦à¥‹à¤· à¤¹à¥‹à¤¨à¥‡ à¤ªà¤° 2 à¤¦à¤¿à¤¨à¥‹à¤‚ à¤•à¥‡ à¤­à¥€à¤¤à¤° à¤¸à¥‚à¤šà¤¿à¤¤ à¤•à¤°à¤¨à¥‡ à¤ªà¤° à¤°à¤¿à¤ªà¥à¤²à¥‡à¤¸à¤®à¥‡à¤‚à¤Ÿ à¤¯à¤¾ à¤°à¤¿à¤«à¤‚à¤¡ à¤•à¤¿à¤¯à¤¾ à¤œà¤¾à¤à¤—à¤¾à¥¤</p>
+          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य है।</p>
+          <p><b>2. स्टोर सामग्री:</b> सामग्री में दोष होने पर 2 दिनों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
         ` 
       },
       shipping: { 
-        title: "Shipping Policy (à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤¨à¥€à¤¤à¤¿)", 
+        title: "Shipping Policy (डिलीवरी नीति)", 
         content: `
-          <p><b>1. à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤¸à¤®à¤¯:</b> à¤‘à¤°à¥à¤¡à¤° à¤•à¤¨à¥à¤«à¤°à¥à¤® à¤¹à¥‹à¤¨à¥‡ à¤•à¥‡ 3 à¤¸à¥‡ 7 à¤•à¤¾à¤°à¥à¤¯ à¤¦à¤¿à¤µà¤¸à¥‹à¤‚ à¤®à¥‡à¤‚ à¤ªà¤¾à¤°à¥à¤¸à¤² à¤†à¤ªà¤•à¥‡ à¤ªà¤¤à¥‡ à¤ªà¤° à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤ªà¤¹à¥à¤à¤šà¤¾à¤¯à¤¾ à¤œà¤¾à¤¤à¤¾ à¤¹à¥ˆà¥¤</p>
-          <p><b>2. à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ OTP à¤¸à¤¿à¤¸à¥à¤Ÿà¤®:</b> à¤¡à¤¿à¤²à¥€à¤µà¤°à¥€ à¤ªà¥à¤°à¤¤à¤¿à¤¨à¤¿à¤§à¤¿ à¤•à¥‹ à¤¸à¤¾à¤®à¤¾à¤¨ à¤ªà¥à¤°à¤¾à¤ªà¥à¤¤ à¤•à¤°à¤¤à¥‡ à¤¸à¤®à¤¯ à¤…à¤ªà¤¨à¤¾ à¤—à¥à¤ªà¥à¤¤ OTP à¤¬à¤¤à¤¾à¤¨à¤¾ à¤…à¤¨à¤¿à¤µà¤¾à¤°à¥à¤¯ à¤¹à¥ˆà¥¤</p>
+          <p><b>1. डिलीवरी समय:</b> ऑर्डर कन्फर्म होने के 3 से 7 कार्य दिवसों में पार्सल आपके पते पर सुरक्षित पहुँचाया जाता है।</p>
+          <p><b>2. सुरक्षित OTP सिस्टम:</b> डिलीवरी प्रतिनिधि को सामान प्राप्त करते समय अपना गुप्त OTP बताना अनिवार्य है।</p>
         ` 
       },
       contact: {
-        title: "Contact Us (à¤¸à¤‚à¤ªà¤°à¥à¤• à¤µà¤¿à¤µà¤°à¤£)",
+        title: "Contact Us (संपर्क विवरण)",
         content: `
-          <p style="margin-bottom:12px;">à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿ à¤à¤µà¤‚ Maa Durga Enterprises à¤¸à¥‡ à¤¸à¤‚à¤ªà¤°à¥à¤• à¤•à¤°à¤¨à¥‡ à¤¹à¥‡à¤¤à¥ à¤µà¤¿à¤µà¤°à¤£:</p>
+          <p style="margin-bottom:12px;">श्री दुर्गा पूजा सेवा समिति एवं Maa Durga Enterprises से संपर्क करने हेतु विवरण:</p>
           <div style="background:rgba(255,215,0,0.08); border:1px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:12px;">
-            <p style="margin-bottom:10px;">ðŸ“ž <b>à¤®à¥‹à¤¬à¤¾à¤‡à¤² / à¤µà¥à¤¹à¤¾à¤Ÿà¥à¤¸à¤à¤ª:</b> <a href="tel:+919120226597" style="color:var(--gold); font-weight:bold; text-decoration:none;">+91 9120226597</a></p>
-            <p style="margin-bottom:10px;">âœ‰ï¸ <b>à¤ˆà¤®à¥‡à¤² à¤†à¤ˆà¤¡à¥€:</b> <a href="mailto:yugampal23@gmail.com" style="color:var(--gold); font-weight:bold; text-decoration:none;">yugampal23@gmail.com</a></p>
-            <p>ðŸ“ <b>à¤•à¤¾à¤°à¥à¤¯à¤¾à¤²à¤¯ à¤ªà¤¤à¤¾:</b> à¤®à¤¾à¤ à¤¦à¥à¤°à¥à¤—à¤¾ à¤à¤‚à¤Ÿà¤°à¤ªà¥à¤°à¤¾à¤‡à¤œà¥‡à¤œ, à¤¶à¥à¤°à¥€ à¤¦à¥à¤°à¥à¤—à¤¾ à¤ªà¥‚à¤œà¤¾ à¤¸à¥‡à¤µà¤¾ à¤¸à¤®à¤¿à¤¤à¤¿, à¤ªà¥à¤°à¤¤à¤¾à¤ªà¤—à¤¢à¤¼, à¤‰à¤¤à¥à¤¤à¤° à¤ªà¥à¤°à¤¦à¥‡à¤¶ - 230001</p>
+            <p style="margin-bottom:10px;">📞 <b>मोबाइल / व्हाट्सएप:</b> <a href="tel:+919120226597" style="color:var(--gold); font-weight:bold; text-decoration:none;">+91 9120226597</a></p>
+            <p style="margin-bottom:10px;">✉️ <b>ईमेल आईडी:</b> <a href="mailto:yugampal23@gmail.com" style="color:var(--gold); font-weight:bold; text-decoration:none;">yugampal23@gmail.com</a></p>
+            <p>📍 <b>कार्यालय पता:</b> माँ दुर्गा एंटरप्राइजेज, श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़, उत्तर प्रदेश - 230001</p>
           </div>
-          <p style="font-size:11px; color:#aaa;">(à¤¸à¤®à¤¯: à¤ªà¥à¤°à¤¾à¤¤à¤ƒ 08:00 AM à¤¸à¥‡ à¤¸à¤¾à¤¯à¤‚ 09:00 PM à¤¤à¤•)</p>
+          <p style="font-size:11px; color:#aaa;">(समय: प्रातः 08:00 AM से सायं 09:00 PM तक)</p>
         `
       }
     };
@@ -3013,7 +2841,7 @@
         };
 
         db.collection("settings").doc("music_room").set(audioSyncData, { merge: true }).then(() => {
-          showAppToast("âœ… à¤¸à¥‡à¤Ÿà¤¿à¤‚à¤—à¥à¤¸ à¤¸à¥à¤°à¤•à¥à¤·à¤¿à¤¤ à¤¹à¥‹ à¤—à¤ˆà¤‚!");
+          showAppToast("✅ सेटिंग्स सुरक्षित हो गईं!");
         });
       });
     }
