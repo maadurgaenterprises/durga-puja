@@ -496,7 +496,7 @@
         <div class="form-group">
           <label>भुगतान माध्यम चुनें *</label>
           <select id="dlvPayMode" onchange="togglePaymentModeView()">
-            <!-- Dynamically populated based on product options -->
+            <!-- Dynamically populated -->
           </select>
         </div>
 
@@ -621,7 +621,7 @@
     </div>
   </div>
 
-  <!-- DONATION PAYMENT MODAL (WITH AUDIO DUCKING) -->
+  <!-- DONATION PAYMENT MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
@@ -640,7 +640,7 @@
     </div>
   </div>
 
-  <!-- CELEBRATION MODAL (WITH WELCOME SOUND & DUCKING) -->
+  <!-- CELEBRATION MODAL (WITH EXACT WELCOME AUDIO & 50% DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
     <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
@@ -653,7 +653,7 @@
     </div>
   </div>
 
-  <!-- FULLSCREEN OWNER ADMIN DASHBOARD (SEPARATED CLEAN BUTTON TABS) -->
+  <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
   <div id="adminPortal">
     <div class="admin-inner">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px; margin-bottom:12px;">
@@ -674,7 +674,7 @@
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings -->
+      <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
@@ -694,16 +694,18 @@
           </div>
         </div>
 
-        <h4 style="color:var(--gold); margin-bottom:8px;">💳 डिफ़ॉल्ट पेमेंट गेटवे मोड:</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">💳 पेमेंट गेटवे मोड व की (Key) सेटिंग्स:</h4>
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
-            <label>मोड चुनें:</label>
+            <label>पेमेंट का मुख्य तरीका चुनें:</label>
             <select id="admPaymentMode">
               <option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>
-              <option value="cod">Cash on Delivery (COD)</option>
+              <option value="razorpay">Razorpay Auto Gateway</option>
+              <option value="cod">Cash on Delivery (COD Only)</option>
             </select>
           </div>
           <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
+          <div class="form-group"><label>Razorpay Key ID (यदि उपयोग हो):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
         </div>
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
@@ -818,9 +820,9 @@
         <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में नया प्रोडक्ट जोड़ें</button>
       </div>
 
-      <!-- Admin Sec 5: Product Inventory with SKU Search & Edit/Delete -->
+      <!-- Admin Sec 5: Product Inventory with SKU Search & Edit Control -->
       <div id="admProdManage" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search)</h4>
+        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search & Edit)</h4>
         <div class="form-group" style="margin-bottom:12px;">
           <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="🔍 नाम या सीरियल नंबर (SKU) से खोजें..." style="background:#000; border:1px solid var(--gold); color:var(--gold);">
         </div>
@@ -835,7 +837,7 @@
       <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
       <div id="admOffers" class="adm-sec">
         <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
-        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं। यदि किसी प्रोडक्ट पर पहले से डिस्काउंट या कूपन है, तो सिस्टम आपको सूचित करेगा।</p>
+        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं।</p>
         
         <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
           <div class="form-group">
@@ -1121,7 +1123,6 @@
     let activeYtVideoId = "";
     const coreAudio = document.getElementById('coreBgAudio');
 
-    // Prevent user from scrubbing/seeking timeline
     coreAudio.addEventListener('seeking', () => {
       const expectedTime = calculateLiveSeekTime();
       if (Math.abs(coreAudio.currentTime - expectedTime) > 2) {
@@ -1173,7 +1174,6 @@
         });
         navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
         navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
-        // Disable seeking from notification
         try {
           navigator.mediaSession.setActionHandler('seekto', null);
         } catch(e) {}
@@ -1376,6 +1376,7 @@
             document.getElementById('admTickerText').value = s.ticker;
           }
           if (s.upi) document.getElementById('admUpiId').value = s.upi;
+          if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
           if (s.wa) {
             document.getElementById('admWaPhone').value = s.wa;
             document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
@@ -2401,12 +2402,11 @@
       });
     }
 
-    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND ---
+    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND (EXACT DURATION MATCH) ---
     const welcomeAudio = new Audio("welcome.MP3");
     function playWelcomeSoundWithDucking() {
-      // Duck background audio to 30%
       if (coreAudio && !coreAudio.paused) {
-        coreAudio.volume = 0.3;
+        coreAudio.volume = 0.5; // Duck to 50%
       }
       welcomeAudio.currentTime = 0;
       welcomeAudio.play().then(() => {
@@ -2557,10 +2557,12 @@
       document.getElementById('celebrationModal').style.display = 'flex';
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       
-      // Trigger welcome sound with ducking
       playWelcomeSoundWithDucking();
 
-      setTimeout(() => closeCelebrationModal(), 10000);
+      // Popup remains open until user clicks 'जय माता दी' or audio finishes
+      welcomeAudio.onended = () => {
+        // audio finished naturally
+      };
     }
 
     function closeCelebrationModal() {
