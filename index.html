@@ -173,7 +173,7 @@
 </head>
 <body>
 
-  <!-- Pure Ad-Free HTML5 MP3 Continuous Live Radio Stream Engine (Seekbar Locked) -->
+  <!-- Pure Ad-Free HTML5 MP3 Continuous Live Radio Stream Engine (Strictly Locked) -->
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
   <!-- Pickers -->
@@ -424,7 +424,7 @@
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (CLEAN UI & WORKING SLIDER) -->
+  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL (WORKING SLIDER) -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
@@ -432,32 +432,25 @@
         <button onclick="closeModal('productDetailModal')" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
       </div>
 
-      <!-- Big Image Display -->
       <div id="modalProdMedia" style="margin-bottom:10px; text-align:center; background:#000; border-radius:8px; padding:6px; border:1px solid rgba(255,215,0,0.3);"></div>
-      
-      <!-- Thumbnail Slider -->
       <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px;" id="modalProdGallery"></div>
       
-      <!-- Price & Offer Info -->
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; margin-bottom:10px;">
         <div style="font-size:16px; color:var(--gold); font-weight:bold;" id="modalProdPrice"></div>
         <div id="modalOfferBadge" style="font-size:11px; color:#81c784; font-weight:bold;"></div>
       </div>
 
-      <!-- Description Box -->
       <div style="font-size:12px; color:#ffcdd2; line-height:1.7; white-space:pre-line; background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.2); margin-bottom:14px;" id="modalProdDesc"></div>
-      
       <div id="modalBuyBtnArea"></div>
     </div>
   </div>
 
-  <!-- POPUP: MULTI-STEP ADVANCED CHECKOUT MODAL -->
+  <!-- POPUP: CHECKOUT MODAL -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:480px; max-height:88vh; overflow-y:auto;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:6px;" id="chkTitle">📦 सुरक्षित ऑर्डर चेकआउट</h3>
       <div style="font-size:12px; color:#ffcdd2; text-align:center; margin-bottom:14px;" id="chkProdSummary"></div>
 
-      <!-- STEP 1: DETAILED ADDRESS FORM -->
       <div id="checkoutStep1">
         <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 1: संपूर्ण डिलीवरी पता (Delivery Address)</h4>
         
@@ -489,15 +482,12 @@
         <button class="btn-main" onclick="goToCheckoutStep2()" style="margin-top:10px;">आगे बढ़ें (Next: Payment)</button>
       </div>
 
-      <!-- STEP 2: PAYMENT METHOD & COUPON -->
       <div id="checkoutStep2" style="display:none;">
         <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 2: भुगतान का तरीका व कूपन</h4>
         
         <div class="form-group">
           <label>भुगतान माध्यम चुनें *</label>
-          <select id="dlvPayMode" onchange="togglePaymentModeView()">
-            <!-- Dynamically populated -->
-          </select>
+          <select id="dlvPayMode" onchange="togglePaymentModeView()"></select>
         </div>
 
         <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold); margin:8px 0;">
@@ -512,7 +502,6 @@
           अंतिम देय राशि: <span id="finalCheckoutAmt">₹0</span>
         </div>
 
-        <!-- UPI / QR Box -->
         <div id="checkoutUpiBox" style="background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(255,215,0,0.3); text-align:center; display:none;">
           <p style="font-size:11px; color:var(--gold); font-weight:bold; margin-bottom:4px;">📲 QR स्कैन करें या ऐप खोलें:</p>
           <div class="upi-app-badges"><span class="upi-badge" onclick="openStoreUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
@@ -559,100 +548,6 @@
     </div>
   </div>
 
-  <!-- POPUP: FEEDBACK MODAL -->
-  <div class="custom-popup-overlay" id="feedbackModal">
-    <div class="custom-popup-box" style="max-width:480px; text-align:left;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
-      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;">
-        <label>आपका शुभ नाम:</label>
-        <input type="text" id="fbNameInput" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
-        <label>रेटिंग चुनें:</label>
-        <select id="fbRatingInput" style="margin-bottom:8px;">
-          <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
-          <option value="4">⭐⭐⭐⭐ 4 Star</option>
-          <option value="3">⭐⭐⭐ 3 Star</option>
-        </select>
-        <label>अपना पावन अनुभव या सुझाव लिखें:</label>
-        <textarea id="fbMsgInput" placeholder="सुझाव यहाँ लिखें..." style="height:60px; margin-bottom:10px;"></textarea>
-        <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
-      </div>
-      <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
-      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
-    </div>
-  </div>
-
-  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
-  <div class="legal-page" id="legalPage">
-    <div class="legal-container">
-      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
-      <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
-      <div id="legalBodyText"></div>
-    </div>
-  </div>
-
-  <!-- LOGIN MODAL -->
-  <div class="custom-popup-overlay" id="loginModal">
-    <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
-      <button class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
-      </button>
-      <br><button onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
-    </div>
-  </div>
-
-  <!-- ADMIN PASS MODAL -->
-  <div class="custom-popup-overlay" id="adminPassModal">
-    <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
-      <p style="font-size:12px; color:#ffcdd2; margin-bottom:12px;">खाता: <b>yugampal23@gmail.com</b><br>कृपया मास्टर पासवर्ड दर्ज करें:</p>
-      <input type="password" id="ownerPassInput" placeholder="Master Password" style="margin-bottom:12px;">
-      <button class="btn-main" onclick="verifyOwnerPassword()">प्रवेश करें</button>
-      <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
-    </div>
-  </div>
-
-  <!-- ADMIN INSPECT MODAL -->
-  <div class="custom-popup-overlay" id="adminInspectModal">
-    <div class="custom-popup-box" style="text-align:left; max-width:440px;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
-      <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;"></div>
-      <button class="btn-main" onclick="closeModal('adminInspectModal')">बंद करें</button>
-    </div>
-  </div>
-
-  <!-- DONATION PAYMENT MODAL -->
-  <div class="custom-popup-overlay" id="donationModal">
-    <div class="custom-popup-box" style="text-align:left; max-width:440px;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
-      <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
-      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox"></div>
-      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
-      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
-    </div>
-  </div>
-
-  <!-- NOTIFY POPUP -->
-  <div class="custom-popup-overlay" id="notifyPopup">
-    <div class="custom-popup-box">
-      <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
-      <button class="btn-main" onclick="closeModal('notifyPopup')">ठीक है (OK)</button>
-    </div>
-  </div>
-
-  <!-- CELEBRATION MODAL (WITH EXACT WELCOME AUDIO & 50% DUCKING) -->
-  <div class="custom-popup-overlay" id="celebrationModal">
-    <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
-      <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
-      <h3 id="celDonorName" style="color:#fff; font-size:17px; margin-bottom:10px;"></h3>
-      <p id="celMsg" style="font-size:14px; line-height: 1.6; color:#ffcdd2;"></p>
-      <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
-        🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
-      </p>
-      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
-    </div>
-  </div>
-
   <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
   <div id="adminPortal">
     <div class="admin-inner">
@@ -674,7 +569,7 @@
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
+      <!-- Admin Sec 1: Settings -->
       <div id="admSet" class="adm-sec active">
         <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
         <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
@@ -705,7 +600,7 @@
             </select>
           </div>
           <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-          <div class="form-group"><label>Razorpay Key ID (यदि उपयोग हो):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
+          <div class="form-group"><label>Razorpay Key ID:</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
         </div>
 
         <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
@@ -1114,7 +1009,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE WITH DUCKING & LOCKED SEEKBAR
+    // TRUE LIVE RADIO SYNC ENGINE WITH 50% DUCKING & AUTO-JUMP TO LIVE TIME
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1123,9 +1018,10 @@
     let activeYtVideoId = "";
     const coreAudio = document.getElementById('coreBgAudio');
 
+    // Prevent scrubbing, always force live server timeline
     coreAudio.addEventListener('seeking', () => {
       const expectedTime = calculateLiveSeekTime();
-      if (Math.abs(coreAudio.currentTime - expectedTime) > 2) {
+      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.5) {
         coreAudio.currentTime = expectedTime;
       }
     });
@@ -1212,10 +1108,10 @@
             document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
           }).catch(() => {});
         } else {
+          // Always jump to live time, preventing lagging behind
+          coreAudio.currentTime = seekSec;
           if (coreAudio.paused) {
             coreAudio.play().catch(() => {});
-          } else {
-            coreAudio.currentTime = seekSec;
           }
           setupMediaSession();
           document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
@@ -2402,7 +2298,7 @@
       });
     }
 
-    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND (EXACT DURATION MATCH) ---
+    // --- DUCKING AUDIO ENGINE FOR WELCOME SOUND (AUTO CLOSE ON END) ---
     const welcomeAudio = new Audio("welcome.MP3");
     function playWelcomeSoundWithDucking() {
       if (coreAudio && !coreAudio.paused) {
@@ -2412,6 +2308,7 @@
       welcomeAudio.play().then(() => {
         welcomeAudio.onended = () => {
           if (coreAudio) coreAudio.volume = 1.0;
+          closeModal('celebrationModal'); // Auto close popup when welcome audio finishes
         };
       }).catch(() => {
         if (coreAudio) coreAudio.volume = 1.0;
@@ -2558,11 +2455,6 @@
       try { confetti({ particleCount: 140, spread: 80, origin: { y: 0.5 } }); } catch(e) {}
       
       playWelcomeSoundWithDucking();
-
-      // Popup remains open until user clicks 'जय माता दी' or audio finishes
-      welcomeAudio.onended = () => {
-        // audio finished naturally
-      };
     }
 
     function closeCelebrationModal() {
@@ -2723,7 +2615,7 @@
           <td>₹${p.price}</td>
           <td>
             <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
+            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
           </td>
         </tr>
       `).join('');
@@ -2856,6 +2748,7 @@
       const batchSettings = {
         ticker: document.getElementById('admTickerText').value,
         upi: document.getElementById('admUpiId').value,
+        razorpay: document.getElementById('admRazorpayKey').value,
         wa: document.getElementById('admWaPhone').value,
         paymentMode: payMode,
         offerExpiry: expiryInput || ""
