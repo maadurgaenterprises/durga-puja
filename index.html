@@ -2,115 +2,247 @@
 <html lang="hi">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title id="siteDocTitle">Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति</title>
   
+  <!-- External Payment, Confetti, and QR Libraries -->
   <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
   
-  <!-- Firebase SDKs -->
+  <!-- Firebase Modular Compat SDKs -->
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-auth-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
 
   <style>
+    /* =========================================================================
+       1. GLOBAL THEME AND RESET
+       ========================================================================= */
     :root { 
       --gold: #ffd700; 
+      --gold-dim: rgba(255, 215, 0, 0.35);
+      --gold-dark: #b89700;
+      --gold-glow: rgba(255, 215, 0, 0.55);
       --red: #d32f2f; 
+      --red-bright: #ff1744;
+      --red-dark: #8b0000;
       --bg: #120002; 
+      --bg-gradient: radial-gradient(circle at top, #2e0006 0%, #120002 100%);
       --card-bg: rgba(255, 255, 255, 0.05); 
+      --card-border: rgba(255, 215, 0, 0.22);
       --green: #4caf50;
+      --green-light: #81c784;
+      --green-dark: #2e7d32;
+      --glass-dark: rgba(18, 0, 2, 0.95);
+      --font-main: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
     }
-    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-    body { background: radial-gradient(circle at top, #2d0005 0%, var(--bg) 100%); color: #fff; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; position: relative; }
     
-    /* Top Bar */
-    .top-bar { display: flex; justify-content: space-between; align-items: center; padding: 10px 14px; background: rgba(0,0,0,0.85); border-bottom: 1px solid rgba(255,215,0,0.3); position: relative; z-index: 1000; }
-    .music-btn { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 5px; }
-    .top-right-nav { display: flex; align-items: center; gap: 10px; }
-    .auth-btn { background: var(--gold); border: none; color: #000; padding: 7px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-block; }
-    .menu-hamburger-btn { background: none; border: 1px solid rgba(255,215,0,0.4); color: var(--gold); font-size: 18px; padding: 4px 10px; border-radius: 6px; cursor: pointer; }
+    *, *::before, *::after { 
+      box-sizing: border-box; 
+      margin: 0; 
+      padding: 0; 
+      font-family: var(--font-main); 
+      -webkit-tap-highlight-color: transparent;
+    }
+    
+    html { scroll-behavior: smooth; }
+
+    body { 
+      background: var(--bg-gradient); 
+      color: #ffffff; 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column; 
+      overflow-x: hidden; 
+      position: relative; 
+    }
+
+    ::-webkit-scrollbar { width: 6px; height: 6px; }
+    ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.6); }
+    ::-webkit-scrollbar-thumb { background: var(--gold-dim); border-radius: 3px; }
+
+    /* =========================================================================
+       2. TOP APP BAR & NAVIGATION
+       ========================================================================= */
+    .top-bar { 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center; 
+      padding: 11px 16px; 
+      background: rgba(10, 0, 2, 0.96); 
+      border-bottom: 1px solid var(--gold-dim); 
+      position: sticky;
+      top: 0;
+      z-index: 2500; 
+      backdrop-filter: blur(12px);
+    }
+    .music-btn { 
+      background: rgba(255, 215, 0, 0.15); 
+      border: 1px solid var(--gold); 
+      color: var(--gold); 
+      padding: 7px 14px; 
+      border-radius: 20px; 
+      font-size: 12px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: inline-flex; 
+      align-items: center; 
+      gap: 6px; 
+    }
+    .top-right-nav { display: flex; align-items: center; gap: 12px; }
+    .auth-btn { 
+      background: var(--gold); 
+      border: none; 
+      color: #000000; 
+      padding: 7px 16px; 
+      border-radius: 20px; 
+      font-size: 12px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      display: inline-block; 
+      box-shadow: 0 2px 10px rgba(255, 215, 0, 0.35);
+    }
+    .menu-hamburger-btn { 
+      background: none; 
+      border: 1px solid var(--gold-dim); 
+      color: var(--gold); 
+      font-size: 20px; 
+      padding: 4px 11px; 
+      border-radius: 6px; 
+      cursor: pointer; 
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
 
     /* Side Navigation Drawer */
-    .side-nav-drawer { display: none; position: fixed; top: 0; right: 0; width: 270px; height: 100%; background: #180004; border-left: 2px solid var(--gold); z-index: 9999; padding: 20px 15px; box-shadow: -5px 0 25px rgba(0,0,0,0.9); }
-    .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.3); padding-bottom: 10px; margin-bottom: 15px; }
-    .drawer-item { display: block; width: 100%; text-align: left; background: none; border: none; color: #fff; padding: 12px 10px; font-size: 14px; font-weight: 600; cursor: pointer; border-radius: 6px; margin-bottom: 6px; border-bottom: 1px dashed rgba(255,215,0,0.15); }
-    .drawer-item:hover, .drawer-item.active { background: rgba(255,215,0,0.15); color: var(--gold); }
+    .side-nav-drawer { 
+      display: none; 
+      position: fixed; 
+      top: 0; 
+      right: 0; 
+      width: 285px; 
+      height: 100%; 
+      background: #190004; 
+      border-left: 2px solid var(--gold); 
+      z-index: 9999; 
+      padding: 24px 18px; 
+      box-shadow: -10px 0 35px rgba(0,0,0,0.95); 
+    }
+    .drawer-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--gold-dim); padding-bottom: 12px; margin-bottom: 20px; }
+    .drawer-item { 
+      display: block; 
+      width: 100%; 
+      text-align: left; 
+      background: none; 
+      border: none; 
+      color: #ffffff; 
+      padding: 13px 12px; 
+      font-size: 14px; 
+      font-weight: 600; 
+      cursor: pointer; 
+      border-radius: 6px; 
+      margin-bottom: 8px; 
+      border-bottom: 1px dashed rgba(255,215,0,0.15); 
+    }
+    .drawer-item:hover, .drawer-item.active { background: rgba(255,215,0,0.15); color: var(--gold); padding-left: 16px; }
 
-    header { text-align: center; padding: 18px 12px 8px; }
-    header h1 { font-size: 22px; color: var(--gold); text-shadow: 0 0 15px rgba(255,215,0,0.5); }
-    header p { color: #ffcdd2; font-size: 12px; margin-top: 3px; }
+    header { text-align: center; padding: 22px 12px 10px; }
+    header h1 { font-size: 24px; color: var(--gold); text-shadow: 0 0 16px var(--gold-glow); letter-spacing: 0.5px; }
+    header p { color: #ffcdd2; font-size: 13px; margin-top: 4px; }
 
-    /* Running Ticker */
-    .ticker-wrap { background: rgba(255, 215, 0, 0.1); border-top: 1px solid rgba(255, 215, 0, 0.25); border-bottom: 1px solid rgba(255, 215, 0, 0.25); padding: 7px 0; overflow: hidden; }
+    .ticker-wrap { background: rgba(255, 215, 0, 0.1); border-top: 1px solid var(--gold-dim); border-bottom: 1px solid var(--gold-dim); padding: 8px 0; overflow: hidden; }
     .ticker-content { white-space: nowrap; display: inline-block; animation: scrollTicker 32s linear infinite; font-size: 13px; color: var(--gold); font-weight: 600; }
     @keyframes scrollTicker { 0% { transform: translateX(100vw); } 100% { transform: translateX(-100%); } }
 
-    .main-wrap { max-width: 920px; width: 100%; margin: 15px auto; padding: 0 12px; flex: 1; }
-    .card { background: var(--card-bg); border: 1px solid rgba(255,215,0,0.25); border-radius: 14px; padding: 18px; backdrop-filter: blur(8px); margin-bottom: 24px; }
-    .card h2 { text-align: center; color: var(--gold); font-size: 18px; margin-bottom: 14px; }
-    .form-group { margin-bottom: 11px; }
-    label { display: block; font-size: 12px; color: #ffcdd2; margin-bottom: 4px; }
-    input, select, textarea { width: 100%; padding: 11px; background: rgba(0,0,0,0.55); border: 1px solid rgba(255,215,0,0.3); border-radius: 7px; color: #fff; font-size: 13px; outline: none; }
-    input:focus, select:focus, textarea:focus { border-color: var(--gold); }
-    .btn-main { width: 100%; padding: 12px; background: linear-gradient(45deg, #d32f2f, #ff6f00); border: none; border-radius: 8px; color: #fff; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 4px 15px rgba(211,47,47,0.4); text-align: center; }
+    .main-wrap { max-width: 950px; width: 100%; margin: 16px auto; padding: 0 14px; flex: 1; }
+    .card { background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 14px; padding: 22px; backdrop-filter: blur(8px); margin-bottom: 24px; box-shadow: 0 4px 25px rgba(0,0,0,0.55); }
+    .card h2 { text-align: center; color: var(--gold); font-size: 19px; margin-bottom: 16px; }
+    .form-group { margin-bottom: 13px; }
+    label { display: block; font-size: 12px; color: #ffcdd2; margin-bottom: 5px; font-weight: 600; }
+    input, select, textarea { 
+      width: 100%; 
+      padding: 12px; 
+      background: rgba(0,0,0,0.65); 
+      border: 1px solid var(--gold-dim); 
+      border-radius: 8px; 
+      color: #fff; 
+      font-size: 13px; 
+      outline: none; 
+    }
+    input:focus, select:focus, textarea:focus { border-color: var(--gold); box-shadow: 0 0 8px rgba(255,215,0,0.3); }
+    .btn-main { 
+      width: 100%; 
+      padding: 13px; 
+      background: linear-gradient(45deg, #d32f2f, #ff6f00); 
+      border: none; 
+      border-radius: 8px; 
+      color: #fff; 
+      font-size: 15px; 
+      font-weight: 700; 
+      cursor: pointer; 
+      box-shadow: 0 4px 15px rgba(211,47,47,0.45); 
+      text-align: center; 
+    }
 
-    /* Store Grid */
-    .sec-heading { font-size: 18px; color: var(--gold); margin: 20px 0 12px; text-align: center; }
+    .sec-heading { font-size: 18px; color: var(--gold); margin: 24px 0 14px; text-align: center; font-weight: 700; }
     .category-scroll { display: flex; gap: 8px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 14px; }
-    .cat-chip { background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); color: #fff; padding: 5px 12px; border-radius: 16px; font-size: 11px; cursor: pointer; white-space: nowrap; }
+    .cat-chip { background: rgba(255,255,255,0.08); border: 1px solid var(--gold-dim); color: #fff; padding: 6px 14px; border-radius: 18px; font-size: 12px; cursor: pointer; white-space: nowrap; }
     .cat-chip.active { background: var(--gold); color: #000; font-weight: bold; }
-    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
-    @media (min-width: 650px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 14px; } }
-    .p-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.18); border-radius: 10px; padding: 10px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
-    .p-card img { width: 100%; height: 130px; object-fit: cover; border-radius: 6px; margin-bottom: 6px; background: #222; }
+    .product-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+    @media (min-width: 650px) { .product-grid { grid-template-columns: repeat(4, 1fr); gap: 16px; } }
+    .p-card { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,215,0,0.2); border-radius: 12px; padding: 12px; text-align: center; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; }
+    .p-card img { width: 100%; height: 140px; object-fit: cover; border-radius: 8px; margin-bottom: 8px; background: #222; }
     .p-title { font-size: 13px; font-weight: bold; color: #fff; margin-bottom: 2px; }
-    .p-sku { font-size: 10px; color: var(--gold); margin-bottom: 4px; font-weight: bold; }
-    .p-price { font-size: 15px; color: var(--gold); font-weight: bold; margin-bottom: 6px; }
-    .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 7px; border-radius: 6px; cursor: pointer; font-size: 12px; }
+    .p-sku { font-size: 10px; color: var(--gold); margin-bottom: 4px; font-weight: 700; }
+    .p-price { font-size: 16px; color: var(--gold); font-weight: 800; margin-bottom: 8px; }
+    .btn-buy { background: linear-gradient(45deg, #ff9800, #f57c00); border: none; color: #000; font-weight: bold; padding: 8px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-    /* Devotional Blog Post Cards */
     .blog-grid { display: grid; grid-template-columns: 1fr; gap: 14px; }
     @media (min-width: 650px) { .blog-grid { grid-template-columns: 1fr 1fr; } }
-    .blog-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,215,0,0.25); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
+    .blog-card { background: rgba(255,255,255,0.04); border: 1px solid var(--card-border); border-radius: 10px; overflow: hidden; display: flex; flex-direction: column; }
     .blog-card img, .blog-card iframe { width: 100%; height: 180px; object-fit: cover; border: none; background: #222; }
-    .blog-content { padding: 12px; flex: 1; display: flex; flex-direction: column; }
+    .blog-content { padding: 14px; flex: 1; display: flex; flex-direction: column; }
     .blog-title { font-size: 15px; font-weight: bold; color: var(--gold); margin-bottom: 6px; }
     .blog-desc { font-size: 12px; color: #ffcdd2; line-height: 1.5; margin-bottom: 10px; flex: 1; }
     .blog-meta { font-size: 10px; color: #aaa; margin-bottom: 8px; }
-    .blog-btn { align-self: flex-start; background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
+    .blog-btn { align-self: flex-start; background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 5px 12px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
 
-    /* WhatsApp Style Chat */
-    .insta-chat-box { background: #0c0204; border: 1px solid rgba(255,215,0,0.3); border-radius: 14px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; }
+    .insta-chat-box { background: #0c0204; border: 1px solid var(--gold-dim); border-radius: 14px; display: flex; flex-direction: column; height: 75vh; max-height: 650px; overflow: hidden; position: relative; }
     .insta-chat-header { background: rgba(255,215,0,0.1); padding: 12px 16px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid rgba(255,215,0,0.2); }
     .insta-messages-area { flex: 1; overflow-y: auto; padding: 14px; display: flex; flex-direction: column; gap: 10px; background: radial-gradient(circle at center, #180004 0%, #080001 100%); }
     .msg-row { display: flex; width: 100%; }
     .msg-row.sent { justify-content: flex-end; }
     .msg-row.received { justify-content: flex-start; }
-    .insta-msg-bubble { padding: 9px 13px; border-radius: 12px; font-size: 13px; max-width: 82%; word-break: break-word; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.4); position: relative; }
+    .insta-msg-bubble { padding: 9px 13px; border-radius: 12px; font-size: 13px; max-width: 82%; word-break: break-word; cursor: pointer; position: relative; }
     .msg-row.sent .insta-msg-bubble { background: linear-gradient(135deg, #2e4d25 0%, #1c3b16 100%); border: 1px solid #4caf50; border-top-right-radius: 2px; color: #e8f5e9; text-align: left; }
     .msg-row.sent .insta-msg-sender { color: #a5d6a7; font-weight: bold; font-size: 11px; margin-bottom: 2px; }
-    .msg-row.received .insta-msg-bubble { background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255,215,0,0.25); border-top-left-radius: 2px; color: #fff; text-align: left; }
+    .msg-row.received .insta-msg-bubble { background: rgba(255, 255, 255, 0.08); border: 1px solid var(--card-border); border-top-left-radius: 2px; color: #fff; text-align: left; }
     .msg-row.received .insta-msg-sender { color: var(--gold); font-weight: bold; font-size: 11px; margin-bottom: 2px; }
     .msg-meta { font-size: 9px; color: #aaa; margin-left: 8px; float: right; margin-top: 5px; }
-    .insta-chat-input-bar { padding: 10px 12px; background: rgba(0,0,0,0.85); display: flex; align-items: center; gap: 8px; border-top: 1px solid rgba(255,215,0,0.2); }
-    .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,215,0,0.3); border-radius: 24px; padding: 10px 16px; color: #fff; font-size: 13px; outline: none; }
-    .insta-action-btn { background: none; border: none; color: var(--gold); font-size: 20px; cursor: pointer; padding: 6px; display: flex; align-items: center; justify-content: center; }
 
-    /* Popups and Overlays */
+    .insta-chat-input-bar { padding: 10px 12px; background: #080001; display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--gold-dim); position: relative; z-index: 7500 !important; }
+    .insta-chat-input-bar input { flex: 1; background: rgba(255,255,255,0.08); border: 1px solid var(--gold-dim); border-radius: 24px; padding: 11px 16px; color: #fff; font-size: 13px; outline: none; }
+    .insta-action-btn { background: rgba(255,215,0,0.12); border: 1px solid var(--gold-dim); border-radius: 50%; color: var(--gold); font-size: 18px; cursor: pointer; width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; touch-action: manipulation; }
+
+    footer { padding: 28px 15px 25px; background: #060001; border-top: 1px solid var(--card-border); margin-top: auto; font-size: 12px; text-align: center; width: 100%; position: relative; z-index: 100; }
+    .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 14px 0; }
+    .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; padding: 5px; }
+    .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+    .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 7px 16px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
+
+    .ganesh-float-btn { position: fixed; bottom: 22px; right: 18px; width: 76px; height: 76px; z-index: 5500; cursor: pointer; display: flex; align-items: center; justify-content: center; border: none; background: transparent; outline: none; }
+    .chakra-bg-img { position: absolute; width: 72px; height: 72px; object-fit: contain; z-index: 1; animation: spinChakraWheel 4.5s linear infinite; pointer-events: none; }
+    .ganesh-idol-img { position: relative; width: 56px; height: 56px; object-fit: contain; z-index: 2; pointer-events: none; }
+    @keyframes spinChakraWheel { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
     .custom-popup-overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.88); backdrop-filter: blur(6px); z-index: 10000; justify-content: center; align-items: center; padding: 15px; }
     .custom-popup-box { background: #1a0004; border: 2px solid var(--gold); border-radius: 14px; padding: 20px; max-width: 450px; width: 100%; text-align: center; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; z-index: 10001; }
 
-    /* Dynamic QR Box */
-    .qr-box-wrapper { background: #fff; padding: 15px; border-radius: 10px; display: inline-block; margin: 10px 0; }
-    .upi-app-badges { display: flex; justify-content: center; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
-    .upi-badge { background: rgba(255,215,0,0.15); border: 1px solid var(--gold); color: var(--gold); padding: 4px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: pointer; }
-
-    /* Admin Portal */
     #adminPortal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #080001; z-index: 8000; overflow-y: auto; padding: 15px; }
     .admin-inner { max-width: 980px; margin: 0 auto; background: #150003; border: 2px solid var(--gold); border-radius: 12px; padding: 18px; }
-    .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid rgba(255,215,0,0.25); }
+    .admin-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 8px; margin-bottom: 15px; border-bottom: 1px solid var(--card-border); }
     .adm-tab { background: rgba(255,215,0,0.1); border: 1px solid var(--gold); color: var(--gold); padding: 6px 12px; border-radius: 4px; font-size: 11px; cursor: pointer; white-space: nowrap; }
     .adm-tab.active { background: var(--gold); color: #000; font-weight: bold; }
     .adm-sec { display: none; }
@@ -120,80 +252,23 @@
     th, td { border: 1px solid rgba(255,215,0,0.2); padding: 7px; text-align: left; }
     th { background: rgba(255,215,0,0.15); color: var(--gold); }
 
-    /* Dedicated Fullscreen Legal & Contact Modal */
     .legal-page { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.92); backdrop-filter: blur(8px); z-index: 10005; overflow-y: auto; padding: 25px 15px; }
-    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; box-shadow: 0 0 30px rgba(255,215,0,0.35); position: relative; }
-
-    /* Sticky Footer */
-    footer { padding: 25px 15px 25px; background: #060001; border-top: 1px solid rgba(255,215,0,0.25); margin-top: auto; font-size: 12px; text-align: center; width: 100%; position: relative; z-index: 10; }
-    .footer-links { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin: 12px 0; }
-    .footer-link-btn { background: none; border: none; color: var(--gold); text-decoration: underline; cursor: pointer; font-size: 12px; font-weight: 500; padding: 4px; }
-    .footer-link-btn:hover { color: #fff; }
-    .footer-action-btns { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
-    .ftr-pill-btn { background: rgba(255,215,0,0.18); border: 1px solid var(--gold); color: var(--gold); padding: 7px 16px; border-radius: 20px; text-decoration: none; font-size: 12px; font-weight: bold; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; }
-
-    /* Ganesh Ji Clean Fire Floating Button */
-    .ganesh-float-btn {
-      position: fixed;
-      bottom: 22px;
-      right: 18px;
-      width: 76px;
-      height: 76px;
-      z-index: 5500;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: none;
-      background: transparent;
-      outline: none;
-      user-select: none;
-    }
-    .chakra-bg-img {
-      position: absolute;
-      width: 72px;
-      height: 72px;
-      object-fit: contain;
-      z-index: 1;
-      animation: spinChakraWheel 4.5s linear infinite, fireAuraBreath 2.8s ease-in-out infinite alternate;
-      pointer-events: none;
-    }
-    .ganesh-idol-img {
-      position: relative;
-      width: 56px;
-      height: 56px;
-      object-fit: contain;
-      z-index: 2;
-      filter: drop-shadow(0 2px 5px rgba(0, 0, 0, 0.85));
-      pointer-events: none;
-    }
-    @keyframes spinChakraWheel {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-    @keyframes fireAuraBreath {
-      0% { filter: drop-shadow(0 0 4px #ff3d00) drop-shadow(0 0 8px #ff9100); }
-      50% { filter: drop-shadow(0 0 6px #ff6d00) drop-shadow(0 0 12px #ffd700); }
-      100% { filter: drop-shadow(0 0 8px #ff1744) drop-shadow(0 0 16px #ff9800) drop-shadow(0 0 20px #ffd600); }
-    }
+    .legal-container { max-width: 650px; margin: 30px auto; background: #170004; border: 2px solid var(--gold); border-radius: 12px; padding: 22px; line-height: 1.8; font-size: 13px; color: #ffcdd2; position: relative; }
   </style>
 </head>
 <body>
 
   <audio id="coreBgAudio" preload="auto" style="display:none;"></audio>
 
-  <!-- Pickers -->
-  <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(event)">
-  <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(event)">
+  <input type="file" id="hiddenFilePicker" style="display:none;" accept="image/*,video/*,audio/*,.pdf,.doc,.docx" onchange="handleFileSelected(this)">
+  <input type="file" id="hiddenCameraPicker" style="display:none;" accept="image/*" capture="environment" onchange="handleFileSelected(this)">
   <input type="file" id="problemScreenPicker" style="display:none;" accept="image/*" onchange="handleProblemImageSelected(event)">
 
-  <!-- GANESH JI BUTTON -->
   <button class="ganesh-float-btn" id="ganeshFloatBtn" onclick="openModal('problemSupportModal')" title="श्री गणेश सहायता व समस्या निवारण">
-    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="दिव्य चक्र">
-    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="श्री गणेश जी">
+    <img src="chakra.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="chakra-bg-img" alt="चक्र">
+    <img src="ganesh.png" onerror="this.onerror=null; this.src='https://cdn-icons-png.flaticon.com/512/3501/3501258.png';" class="ganesh-idol-img" alt="गणेश">
   </button>
 
-  <!-- Top Bar -->
   <div class="top-bar">
     <button class="music-btn" id="musicToggleBtn" onclick="toggleBackgroundMusic()">
       🚩 <span id="musicBtnTxt">Play Music</span>
@@ -206,7 +281,6 @@
     </div>
   </div>
 
-  <!-- Side Navigation Drawer -->
   <div class="side-nav-drawer" id="sideNavDrawer">
     <div class="drawer-header">
       <b style="color:var(--gold); font-size:14px;">🚩 नेविगेशन मेनू</b>
@@ -225,7 +299,6 @@
     <p id="hdrSub">Maa Durga Enterprises | 12 माह जन-कल्याण एवं पावन सेवा पोर्टल</p>
   </header>
 
-  <!-- Running Ticker -->
   <div class="ticker-wrap">
     <div class="ticker-content" id="liveTicker">
       🚩 Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति 🚩 अखंड भंडारा एवं 12 माह पावन सेवा पोर्टल 🌸 माँ भगवती आप सभी पर अपनी असीम कृपा बनाए रखें 🌸
@@ -233,7 +306,6 @@
   </div>
 
   <div class="main-wrap">
-
     <!-- PANEL 1: DONATION FORM -->
     <div id="panelDonate">
       <div class="card">
@@ -274,10 +346,9 @@
           <label id="lblAmount">सहयोग राशि (₹) *</label>
           <input type="number" id="donAmount" placeholder="राशि (₹)">
         </div>
-        <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
+        <button type="button" class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
-      <!-- FEATURED POSTS ON DONATION PAGE WITH TIMER -->
       <div id="donationFeaturedBlogSec" style="display:none; margin-bottom:20px;">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
           <h3 class="sec-heading" style="margin:0;">🌸 विशेष पावन कथा व दर्शन</h3>
@@ -303,7 +374,7 @@
       <div class="product-grid" id="fullStoreGrid"></div>
     </div>
 
-    <!-- PANEL 3: DEVOTIONAL BLOG / STORIES PAGE -->
+    <!-- PANEL 3: DEVOTIONAL BLOG -->
     <div id="panelBlog" style="display:none;">
       <h3 class="sec-heading">📖 पावन भक्ति कथाएँ, दर्शन एवं ब्लॉग</h3>
       <div class="blog-grid" id="publicFullBlogList"></div>
@@ -323,7 +394,7 @@
       </div>
     </div>
 
-    <!-- PANEL 5: WHATSAPP STYLE CHAT -->
+    <!-- PANEL 5: LIVE CHAT -->
     <div id="panelChat" style="display:none;">
       <div class="insta-chat-box">
         <div class="insta-chat-header">
@@ -339,11 +410,11 @@
         <div class="insta-messages-area" id="globalChatContainer"></div>
 
         <div class="insta-chat-input-bar">
-          <input type="text" id="chatInputMsg" placeholder="संदेश, फोटो या फाइल भेजें..." onkeypress="if(event.key==='Enter') sendGlobalChatMessage()">
-          <button class="insta-action-btn" onclick="toggleVoiceRecording()" id="micBtn" title="वॉयस नोट भेजें">🎙️</button>
-          <button class="insta-action-btn" onclick="openCameraApp()" title="कैमरा से फोटो लें">📷</button>
-          <button class="insta-action-btn" onclick="openFileStorage()" title="स्टोरेज से फाइल/फोटो चुनें">📁</button>
-          <button class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
+          <input type="text" id="chatInputMsg" placeholder="संदेश लिखें..." onkeydown="if(event.key==='Enter'){ event.preventDefault(); sendGlobalChatMessage(); }">
+          <button type="button" class="insta-action-btn" id="micBtn" onclick="toggleVoiceRecording()" title="वॉइस रिकॉर्ड करें">🎙️</button>
+          <button type="button" class="insta-action-btn" onclick="openCameraApp()" title="कैमरा खोलें">📷</button>
+          <button type="button" class="insta-action-btn" onclick="openFileStorage()" title="फ़ाइल चुनें">📁</button>
+          <button type="button" class="insta-action-btn" onclick="sendGlobalChatMessage()" title="भेजें">📤</button>
         </div>
       </div>
     </div>
@@ -353,10 +424,9 @@
       <h2 id="txtMyOrdersTitle">📦 मेरे ऑर्डर्स एवं लाइव डिलीवरी स्टेटस</h2>
       <div id="ordersContainer"></div>
     </div>
-
   </div>
 
-  <!-- POPUP: FLIPKART STYLE ORDER TRACKING TIMELINE MODAL -->
+  <!-- MODALS -->
   <div class="custom-popup-overlay" id="orderTrackModal">
     <div class="custom-popup-box" style="max-width:450px; text-align:left; max-height:85vh; overflow-y:auto;">
       <h3 style="color:var(--gold); margin-bottom:10px; text-align:center;">📍 ऑर्डर लाइव ट्रैकिंग</h3>
@@ -365,583 +435,308 @@
     </div>
   </div>
 
-  <!-- POPUP: GANESH JI SUPPORT MODAL -->
   <div class="custom-popup-overlay" id="problemSupportModal">
     <div class="custom-popup-box" style="max-width:460px; text-align:left;">
-      <div style="text-align:center; margin-bottom:10px;">
-        <span style="font-size:24px;">🚩 ॐ गं गणपतये नमः 🚩</span>
-        <h3 style="color:var(--gold); font-size:16px; margin-top:3px;">समस्या निवारण एवं सहायता केंद्र</h3>
-        <p style="font-size:11px; color:#ffcdd2;">भुगतान, ऑर्डर या पोर्टल संबंधी समस्या बताएं, तत्काल समाधान होगा।</p>
-      </div>
-
-      <div style="background:rgba(0,0,0,0.5); padding:14px; border-radius:10px; border:1px solid rgba(255,215,0,0.3);">
-        <label>आपका शुभ नाम *</label>
-        <input type="text" id="probCustName" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
-
-        <label>व्हाट्सएप मोबाइल नंबर *</label>
-        <input type="tel" id="probCustPhone" placeholder="संपर्क हेतु मोबाइल नंबर" style="margin-bottom:8px;">
-
-        <label>समस्या का विवरण *</label>
-        <textarea id="probCustMsg" placeholder="अपनी समस्या या प्रश्न विस्तार से लिखें..." style="height:65px; margin-bottom:8px;"></textarea>
-
-        <label>स्क्रीनशॉट या फोटो (वैकल्पिक):</label>
-        <div style="display:flex; align-items:center; gap:10px; margin-bottom:12px;">
-          <button type="button" onclick="document.getElementById('problemScreenPicker').click()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:6px 12px; border-radius:6px; font-size:11px; font-weight:bold; cursor:pointer;">
-            📷 फोटो / स्क्रीनशॉट चुनें
-          </button>
-          <span id="probImgStatusTxt" style="font-size:11px; color:#81c784;"></span>
-        </div>
-        <div id="probImgPreviewBox" style="margin-bottom:10px;"></div>
-
-        <button class="btn-main" onclick="submitProblemTicket()">समस्या भेजें (Submit)</button>
-      </div>
-
-      <button onclick="closeModal('problemSupportModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें (Cancel)</button>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:10px;">समस्या निवारण केंद्र</h3>
+      <input type="text" id="probCustName" placeholder="आपका नाम *" style="margin-bottom:8px;">
+      <input type="tel" id="probCustPhone" placeholder="मोबाइल नंबर *" style="margin-bottom:8px;">
+      <textarea id="probCustMsg" placeholder="समस्या का विवरण..." style="height:65px; margin-bottom:8px;"></textarea>
+      <button class="btn-main" onclick="submitProblemTicket()">समस्या भेजें</button>
+      <button onclick="closeModal('problemSupportModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- POPUP: SAFE SCREENSHOT VIEWER -->
   <div class="custom-popup-overlay" id="imagePreviewModal">
-    <div class="custom-popup-box" style="max-width:550px; padding:15px; position:relative;">
-      <h3 style="color:var(--gold); margin-bottom:10px; font-size:15px;">🔍 फोटो प्रीव्यू</h3>
-      <div style="max-height:68vh; overflow-y:auto; border-radius:8px; background:#000; border:1px solid rgba(255,215,0,0.3); padding:4px;">
-        <img id="previewZoomImage" src="" style="width:100%; height:auto; display:block; border-radius:6px;">
-      </div>
-      <div style="display:flex; gap:10px; margin-top:12px;">
-        <a id="downloadScreenshotBtn" href="" download="image.png" class="btn-main" style="text-decoration:none; padding:10px; display:inline-block; font-size:13px; flex:1;">
-          ⬇️ फ़ोटो डाउनलोड करें
-        </a>
-        <button type="button" onclick="closeModal('imagePreviewModal')" class="btn-main" style="background:#444; flex:1; padding:10px; font-size:13px;">
-          बंद करें
-        </button>
-      </div>
+    <div class="custom-popup-box" style="max-width:550px; padding:15px;">
+      <img id="previewZoomImage" src="" style="width:100%; border-radius:6px; margin-bottom:10px;" alt="Zoom">
+      <button onclick="closeModal('imagePreviewModal')" class="btn-main">बंद करें</button>
     </div>
   </div>
 
-  <!-- POPUP: BLOG READER MODAL -->
   <div class="custom-popup-overlay" id="blogReaderModal">
     <div class="custom-popup-box" style="max-width:540px; text-align:left; max-height:85vh; overflow-y:auto;">
       <h3 style="color:var(--gold); margin-bottom:6px;" id="readerBlogTitle"></h3>
       <div style="font-size:11px; color:#aaa; margin-bottom:12px;" id="readerBlogMeta"></div>
       <div id="readerBlogMedia" style="margin-bottom:12px;"></div>
       <div id="readerBlogGallery" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:8px; margin-bottom:12px;"></div>
-      <div id="readerBlogText" style="font-size:13px; color:#ffcdd2; line-height:1.7; white-space:pre-line;"></div>
+      <div id="readerBlogText" style="font-size:13px; color:#ffcdd2; line-height:1.7;"></div>
       <button class="btn-main" onclick="closeModal('blogReaderModal')" style="margin-top:16px;">बंद करें</button>
     </div>
   </div>
 
-  <!-- POPUP: FLIPKART STYLE PRODUCT DETAILS MODAL -->
   <div class="custom-popup-overlay" id="productDetailModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:88vh; overflow-y:auto; border:2px solid var(--gold); background:#150003;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:8px;">
         <h3 style="color:var(--gold); font-size:16px;" id="modalProdTitle"></h3>
         <button onclick="closeModal('productDetailModal')" style="background:none; border:none; color:#ff8a80; font-size:18px; cursor:pointer;">✖</button>
       </div>
-
-      <div id="modalProdMedia" style="margin-bottom:10px; text-align:center; background:#000; border-radius:8px; padding:6px; border:1px solid rgba(255,215,0,0.3);"></div>
+      <div id="modalProdMedia" style="margin-bottom:10px; text-align:center; background:#000; border-radius:8px; padding:6px;"></div>
       <div style="display:flex; gap:6px; overflow-x:auto; padding-bottom:4px; margin-bottom:12px;" id="modalProdGallery"></div>
-      
       <div style="display:flex; justify-content:space-between; align-items:center; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; margin-bottom:10px;">
         <div style="font-size:16px; color:var(--gold); font-weight:bold;" id="modalProdPrice"></div>
         <div id="modalOfferBadge" style="font-size:11px; color:#81c784; font-weight:bold;"></div>
       </div>
-
-      <div style="font-size:12px; color:#ffcdd2; line-height:1.7; white-space:pre-line; background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.2); margin-bottom:14px;" id="modalProdDesc"></div>
+      <div style="font-size:12px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; margin-bottom:14px;" id="modalProdDesc"></div>
       <div id="modalBuyBtnArea"></div>
     </div>
   </div>
 
-  <!-- POPUP: CHECKOUT MODAL -->
   <div class="custom-popup-overlay" id="checkoutModal">
     <div class="custom-popup-box" style="text-align:left; max-width:480px; max-height:88vh; overflow-y:auto;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:6px;" id="chkTitle">📦 सुरक्षित ऑर्डर चेकआउट</h3>
       <div style="font-size:12px; color:#ffcdd2; text-align:center; margin-bottom:14px;" id="chkProdSummary"></div>
 
       <div id="checkoutStep1">
-        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 1: संपूर्ण डिलीवरी पता (Delivery Address)</h4>
-        
+        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 1: संपूर्ण डिलीवरी पता</h4>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>पूरा नाम *</label><input type="text" id="dlvName" placeholder="आपका पूरा नाम"></div>
-          <div class="form-group"><label>मोबाइल नंबर *</label><input type="tel" id="dlvPhone" placeholder="10-अंकीय नंबर"></div>
+          <input type="text" id="dlvName" placeholder="पूरा नाम *">
+          <input type="tel" id="dlvPhone" placeholder="मोबाइल नंबर *">
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>एक्स्ट्रा मोबाइल (वैकल्पिक)</label><input type="tel" id="dlvAltPhone" placeholder="दूसरा संपर्क नंबर"></div>
-          <div class="form-group"><label>पिनकोड (Pincode) *</label><input type="number" id="dlvPincode" placeholder="6-अंक पिन"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;">
+          <input type="tel" id="dlvAltPhone" placeholder="एक्स्ट्रा मोबाइल">
+          <input type="number" id="dlvPincode" placeholder="पिनकोड *">
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>मकान नंबर / फ्लैट *</label><input type="text" id="dlvHouse" placeholder="हाउस नं / बिल्डिंग"></div>
-          <div class="form-group"><label>रोड / गली का नाम *</label><input type="text" id="dlvRoad" placeholder="रोड / स्ट्रीट"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;">
+          <input type="text" id="dlvHouse" placeholder="मकान नंबर *">
+          <input type="text" id="dlvRoad" placeholder="रोड / गली *">
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>एरिया / मोहल्ला *</label><input type="text" id="dlvArea" placeholder="इलाका / कॉलोनी"></div>
-          <div class="form-group"><label>शहर / टाउन (City) *</label><input type="text" id="dlvCity" placeholder="शहर का नाम"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;">
+          <input type="text" id="dlvArea" placeholder="एरिया *">
+          <input type="text" id="dlvCity" placeholder="शहर *">
         </div>
-
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px;">
-          <div class="form-group"><label>ज़िला (District) *</label><input type="text" id="dlvDist" placeholder="ज़िला"></div>
-          <div class="form-group"><label>राज्य (State) *</label><input type="text" id="dlvState" value="Uttar Pradesh"></div>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:8px; margin-top:8px;">
+          <input type="text" id="dlvDist" placeholder="ज़िला *">
+          <input type="text" id="dlvState" value="Uttar Pradesh">
         </div>
-
-        <button class="btn-main" onclick="goToCheckoutStep2()" style="margin-top:10px;">आगे बढ़ें (Next: Payment)</button>
+        <button class="btn-main" onclick="goToCheckoutStep2()" style="margin-top:12px;">आगे बढ़ें</button>
       </div>
 
       <div id="checkoutStep2" style="display:none;">
-        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 2: भुगतान का तरीका व कूपन</h4>
-        
+        <h4 style="color:var(--gold); font-size:13px; margin-bottom:8px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:4px;">चरण 2: भुगतान</h4>
         <div class="form-group">
-          <label>भुगतान माध्यम चुनें *</label>
+          <label>भुगतान माध्यम *</label>
           <select id="dlvPayMode" onchange="togglePaymentModeView()"></select>
         </div>
-
-        <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold); margin:8px 0;">
+        <div style="background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; margin:8px 0;">
           <div style="display:flex; gap:6px;">
-            <input type="text" id="chkCouponInput" placeholder="Discount Code (कूपन कोड)" style="text-transform:uppercase;">
+            <input type="text" id="chkCouponInput" placeholder="कूपन कोड" style="text-transform:uppercase;">
             <button type="button" class="btn-main" onclick="applyStoreCoupon()" style="width:auto; padding:0 12px; font-size:12px;">लागू करें</button>
           </div>
           <p id="couponMsg" style="font-size:11px; color:#81c784; margin-top:4px; display:none;"></p>
         </div>
-
         <div style="font-size:15px; font-weight:bold; color:var(--gold); text-align:right; margin-bottom:10px;">
           अंतिम देय राशि: <span id="finalCheckoutAmt">₹0</span>
         </div>
-
-        <div id="checkoutUpiBox" style="background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; margin-bottom:10px; border:1px solid rgba(255,215,0,0.3); text-align:center; display:none;">
-          <p style="font-size:11px; color:var(--gold); font-weight:bold; margin-bottom:4px;">📲 QR स्कैन करें या ऐप खोलें:</p>
+        <div id="checkoutUpiBox" style="background:rgba(0,0,0,0.5); padding:10px; border-radius:8px; margin-bottom:10px; text-align:center; display:none;">
           <div class="upi-app-badges"><span class="upi-badge" onclick="openStoreUpiApp()">Paytm / GPay / PhonePe खोलें</span></div>
           <div style="display: flex; justify-content: center; margin: 6px 0;"><div class="qr-box-wrapper" id="dynamicQrContainer"></div></div>
-          <input type="text" id="chkUtrInput" placeholder="12-digit UPI Ref / UTR No. *" style="margin-top:6px;">
+          <input type="text" id="chkUtrInput" placeholder="12-digit UTR No. *" style="margin-top:6px;">
         </div>
-
         <div style="display:flex; gap:8px;">
-          <button type="button" class="btn-main" onclick="document.getElementById('checkoutStep2').style.display='none'; document.getElementById('checkoutStep1').style.display='block';" style="background:#444; flex:1;">पीछे जाएं</button>
-          <button type="button" class="btn-main" onclick="confirmStoreOrderFinal()" style="flex:2;">ऑर्डर कन्फर्म करें</button>
+          <button type="button" class="btn-main" onclick="document.getElementById('checkoutStep2').style.display='none'; document.getElementById('checkoutStep1').style.display='block';" style="background:#444; flex:1;">पीछे</button>
+          <button type="button" class="btn-main" onclick="confirmStoreOrderFinal()" style="flex:2;">ऑर्डर कन्फर्म</button>
         </div>
       </div>
-
       <button onclick="closeModal('checkoutModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- POPUP: EDIT PRODUCT MODAL (ADMIN) -->
   <div class="custom-popup-overlay" id="editProductModal">
-    <div class="custom-popup-box" style="max-width:480px; text-align:left; max-height:85vh; overflow-y:auto;">
+    <div class="custom-popup-box" style="max-width:480px; text-align:left;">
       <h3 style="color:var(--gold); margin-bottom:12px;">✏️ प्रोडक्ट एडिट करें</h3>
       <input type="hidden" id="editProdId">
-      
-      <div class="form-group"><label>सामग्री का नाम:</label><input type="text" id="editPName"></div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-        <div class="form-group"><label>कीमत (₹):</label><input type="number" id="editPPrice"></div>
-        <div class="form-group"><label>कैटेगरी:</label><input type="text" id="editPCat"></div>
-      </div>
-      <div class="form-group"><label>मुख्य फोटो URL:</label><input type="text" id="editPImg"></div>
-      <div class="form-group"><label>विवरण (Description):</label><textarea id="editPDesc" style="height:70px;"></textarea></div>
-
-      <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
-        <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">पेमेंट तरीके:</label>
-        <div style="display:flex; gap:14px; font-size:12px;">
-          <label><input type="checkbox" id="editPayUpi"> UPI / QR</label>
-          <label><input type="checkbox" id="editPayCod"> COD</label>
-        </div>
-      </div>
-
-      <div style="display:flex; gap:10px; margin-top:12px;">
+      <input type="text" id="editPName" placeholder="नाम" style="margin-bottom:8px;">
+      <input type="number" id="editPPrice" placeholder="कीमत" style="margin-bottom:8px;">
+      <input type="text" id="editPCat" placeholder="कैटेगरी" style="margin-bottom:8px;">
+      <input type="text" id="editPImg" placeholder="फोटो URL" style="margin-bottom:8px;">
+      <textarea id="editPDesc" placeholder="विवरण" style="height:60px; margin-bottom:8px;"></textarea>
+      <div style="display:flex; gap:10px;">
         <button class="btn-main" onclick="saveEditedProduct()" style="flex:1;">सेव करें</button>
         <button class="btn-main" onclick="closeModal('editProductModal')" style="background:#444; flex:1;">रद्द करें</button>
       </div>
     </div>
   </div>
 
-  <!-- LOGIN POPUP -->
   <div class="custom-popup-overlay" id="loginModal">
     <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:18px;">👤 <span>लॉगिन / साइन-अप</span></h3>
-      <p style="font-size:12px; color:#ffcdd2; margin-bottom:16px;">अपने Google खाते से आसानी से लॉगिन करें:</p>
-      <button type="button" class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#333; display:flex; align-items:center; justify-content:center; gap:8px;">
-        <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" width="18"> Google से लॉगिन करें
-      </button>
-      <br><button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
+      <h3 style="color:var(--gold); margin-bottom:14px;">Google लॉगिन</h3>
+      <button type="button" class="btn-main" onclick="loginWithGoogle()" style="background:#fff; color:#000;">Google से लॉगिन करें</button>
+      <button type="button" onclick="closeModal('loginModal')" style="background:none; border:none; color:#aaa; margin-top:14px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- ADMIN PASS MODAL -->
   <div class="custom-popup-overlay" id="adminPassModal">
     <div class="custom-popup-box">
-      <h3 style="color:var(--gold); margin-bottom:10px;">🔐 Owner Verification</h3>
-      <p style="font-size:12px; color:#ffcdd2; margin-bottom:12px;">खाता: <b>yugampal23@gmail.com</b><br>कृपया मास्टर पासवर्ड दर्ज करें:</p>
+      <h3 style="color:var(--gold); margin-bottom:10px;">Owner Verification</h3>
       <input type="password" id="ownerPassInput" placeholder="Master Password" style="margin-bottom:12px;">
       <button class="btn-main" onclick="verifyOwnerPassword()">प्रवेश करें</button>
-      <br><button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
+      <button onclick="closeModal('adminPassModal')" style="background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- ADMIN INSPECT MODAL -->
   <div class="custom-popup-overlay" id="adminInspectModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 संपूर्ण विवरण (Inspect Record)</h3>
-      <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; line-height:1.7; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;"></div>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🔍 विवरण</h3>
+      <div id="inspectContentBox" style="font-size:13px; color:#ffcdd2; background:rgba(0,0,0,0.4); padding:12px; border-radius:8px; margin-bottom:14px;"></div>
       <button class="btn-main" onclick="closeModal('adminInspectModal')">बंद करें</button>
     </div>
   </div>
 
-  <!-- DONATION PAYMENT MODAL -->
   <div class="custom-popup-overlay" id="donationModal">
     <div class="custom-popup-box" style="text-align:left; max-width:440px;">
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
       <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
-      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox"></div>
-      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
-      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
+      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; text-align:center;" id="donPaymentBox"></div>
+      <button type="button" class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें</button>
+      <button type="button" onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
-  <!-- NOTIFY POPUP -->
   <div class="custom-popup-overlay" id="notifyPopup">
     <div class="custom-popup-box">
-      <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600; line-height:1.5;"></p>
-      <button class="btn-main" onclick="closeModal('notifyPopup')">ठीक है (OK)</button>
+      <p id="notifyMsg" style="font-size:15px; color:#fff; margin-bottom:16px; font-weight:600;"></p>
+      <button class="btn-main" onclick="closeModal('notifyPopup')">ठीक है</button>
     </div>
   </div>
 
-  <!-- CELEBRATION MODAL (WITH WELCOME SOUND & 50% DUCKING) -->
   <div class="custom-popup-overlay" id="celebrationModal">
-    <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004; max-width: 460px;">
+    <div class="custom-popup-box" style="border: 2px solid var(--gold); background: #1b0004;">
       <h1 style="font-size:24px; color:var(--gold); margin-bottom:12px;">🎉 जय माता दी! 🎉</h1>
       <h3 id="celDonorName" style="color:#fff; font-size:17px; margin-bottom:10px;"></h3>
-      <p id="celMsg" style="font-size:14px; line-height: 1.6; color:#ffcdd2;"></p>
-      <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
-        🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
-      </p>
-      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
+      <p id="celMsg" style="font-size:14px; color:#ffcdd2; margin-bottom:14px;"></p>
+      <button type="button" class="btn-main" onclick="closeCelebrationModal()">जय माता दी</button>
     </div>
   </div>
 
-  <!-- DEDICATED FULLSCREEN LEGAL & CONTACT MODAL -->
   <div class="legal-page" id="legalPage">
     <div class="legal-container">
-      <button onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
+      <button type="button" onclick="closeLegalPage()" style="float:right; background:#d32f2f; color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-weight:bold;">बंद करें ✖</button>
       <h2 style="color:var(--gold); margin-bottom:14px; font-size:18px;" id="legalHeading"></h2>
       <div id="legalBodyText"></div>
     </div>
   </div>
 
-  <!-- POPUP: FEEDBACK MODAL -->
   <div class="custom-popup-overlay" id="feedbackModal">
     <div class="custom-popup-box" style="max-width:480px; text-align:left;">
-      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 भक्त सुझाव एवं अनुभव</h3>
-      <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); margin-bottom:14px;">
-        <label>आपका शुभ नाम:</label>
-        <input type="text" id="fbNameInput" placeholder="नाम दर्ज करें" style="margin-bottom:8px;">
-        <label>रेटिंग चुनें:</label>
-        <select id="fbRatingInput" style="margin-bottom:8px;">
-          <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
-          <option value="4">⭐⭐⭐⭐ 4 Star</option>
-          <option value="3">⭐⭐⭐ 3 Star</option>
-        </select>
-        <label>अपना पावन अनुभव या सुझाव लिखें:</label>
-        <textarea id="fbMsgInput" placeholder="सुझाव यहाँ लिखें..." style="height:60px; margin-bottom:10px;"></textarea>
-        <button class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें (Submit)</button>
-      </div>
-      <div style="max-height:180px; overflow-y:auto;" id="publicFeedbackList"></div>
-      <button onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें (Close)</button>
+      <h3 style="color:var(--gold); text-align:center; margin-bottom:12px;">🌟 सुझाव एवं अनुभव</h3>
+      <input type="text" id="fbNameInput" placeholder="नाम" style="margin-bottom:8px;">
+      <select id="fbRatingInput" style="margin-bottom:8px;">
+        <option value="5">⭐⭐⭐⭐⭐ 5 Star</option>
+        <option value="4">⭐⭐⭐⭐ 4 Star</option>
+      </select>
+      <textarea id="fbMsgInput" placeholder="सुझाव..." style="height:60px; margin-bottom:10px;"></textarea>
+      <button type="button" class="btn-main" onclick="submitPublicFeedback()">सुझाव भेजें</button>
+      <button type="button" onclick="closeModal('feedbackModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:10px; cursor:pointer;">बंद करें</button>
     </div>
   </div>
 
-  <!-- FULLSCREEN OWNER ADMIN DASHBOARD -->
+  <!-- ADMIN PORTAL -->
   <div id="adminPortal">
     <div class="admin-inner">
       <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px; margin-bottom:12px;">
-        <h3 style="color:var(--gold); font-size:16px;">👑 संपूर्ण मालिक कंट्रोल सेंटर (yugampal23@gmail.com)</h3>
+        <h3 style="color:var(--gold); font-size:16px;">👑 संपूर्ण मालिक कंट्रोल सेंटर</h3>
         <button onclick="document.getElementById('adminPortal').style.display='none'" style="background:#d32f2f; color:#fff; border:none; padding:5px 12px; border-radius:4px; cursor:pointer;">पोर्टल बंद करें ✖</button>
       </div>
 
       <div class="admin-tabs">
         <button class="adm-tab active" onclick="switchAdm('admSet')">⚙️ सेटिंग्स</button>
-        <button class="adm-tab" onclick="switchAdm('admPlaylist')">🎵 भजन प्लेलिस्ट</button>
-        <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 भक्ति ब्लॉग</button>
-        <button class="adm-tab" onclick="switchAdm('admProdAdd')">➕ नया प्रोडक्ट जोड़ें</button>
-        <button class="adm-tab" onclick="switchAdm('admProdManage')">📋 स्टोर इन्वेंटरी व स्टॉक</button>
-        <button class="adm-tab" onclick="switchAdm('admOffers')">🏷️ ऑफर व डिस्काउंट कंट्रोल</button>
+        <button class="adm-tab" onclick="switchAdm('admPlaylist')">🎵 प्लेलिस्ट</button>
+        <button class="adm-tab" onclick="switchAdm('admBlogAdm')">📖 ब्लॉग</button>
+        <button class="adm-tab" onclick="switchAdm('admProdAdd')">➕ प्रोडक्ट जोड़ें</button>
+        <button class="adm-tab" onclick="switchAdm('admProdManage')">📋 इन्वेंटरी व स्टॉक</button>
+        <button class="adm-tab" onclick="switchAdm('admOffers')">🏷️ ऑफर कंट्रोल</button>
         <button class="adm-tab" onclick="switchAdm('admCoup')">🎫 कूपन्स</button>
-        <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ग्राहक ऑर्डर्स</button>
+        <button class="adm-tab" onclick="switchAdm('admOrd')">📦 ऑर्डर्स</button>
         <button class="adm-tab" onclick="switchAdm('admDon')">💵 डोनेशन</button>
         <button class="adm-tab" onclick="switchAdm('admFeed')">💬 सुझाव</button>
       </div>
 
-      <!-- Admin Sec 1: Settings with Payment Methods & Keys -->
       <div id="admSet" class="adm-sec active">
-        <h4 style="color:var(--gold); margin-bottom:8px;">स्क्रीन पर चलने वाला संदेश:</h4>
-        <textarea id="admTickerText" style="height:55px; margin-bottom:12px;"></textarea>
-
-        <h4 style="color:var(--gold); margin-bottom:8px;">🎵 ऑडियो मोड चुनें:</h4>
-        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
-          <div class="form-group">
-            <label style="color:var(--gold); font-weight:bold;">ऑडियो माध्यम (Audio Source):</label>
-            <select id="admAudioModeSelect" onchange="toggleAudioModeInputs()">
-              <option value="mp3">MP3 Stream (24 घंटे लाइव रेडियो सिंक)</option>
-              <option value="yt">YouTube Link (YouTube वीडियो)</option>
-            </select>
-          </div>
-          <div class="form-group" id="ytInputGroup" style="display:none;">
-            <label>YouTube भजन लिंक:</label>
-            <input type="text" id="admYtLink" placeholder="https://www.youtube.com/watch?v=...">
-          </div>
-        </div>
-
-        <h4 style="color:var(--gold); margin-bottom:8px;">💳 पेमेंट गेटवे मोड व की (Key) सेटिंग्स:</h4>
-        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
-          <div class="form-group">
-            <label>पेमेंट का मुख्य तरीका चुनें:</label>
-            <select id="admPaymentMode">
-              <option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>
-              <option value="razorpay">Razorpay Auto Gateway</option>
-              <option value="cod">Cash on Delivery (COD Only)</option>
-            </select>
-          </div>
-          <div class="form-group"><label>Paytm Business UPI ID:</label><input type="text" id="admUpiId" value="paytm.s20g6r2@pty"></div>
-          <div class="form-group"><label>Razorpay Key ID (यदि उपयोग हो):</label><input type="text" id="admRazorpayKey" placeholder="rzp_live_xxxxxxxxxxxxxx"></div>
-        </div>
-
-        <h4 style="color:var(--gold); margin:14px 0 8px;">सोशल लिंक्स:</h4>
-        <div class="form-group"><label>व्हाट्सएप नंबर (10 अंक):</label><input type="tel" id="admWaPhone" value="9120226597"></div>
-
+        <textarea id="admTickerText" style="height:55px; margin-bottom:12px;" placeholder="टिकर संदेश..."></textarea>
+        <select id="admPaymentMode" style="margin-bottom:12px;">
+          <option value="upi">UPI / QR</option>
+          <option value="cod">COD Only</option>
+        </select>
+        <input type="text" id="admUpiId" value="paytm.s20g6r2@pty" style="margin-bottom:12px;">
+        <input type="tel" id="admWaPhone" value="9120226597" style="margin-bottom:12px;">
         <button class="btn-main" onclick="saveAdminSettings()">सेटिंग्स सुरक्षित करें</button>
       </div>
 
-      <!-- Admin Sec 2: Playlist Manager -->
       <div id="admPlaylist" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ प्लेलिस्ट में नया भजन जोड़ें</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-          <input type="text" id="newSongTitle" placeholder="भजन का नाम (उदा: दुर्गा आरती)">
-          <input type="text" id="newSongUrl" placeholder="Google Drive शेयर लिंक (https://...) *">
-        </div>
+        <input type="text" id="newSongTitle" placeholder="भजन नाम" style="margin-bottom:6px;">
+        <input type="text" id="newSongUrl" placeholder="Google Drive लिंक" style="margin-bottom:6px;">
         <button class="btn-main" onclick="addNewPlaylistSong()">+ प्लेलिस्ट में जोड़ें</button>
-
-        <h4 style="color:var(--gold); margin:18px 0 8px;">भजन प्लेलिस्ट:</h4>
-        <div class="table-responsive">
-          <table id="admPlaylistTable">
-            <thead><tr><th>क्रम</th><th>भजन नाम</th><th>ऑडियो लिंक</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admPlaylistTable"><thead><tr><th>क्रम</th><th>नाम</th><th>लिंक</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 3: Blog Manager -->
       <div id="admBlogAdm" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ नई भक्ति कथा / दर्शन पोस्ट जोड़ें</h4>
-        <div class="form-group"><label>कथा / पोस्ट शीर्षक *</label><input type="text" id="newBlogTitle" placeholder="जैसे: माँ भगवती का नौ रूपों का महात्म्य"></div>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:6px; margin-bottom:6px;">
-          <input type="text" id="newBlogAuthor" placeholder="लेखक / समिति">
-          <input type="text" id="newBlogImg" placeholder="मुख्य फोटो URL लिंक">
-        </div>
-        
-        <div class="form-group">
-          <label>अतिरिक्त तस्वीरें:</label>
-          <div id="extraPhotoInputsContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
-            <input type="text" class="extra-img-url" placeholder="एडिशनल फोटो URL लिंक #1">
-          </div>
-          <button type="button" onclick="addExtraPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ और फोटो URL जोड़ें</button>
-        </div>
-
-        <div class="form-group" style="margin-top:6px;">
-          <label>यूट्यूब वीडियो लिंक:</label>
-          <input type="text" id="newBlogVideo" placeholder="https://www.youtube.com/watch?v=...">
-        </div>
-        <div class="form-group">
-          <label>पूरी कथा विवरण *:</label>
-          <textarea id="newBlogBody" placeholder="पूरी कहानी..." style="height:110px;"></textarea>
-        </div>
-        <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold);">
-          <input type="checkbox" id="newBlogOnDonation" style="width:18px; height:18px; cursor:pointer;">
-          <label for="newBlogOnDonation" style="margin:0; color:#fff; font-weight:bold; cursor:pointer;">⭐ डोनेशन पेज पर दिखाएं</label>
-        </div>
+        <input type="text" id="newBlogTitle" placeholder="शीर्षक" style="margin-bottom:6px;">
+        <input type="text" id="newBlogImg" placeholder="फोटो URL" style="margin-bottom:6px;">
+        <textarea id="newBlogBody" placeholder="कथा..." style="height:80px; margin-bottom:6px;"></textarea>
         <button class="btn-main" onclick="saveNewBlogPost()">+ ब्लॉग प्रकाशित करें</button>
-
-        <h4 style="color:var(--gold); margin:18px 0 8px;">प्रकाशित ब्लॉग सूची</h4>
-        <div class="table-responsive">
-          <table id="admBlogTable">
-            <thead><tr><th>तारीख</th><th>शीर्षक</th><th>डोनेशन पेज?</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admBlogTable"><thead><tr><th>दिनांक</th><th>शीर्षक</th><th>डोनेशन?</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 4: Add New Product -->
       <div id="admProdAdd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:10px;">+ नया प्रोडक्ट / प्रसाद जोड़ें</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px;">
-          <input type="text" id="newPName" placeholder="सामग्री का नाम (उदा: Prasad Dana) *">
-          <input type="number" id="newPPrice" placeholder="कीमत (₹) *">
-        </div>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin:6px 0;">
-          <input type="text" id="newPCat" placeholder="कैटेगरी (उदा: Grocery)">
-          <input type="text" id="newPSubCat" placeholder="सब-कैटेगरी (उदा: 500g Pack)">
-        </div>
-        <div class="form-group">
-          <input type="text" id="newPImg" placeholder="मुख्य फोटो का सीधा URL लिंक">
-        </div>
-
-        <div class="form-group">
-          <label>अतिरिक्त उत्पाद तस्वीरें (Multiple Images for Slider):</label>
-          <div id="extraProductPhotosContainer" style="display:flex; flex-direction:column; gap:6px; margin-bottom:6px;">
-            <input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">
-          </div>
-          <button type="button" onclick="addExtraProductPhotoInput()" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); padding:5px 12px; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer;">+ और फोटो URL जोड़ें</button>
-        </div>
-
-        <div class="form-group">
-          <label>उत्पाद का पूरा विवरण:</label>
-          <textarea id="newPDesc" placeholder="Brand: TRINETRA&#10;Shelf life: 6 Months..." style="height:90px;"></textarea>
-        </div>
-
-        <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px solid rgba(255,215,0,0.3); margin-bottom:10px;">
-          <label style="color:var(--gold); font-weight:bold; margin-bottom:6px;">इस प्रोडक्ट पर कौन से पेमेंट तरीके उपलब्ध हों:</label>
-          <div style="display:flex; gap:14px; font-size:12px;">
-            <label><input type="checkbox" id="prodPayUpi" checked> UPI / QR</label>
-            <label><input type="checkbox" id="prodPayCod" checked> Cash on Delivery (COD)</label>
-          </div>
-        </div>
-
-        <div style="display:flex; gap:14px; align-items:center; margin-bottom:12px; background:rgba(255,215,0,0.08); padding:8px; border-radius:6px; border:1px dashed var(--gold);">
-          <label style="cursor:pointer; display:flex; align-items:center; gap:6px; margin:0;">
-            <input type="checkbox" id="newPInStock" checked style="width:18px; height:18px;"> 🟢 स्टॉक में उपलब्ध
-          </label>
-          <label style="cursor:pointer; display:flex; align-items:center; gap:6px; margin:0; margin-left:15px;">
-            <input type="checkbox" id="newPOnDonation" style="width:18px; height:18px;"> ⭐ डोनेशन पेज सजेस्टेड
-          </label>
-        </div>
-
-        <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में नया प्रोडक्ट जोड़ें</button>
+        <input type="text" id="newPName" placeholder="सामग्री का नाम *" style="margin-bottom:6px;">
+        <input type="number" id="newPPrice" placeholder="कीमत (₹) *" style="margin-bottom:6px;">
+        <input type="text" id="newPCat" placeholder="कैटेगरी" style="margin-bottom:6px;">
+        <input type="text" id="newPImg" placeholder="फोटो URL" style="margin-bottom:6px;">
+        <textarea id="newPDesc" placeholder="विवरण" style="height:70px; margin-bottom:6px;"></textarea>
+        <button class="btn-main" onclick="saveNewProduct()">+ स्टोर में जोड़ें</button>
       </div>
 
-      <!-- Admin Sec 5: Product Inventory with SKU Search & Edit Control -->
       <div id="admProdManage" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">📋 स्टोर इन्वेंटरी, स्टॉक व सर्च कंट्रोल (SKU Search & Edit)</h4>
-        <div class="form-group" style="margin-bottom:12px;">
-          <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="🔍 नाम या सीरियल नंबर (SKU) से खोजें..." style="background:#000; border:1px solid var(--gold); color:var(--gold);">
-        </div>
-        <div class="table-responsive">
-          <table id="admProdTable">
-            <thead><tr><th>एस.नंबर (SKU)</th><th>फोटो</th><th>नाम</th><th>स्टॉक व स्टेटस</th><th>कीमत</th><th>एक्शन</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <input type="text" id="adminInventorySearch" onkeyup="renderAdminProducts()" placeholder="🔍 SKU या नाम से खोजें..." style="margin-bottom:10px;">
+        <div class="table-responsive"><table id="admProdTable"><thead><tr><th>SKU</th><th>फोटो</th><th>नाम</th><th>स्टॉक</th><th>कीमत</th><th>एक्शन</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
       <div id="admOffers" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
-        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं।</p>
-        
-        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
-          <div class="form-group">
-            <label>ऑफर समाप्त होने का समय (काउंटडाउन टाइमर):</label>
-            <input type="datetime-local" id="admOfferExpiryInput">
-          </div>
-          <button class="btn-main" onclick="saveAdminSettings()" style="margin-top:6px;">टाइमर सेव करें</button>
-        </div>
-
-        <h4 style="color:var(--gold); margin:14px 0 8px;">उत्पाद वार डिस्काउंट ऑफर मैनेजर:</h4>
-        <div class="table-responsive">
-          <table id="admOffersTable">
-            <thead><tr><th>उत्पाद (SKU)</th><th>मूल कीमत</th><th>स्पेशल छूट (%)</th><th>एक्शन</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admOffersTable"><thead><tr><th>उत्पाद</th><th>कीमत</th><th>छूट %</th><th>एक्शन</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 7: Coupons -->
       <div id="admCoup" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">+ नया कूपन बनाएँ</h4>
-        <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:8px;">
-          <input type="text" id="newCCode" placeholder="कोड (उदा: JAY40)" style="text-transform:uppercase;">
-          <input type="number" id="newCDiscount" placeholder="छूट % (उदा: 40)">
-        </div>
+        <input type="text" id="newCCode" placeholder="कूपन कोड" style="text-transform:uppercase; margin-bottom:6px;">
+        <input type="number" id="newCDiscount" placeholder="छूट %" style="margin-bottom:6px;">
         <button class="btn-main" onclick="saveNewCoupon()">+ कूपन सेव करें</button>
-        <div class="table-responsive" style="margin-top:12px;">
-          <table id="admCoupTable">
-            <thead><tr><th>कोड</th><th>छूट %</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admCoupTable"><thead><tr><th>कोड</th><th>छूट %</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 8: Orders -->
       <div id="admOrd" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">ग्राहक ऑर्डर्स व 5-स्टेज डिलीवरी कंट्रोल</h4>
-        <div class="table-responsive">
-          <table id="admOrdTable">
-            <thead><tr><th>तारीख</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>UTR</th><th>लाइव स्टेटस (5 स्टेज)</th><th>OTP दृश्य</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admOrdTable"><thead><tr><th>दिनांक</th><th>ग्राहक</th><th>सामग्री</th><th>रुपये</th><th>स्टेटस</th><th>OTP</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 9: Donations -->
       <div id="admDon" class="adm-sec">
-        <div style="background:rgba(255,215,0,0.06); padding:10px; border-radius:6px; border:1px dashed var(--gold); margin-bottom:12px;">
-          <h4 style="color:var(--gold); margin-bottom:6px;">💵 नकद दान एंट्री जोड़ें</h4>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="text" id="admCashName" placeholder="दानदाता का नाम *">
-            <input type="tel" id="admCashPhone" placeholder="मोबाइल नंबर">
-          </div>
-          <div style="display:grid; grid-template-columns:1fr 1fr; gap:6px; margin-bottom:6px;">
-            <input type="text" id="admCashCity" placeholder="स्थान">
-            <input type="number" id="admCashAmt" placeholder="राशि (₹) *">
-          </div>
-          <button class="btn-main" onclick="saveAdminCashDonation()">+ लाइव बोर्ड में जोड़ें</button>
-        </div>
-        <h4 style="color:var(--gold); margin-bottom:8px;">दानदाता सूची</h4>
-        <div class="table-responsive">
-          <table id="admDonTable">
-            <thead><tr><th>तारीख</th><th>दानदाता नाम</th><th>मोबाइल</th><th>स्थान</th><th>राशि</th><th>UTR</th><th>व्हाट्सएप</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <input type="text" id="admCashName" placeholder="नाम" style="margin-bottom:6px;">
+        <input type="tel" id="admCashPhone" placeholder="मोबाइल" style="margin-bottom:6px;">
+        <input type="number" id="admCashAmt" placeholder="राशि" style="margin-bottom:6px;">
+        <button class="btn-main" onclick="saveAdminCashDonation()">+ नकद दान जोड़ें</button>
+        <div class="table-responsive"><table id="admDonTable"><thead><tr><th>दिनांक</th><th>नाम</th><th>मोबाइल</th><th>राशि</th><th>UTR</th><th>व्हाट्सएप</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
 
-      <!-- Admin Sec 10: Feedback -->
       <div id="admFeed" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">💬 भक्त सुझाव व समस्याएं</h4>
-        <div class="table-responsive">
-          <table id="admFeedTable">
-            <thead><tr><th>तारीख</th><th>नाम / फोन</th><th>प्रकार</th><th>विवरण</th><th>स्क्रीनशॉट</th><th>हटाएं</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+        <div class="table-responsive"><table id="admFeedTable"><thead><tr><th>दिनांक</th><th>नाम</th><th>प्रकार</th><th>विवरण</th><th>हटाएं</th></tr></thead><tbody></tbody></table></div>
       </div>
     </div>
   </div>
 
-  <!-- FIXED STICKY FOOTER WITH WORKING CLICK HANDLERS -->
   <footer>
-    <div style="max-width:900px; margin:0 auto; position:relative; z-index:100;">
-      <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
-      <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
-      
-      <div class="footer-links">
-        <button type="button" class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
-        <button type="button" class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
-        <button type="button" class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
-        <button type="button" class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
-        <button type="button" class="footer-link-btn" onclick="openLegal('contact')">Contact Us (संपर्क करें)</button>
-      </div>
-
-      <div class="footer-action-btns">
-        <a href="https://g.page/r/CSiWpZsgIYO2ECE/review" target="_blank" class="ftr-pill-btn">⭐ Google पर रिव्यू दें</a>
-        <button type="button" class="ftr-pill-btn" onclick="openModal('feedbackModal')">✍️ सुझाव / Feedback दें</button>
-      </div>
-
-      <p style="margin-top:15px; font-size:11px; color:#777;">© 2026 Maa Durga Enterprises. सर्वाधिकार सुरक्षित।</p>
+    <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises | प्रतापगढ़ (उ.प्र.)</p>
+    <div class="footer-links">
+      <button type="button" class="footer-link-btn" onclick="openLegal('terms')">Terms & Conditions</button>
+      <button type="button" class="footer-link-btn" onclick="openLegal('privacy')">Privacy Policy</button>
+      <button type="button" class="footer-link-btn" onclick="openLegal('refund')">Refund Policy</button>
+      <button type="button" class="footer-link-btn" onclick="openLegal('shipping')">Shipping Policy</button>
+      <button type="button" class="footer-link-btn" onclick="openLegal('contact')">Contact Us</button>
+    </div>
+    <div class="footer-action-btns">
+      <button type="button" class="ftr-pill-btn" onclick="openModal('feedbackModal')">✍️ सुझाव / Feedback</button>
     </div>
   </footer>
 
   <script>
     const OWNER_EMAIL = "yugampal23@gmail.com";
     const OWNER_MASTER_PASS = "durga@2004";
-
     const MY_CLIENT_ID = localStorage.getItem('siti_chat_client_id') || ('cli_' + Math.random().toString(36).substring(2) + Date.now().toString(36));
     localStorage.setItem('siti_chat_client_id', MY_CLIENT_ID);
 
@@ -955,361 +750,69 @@
       measurementId: "G-YWXXTLH016"
     };
 
-    let auth = null;
-    let db = null;
-    let googleProvider = null;
-
+    let auth = null, db = null, googleProvider = null;
     try {
       if (!firebase.apps.length) firebase.initializeApp(firebaseConfig);
       auth = firebase.auth();
       db = firebase.firestore();
       googleProvider = new firebase.auth.GoogleAuthProvider();
-    } catch(e) {
-      console.error("Firebase init error:", e);
-    }
+    } catch(e) {}
 
     let currentUser = null;
-    let cloudDonations = [];
-    let cloudProducts = [];
-    let cloudCoupons = [];
-    let cloudOrders = [];
-    let cloudChats = [];
-    let cloudFeedbacks = [];
-    let cloudBlogs = [];
-    let cloudPlaylist = [];
+    let cloudDonations = [], cloudProducts = [], cloudCoupons = [], cloudOrders = [], cloudChats = [], cloudFeedbacks = [], cloudBlogs = [], cloudPlaylist = [];
     let globalRoomState = { songIndex: 0, startedAt: Date.now(), isPlaying: false };
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
     let pendingDonationData = null;
-    let selectedProblemImageBase64 = null;
-    let globalOfferExpiryTime = null;
     let appSettingsMain = {};
 
-    function toggleSideNav() {
+    function toggleNav() {
       const d = document.getElementById('sideNavDrawer');
       if (d) d.style.display = (d.style.display === 'block') ? 'none' : 'block';
     }
+    function toggleSideNav() { toggleNav(); }
 
     function switchNav(tab) {
-      toggleSideNav();
-      document.querySelectorAll('.drawer-item').forEach(i => i.classList.remove('active'));
+      toggleNav();
       ['donate', 'store', 'blog', 'directory', 'chat', 'orders'].forEach(id => {
         const p = document.getElementById('panel' + id.charAt(0).toUpperCase() + id.slice(1));
         if (p) p.style.display = 'none';
       });
       const target = document.getElementById('panel' + tab.charAt(0).toUpperCase() + tab.slice(1));
       if (target) target.style.display = 'block';
-      if (window.event && window.event.target) window.event.target.classList.add('active');
-      if (tab === 'chat') {
-        setTimeout(scrollChatToBottom, 150);
-      }
     }
 
     function showAppToast(msg) {
       const m = document.getElementById('notifyMsg');
       if (m) m.innerText = msg;
-      const p = document.getElementById('notifyPopup');
-      if (p) p.style.display = 'flex';
+      openModal('notifyPopup');
     }
 
-    function openModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'flex';
-    }
-
-    function closeModal(id) {
-      const el = document.getElementById(id);
-      if (el) el.style.display = 'none';
-    }
-
-    function viewAdminScreenshot(dataUrl) {
-      if (!dataUrl) return;
-      const zoomImg = document.getElementById('previewZoomImage');
-      const dlBtn = document.getElementById('downloadScreenshotBtn');
-      if (zoomImg && dlBtn) {
-        zoomImg.src = dataUrl;
-        dlBtn.href = dataUrl;
-        openModal('imagePreviewModal');
-      }
-    }
-
-    function formatDonorName(name, salutation) {
-      const clean = (name || "").trim();
-      if (!clean) return "श्रद्धालु भक्त";
-      if (salutation === 'shree') return `श्री ${clean} जी`;
-      if (salutation === 'shrimati') return `श्रीमती ${clean} जी`;
-      if (salutation === 'kumari') return `कुमारी ${clean} जी`;
-      return `${clean} जी`;
-    }
-
-    function extractVideoId(url) {
-      if (!url) return null;
-      const regExp = /(?:youtu\.be\/|youtube\.com\/(?:embed\/|v\/|watch\?v=|watch\?.+&v=))([\w-]{11})/;
-      const match = url.match(regExp);
-      return match ? match[1] : null;
-    }
-
-    function parseDirectAudioUrl(rawUrl) {
-      if (!rawUrl) return "";
-      if (rawUrl.includes("drive.google.com")) {
-        const match = rawUrl.match(/\/d\/([a-zA-Z0-9_-]+)/) || rawUrl.match(/id=([a-zA-Z0-9_-]+)/);
-        if (match && match[1]) {
-          return `https://drive.google.com/uc?export=download&id=${match[1]}`;
-        }
-      }
-      return rawUrl;
-    }
-
-    function addExtraPhotoInput() {
-      const container = document.getElementById('extraPhotoInputsContainer');
-      if (!container) return;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'extra-img-url';
-      input.placeholder = `एडिशनल फोटो URL लिंक #${container.children.length + 1}`;
-      input.style.marginTop = '4px';
-      container.appendChild(input);
-    }
-
-    function addExtraProductPhotoInput() {
-      const container = document.getElementById('extraProductPhotosContainer');
-      if (!container) return;
-      const input = document.createElement('input');
-      input.type = 'text';
-      input.className = 'extra-prod-prod-url';
-      input.placeholder = `एडिशनल फोटो URL लिंक #${container.children.length + 1}`;
-      input.style.marginTop = '4px';
-      container.appendChild(input);
-    }
-
-    // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE (CONTINUOUS PLAYLIST AUTO-NEXT & REPEAT LOOP)
-    // =========================================================================
-    let isMusicPlaying = false;
-    let isYtPlayerReady = false;
-    let ytPlayer = null;
-    let currentAudioSourceType = "mp3";
-    let activeYtVideoId = "";
-    const coreAudio = document.getElementById('coreBgAudio');
-
-    coreAudio.addEventListener('seeking', () => {
-      const expectedTime = calculateLiveSeekTime();
-      if (Math.abs(coreAudio.currentTime - expectedTime) > 1.2) {
-        coreAudio.currentTime = expectedTime;
-      }
-    });
-
-    function playNextSongInContinuousLoop() {
-      if (cloudPlaylist.length === 0) return;
-      const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
-      globalRoomState.songIndex = nextIdx;
-      globalRoomState.startedAt = Date.now();
-
-      if (db) {
-        db.collection("settings").doc("music_room").set({
-          songIndex: nextIdx,
-          startedAt: Date.now(),
-          isPlaying: true,
-          sourceType: "mp3"
-        }, { merge: true }).catch(() => {});
-      }
-
-      applyGlobalSyncPlayback();
-    }
-
-    coreAudio.addEventListener('ended', () => {
-      playNextSongInContinuousLoop();
-    });
-
-    const ytScriptTag = document.createElement('script');
-    ytScriptTag.src = "https://www.youtube.com/iframe_api";
-    const firstScript = document.getElementsByTagName('script')[0];
-    if (firstScript && firstScript.parentNode) firstScript.parentNode.insertBefore(ytScriptTag, firstScript);
-
-    window.onYouTubeIframeAPIReady = function() {
-      ytPlayer = new YT.Player('ytPlayerDiv', {
-        height: '0', width: '0',
-        playerVars: { 'autoplay': 0, 'controls': 0, 'loop': 1, 'enablejsapi': 1, 'origin': window.location.origin },
-        events: {
-          'onReady': () => { isYtPlayerReady = true; applyGlobalSyncPlayback(); },
-          'onStateChange': (e) => { if (e.data === YT.PlayerState.PLAYING) setupMediaSession(); }
-        }
-      });
-    };
-
-    function toggleAudioModeInputs() {
-      const mode = document.getElementById('admAudioModeSelect').value;
-      document.getElementById('ytInputGroup').style.display = (mode === 'yt') ? 'block' : 'none';
-    }
-
-    function setupMediaSession() {
-      if ('mediaSession' in navigator) {
-        const currentSong = (cloudPlaylist.length > 0 && cloudPlaylist[globalRoomState.songIndex]) ? cloudPlaylist[globalRoomState.songIndex].title : "पावन दिव्य संकीर्तन";
-        navigator.mediaSession.metadata = new MediaMetadata({
-          title: `🚩 ${currentSong}`,
-          artist: "Maa Durga Enterprises | श्री दुर्गा पूजा सेवा समिति",
-          album: "श्री दुर्गा पूजा लाइव दरबार",
-          artwork: [{ src: "ganesh.png", sizes: "512x512", type: "image/png" }]
-        });
-        navigator.mediaSession.setActionHandler('play', () => { toggleBackgroundMusic(); });
-        navigator.mediaSession.setActionHandler('pause', () => { toggleBackgroundMusic(); });
-        try {
-          navigator.mediaSession.setActionHandler('seekto', null);
-        } catch(e) {}
-      }
-    }
-
-    function calculateLiveSeekTime() {
-      if (!globalRoomState.startedAt) return 0;
-      const elapsedSec = Math.floor((Date.now() - globalRoomState.startedAt) / 1000);
-      let duration = 300;
-      if (currentAudioSourceType === "mp3" && coreAudio.duration && !isNaN(coreAudio.duration) && coreAudio.duration > 0) {
-        duration = coreAudio.duration;
-      } else if (currentAudioSourceType === "yt" && ytPlayer && typeof ytPlayer.getDuration === 'function') {
-        duration = ytPlayer.getDuration() || 300;
-      }
-      return elapsedSec % Math.max(10, Math.floor(duration));
-    }
-
-    function applyGlobalSyncPlayback() {
-      if (!isMusicPlaying) return;
-      const seekSec = calculateLiveSeekTime();
-
-      if (currentAudioSourceType === "mp3") {
-        if (cloudPlaylist.length === 0) return;
-        const targetSong = cloudPlaylist[globalRoomState.songIndex] || cloudPlaylist[0];
-        if (!targetSong || !targetSong.url) return;
-
-        try { if (ytPlayer && isYtPlayerReady) ytPlayer.pauseVideo(); } catch(e) {}
-
-        const directUrl = parseDirectAudioUrl(targetSong.url);
-        if (coreAudio.src !== directUrl) {
-          coreAudio.src = directUrl;
-          coreAudio.currentTime = seekSec;
-          coreAudio.play().then(() => {
-            setupMediaSession();
-            document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
-          }).catch(() => {});
-        } else {
-          coreAudio.currentTime = seekSec;
-          if (coreAudio.paused) {
-            coreAudio.play().catch(() => {});
-          }
-          setupMediaSession();
-          document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
-        }
-      } else {
-        if (!activeYtVideoId || !ytPlayer || !isYtPlayerReady) return;
-        try { coreAudio.pause(); } catch(e) {}
-        try {
-          ytPlayer.loadVideoById({ videoId: activeYtVideoId, startSeconds: seekSec });
-          ytPlayer.playVideo();
-          setupMediaSession();
-          document.getElementById('musicBtnTxt').innerText = "संगीत रोकें";
-        } catch(e) {}
-      }
-    }
-
-    function toggleBackgroundMusic() {
-      const btnTxt = document.getElementById('musicBtnTxt');
-      if (!isMusicPlaying) {
-        isMusicPlaying = true;
-        applyGlobalSyncPlayback();
-      } else {
-        isMusicPlaying = false;
-        try { coreAudio.pause(); } catch(e) {}
-        try { if (ytPlayer && isYtPlayerReady) ytPlayer.pauseVideo(); } catch(e) {}
-        if (btnTxt) btnTxt.innerText = "Play Music";
-      }
-    }
-
-    let hasUserInteracted = false;
-    function handleFirstUserInteraction() {
-      if (hasUserInteracted) return;
-      hasUserInteracted = true;
-      isMusicPlaying = true;
-      try { applyGlobalSyncPlayback(); } catch(e) {}
-      ['click', 'touchstart', 'scroll'].forEach(evt => window.removeEventListener(evt, handleFirstUserInteraction));
-    }
-    ['click', 'touchstart', 'scroll'].forEach(evt => window.addEventListener(evt, handleFirstUserInteraction, { once: true, passive: true }));
-
-    function updateOnlinePresence() {
-      if (!db) return;
-      db.collection("presence").doc(MY_CLIENT_ID).set({ lastSeen: firebase.firestore.FieldValue.serverTimestamp() }, { merge: true }).catch(() => {});
-    }
-    setInterval(updateOnlinePresence, 15000);
-    updateOnlinePresence();
-
-    if (db) {
-      db.collection("presence").onSnapshot(snap => {
-        const now = Date.now();
-        let activeCount = 0;
-        snap.forEach(doc => {
-          const data = doc.data();
-          if (data.lastSeen && (now - data.lastSeen.toMillis() < 45000)) activeCount++;
-        });
-        const cntEl = document.getElementById('onlineUsersCount');
-        if (cntEl) cntEl.innerText = Math.max(1, activeCount);
-      }, err => {});
-    }
-
-    if (auth) {
-      auth.onAuthStateChanged(user => {
-        currentUser = user;
-        const navArea = document.getElementById('navAuthArea');
-        const drwOrders = document.getElementById('drwOrdersItem');
-        if (user) {
-          if (user.email && user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
-            navArea.innerHTML = `
-              <button class="auth-btn" onclick="openOwnerVerification()">Admin Dashboard</button>
-              <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
-            `;
-          } else {
-            navArea.innerHTML = `
-              <span style="font-size:11px; color:#ffcdd2; margin-right:4px;">${user.displayName ? user.displayName.split(' ')[0] : 'User'}</span>
-              <button class="music-btn" onclick="auth.signOut()" style="border-color:#d32f2f; color:#ff8a80; padding:4px 8px;">Logout</button>
-            `;
-          }
-          if (drwOrders) drwOrders.style.display = "block";
-        } else {
-          navArea.innerHTML = `<button type="button" class="auth-btn" onclick="openLoginModal()" id="mainLoginActionBtn">लॉगिन / साइन-अप</button>`;
-          if (drwOrders) drwOrders.style.display = "none";
-        }
-        renderCustomerOrders();
-        renderGlobalChat();
-      });
-    }
-
-    function openLoginModal() { 
-      const m = document.getElementById('loginModal');
-      if (m) m.style.display = 'flex'; 
-    }
+    function openModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'flex'; }
+    function closeModal(id) { const el = document.getElementById(id); if (el) el.style.display = 'none'; }
+    function openLoginModal() { openModal('loginModal'); }
 
     function loginWithGoogle() {
-      if (!auth || !googleProvider) {
-        showAppToast("प्रमाणीकरण सेवा उपलब्ध नहीं है!");
-        return;
-      }
+      if (!auth) return;
       auth.signInWithPopup(googleProvider).then(res => {
         closeModal('loginModal');
         if (res.user && res.user.email && res.user.email.toLowerCase() === OWNER_EMAIL.toLowerCase()) {
           openOwnerVerification();
         }
-      }).catch(e => showAppToast(e.message));
+      }).catch(e => alert(e.message));
     }
 
     function openOwnerVerification() {
       document.getElementById('ownerPassInput').value = '';
-      document.getElementById('adminPassModal').style.display = 'flex';
+      openModal('adminPassModal');
     }
 
     function verifyOwnerPassword() {
-      const pass = document.getElementById('ownerPassInput').value;
-      if (pass === OWNER_MASTER_PASS) {
+      if (document.getElementById('ownerPassInput').value === OWNER_MASTER_PASS) {
         closeModal('adminPassModal');
         document.getElementById('adminPortal').style.display = 'block';
       } else {
-        showAppToast("गलत मास्टर पासवर्ड!");
+        alert("गलत पासवर्ड!");
       }
     }
 
@@ -1321,63 +824,63 @@
       if (target) target.classList.add('active');
     }
 
-    // --- Firestore Sync Listeners ---
+    // Audio & Live Sync
+    let isMusicPlaying = false;
+    const coreAudio = document.getElementById('coreBgAudio');
+    const welcomeAudio = new Audio("welcome.MP3");
+
+    coreAudio.addEventListener('seeking', () => {
+      const expected = calculateLiveSeekTime();
+      if (Math.abs(coreAudio.currentTime - expected) > 1.2) coreAudio.currentTime = expected;
+    });
+
+    function calculateLiveSeekTime() {
+      if (!globalRoomState.startedAt) return 0;
+      const elapsed = Math.floor((Date.now() - globalRoomState.startedAt) / 1000);
+      return elapsed % 300;
+    }
+
+    function applyGlobalSyncPlayback() {
+      if (!isMusicPlaying || cloudPlaylist.length === 0) return;
+      const song = cloudPlaylist[globalRoomState.songIndex] || cloudPlaylist[0];
+      if (!song || !song.url) return;
+      
+      const directUrl = song.url.includes("drive.google.com") ? `https://drive.google.com/uc?export=download&id=${song.url.match(/\/d\/([a-zA-Z0-9_-]+)/)[1]}` : song.url;
+      if (coreAudio.src !== directUrl) coreAudio.src = directUrl;
+      coreAudio.currentTime = calculateLiveSeekTime();
+      coreAudio.play().then(() => document.getElementById('musicBtnTxt').innerText = "संगीत रोकें").catch(() => {});
+    }
+
+    function toggleBackgroundMusic() {
+      if (!isMusicPlaying) {
+        isMusicPlaying = true;
+        applyGlobalSyncPlayback();
+      } else {
+        isMusicPlaying = false;
+        coreAudio.pause();
+        document.getElementById('musicBtnTxt').innerText = "Play Music";
+      }
+    }
+
+    // Firebase Data Sync
     if (db) {
       db.collection("playlist").orderBy("timeNumber", "asc").onSnapshot(snap => {
         cloudPlaylist = [];
         snap.forEach(doc => cloudPlaylist.push({ id: doc.id, ...doc.data() }));
         renderAdminPlaylist();
-        if (isMusicPlaying) applyGlobalSyncPlayback();
-      }, err => {});
+      });
 
-      db.collection("settings").doc("music_room").onSnapshot(doc => {
-        if (doc.exists) {
-          const data = doc.data();
-          globalRoomState = {
-            songIndex: data.songIndex || 0,
-            startedAt: data.startedAt || Date.now(),
-            isPlaying: data.isPlaying !== false
-          };
-          currentAudioSourceType = data.sourceType || "mp3";
-          activeYtVideoId = data.videoId || "";
-
-          const modeSelect = document.getElementById('admAudioModeSelect');
-          if (modeSelect) {
-            modeSelect.value = currentAudioSourceType;
-            toggleAudioModeInputs();
-          }
-
-          if (isMusicPlaying) {
-            applyGlobalSyncPlayback();
-          }
-        }
-      }, err => {});
-
-      db.collection("settings").doc("main").onSnapshot(doc => {
-        if (doc.exists) {
-          appSettingsMain = doc.data();
-          const s = appSettingsMain;
-          if (s.ticker) {
-            document.getElementById('liveTicker').innerText = s.ticker;
-            document.getElementById('admTickerText').value = s.ticker;
-          }
-          if (s.upi) document.getElementById('admUpiId').value = s.upi;
-          if (s.razorpay) document.getElementById('admRazorpayKey').value = s.razorpay;
-          if (s.wa) {
-            document.getElementById('admWaPhone').value = s.wa;
-            document.getElementById('ftrWa').href = `https://wa.me/${s.wa}`;
-            document.getElementById('ftrWa').innerText = `+${s.wa}`;
-          }
-          if (s.paymentMode) {
-            document.getElementById('admPaymentMode').value = s.paymentMode;
-          }
-          if (s.offerExpiry) {
-            globalOfferExpiryTime = new Date(s.offerExpiry).getTime();
-            const expInput = document.getElementById('admOfferExpiryInput');
-            if (expInput) expInput.value = s.offerExpiry;
-          }
-        }
-      }, err => {});
+      db.collection("products").onSnapshot(snap => {
+        cloudProducts = [];
+        let skuId = 101;
+        snap.forEach(doc => {
+          const d = doc.data();
+          cloudProducts.push({ id: doc.id, sku: d.sku || ("SKU-" + skuId++), ...d });
+        });
+        renderStoreProducts();
+        renderAdminProducts();
+        renderAdminOffers();
+      });
 
       db.collection("donations").onSnapshot(snap => {
         let isInit = isFirstDonationLoad;
@@ -1390,267 +893,97 @@
         });
         cloudDonations = [];
         snap.forEach(doc => cloudDonations.push({ id: doc.id, ...doc.data() }));
-        cloudDonations.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
-        refreshTicker();
         renderPublicDonors();
         renderAdminDonations();
-      }, err => {});
-
-      db.collection("products").onSnapshot(snap => {
-        cloudProducts = [];
-        let autoSkuNum = 101;
-        snap.forEach(doc => {
-          const d = doc.data();
-          const finalSku = d.sku || ("SKU-" + autoSkuNum++);
-          cloudProducts.push({ id: doc.id, sku: finalSku, ...d });
-        });
-        renderCategories();
-        renderStoreProducts();
-        renderAdminProducts();
-        renderAdminOffers();
-      }, err => {});
-
-      db.collection("coupons").onSnapshot(snap => {
-        cloudCoupons = [];
-        snap.forEach(doc => cloudCoupons.push({ id: doc.id, ...doc.data() }));
-        renderAdminCoupons();
-      }, err => {});
+      });
 
       db.collection("orders").onSnapshot(snap => {
         cloudOrders = [];
         snap.forEach(doc => cloudOrders.push({ id: doc.id, ...doc.data() }));
         renderCustomerOrders();
         renderAdminOrders();
-      }, err => {});
+      });
 
-      db.collection("chats").orderBy("timeNumber", "asc").onSnapshot(snap => {
-        const now = Date.now();
-        const oneHourMs = 60 * 60 * 1000;
-        cloudChats = [];
-        snap.forEach(doc => {
-          const data = doc.data();
-          if (data.timeNumber && (now - data.timeNumber > oneHourMs)) {
-            db.collection("chats").doc(doc.id).delete().catch(() => {});
-          } else {
-            cloudChats.push({ id: doc.id, ...data });
-          }
-        });
-        renderGlobalChat();
-        renderAdminChat();
-      }, err => {});
-
-      db.collection("feedbacks").onSnapshot(snap => {
-        cloudFeedbacks = [];
-        snap.forEach(doc => cloudFeedbacks.push({ id: doc.id, ...doc.data() }));
-        cloudFeedbacks.sort((a,b) => (b.timeNumber || 0) - (a.timeNumber || 0));
-        renderPublicFeedbacks();
-        renderAdminFeedbacks();
-      }, err => {});
+      db.collection("coupons").onSnapshot(snap => {
+        cloudCoupons = [];
+        snap.forEach(doc => cloudCoupons.push({ id: doc.id, ...doc.data() }));
+        renderAdminCoupons();
+      });
 
       db.collection("blogs").orderBy("timeNumber", "desc").onSnapshot(snap => {
         cloudBlogs = [];
         snap.forEach(doc => cloudBlogs.push({ id: doc.id, ...doc.data() }));
         renderPublicBlogs();
-        renderDonationFeaturedBlogs();
         renderAdminBlogs();
-      }, err => {});
+      });
+
+      db.collection("feedbacks").onSnapshot(snap => {
+        cloudFeedbacks = [];
+        snap.forEach(doc => cloudFeedbacks.push({ id: doc.id, ...doc.data() }));
+        renderPublicFeedbacks();
+        renderAdminFeedbacks();
+      });
     }
 
-    // --- OFFER COUNTDOWN TIMER ---
-    setInterval(() => {
-      if (!globalOfferExpiryTime) {
-        const timerSec = document.getElementById('offerCountdownTimer');
-        if (timerSec) timerSec.style.display = 'none';
-        return;
-      }
-      const now = Date.now();
-      const diff = globalOfferExpiryTime - now;
-      const clockEl = document.getElementById('timerClockTxt');
-      const timerSec = document.getElementById('offerCountdownTimer');
-
-      if (diff <= 0) {
-        if (timerSec) timerSec.style.display = 'none';
-        return;
-      }
-
-      if (timerSec) timerSec.style.display = 'block';
-      const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-
-      if (clockEl) {
-        clockEl.innerText = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
-      }
-    }, 1000);
-
-    function addNewPlaylistSong() {
-      if (!db) return;
-      const title = document.getElementById('newSongTitle').value.trim() || "पावन भजन";
-      const rawUrl = document.getElementById('newSongUrl').value.trim();
-
-      if (!rawUrl) {
-        showAppToast("कृपया Google Drive या सीधा MP3 लिंक दर्ज करें!");
-        return;
-      }
-
-      const finalDirectUrl = parseDirectAudioUrl(rawUrl);
-
-      db.collection("playlist").add({
-        title, 
-        url: finalDirectUrl,
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ भजन सफलतापूर्वक प्लेलिस्ट में जुड़ गया!");
-        document.getElementById('newSongTitle').value = '';
-        document.getElementById('newSongUrl').value = '';
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    function renderAdminPlaylist() {
-      const tb = document.querySelector('#admPlaylistTable tbody');
-      if (!tb) return;
-      if (cloudPlaylist.length === 0) {
-        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">अभी प्लेलिस्ट में कोई गाना नहीं है। ऊपर फ़ॉर्म से जोड़ें।</td></tr>`;
-        return;
-      }
-      tb.innerHTML = cloudPlaylist.map((s, idx) => `
-        <tr>
-          <td>${idx + 1}</td>
-          <td><b>${s.title}</b></td>
-          <td><small style="color:var(--gold);">${s.url.length > 40 ? s.url.substring(0, 40) + '...' : s.url}</small></td>
-          <td><button onclick="db.collection('playlist').doc('${s.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
+    // Store & Checkout Logic
+    function renderStoreProducts() {
+      const g = document.getElementById('fullStoreGrid');
+      const sg = document.getElementById('suggestedGrid');
+      const html = cloudProducts.map(p => `
+        <div class="p-card" onclick="openProductDetails('${p.id}')">
+          <img src="${p.img || 'https://via.placeholder.com/200'}" alt="Product">
+          <div class="p-title">${p.name}</div>
+          <div class="p-sku">${p.sku}</div>
+          <div class="p-price">₹${p.price}</div>
+          <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
+        </div>
       `).join('');
+      if (g) g.innerHTML = html;
+      if (sg) sg.innerHTML = html;
     }
 
-    // --- FLIPKART STYLE PRODUCT DETAILS & WORKING SLIDER ---
-    let activeCheckoutProduct = null;
-    let appliedDiscountPercent = 0;
-    let currentCalculatedPrice = 0;
-
-    function openProductDetails(prodId) {
-      const p = cloudProducts.find(item => item.id === prodId);
+    function openProductDetails(id) {
+      const p = cloudProducts.find(item => item.id === id);
       if (!p) return;
       activeCheckoutProduct = p;
-
       document.getElementById('modalProdTitle').innerText = p.name;
-      
-      let finalDisplayPrice = p.price;
-      let offerBadgeHtml = "";
-      if (p.discountPercent && p.discountPercent > 0) {
-        const discountedAmt = Math.round(p.price - (p.price * p.discountPercent) / 100);
-        finalDisplayPrice = discountedAmt;
-        offerBadgeHtml = `🔥 ${p.discountPercent}% की छूट (Special Offer)`;
-        document.getElementById('modalProdPrice').innerHTML = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:6px;">₹${p.price}</span> ₹${discountedAmt}`;
-      } else {
-        document.getElementById('modalProdPrice').innerText = `कीमत: ₹${p.price}`;
-      }
-      document.getElementById('modalOfferBadge').innerText = offerBadgeHtml;
-
-      const mediaBox = document.getElementById('modalProdMedia');
-      const galleryBox = document.getElementById('modalProdGallery');
-      const buyBtnArea = document.getElementById('modalBuyBtnArea');
-      galleryBox.innerHTML = "";
-
-      let allImgs = [];
-      if (p.img) allImgs.push(p.img);
-      if (p.gallery && p.gallery.length > 0) allImgs = allImgs.concat(p.gallery);
-
-      if (allImgs.length > 0) {
-        mediaBox.innerHTML = `<img id="mainZoomPic" src="${allImgs[0]}" style="max-height:230px; width:100%; object-fit:contain; border-radius:6px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">`;
-        
-        galleryBox.innerHTML = allImgs.map((imgUrl, i) => `
-          <img src="${imgUrl}" style="width:65px; height:65px; object-fit:cover; border-radius:6px; border:2px solid ${i === 0 ? 'var(--gold)' : 'rgba(255,215,0,0.3)'}; cursor:pointer;" onclick="document.getElementById('mainZoomPic').src='${imgUrl}'; document.querySelectorAll('#modalProdGallery img').forEach(img=>img.style.borderColor='rgba(255,215,0,0.3)'); this.style.borderColor='var(--gold)';" onerror="this.onerror=null; this.src='https://via.placeholder.com/100';">
-        `).join('');
-      } else {
-        mediaBox.innerHTML = `<div style="height:140px; background:rgba(255,215,0,0.1); display:flex; align-items:center; justify-content:center; font-size:30px; border-radius:8px;">📦</div>`;
-      }
-
-      document.getElementById('modalProdDesc').innerText = p.description || "इस उत्पाद के लिए कोई अतिरिक्त विवरण उपलब्ध नहीं है।";
-
-      if (p.inStock === false) {
-        buyBtnArea.innerHTML = `<button class="btn-main" style="background:#444; color:#aaa; cursor:not-allowed;" disabled>❌ आउट ऑफ़ स्टॉक (Out of Stock)</button>`;
-      } else {
-        buyBtnArea.innerHTML = `<button class="btn-main" onclick="proceedToCheckoutFromModal()">🛒 अभी खरीदें (Buy Now)</button>`;
-      }
-
+      document.getElementById('modalProdPrice').innerText = `कीमत: ₹${p.price}`;
+      document.getElementById('modalProdDesc').innerText = p.description || 'विवरण उपलब्ध नहीं';
+      document.getElementById('modalProdMedia').innerHTML = `<img src="${p.img}" style="max-height:220px; width:100%; object-fit:contain;" alt="Img">`;
+      document.getElementById('modalBuyBtnArea').innerHTML = `<button class="btn-main" onclick="proceedToCheckoutFromModal()">🛒 खरीदें</button>`;
       openModal('productDetailModal');
     }
 
+    let activeCheckoutProduct = null;
+    let currentCalculatedPrice = 0;
+
     function proceedToCheckoutFromModal() {
       closeModal('productDetailModal');
-      if (!activeCheckoutProduct || activeCheckoutProduct.inStock === false) return;
-
-      let basePrice = activeCheckoutProduct.price;
-      if (activeCheckoutProduct.discountPercent && activeCheckoutProduct.discountPercent > 0) {
-        basePrice = Math.round(basePrice - (basePrice * activeCheckoutProduct.discountPercent) / 100);
-      }
-
-      document.getElementById('chkTitle').innerText = `📦 ऑर्डर: ${activeCheckoutProduct.name}`;
-      document.getElementById('chkProdSummary').innerHTML = `मूल्य: <b style="color:var(--gold);">₹${basePrice}</b>`;
-      
-      document.getElementById('dlvName').value = currentUser && currentUser.displayName ? currentUser.displayName : '';
-      document.getElementById('dlvPhone').value = '';
-      document.getElementById('dlvAltPhone').value = '';
-      document.getElementById('dlvPincode').value = '';
-      document.getElementById('dlvHouse').value = '';
-      document.getElementById('dlvRoad').value = '';
-      document.getElementById('dlvArea').value = '';
-      document.getElementById('dlvCity').value = '';
-      document.getElementById('dlvDist').value = '';
-      document.getElementById('chkCouponInput').value = '';
-      document.getElementById('couponMsg').style.display = 'none';
-
-      appliedDiscountPercent = 0;
-      currentCalculatedPrice = basePrice;
+      if (!activeCheckoutProduct) return;
+      currentCalculatedPrice = activeCheckoutProduct.price;
+      document.getElementById('chkProdSummary').innerHTML = `<b>${activeCheckoutProduct.name}</b> - ₹${currentCalculatedPrice}`;
       document.getElementById('finalCheckoutAmt').innerText = `₹${currentCalculatedPrice}`;
-
-      const payModeSelect = document.getElementById('dlvPayMode');
-      payModeSelect.innerHTML = "";
       
-      const allowUpi = activeCheckoutProduct.payUpi !== false;
-      const allowCod = activeCheckoutProduct.payCod !== false;
-
-      if (allowUpi) {
-        payModeSelect.innerHTML += `<option value="upi">UPI / QR (Paytm / GPay / PhonePe)</option>`;
-      }
-      if (allowCod) {
-        payModeSelect.innerHTML += `<option value="cod">Cash on Delivery (COD - नगद भुगतान)</option>`;
-      }
-
+      const select = document.getElementById('dlvPayMode');
+      select.innerHTML = `<option value="upi">UPI / QR</option><option value="cod">Cash on Delivery</option>`;
+      
       document.getElementById('checkoutStep1').style.display = 'block';
       document.getElementById('checkoutStep2').style.display = 'none';
       openModal('checkoutModal');
     }
 
-    function openCheckout(prodId) {
-      const p = cloudProducts.find(item => item.id === prodId);
+    function openCheckout(id) {
+      const p = cloudProducts.find(item => item.id === id);
       if (!p) return;
-      if (p.inStock === false) {
-        showAppToast("⚠️ यह उत्पाद वर्तमान में आउट ऑफ़ स्टॉक है!");
-        return;
-      }
       activeCheckoutProduct = p;
       proceedToCheckoutFromModal();
     }
 
     function goToCheckoutStep2() {
-      const name = document.getElementById('dlvName').value.trim();
-      const phone = document.getElementById('dlvPhone').value.trim();
-      const pin = document.getElementById('dlvPincode').value.trim();
-      const house = document.getElementById('dlvHouse').value.trim();
-      const city = document.getElementById('dlvCity').value.trim();
-      const dist = document.getElementById('dlvDist').value.trim();
-
-      if (!name || !phone || !pin || !house || !city || !dist) {
-        showAppToast("कृपया सभी आवश्यक एड्रेस फ़ील्ड भरें!");
+      if (!document.getElementById('dlvName').value.trim() || !document.getElementById('dlvPhone').value.trim()) {
+        showAppToast("नाम व मोबाइल नंबर आवश्यक हैं!");
         return;
       }
-      if (phone.length < 10) {
-        showAppToast("कृपया सही 10-अंकीय मोबाइल नंबर दर्ज करें!");
-        return;
-      }
-
       document.getElementById('checkoutStep1').style.display = 'none';
       document.getElementById('checkoutStep2').style.display = 'block';
       togglePaymentModeView();
@@ -1658,84 +991,41 @@
 
     function togglePaymentModeView() {
       const mode = document.getElementById('dlvPayMode').value;
-      const upiBox = document.getElementById('checkoutUpiBox');
-      if (mode === 'upi') {
-        upiBox.style.display = 'block';
-        generateDynamicQrCode('dynamicQrContainer', currentCalculatedPrice);
-      } else {
-        upiBox.style.display = 'none';
-      }
+      document.getElementById('checkoutUpiBox').style.display = (mode === 'upi') ? 'block' : 'none';
+      if (mode === 'upi') generateDynamicQrCode('dynamicQrContainer', currentCalculatedPrice);
     }
 
     function applyStoreCoupon() {
-      if (!activeCheckoutProduct) return;
-      const codeInput = document.getElementById('chkCouponInput').value.trim().toUpperCase();
-      const msgEl = document.getElementById('couponMsg');
-
-      if (!codeInput) return;
-
-      const coupon = cloudCoupons.find(c => c.code === codeInput);
-      if (!coupon) {
-        showAppToast("अमान्य (Invalid) कूपन कोड!");
-        return;
-      }
-
-      const userEmail = currentUser ? currentUser.email : (localStorage.getItem('guest_email') || 'guest_' + MY_CLIENT_ID);
-      const usedKey = `coupon_used_${userEmail}_${codeInput}`;
-      if (localStorage.getItem(usedKey) === 'true') {
-        showAppToast("⚠️ यह कूपन कोड इस आईडी पर पहले ही उपयोग किया जा चुका है!");
-        return;
-      }
-
-      appliedDiscountPercent = coupon.discount || 0;
-      const discountAmount = Math.round((currentCalculatedPrice * appliedDiscountPercent) / 100);
-      currentCalculatedPrice = Math.max(0, currentCalculatedPrice - discountAmount);
-
+      const code = document.getElementById('chkCouponInput').value.trim().toUpperCase();
+      const c = cloudCoupons.find(item => item.code === code);
+      if (!c) { showAppToast("अमान्य कूपन!"); return; }
+      const discount = Math.round((currentCalculatedPrice * c.discount) / 100);
+      currentCalculatedPrice = Math.max(0, currentCalculatedPrice - discount);
       document.getElementById('finalCheckoutAmt').innerText = `₹${currentCalculatedPrice}`;
-      msgEl.innerText = `✓ ${appliedDiscountPercent}% कूपन छूट लागू हुई!`;
-      msgEl.style.display = 'block';
-
-      localStorage.setItem(usedKey, 'true');
-
-      if (document.getElementById('dlvPayMode').value === 'upi') {
-        generateDynamicQrCode('dynamicQrContainer', currentCalculatedPrice);
-      }
+      document.getElementById('couponMsg').innerText = `✓ ${c.discount}% छूट लागू हुई!`;
+      document.getElementById('couponMsg').style.display = 'block';
     }
 
     function openStoreUpiApp() {
       if (!activeCheckoutProduct) return;
       const upiId = document.getElementById('admUpiId')?.value || "paytm.s20g6r2@pty";
-      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam%20Pal&am=${currentCalculatedPrice}&cu=INR`;
+      window.location.href = `upi://pay?pa=${upiId}&pn=Yugam&am=${currentCalculatedPrice}&cu=INR`;
     }
 
     function confirmStoreOrderFinal() {
       if (!db || !activeCheckoutProduct) return;
       const payMode = document.getElementById('dlvPayMode').value;
-      let utr = "NOT_REQUIRED";
-
-      if (payMode === 'upi') {
-        utr = document.getElementById('chkUtrInput').value.trim();
-        if (!utr || utr.length < 12) {
-          showAppToast("कृपया भुगतान के बाद सही 12-अंकीय UPI Ref / UTR नंबर दर्ज करें!");
-          return;
-        }
-        const dup = cloudOrders.find(o => o.utr === utr);
-        if (dup) {
-          showAppToast("⚠️ यह UTR नंबर पहले ही उपयोग किया जा चुका है!");
-          return;
-        }
-      } else {
-        utr = "COD_" + Date.now().toString().slice(-6);
+      let utr = payMode === 'upi' ? document.getElementById('chkUtrInput').value.trim() : "COD_" + Date.now().toString().slice(-6);
+      if (payMode === 'upi' && (!utr || utr.length < 12)) {
+        showAppToast("सही 12-अंकीय UTR नंबर दर्ज करें!");
+        return;
       }
-
-      const fullAddr = `${document.getElementById('dlvHouse').value}, ${document.getElementById('dlvRoad').value}, ${document.getElementById('dlvArea').value}, ${document.getElementById('dlvCity').value}, ${document.getElementById('dlvDist').value} (Pin: ${document.getElementById('dlvPincode').value}), State: ${document.getElementById('dlvState').value}`;
 
       db.collection("orders").add({
         userName: document.getElementById('dlvName').value.trim(),
         userEmail: currentUser ? currentUser.email : 'guest',
         phone: document.getElementById('dlvPhone').value.trim(),
-        altPhone: document.getElementById('dlvAltPhone').value.trim(),
-        fullAddress: fullAddr,
+        fullAddress: `${document.getElementById('dlvHouse').value}, ${document.getElementById('dlvCity').value}`,
         productName: activeCheckoutProduct.name,
         productImg: activeCheckoutProduct.img || '',
         amount: currentCalculatedPrice,
@@ -1744,81 +1034,109 @@
         otp: Math.floor(1000 + Math.random() * 9000).toString(),
         showOtpToUser: false,
         date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
         status: "पेंडिंग"
       }).then(() => {
         closeModal('checkoutModal');
-        showAppToast("🎉 बधाई हो! आपका ऑर्डर सफलता पूर्वक ले लिया गया है। जल्द ही हमारी टीम आपसे संपर्क करेगी। धन्यवाद।");
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
+        showAppToast("🎉 ऑर्डर सफलतापूर्वक ले लिया गया है!");
+      });
     }
 
-    // --- FLIPKART STYLE TRACKING MODAL ---
-    function openOrderTrackingModal(orderId) {
-      const order = cloudOrders.find(o => o.id === orderId);
-      if (!order) return;
-
-      const currentStatus = order.status || "पेंडिंग";
-      const stages = ["पेंडिंग", "कन्फ़र्म", "शिप हुआ", "डिलीवरी के लिए निकला", "डिलीवर"];
-      let currentIndex = stages.indexOf(currentStatus);
-      if (currentIndex === -1) currentIndex = 0;
-
-      let timelineHtml = stages.map((st, idx) => {
-        let isDone = idx <= currentIndex;
-        let colorDot = isDone ? "#4caf50" : "#555";
-        let lineClr = idx < stages.length - 1 && idx < currentIndex ? "#4caf50" : "#444";
-        return `
-          <div style="display:flex; gap:12px; position:relative; margin-bottom:14px;">
-            <div style="display:flex; flex-direction:column; align-items:center;">
-              <div style="width:18px; height:18px; border-radius:50%; background:${colorDot}; border:2px solid var(--gold); z-index:2;"></div>
-              ${idx < stages.length - 1 ? `<div style="width:2px; height:35px; background:${lineClr}; margin-top:2px;"></div>` : ''}
-            </div>
-            <div>
-              <b style="font-size:14px; color:${isDone ? '#fff' : '#aaa'};">${st}</b>
-              <p style="font-size:11px; color:#aaa;">${isDone ? 'स्थिति सक्रिय / अपडेटेड' : 'प्रतीक्षा में...'}</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      let otpBlock = "";
-      if (order.showOtpToUser && order.otp) {
-        otpBlock = `<div style="background:rgba(76,175,80,0.15); border:1px solid #4caf50; padding:10px; border-radius:8px; margin-top:12px; text-align:center;">
-          <b style="color:#81c784; font-size:14px;">🔑 गुप्त डिलीवरी OTP: ${order.otp}</b>
-          <p style="font-size:10px; color:#ccc;">सामान प्राप्त करते समय डिलीवरी बॉय को यह OTP बताएं।</p>
-        </div>`;
-      }
-
-      document.getElementById('trackModalContent').innerHTML = `
-        <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px; background:rgba(0,0,0,0.4); padding:8px; border-radius:8px;">
-          <img src="${order.productImg || 'https://via.placeholder.com/60'}" width="50" height="50" style="object-fit:cover; border-radius:6px;" onerror="this.style.display='none'">
-          <div>
-            <b style="color:var(--gold); font-size:13px;">${order.productName}</b>
-            <p style="font-size:11px; color:#ffcdd2;">मूल्य: ₹${order.amount} | दिनांक: ${order.date}</p>
-          </div>
-        </div>
-        <div style="padding:4px 10px;">${timelineHtml}</div>
-        ${otpBlock}
+    // Donation & Ducking Celebration
+    function openDonationModal() {
+      const name = document.getElementById('donName').value.trim() || 'भक्त';
+      const amt = document.getElementById('donAmount').value;
+      const phone = document.getElementById('donPhone').value.trim();
+      if (!amt || !phone) { showAppToast("कृपया नाम, फोन व राशि भरें"); return; }
+      
+      pendingDonationData = { name, amount: Number(amt), cause: document.getElementById('donCause').value, phone, address: document.getElementById('donCity').value, salutation: document.getElementById('donSalutation').value };
+      document.getElementById('donModalInfo').innerText = `${pendingDonationData.cause} - ₹${amt}`;
+      
+      const box = document.getElementById('donPaymentBox');
+      box.innerHTML = `
+        <div class="upi-app-badges"><span class="upi-badge" onclick="window.location.href='upi://pay?pa=paytm.s20g6r2@pty&pn=Yugam&am=${amt}&cu=INR'">Paytm/GPay खोलें</span></div>
+        <div class="qr-box-wrapper" id="donationQrContainer"></div>
+        <input type="text" id="donUtrInput" placeholder="12-digit UTR No. *" style="margin-top:6px;">
       `;
-      openModal('orderTrackModal');
+      generateDynamicQrCode('donationQrContainer', amt);
+      openModal('donationModal');
     }
 
-    function renderCustomerOrders() {
-      const cont = document.getElementById('ordersContainer');
-      if (!cont || !currentUser) return;
-      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
-      if (my.length === 0) {
-        cont.innerHTML = `<p style="color:#aaa; text-align:center; padding:15px;">आपका कोई ऑर्डर नहीं मिला।</p>`;
-        return;
-      }
-      cont.innerHTML = my.map(o => `
-        <div onclick="openOrderTrackingModal('${o.id}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.25); padding:12px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer;" title="स्टेटस देखने हेतु क्लिक करें">
-          <img src="${o.productImg || 'https://via.placeholder.com/60'}" width="60" height="60" style="object-fit:cover; border-radius:8px; border:1px solid var(--gold);" onerror="this.onerror=null; this.src='https://via.placeholder.com/60';">
-          <div style="flex:1;">
-            <b style="color:var(--gold); font-size:14px; display:block; margin-bottom:3px;">${o.productName}</b>
-            <p style="font-size:12px; color:#ffcdd2;">वर्तमान स्थिति: <b style="color:#81c784;">${o.status || 'पेंडिंग'}</b></p>
-            <small style="color:#aaa;">क्लिक करके विस्तृत स्टेटस (Flipkart स्टाइल) देखें ➔</small>
-          </div>
-        </div>
+    function submitSecureDonation() {
+      if (!pendingDonationData || !db) return;
+      const utr = document.getElementById('donUtrInput')?.value.trim() || "UPI_" + Date.now().toString().slice(-6);
+      db.collection("donations").add({
+        ...pendingDonationData,
+        utr: utr,
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now()
+      }).then(() => {
+        closeModal('donationModal');
+        triggerCelebration(pendingDonationData.name, pendingDonationData.cause, pendingDonationData.amount, pendingDonationData.salutation);
+      });
+    }
+
+    function triggerCelebration(name, cause, amount, salutation) {
+      document.getElementById('celDonorName').innerText = formatDonorName(name, salutation) + ",";
+      document.getElementById('celMsg').innerText = `${cause} हेतु ₹${amount} का सहयोग प्राप्त हुआ!`;
+      openModal('celebrationModal');
+      try { confetti({ particleCount: 120, spread: 80 }); } catch(e) {}
+      
+      if (isMusicPlaying && coreAudio) coreAudio.volume = 0.5;
+      welcomeAudio.currentTime = 0;
+      welcomeAudio.play().then(() => {
+        welcomeAudio.onended = () => {
+          if (coreAudio) coreAudio.volume = 1.0;
+          closeModal('celebrationModal');
+        };
+      }).catch(() => { if (coreAudio) coreAudio.volume = 1.0; });
+    }
+
+    function closeCelebrationModal() {
+      closeModal('celebrationModal');
+      welcomeAudio.pause();
+      if (coreAudio) coreAudio.volume = 1.0;
+    }
+
+    // Admin Helpers
+    function saveNewProduct() {
+      const name = document.getElementById('newPName').value.trim();
+      const price = document.getElementById('newPPrice').value.trim();
+      if (!name || !price) { showAppToast("नाम व कीमत आवश्यक है"); return; }
+      db.collection("products").add({
+        sku: "SKU-" + Math.floor(1000 + Math.random() * 9000),
+        name, price: Number(price),
+        category: document.getElementById('newPCat').value.trim() || 'प्रसाद',
+        img: document.getElementById('newPImg').value.trim(),
+        description: document.getElementById('newPDesc').value.trim(),
+        inStock: true, payUpi: true, payCod: true, discountPercent: 0, timeNumber: Date.now()
+      }).then(() => showAppToast("✅ प्रोडक्ट जुड़ गया!"));
+    }
+
+    function renderAdminProducts() {
+      const tb = document.querySelector('#admProdTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudProducts.map(p => `
+        <tr>
+          <td><b>${p.sku}</b></td>
+          <td><img src="${p.img || ''}" width="25"></td>
+          <td>${p.name}</td>
+          <td>${p.inStock !== false ? '🟢' : '🔴'}</td>
+          <td>₹${p.price}</td>
+          <td><button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">🗑️</button></td>
+        </tr>
+      `).join('');
+    }
+
+    function renderAdminOffers() {
+      const tb = document.querySelector('#admOffersTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudProducts.map(p => `
+        <tr>
+          <td><b>${p.name}</b> (${p.sku})</td>
+          <td>₹${p.price}</td>
+          <td><input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" style="width:60px;"></td>
+          <td><button onclick="db.collection('products').doc('${p.id}').update({discountPercent: Number(document.getElementById('offerDisc_${p.id}').value)})" style="background:var(--gold); color:#000; border:none; padding:3px 8px; font-weight:bold;">सेट करें</button></td>
+        </tr>
       `).join('');
     }
 
@@ -1828,280 +1146,82 @@
       tb.innerHTML = cloudOrders.map(o => `
         <tr>
           <td>${o.date}</td>
-          <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
+          <td><b>${o.userName}</b></td>
           <td>${o.productName}</td>
           <td>₹${o.amount}</td>
-          <td>${o.utr}</td>
-          <td>
-            <select id="admStat_${o.id}" onchange="updateOrderStatus('${o.id}')" style="background:#000; color:var(--gold); border:1px solid var(--gold); padding:4px; border-radius:4px;">
-              <option value="पेंडिंग" ${o.status === 'पेंडिंग' ? 'selected' : ''}>पेंडिंग (Default)</option>
-              <option value="कन्फ़र्म" ${o.status === 'कन्फ़र्म' ? 'selected' : ''}>कन्फ़र्म</option>
-              <option value="शिप हुआ" ${o.status === 'शिप हुआ' ? 'selected' : ''}>शिप हुआ</option>
-              <option value="डिलीवरी के लिए निकला" ${o.status === 'डिलीवरी के लिए निकला' ? 'selected' : ''}>डिलीवरी के लिए निकला</option>
-              <option value="डिलीवर" ${o.status === 'डिलीवर' ? 'selected' : ''}>डिलीवर</option>
-            </select>
-          </td>
-          <td>
-            <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''} onchange="updateOrderOtpVisibility('${o.id}')" style="width:16px; height:16px; cursor:pointer;" title="टिक करने पर ग्राहक को OTP दिखेगा">
-          </td>
-          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">🗑️</button></td>
+          <td>${o.status || 'पेंडिंग'}</td>
+          <td>${o.otp || '—'}</td>
+          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">🗑️</button></td>
         </tr>
       `).join('');
     }
 
-    function updateOrderStatus(orderId) {
-      const selectEl = document.getElementById(`admStat_${orderId}`);
-      if (!selectEl || !db) return;
-      const newStatus = selectEl.value;
-      db.collection("orders").doc(orderId).update({ status: newStatus }).then(() => {
-        showAppToast("✅ ऑर्डर स्टेटस अपडेट हुआ!");
-      });
-    }
-
-    function updateOrderOtpVisibility(orderId) {
-      const chkEl = document.getElementById(`admOtpChk_${orderId}`);
-      if (!chkEl || !db) return;
-      const isVisible = chkEl.checked;
-      db.collection("orders").doc(orderId).update({ showOtpToUser: isVisible }).then(() => {
-        showAppToast(isVisible ? "🔑 OTP अब ग्राहक को दिखने लगा है!" : "🔒 OTP ग्राहक से छिपा दिया गया है!");
-      });
-    }
-
-    // --- SAVE PRODUCT ---
-    function saveNewProduct() {
-      const name = document.getElementById('newPName').value.trim();
-      const price = document.getElementById('newPPrice').value.trim();
-      const cat = document.getElementById('newPCat').value.trim() || 'प्रसाद';
-      const subCat = document.getElementById('newPSubCat').value.trim() || '';
-      const mainImg = document.getElementById('newPImg').value.trim();
-      const desc = document.getElementById('newPDesc').value.trim();
-      const onDonation = document.getElementById('newPOnDonation').checked;
-      const inStock = document.getElementById('newPInStock').checked;
-      const payUpi = document.getElementById('prodPayUpi').checked;
-      const payCod = document.getElementById('prodPayCod').checked;
-
-      const extraImgs = [];
-      document.querySelectorAll('.extra-prod-prod-url').forEach(input => {
-        const val = input.value.trim();
-        if (val) extraImgs.push(val);
-      });
-
-      if (!name || !price) {
-        showAppToast("कृपया उत्पाद का नाम और कीमत अवश्य भरें!");
-        return;
-      }
-
-      const skuCode = "SKU-" + Math.floor(1000 + Math.random() * 9000);
-
-      db.collection("products").add({
-        sku: skuCode,
-        name,
-        price: Number(price),
-        category: cat,
-        subCategory: subCat,
-        img: mainImg,
-        gallery: extraImgs,
-        description: desc,
-        showOnDonation: onDonation,
-        inStock: inStock,
-        payUpi: payUpi,
-        payCod: payCod,
-        discountPercent: 0,
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast(`✅ नया प्रोडक्ट जुड़ गया! (SKU: ${skuCode})`);
-        document.getElementById('newPName').value = '';
-        document.getElementById('newPPrice').value = '';
-        document.getElementById('newPCat').value = '';
-        document.getElementById('newPSubCat').value = '';
-        document.getElementById('newPImg').value = '';
-        document.getElementById('newPDesc').value = '';
-        document.getElementById('newPOnDonation').checked = false;
-        document.getElementById('newPInStock').checked = true;
-        document.getElementById('extraProductPhotosContainer').innerHTML = `<input type="text" class="extra-prod-prod-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    function renderAdminProducts() {
-      const tb = document.querySelector('#admProdTable tbody');
+    function renderAdminDonations() {
+      const tb = document.querySelector('#admDonTable tbody');
       if (!tb) return;
-      const query = (document.getElementById('adminInventorySearch')?.value || '').toLowerCase().trim();
-
-      const filtered = cloudProducts.filter(p => {
-        const pName = (p.name || '').toLowerCase();
-        const pSku = (p.sku || '').toLowerCase();
-        return pName.includes(query) || pSku.includes(query);
-      });
-
-      if (filtered.length === 0) {
-        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला। ऊपर 'नया प्रोडक्ट जोड़ें' से जोड़ें।</td></tr>`;
-        return;
-      }
-
-      tb.innerHTML = filtered.map(p => `
+      tb.innerHTML = cloudDonations.map(d => `
         <tr>
-          <td><b style="color:var(--gold);">${p.sku}</b></td>
-          <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
-          <td><b>${p.name}</b></td>
-          <td>
-            <button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
-              ${p.inStock !== false ? '🟢 In Stock' : '🔴 Out of Stock'}
-            </button>
-          </td>
-          <td>₹${p.price}</td>
-          <td>
-            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
-          </td>
+          <td>${d.date}</td>
+          <td><b>${formatDonorName(d.name, d.salutation)}</b></td>
+          <td>${d.phone || '—'}</td>
+          <td>₹${d.amount}</td>
+          <td>${d.utr}</td>
+          <td><button onclick="window.open('https://wa.me/91${d.phone}')" style="background:var(--green); color:#fff; border:none; padding:3px 6px;">WA</button></td>
+          <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">🗑️</button></td>
         </tr>
       `).join('');
     }
 
-    function renderAdminOffers() {
-      const tb = document.querySelector('#admOffersTable tbody');
-      if (!tb) return;
-      if (cloudProducts.length === 0) {
-        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">कोई प्रोडक्ट उपलब्ध नहीं है।</td></tr>`;
-        return;
-      }
-      tb.innerHTML = cloudProducts.map(p => `
-        <tr>
-          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku}</small></td>
-          <td>₹${p.price}</td>
-          <td>
-            <input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" min="0" max="90" style="width:70px; padding:4px;" placeholder="%">
-          </td>
-          <td>
-            <button onclick="applyProductDiscount('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:5px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">
-              ऑफर सेट करें
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function applyProductDiscount(prodId) {
-      const discInput = document.getElementById(`offerDisc_${prodId}`);
-      if (!discInput || !db) return;
-      const discVal = Number(discInput.value) || 0;
-
-      const p = cloudProducts.find(item => item.id === prodId);
-      if (p && p.discountPercent && p.discountPercent > 0 && discVal > 0 && p.discountPercent !== discVal) {
-        if (!confirm(`⚠️ इस प्रोडक्ट पर पहले से ${p.discountPercent}% का ऑफर लगा है। क्या आप इसे बदलकर ${discVal}% करना चाहते हैं?`)) {
-          return;
-        }
-      }
-
-      db.collection("products").doc(prodId).update({ discountPercent: discVal }).then(() => {
-        showAppToast("✅ प्रोडक्ट पर विशेष ऑफर / डिस्काउंट अपडेट हो गया!");
-      });
-    }
-
-    function saveNewCoupon() {
-      const code = document.getElementById('newCCode').value.trim().toUpperCase();
-      const dis = document.getElementById('newCDiscount').value.trim();
-      if (!code || !dis) return;
-      db.collection("coupons").add({ code, discount: Number(dis), timeNumber: Date.now() }).then(() => { showAppToast("कूपन बना!"); document.getElementById('newCCode').value = ''; document.getElementById('newCDiscount').value = ''; });
-    }
     function renderAdminCoupons() {
       const tb = document.querySelector('#admCoupTable tbody');
       if (!tb) return;
-      tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
+      tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">हटाएं</button></td></tr>`).join('');
     }
 
-    // --- LEGAL & CONTACT MODAL LOGIC (FIXED) ---
+    function renderAdminBlogs() {
+      const tb = document.querySelector('#admBlogTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudBlogs.map(b => `<tr><td>${b.date || '—'}</td><td>${b.title}</td><td>${b.showOnDonation ? 'हाँ' : 'नहीं'}</td><td><button onclick="db.collection('blogs').doc('${b.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">हटाएं</button></td></tr>`).join('');
+    }
+
+    function renderAdminFeedbacks() {
+      const tb = document.querySelector('#admFeedTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudFeedbacks.map(f => `<tr><td>${f.date || '—'}</td><td>${f.name}</td><td>${f.type}</td><td>${f.message}</td><td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 5px;">हटाएं</button></td></tr>`).join('');
+    }
+
+    // Chat Actions
+    function sendGlobalChatMessage(txt = null, isVoice = false) {
+      const msgInput = document.getElementById('chatInputMsg');
+      const text = txt || (msgInput ? msgInput.value.trim() : '');
+      if (!text || !db) return;
+      db.collection("chats").add({
+        senderClientId: MY_CLIENT_ID,
+        name: currentUser ? currentUser.displayName : "श्रद्धालु भक्त",
+        email: currentUser ? currentUser.email : "guest",
+        message: text,
+        isVoiceNote: isVoice,
+        timeNumber: Date.now(),
+        dateStr: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
+      }).then(() => { if (msgInput && !txt) msgInput.value = ''; });
+    }
+
+    // Legal Modals
     const legalDocs = {
-      terms: { 
-        title: "Terms & Conditions (नियम एवं शर्तें)", 
-        content: `
-          <p><b>1. परिचय:</b> यह पोर्टल 'Maa Durga Enterprises' एवं 'श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)' द्वारा संचालित है।</p>
-          <p><b>2. सेवा व सहयोग:</b> वेबसाइट पर किया जाने वाला सहयोग पूर्णतः स्वैच्छिक एवं धार्मिक/जनकल्याणकारी कार्यों हेतु है।</p>
-          <p><b>3. उत्पाद एवं सेवाएँ:</b> भक्ति स्टोर में उपलब्ध सामग्री की डिलीवरी 3 से 7 कार्य दिवसों में की जाती है।</p>
-          <p><b>4. सुरक्षा एवं आचरण:</b> सत्संग चैट में केवल भक्तिमय भाषा का उपयोग करें।</p>
-        ` 
-      },
-      privacy: { 
-        title: "Privacy Policy (गोपनीयता नीति)", 
-        content: `
-          <p><b>1. डेटा सुरक्षा:</b> हम आपके नाम, मोबाइल नंबर व पते की गोपनीयता का पूर्ण सम्मान करते हैं।</p>
-          <p><b>2. उपयोग:</b> आपका नंबर केवल ऑर्डर डिलीवरी, OTP सत्यापन एवं सहयोग रसीद प्रेषित करने हेतु उपयोग किया जाता है।</p>
-          <p><b>3. सुरक्षा:</b> आपकी कोई भी निजी जानकारी किसी तीसरे पक्ष के साथ साझा नहीं की जाती।</p>
-        ` 
-      },
-      refund: { 
-        title: "Refund Policy (रिफंड एवं वापसी नीति)", 
-        content: `
-          <p><b>1. दान एवं सहयोग:</b> जन-कल्याण एवं भंडारे हेतु दिया गया आर्थिक सहयोग गैर-वापसीयोग्य है।</p>
-          <p><b>2. स्टोर सामग्री:</b> सामग्री में दोष होने पर 2 दिनों के भीतर सूचित करने पर रिप्लेसमेंट या रिफंड किया जाएगा।</p>
-        ` 
-      },
-      shipping: { 
-        title: "Shipping Policy (डिलीवरी नीति)", 
-        content: `
-          <p><b>1. डिलीवरी समय:</b> ऑर्डर कन्फर्म होने के 3 से 7 कार्य दिवसों में पार्सल आपके पते पर सुरक्षित पहुँचाया जाता है।</p>
-          <p><b>2. सुरक्षित OTP सिस्टम:</b> डिलीवरी प्रतिनिधि को सामान प्राप्त करते समय अपना गुप्त OTP बताना अनिवार्य है।</p>
-        ` 
-      },
-      contact: {
-        title: "Contact Us (संपर्क विवरण)",
-        content: `
-          <p style="margin-bottom:12px;">श्री दुर्गा पूजा सेवा समिति एवं Maa Durga Enterprises से संपर्क करने हेतु विवरण:</p>
-          <div style="background:rgba(255,215,0,0.08); border:1px solid var(--gold); border-radius:8px; padding:12px; margin-bottom:12px;">
-            <p style="margin-bottom:10px;">📞 <b>मोबाइल / व्हाट्सएप:</b> <a href="tel:+919120226597" style="color:var(--gold); font-weight:bold; text-decoration:none;">+91 9120226597</a></p>
-            <p style="margin-bottom:10px;">✉️ <b>ईमेल आईडी:</b> <a href="mailto:yugampal23@gmail.com" style="color:var(--gold); font-weight:bold; text-decoration:none;">yugampal23@gmail.com</a></p>
-            <p>📍 <b>कार्यालय पता:</b> माँ दुर्गा एंटरप्राइजेज, श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़, उत्तर प्रदेश - 230001</p>
-          </div>
-          <p style="font-size:11px; color:#aaa;">(समय: प्रातः 08:00 AM से सायं 09:00 PM तक)</p>
-        `
-      }
+      terms: { title: "Terms & Conditions", content: "<p>यह पोर्टल जन-कल्याण एवं पावन भंडारा सेवा हेतु है। सहयोग स्वैच्छिक है।</p>" },
+      privacy: { title: "Privacy Policy", content: "<p>आपका डेटा पूर्ण रूप से सुरक्षित है और किसी तीसरे पक्ष को नहीं दिया जाता।</p>" },
+      refund: { title: "Refund Policy", content: "<p>धार्मिक सहयोग गैर-वापसीयोग्य है। स्टोर सामग्री में दोष पर 48 घंटे में रिप्लेसमेंट।</p>" },
+      shipping: { title: "Shipping Policy", content: "<p>3 से 7 कार्य दिवसों में सुरक्षित डिलीवरी। प्राप्त करते समय OTP बताएं।</p>" },
+      contact: { title: "Contact Us", content: "<p>📞 +91 9120226597 | ✉️ yugampal23@gmail.com | प्रतापगढ़ (उ.प्र.)</p>" }
     };
-
     function openLegal(type) {
-      const doc = legalDocs[type];
-      if (!doc) return;
-      const h = document.getElementById('legalHeading');
-      const b = document.getElementById('legalBodyText');
-      const p = document.getElementById('legalPage');
-      if (h && b && p) {
-        h.innerText = doc.title;
-        b.innerHTML = doc.content;
-        p.style.display = 'block';
-      }
+      const d = legalDocs[type];
+      if (!d) return;
+      document.getElementById('legalHeading').innerText = d.title;
+      document.getElementById('legalBodyText').innerHTML = d.content;
+      document.getElementById('legalPage').style.display = 'block';
     }
-
-    function closeLegalPage() {
-      const p = document.getElementById('legalPage');
-      if (p) p.style.display = 'none';
-    }
-
-    function saveAdminSettings() {
-      const selectedMode = document.getElementById('admAudioModeSelect').value;
-      const ytLink = document.getElementById('admYtLink').value.trim();
-      const ytVidId = extractVideoId(ytLink) || "";
-      const expiryInput = document.getElementById('admOfferExpiryInput').value;
-      const payMode = document.getElementById('admPaymentMode').value;
-
-      const batchSettings = {
-        ticker: document.getElementById('admTickerText').value,
-        upi: document.getElementById('admUpiId').value,
-        razorpay: document.getElementById('admRazorpayKey').value,
-        wa: document.getElementById('admWaPhone').value,
-        paymentMode: payMode,
-        offerExpiry: expiryInput || ""
-      };
-
-      db.collection("settings").doc("main").set(batchSettings, { merge: true }).then(() => {
-        const audioSyncData = {
-          sourceType: selectedMode,
-          videoId: ytVidId,
-          startedAt: Date.now()
-        };
-
-        db.collection("settings").doc("music_room").set(audioSyncData, { merge: true }).then(() => {
-          showAppToast("✅ सेटिंग्स सुरक्षित हो गईं!");
-        });
-      });
-    }
+    function closeLegalPage() { document.getElementById('legalPage').style.display = 'none'; }
   </script>
 </body>
 </html>
