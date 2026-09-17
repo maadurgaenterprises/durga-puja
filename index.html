@@ -275,7 +275,8 @@
           <label id="lblAmount">सहयोग राशि (₹) *</label>
           <input type="number" id="donAmount" placeholder="राशि (₹)">
         </div>
-        <button class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
+        <!-- 100% WORKING DONATE BUTTON -->
+        <button type="button" class="btn-main" onclick="openDonationModal()" id="btnPayDon">सहयोग करें (Pay Now)</button>
       </div>
 
       <!-- FEATURED POSTS ON DONATION PAGE WITH TIMER -->
@@ -593,8 +594,8 @@
       <h3 style="color:var(--gold); text-align:center; margin-bottom:8px;">🙏 पावन सहयोग भुगतान</h3>
       <p id="donModalInfo" style="font-size:13px; color:#ffcdd2; text-align:center; margin-bottom:12px;"></p>
       <div style="background:rgba(0,0,0,0.5); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.3); text-align:center;" id="donPaymentBox"></div>
-      <button class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
-      <button onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
+      <button type="button" class="btn-main" onclick="submitSecureDonation()" style="margin-top:12px;">सहयोग कन्फर्म करें (Confirm)</button>
+      <button type="button" onclick="closeModal('donationModal')" style="width:100%; background:none; border:none; color:#aaa; margin-top:8px; cursor:pointer;">रद्द करें</button>
     </div>
   </div>
 
@@ -615,7 +616,7 @@
       <p style="font-size:13px; color:var(--gold); margin-top:14px; font-weight:bold;">
         🌸 माँ भगवती का आशीर्वाद आप और आपके पूरे परिवार पर सदैव बनी रहे। 🌸
       </p>
-      <button class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
+      <button type="button" class="btn-main" onclick="closeCelebrationModal()" style="margin-top:16px;">जय माता दी</button>
     </div>
   </div>
 
@@ -831,23 +832,51 @@
         </div>
       </div>
 
-      <!-- Admin Sec 6: Offers & Discount Control Dashboard -->
+      <!-- Admin Sec 6: Advanced Multi-Offer Management Dashboard -->
       <div id="admOffers" class="adm-sec">
-        <h4 style="color:var(--gold); margin-bottom:8px;">🏷️ स्पेशल ऑफर व डिस्काउंट कंट्रोल (डैशबोर्ड)</h4>
-        <p style="font-size:11px; color:#ffcdd2; margin-bottom:10px;">यहाँ से आप किसी भी प्रोडक्ट पर सीधे स्पेशल डिस्काउंट % सेट कर सकते हैं।</p>
-        
-        <div style="background:rgba(255,215,0,0.06); padding:12px; border-radius:8px; border:1px solid rgba(255,215,0,0.25); margin-bottom:14px;">
-          <div class="form-group">
-            <label>ऑफर समाप्त होने का समय (काउंटडाउन टाइमर):</label>
-            <input type="datetime-local" id="admOfferExpiryInput">
+        <div style="background:rgba(255,215,0,0.06); padding:16px; border-radius:10px; border:1px solid rgba(255,215,0,0.25); margin-bottom:18px;">
+          <h4 style="color:var(--gold); margin-bottom:10px; font-size:15px;">🏷️ नया स्पेशल ऑफर बनाएँ (Multi-Offer Creator)</h4>
+          
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:10px;">
+            <div class="form-group">
+              <label>ऑफर का नाम (उदा: 🌈 Holi Special Offer 2027) *</label>
+              <input type="text" id="newOfferTitle" placeholder="ऑफर शीर्षक दर्ज करें">
+            </div>
+            <div class="form-group">
+              <label>ऑफर का पावन विवरण (Description)</label>
+              <input type="text" id="newOfferDesc" placeholder="जैसे: होली के पावन पर्व पर चुनिंदा सामग्री पर विशेष छूट">
+            </div>
           </div>
-          <button class="btn-main" onclick="saveAdminSettings()" style="margin-top:6px;">टाइमर सेव करें</button>
+
+          <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-bottom:12px;">
+            <div class="form-group">
+              <label>शुरू होने का समय (Start Date & Time) *</label>
+              <input type="datetime-local" id="newOfferStart">
+            </div>
+            <div class="form-group">
+              <label>समाप्त होने का समय (End Date & Time) *</label>
+              <input type="datetime-local" id="newOfferEnd">
+            </div>
+          </div>
+
+          <label style="color:var(--gold); font-weight:bold; margin-bottom:6px; display:block;">किन उत्पादों पर यह ऑफर लागू होगा? (Select Products & Discount %):</label>
+          <div id="offerProductPickerContainer" style="max-height:220px; overflow-y:auto; background:rgba(0,0,0,0.5); border:1px solid rgba(255,215,0,0.2); border-radius:8px; padding:10px; margin-bottom:14px;"></div>
+
+          <button type="button" class="btn-main" onclick="saveNewMultiOffer()">💾 ऑफर सुरक्षित करें (Save & Activate Offer)</button>
         </div>
 
-        <h4 style="color:var(--gold); margin:14px 0 8px;">उत्पाद वार डिस्काउंट ऑफर मैनेजर:</h4>
+        <h4 style="color:var(--gold); margin:18px 0 10px; font-size:15px;">📋 सक्रिय एवं पूर्व ऑफर्स सूची (Active & Past Campaign Offers)</h4>
         <div class="table-responsive">
-          <table id="admOffersTable">
-            <thead><tr><th>उत्पाद (SKU)</th><th>मूल कीमत</th><th>स्पेशल छूट (%)</th><th>एक्शन</th></tr></thead>
+          <table id="admActiveOffersTable">
+            <thead>
+              <tr>
+                <th>ऑफर नाम</th>
+                <th>अवधि (Start - End)</th>
+                <th>शामिल उत्पाद</th>
+                <th>स्थिति (Status)</th>
+                <th>हटाएं</th>
+              </tr>
+            </thead>
             <tbody></tbody>
           </table>
         </div>
@@ -916,9 +945,9 @@
     </div>
   </div>
 
-  <!-- FIXED STICKY FOOTER -->
+  <!-- FIXED STICKY FOOTER WITH WORKING CLICK HANDLERS -->
   <footer>
-    <div style="max-width:900px; margin:0 auto;">
+    <div style="max-width:900px; margin:0 auto; position:relative; z-index:100;">
       <p style="color:var(--gold); font-weight:bold; margin-bottom:4px;">Maa Durga Enterprises & श्री दुर्गा पूजा सेवा समिति, प्रतापगढ़ (उ.प्र.)</p>
       <p style="color:#ffcdd2; font-size:12px;">📞 WhatsApp: <a id="ftrWa" href="https://wa.me/919120226597" target="_blank" style="color:var(--gold);">+91 9120226597</a> | 📷 Instagram: <a id="ftrInsta" href="https://www.instagram.com/shreedurgapuja_official" target="_blank" style="color:var(--gold);">@shreedurgapuja_official</a></p>
       
@@ -978,6 +1007,7 @@
     let cloudFeedbacks = [];
     let cloudBlogs = [];
     let cloudPlaylist = [];
+    let cloudOffers = [];
     let globalRoomState = { songIndex: 0, startedAt: Date.now(), isPlaying: false };
     let activeCategory = 'all';
     let isFirstDonationLoad = true;
@@ -1084,7 +1114,7 @@
     }
 
     // =========================================================================
-    // TRUE LIVE RADIO SYNC ENGINE (50% DUCKING & EXACT RESUME TIME)
+    // TRUE LIVE RADIO SYNC ENGINE (CONTINUOUS PLAYLIST AUTO-NEXT & REPEAT LOOP)
     // =========================================================================
     let isMusicPlaying = false;
     let isYtPlayerReady = false;
@@ -1100,9 +1130,13 @@
       }
     });
 
-    coreAudio.addEventListener('ended', () => {
-      if (cloudPlaylist.length > 0 && db) {
-        const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
+    function playNextSongInContinuousLoop() {
+      if (cloudPlaylist.length === 0) return;
+      const nextIdx = (globalRoomState.songIndex + 1) % cloudPlaylist.length;
+      globalRoomState.songIndex = nextIdx;
+      globalRoomState.startedAt = Date.now();
+
+      if (db) {
         db.collection("settings").doc("music_room").set({
           songIndex: nextIdx,
           startedAt: Date.now(),
@@ -1110,6 +1144,12 @@
           sourceType: "mp3"
         }, { merge: true }).catch(() => {});
       }
+
+      applyGlobalSyncPlayback();
+    }
+
+    coreAudio.addEventListener('ended', () => {
+      playNextSongInContinuousLoop();
     });
 
     const ytScriptTag = document.createElement('script');
@@ -1310,6 +1350,9 @@
       if (window.event && window.event.target) window.event.target.classList.add('active');
       const target = document.getElementById(id);
       if (target) target.classList.add('active');
+      if (id === 'admOffers') {
+        renderOfferProductChecklist();
+      }
     }
 
     // --- Firestore Sync Listeners ---
@@ -1364,8 +1407,6 @@
           }
           if (s.offerExpiry) {
             globalOfferExpiryTime = new Date(s.offerExpiry).getTime();
-            const expInput = document.getElementById('admOfferExpiryInput');
-            if (expInput) expInput.value = s.offerExpiry;
           }
         }
       }, err => {});
@@ -1392,7 +1433,6 @@
         let autoSkuNum = 101;
         snap.forEach(doc => {
           const d = doc.data();
-          // Guarantee an SKU exists even for old products
           const finalSku = d.sku || ("SKU-" + autoSkuNum++);
           cloudProducts.push({ id: doc.id, sku: finalSku, ...d });
         });
@@ -1400,7 +1440,14 @@
         renderStoreProducts();
         renderSuggestedProducts();
         renderAdminProducts();
-        renderAdminOffers();
+        renderOfferProductChecklist();
+      }, err => {});
+
+      db.collection("offers").onSnapshot(snap => {
+        cloudOffers = [];
+        snap.forEach(doc => cloudOffers.push({ id: doc.id, ...doc.data() }));
+        renderAdminOffersList();
+        renderStoreProducts();
       }, err => {});
 
       db.collection("coupons").onSnapshot(snap => {
@@ -1468,7 +1515,7 @@
 
       if (timerSec) timerSec.style.display = 'block';
       const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const minutes = Math.floor((diff % (1000 * 60)) / (1000 * 60));
       const seconds = Math.floor((diff % (1000 * 60)) / 1000);
 
       if (clockEl) {
@@ -1516,6 +1563,129 @@
       `).join('');
     }
 
+    // --- MULTI-OFFER HELPER LOGIC ---
+    function getProductActiveOffer(productId) {
+      const now = Date.now();
+      for (const offer of cloudOffers) {
+        const start = new Date(offer.startTime).getTime();
+        const end = new Date(offer.endTime).getTime();
+        if (now >= start && now <= end) {
+          if (offer.products && offer.products[productId]) {
+            return {
+              title: offer.title,
+              discountPercent: Number(offer.products[productId]),
+              endTime: end
+            };
+          }
+        }
+      }
+      return null;
+    }
+
+    function renderOfferProductChecklist() {
+      const container = document.getElementById('offerProductPickerContainer');
+      if (!container) return;
+
+      if (cloudProducts.length === 0) {
+        container.innerHTML = `<p style="color:#aaa; font-size:12px;">स्टोर में कोई उत्पाद उपलब्ध नहीं है।</p>`;
+        return;
+      }
+
+      container.innerHTML = cloudProducts.map(p => `
+        <div style="display:flex; align-items:center; justify-content:space-between; padding:6px 0; border-bottom:1px solid rgba(255,215,0,0.1);">
+          <label style="display:flex; align-items:center; gap:8px; margin:0; cursor:pointer; color:#fff;">
+            <input type="checkbox" class="offer-prod-checkbox" value="${p.id}" id="chk_offer_${p.id}" style="width:16px; height:16px;">
+            <span><b>${p.sku}</b> — ${p.name} (मूल्य: ₹${p.price})</span>
+          </label>
+          <div style="display:flex; align-items:center; gap:4px;">
+            <input type="number" id="disc_val_${p.id}" placeholder="छूट %" min="1" max="90" style="width:75px; padding:4px 6px; font-size:12px;" value="15">
+            <span style="font-size:11px; color:var(--gold);">%</span>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function saveNewMultiOffer() {
+      if (!db) return;
+      const title = document.getElementById('newOfferTitle')?.value.trim();
+      const desc = document.getElementById('newOfferDesc')?.value.trim() || "";
+      const startVal = document.getElementById('newOfferStart')?.value;
+      const endVal = document.getElementById('newOfferEnd')?.value;
+
+      if (!title || !startVal || !endVal) {
+        showAppToast("कृपया ऑफर का नाम, शुरू और समाप्त होने का समय दर्ज करें!");
+        return;
+      }
+
+      const selectedProducts = {};
+      let count = 0;
+      document.querySelectorAll('.offer-prod-checkbox').forEach(cb => {
+        if (cb.checked) {
+          const pId = cb.value;
+          const discount = Number(document.getElementById(`disc_val_${pId}`)?.value) || 10;
+          selectedProducts[pId] = discount;
+          count++;
+        }
+      });
+
+      if (count === 0) {
+        showAppToast("कृपया कम से कम एक उत्पाद चुनकर उस पर छूट % तय करें!");
+        return;
+      }
+
+      db.collection("offers").add({
+        title: title,
+        description: desc,
+        startTime: startVal,
+        endTime: endVal,
+        products: selectedProducts,
+        createdAt: Date.now()
+      }).then(() => {
+        showAppToast("🎉 नया स्पेशल ऑफर सफलतापूर्वक सक्रिय हो गया!");
+        document.getElementById('newOfferTitle').value = '';
+        document.getElementById('newOfferDesc').value = '';
+        document.getElementById('newOfferStart').value = '';
+        document.getElementById('newOfferEnd').value = '';
+        renderOfferProductChecklist();
+      }).catch(e => showAppToast("त्रुटि: " + e.message));
+    }
+
+    function renderAdminOffersList() {
+      const tb = document.querySelector('#admActiveOffersTable tbody');
+      if (!tb) return;
+
+      if (cloudOffers.length === 0) {
+        tb.innerHTML = `<tr><td colspan="5" style="text-align:center; color:#aaa; padding:14px;">अभी कोई स्पेशल कैंपेन ऑफर नहीं बना है। ऊपर दिए फ़ॉर्म से नया ऑफर बनाएं।</td></tr>`;
+        return;
+      }
+
+      const now = Date.now();
+      tb.innerHTML = cloudOffers.map(o => {
+        const start = new Date(o.startTime).getTime();
+        const end = new Date(o.endTime).getTime();
+        const isActive = now >= start && now <= end;
+        const isExpired = now > end;
+
+        let statusHtml = isActive 
+          ? `<span style="color:#81c784; font-weight:bold;">🟢 लाइव (Active)</span>` 
+          : (isExpired ? `<span style="color:#ff5252;">🔴 समाप्त (Expired)</span>` : `<span style="color:var(--gold);">⏳ आगामी (Upcoming)</span>`);
+
+        const prodCount = o.products ? Object.keys(o.products).length : 0;
+
+        return `
+          <tr>
+            <td><b>${o.title}</b><br><small style="color:#ccc;">${o.description || ''}</small></td>
+            <td><small>${new Date(o.startTime).toLocaleDateString('hi-IN')} से<br>${new Date(o.endTime).toLocaleDateString('hi-IN')}</small></td>
+            <td><b>${prodCount} उत्पाद</b></td>
+            <td>${statusHtml}</td>
+            <td>
+              <button type="button" onclick="db.collection('offers').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:4px 8px; border-radius:4px; cursor:pointer;">हटाएं 🗑️</button>
+            </td>
+          </tr>
+        `;
+      }).join('');
+    }
+
     // --- FLIPKART STYLE PRODUCT DETAILS & WORKING SLIDER ---
     let activeCheckoutProduct = null;
     let appliedDiscountPercent = 0;
@@ -1528,12 +1698,14 @@
 
       document.getElementById('modalProdTitle').innerText = p.name;
       
+      const offerInfo = getProductActiveOffer(p.id);
       let finalDisplayPrice = p.price;
       let offerBadgeHtml = "";
-      if (p.discountPercent && p.discountPercent > 0) {
-        const discountedAmt = Math.round(p.price - (p.price * p.discountPercent) / 100);
+
+      if (offerInfo && offerInfo.discountPercent > 0) {
+        const discountedAmt = Math.round(p.price - (p.price * offerInfo.discountPercent) / 100);
         finalDisplayPrice = discountedAmt;
-        offerBadgeHtml = `🔥 ${p.discountPercent}% की छूट (Special Offer)`;
+        offerBadgeHtml = `🔥 ${offerInfo.title} (${offerInfo.discountPercent}% की छूट)`;
         document.getElementById('modalProdPrice').innerHTML = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:6px;">₹${p.price}</span> ₹${discountedAmt}`;
       } else {
         document.getElementById('modalProdPrice').innerText = `कीमत: ₹${p.price}`;
@@ -1570,13 +1742,21 @@
       openModal('productDetailModal');
     }
 
+    // MANDATORY LOGIN CHECK BEFORE ORDER
     function proceedToCheckoutFromModal() {
       closeModal('productDetailModal');
       if (!activeCheckoutProduct || activeCheckoutProduct.inStock === false) return;
 
+      if (!currentUser) {
+        showAppToast("⚠️ ऑर्डर करने के लिए पहले अपने Google खाते से लॉगिन करें!");
+        openLoginModal();
+        return;
+      }
+
+      const offerInfo = getProductActiveOffer(activeCheckoutProduct.id);
       let basePrice = activeCheckoutProduct.price;
-      if (activeCheckoutProduct.discountPercent && activeCheckoutProduct.discountPercent > 0) {
-        basePrice = Math.round(basePrice - (basePrice * activeCheckoutProduct.discountPercent) / 100);
+      if (offerInfo && offerInfo.discountPercent > 0) {
+        basePrice = Math.round(basePrice - (basePrice * offerInfo.discountPercent) / 100);
       }
 
       document.getElementById('chkTitle').innerText = `📦 ऑर्डर: ${activeCheckoutProduct.name}`;
@@ -1745,663 +1925,7 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
-    // --- FLIPKART STYLE TRACKING MODAL ---
-    function openOrderTrackingModal(orderId) {
-      const order = cloudOrders.find(o => o.id === orderId);
-      if (!order) return;
-
-      const currentStatus = order.status || "पेंडिंग";
-      const stages = ["पेंडिंग", "कन्फ़र्म", "शिप हुआ", "डिलीवरी के लिए निकला", "डिलीवर"];
-      let currentIndex = stages.indexOf(currentStatus);
-      if (currentIndex === -1) currentIndex = 0;
-
-      let timelineHtml = stages.map((st, idx) => {
-        let isDone = idx <= currentIndex;
-        let colorDot = isDone ? "#4caf50" : "#555";
-        let lineClr = idx < stages.length - 1 && idx < currentIndex ? "#4caf50" : "#444";
-        return `
-          <div style="display:flex; gap:12px; position:relative; margin-bottom:14px;">
-            <div style="display:flex; flex-direction:column; align-items:center;">
-              <div style="width:18px; height:18px; border-radius:50%; background:${colorDot}; border:2px solid var(--gold); z-index:2;"></div>
-              ${idx < stages.length - 1 ? `<div style="width:2px; height:35px; background:${lineClr}; margin-top:2px;"></div>` : ''}
-            </div>
-            <div>
-              <b style="font-size:14px; color:${isDone ? '#fff' : '#aaa'};">${st}</b>
-              <p style="font-size:11px; color:#aaa;">${isDone ? 'स्थिति सक्रिय / अपडेटेड' : 'प्रतीक्षा में...'}</p>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      let otpBlock = "";
-      if (order.showOtpToUser && order.otp) {
-        otpBlock = `<div style="background:rgba(76,175,80,0.15); border:1px solid #4caf50; padding:10px; border-radius:8px; margin-top:12px; text-align:center;">
-          <b style="color:#81c784; font-size:14px;">🔑 गुप्त डिलीवरी OTP: ${order.otp}</b>
-          <p style="font-size:10px; color:#ccc;">सामान प्राप्त करते समय डिलीवरी बॉय को यह OTP बताएं।</p>
-        </div>`;
-      }
-
-      document.getElementById('trackModalContent').innerHTML = `
-        <div style="display:flex; gap:10px; align-items:center; margin-bottom:12px; background:rgba(0,0,0,0.4); padding:8px; border-radius:8px;">
-          <img src="${order.productImg || 'https://via.placeholder.com/60'}" width="50" height="50" style="object-fit:cover; border-radius:6px;" onerror="this.style.display='none'">
-          <div>
-            <b style="color:var(--gold); font-size:13px;">${order.productName}</b>
-            <p style="font-size:11px; color:#ffcdd2;">मूल्य: ₹${order.amount} | दिनांक: ${order.date}</p>
-          </div>
-        </div>
-        <div style="padding:4px 10px;">${timelineHtml}</div>
-        ${otpBlock}
-      `;
-      openModal('orderTrackModal');
-    }
-
-    function renderCustomerOrders() {
-      const cont = document.getElementById('ordersContainer');
-      if (!cont || !currentUser) return;
-      const my = cloudOrders.filter(o => o.userEmail === currentUser.email);
-      if (my.length === 0) {
-        cont.innerHTML = `<p style="color:#aaa; text-align:center; padding:15px;">आपका कोई ऑर्डर नहीं मिला।</p>`;
-        return;
-      }
-      cont.innerHTML = my.map(o => `
-        <div onclick="openOrderTrackingModal('${o.id}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.25); padding:12px; border-radius:10px; margin-bottom:10px; display:flex; align-items:center; gap:12px; cursor:pointer;" title="स्टेटस देखने हेतु क्लिक करें">
-          <img src="${o.productImg || 'https://via.placeholder.com/60'}" width="60" height="60" style="object-fit:cover; border-radius:8px; border:1px solid var(--gold);" onerror="this.onerror=null; this.src='https://via.placeholder.com/60';">
-          <div style="flex:1;">
-            <b style="color:var(--gold); font-size:14px; display:block; margin-bottom:3px;">${o.productName}</b>
-            <p style="font-size:12px; color:#ffcdd2;">वर्तमान स्थिति: <b style="color:#81c784;">${o.status || 'पेंडिंग'}</b></p>
-            <small style="color:#aaa;">क्लिक करके विस्तृत स्टेटस (Flipkart स्टाइल) देखें ➔</small>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function renderAdminOrders() {
-      const tb = document.querySelector('#admOrdTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudOrders.map(o => `
-        <tr>
-          <td>${o.date}</td>
-          <td><b style="color:var(--gold); cursor:pointer;" onclick="inspectRecord('order', '${o.id}')">${o.userName}</b></td>
-          <td>${o.productName}</td>
-          <td>₹${o.amount}</td>
-          <td>${o.utr}</td>
-          <td>
-            <select id="admStat_${o.id}" onchange="updateOrderStatus('${o.id}')" style="background:#000; color:var(--gold); border:1px solid var(--gold); padding:4px; border-radius:4px;">
-              <option value="पेंडिंग" ${o.status === 'पेंडिंग' ? 'selected' : ''}>पेंडिंग (Default)</option>
-              <option value="कन्फ़र्म" ${o.status === 'कन्फ़र्म' ? 'selected' : ''}>कन्फ़र्म</option>
-              <option value="शिप हुआ" ${o.status === 'शिप हुआ' ? 'selected' : ''}>शिप हुआ</option>
-              <option value="डिलीवरी के लिए निकला" ${o.status === 'डिलीवरी के लिए निकला' ? 'selected' : ''}>डिलीवरी के लिए निकला</option>
-              <option value="डिलीवर" ${o.status === 'डिलीवर' ? 'selected' : ''}>डिलीवर</option>
-            </select>
-          </td>
-          <td>
-            <input type="checkbox" id="admOtpChk_${o.id}" ${o.showOtpToUser ? 'checked' : ''} onchange="updateOrderOtpVisibility('${o.id}')" style="width:16px; height:16px; cursor:pointer;" title="टिक करने पर ग्राहक को OTP दिखेगा">
-          </td>
-          <td><button onclick="db.collection('orders').doc('${o.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:4px; cursor:pointer;">🗑️</button></td>
-        </tr>
-      `).join('');
-    }
-
-    function updateOrderStatus(orderId) {
-      const selectEl = document.getElementById(`admStat_${orderId}`);
-      if (!selectEl || !db) return;
-      const newStatus = selectEl.value;
-      db.collection("orders").doc(orderId).update({ status: newStatus }).then(() => {
-        showAppToast("✅ ऑर्डर स्टेटस अपडेट हुआ!");
-      });
-    }
-
-    function updateOrderOtpVisibility(orderId) {
-      const chkEl = document.getElementById(`admOtpChk_${orderId}`);
-      if (!chkEl || !db) return;
-      const isVisible = chkEl.checked;
-      db.collection("orders").doc(orderId).update({ showOtpToUser: isVisible }).then(() => {
-        showAppToast(isVisible ? "🔑 OTP अब ग्राहक को दिखने लगा है!" : "🔒 OTP ग्राहक से छिपा दिया गया है!");
-      });
-    }
-
-    // --- EDIT PRODUCT MODAL (ADMIN) ---
-    function openEditProductModal(prodId) {
-      const p = cloudProducts.find(item => item.id === prodId);
-      if (!p) return;
-
-      document.getElementById('editProdId').value = p.id;
-      document.getElementById('editPName').value = p.name || '';
-      document.getElementById('editPPrice').value = p.price || 0;
-      document.getElementById('editPCat').value = p.category || '';
-      document.getElementById('editPImg').value = p.img || '';
-      document.getElementById('editPDesc').value = p.description || '';
-      document.getElementById('editPayUpi').checked = p.payUpi !== false;
-      document.getElementById('editPayCod').checked = p.payCod !== false;
-
-      openModal('editProductModal');
-    }
-
-    function saveEditedProduct() {
-      if (!db) return;
-      const id = document.getElementById('editProdId').value;
-      const name = document.getElementById('editPName').value.trim();
-      const price = Number(document.getElementById('editPPrice').value);
-      const cat = document.getElementById('editPCat').value.trim();
-      const img = document.getElementById('editPImg').value.trim();
-      const desc = document.getElementById('editPDesc').value.trim();
-      const payUpi = document.getElementById('editPayUpi').checked;
-      const payCod = document.getElementById('editPayCod').checked;
-
-      if (!name || !price) {
-        showAppToast("नाम और कीमत आवश्यक हैं!");
-        return;
-      }
-
-      db.collection("products").doc(id).update({
-        name, price, category: cat, img, description: desc, payUpi, payCod
-      }).then(() => {
-        closeModal('editProductModal');
-        showAppToast("✅ प्रोडक्ट सफलतापूर्वक अपडेट हो गया!");
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    // --- GANESH JI SUPPORT / PROBLEM TICKET HANDLERS ---
-    function handleProblemImageSelected(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        selectedProblemImageBase64 = e.target.result;
-        document.getElementById('probImgStatusTxt').innerText = "✓ फोटो चुनी गई";
-        document.getElementById('probImgPreviewBox').innerHTML = `<img src="${selectedProblemImageBase64}" style="max-height:80px; border-radius:6px; border:1px solid var(--gold);">`;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function submitProblemTicket() {
-      if (!db) return;
-      const name = document.getElementById('probCustName').value.trim();
-      const phone = document.getElementById('probCustPhone').value.trim();
-      const msg = document.getElementById('probCustMsg').value.trim();
-
-      if (!name || !phone || !msg) {
-        showAppToast("कृपया नाम, मोबाइल नंबर और समस्या का विवरण पूरा भरें!");
-        return;
-      }
-
-      db.collection("feedbacks").add({
-        name: name,
-        phone: phone,
-        message: msg,
-        type: "सहायता / समस्या रिपोर्ट",
-        rating: 5,
-        screenshot: selectedProblemImageBase64 || "",
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ आपकी समस्या सुरक्षित दर्ज हो गई है। हमारी टीम आपसे तुरंत संपर्क करेगी।");
-        document.getElementById('probCustName').value = '';
-        document.getElementById('probCustPhone').value = '';
-        document.getElementById('probCustMsg').value = '';
-        selectedProblemImageBase64 = null;
-        document.getElementById('probImgStatusTxt').innerText = "";
-        document.getElementById('probImgPreviewBox').innerHTML = "";
-        closeModal('problemSupportModal');
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    // --- DEVOTIONAL BLOG LOGIC ---
-    function saveNewBlogPost() {
-      if (!db) return;
-      const title = document.getElementById('newBlogTitle').value.trim();
-      const author = document.getElementById('newBlogAuthor').value.trim() || "श्री दुर्गा पूजा सेवा समिति";
-      const mainImg = document.getElementById('newBlogImg').value.trim();
-      const video = document.getElementById('newBlogVideo').value.trim();
-      const content = document.getElementById('newBlogBody').value.trim();
-      const onDonation = document.getElementById('newBlogOnDonation').checked;
-
-      const extraImgs = [];
-      document.querySelectorAll('.extra-img-url').forEach(input => {
-        const val = input.value.trim();
-        if (val) extraImgs.push(val);
-      });
-
-      if (!title || !content) {
-        showAppToast("कृपया शीर्षक और पूरी कहानी/कंटेंट अवश्य लिखें!");
-        return;
-      }
-
-      db.collection("blogs").add({
-        title, author, 
-        img: mainImg,
-        gallery: extraImgs,
-        video, content,
-        showOnDonation: onDonation,
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ पावन कथा प्रकाशित हुई!");
-        document.getElementById('newBlogTitle').value = '';
-        document.getElementById('newBlogImg').value = '';
-        document.getElementById('newBlogVideo').value = '';
-        document.getElementById('newBlogBody').value = '';
-        document.getElementById('newBlogOnDonation').checked = false;
-        document.getElementById('extraPhotoInputsContainer').innerHTML = `<input type="text" class="extra-img-url" placeholder="एडिशनल फोटो URL लिंक #1">`;
-      }).catch(e => showAppToast("त्रुटि: " + e.message));
-    }
-
-    function renderBlogCardsHtml(blogsList) {
-      return blogsList.map(b => {
-        let mediaHtml = "";
-        const vidId = extractVideoId(b.video);
-        if (vidId) {
-          mediaHtml = `<iframe src="https://www.youtube.com/embed/${vidId}" allowfullscreen loading="lazy"></iframe>`;
-        } else if (b.img) {
-          mediaHtml = `<img src="${b.img}" alt="${b.title}" loading="lazy" onerror="this.onerror=null; this.src='https://via.placeholder.com/400';">`;
-        } else {
-          mediaHtml = `<div style="height:140px; background:linear-gradient(135deg, #d32f2f, #ff6f00); display:flex; align-items:center; justify-content:center; font-size:35px;">🚩</div>`;
-        }
-
-        const shortText = b.content.length > 110 ? b.content.substring(0, 110) + '...' : b.content;
-
-        return `
-          <div class="blog-card">
-            ${mediaHtml}
-            <div class="blog-content">
-              <div class="blog-title">${b.title}</div>
-              <div class="blog-meta">📅 ${b.date || ''} | ✍️ ${b.author || 'समिति'}</div>
-              <div class="blog-desc">${shortText}</div>
-              <button class="blog-btn" onclick="openBlogReader('${b.id}')">📖 पूरा पढ़ें व गैलरी देखें</button>
-            </div>
-          </div>
-        `;
-      }).join('');
-    }
-
-    function renderPublicBlogs() {
-      const box = document.getElementById('publicFullBlogList');
-      if (!box) return;
-      if (cloudBlogs.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; grid-column:1/-1; padding:30px;">अभी कोई पावन कथा या ब्लॉग प्रकाशित नहीं हुआ है। जल्द ही दर्शन होंगे!</p>`;
-        return;
-      }
-      box.innerHTML = renderBlogCardsHtml(cloudBlogs);
-    }
-
-    function renderDonationFeaturedBlogs() {
-      const sec = document.getElementById('donationFeaturedBlogSec');
-      const box = document.getElementById('donationFeaturedBlogList');
-      if (!sec || !box) return;
-
-      const featured = cloudBlogs.filter(b => b.showOnDonation === true);
-      if (featured.length > 0) {
-        box.innerHTML = renderBlogCardsHtml(featured);
-        sec.style.display = 'block';
-      } else {
-        sec.style.display = 'none';
-      }
-    }
-
-    function openBlogReader(blogId) {
-      const blog = cloudBlogs.find(b => b.id === blogId);
-      if (!blog) return;
-
-      document.getElementById('readerBlogTitle').innerText = blog.title;
-      document.getElementById('readerBlogMeta').innerText = `दिनांक: ${blog.date || ''} | लेखक/स्रोत: ${blog.author || 'श्री दुर्गा पूजा सेवा समिति'}`;
-      
-      const mediaBox = document.getElementById('readerBlogMedia');
-      const galleryBox = document.getElementById('readerBlogGallery');
-      galleryBox.innerHTML = "";
-
-      const vidId = extractVideoId(blog.video);
-      if (vidId) {
-        mediaBox.innerHTML = `<iframe src="https://www.youtube.com/embed/${vidId}" style="width:100%; height:230px; border-radius:8px; border:none;" allowfullscreen></iframe>`;
-      } else if (blog.img) {
-        mediaBox.innerHTML = `<img src="${blog.img}" style="width:100%; max-height:260px; object-fit:cover; border-radius:8px;" onerror="this.onerror=null; this.src='https://via.placeholder.com/400';">`;
-      } else {
-        mediaBox.innerHTML = "";
-      }
-
-      if (blog.gallery && blog.gallery.length > 0) {
-        galleryBox.innerHTML = blog.gallery.map(imgUrl => `
-          <img src="${imgUrl}" style="width:100%; height:120px; object-fit:cover; border-radius:6px; border:1px solid rgba(255,215,0,0.3); cursor:pointer;" onclick="viewAdminScreenshot('${imgUrl}')" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';" title="बड़ा देखने के लिए क्लिक करें">
-        `).join('');
-      }
-
-      document.getElementById('readerBlogText').innerText = blog.content;
-      openModal('blogReaderModal');
-    }
-
-    function toggleBlogOnDonation(blogId, currentVal) {
-      if (!db) return;
-      db.collection("blogs").doc(blogId).update({ showOnDonation: !currentVal }).then(() => {
-        showAppToast("डोनेशन पेज स्टेटस अपडेट हुआ!");
-      });
-    }
-
-    function toggleProductOnDonation(prodId, currentVal) {
-      if (!db) return;
-      db.collection("products").doc(prodId).update({ showOnDonation: !currentVal }).then(() => {
-        showAppToast("प्रोडक्ट सजेस्टेड स्टेटस अपडेट हुआ!");
-      });
-    }
-
-    function toggleProductStock(prodId, currentStockVal) {
-      if (!db) return;
-      const newStock = currentStockVal === false ? true : false;
-      db.collection("products").doc(prodId).update({ inStock: newStock }).then(() => {
-        showAppToast(newStock ? "🟢 प्रोडक्ट स्टॉक में है!" : "🔴 प्रोडक्ट आउट ऑफ़ स्टॉक कर दिया गया!");
-      });
-    }
-
-    function renderAdminBlogs() {
-      const tb = document.querySelector('#admBlogTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudBlogs.map(b => `
-        <tr>
-          <td>${b.date || '—'}</td>
-          <td><b>${b.title}</b></td>
-          <td>
-            <button onclick="toggleBlogOnDonation('${b.id}', ${b.showOnDonation || false})" style="background:${b.showOnDonation ? '#ffd700' : '#444'}; color:#000; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
-              ${b.showOnDonation ? '⭐ दिख रहा है' : 'छिपा हुआ'}
-            </button>
-          </td>
-          <td><button onclick="db.collection('blogs').doc('${b.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
-    }
-
-    // --- WHATSAPP-STYLE LIVE SATSANG CHAT ---
-    let mediaRecorder = null;
-    let audioChunks = [];
-    let isRecording = false;
-
-    function sendGlobalChatMessage(customContent = null, isVoice = false) {
-      if (!db) return;
-      const msgInput = document.getElementById('chatInputMsg');
-      const text = customContent !== null ? customContent : (msgInput ? msgInput.value.trim() : '');
-      if (!text) return;
-
-      const senderName = (currentUser && currentUser.displayName) ? currentUser.displayName : "अज्ञात भक्त";
-      const senderEmail = (currentUser && currentUser.email) ? currentUser.email : "anonymous";
-
-      db.collection("chats").add({
-        senderClientId: MY_CLIENT_ID,
-        name: senderName,
-        email: senderEmail,
-        message: text,
-        isVoiceNote: isVoice,
-        timeNumber: Date.now(),
-        dateStr: new Date().toLocaleTimeString('hi-IN', { hour: '2-digit', minute: '2-digit' })
-      }).then(() => {
-        if (msgInput && customContent === null) msgInput.value = '';
-        setTimeout(scrollChatToBottom, 80);
-      }).catch(e => showAppToast(e.message));
-    }
-
-    function scrollChatToBottom() {
-      const box = document.getElementById('globalChatContainer');
-      if (box) box.scrollTop = box.scrollHeight;
-    }
-
-    function openFileStorage() { document.getElementById('hiddenFilePicker')?.click(); }
-    function openCameraApp() { document.getElementById('hiddenCameraPicker')?.click(); }
-
-    function handleFileSelected(event) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const fileDataUrl = e.target.result;
-        if (file.type.startsWith('image/')) {
-          sendGlobalChatMessage(`<img src="${fileDataUrl}" style="max-width:100%; max-height:200px; border-radius:8px; display:block;">`);
-        } else if (file.type.startsWith('video/')) {
-          sendGlobalChatMessage(`<video src="${fileDataUrl}" controls style="max-width:100%; max-height:200px; border-radius:8px; display:block;"></video>`);
-        } else if (file.type.startsWith('audio/')) {
-          sendGlobalChatMessage(`<audio src="${fileDataUrl}" controls style="width:100%; max-width:240px;"></audio>`, true);
-        } else {
-          sendGlobalChatMessage(`📄 <a href="${fileDataUrl}" download="${file.name}" style="color:var(--gold); text-decoration:underline;">डाउनलोड: ${file.name}</a>`);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-
-    function toggleVoiceRecording() {
-      if (!isRecording) {
-        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-          showAppToast("ब्राउज़र वॉइस रिकॉर्डिंग सपोर्ट नहीं करता।");
-          return;
-        }
-        navigator.mediaDevices.getUserMedia({ audio: true }).then(stream => {
-          mediaRecorder = new MediaRecorder(stream);
-          audioChunks = [];
-          mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-          mediaRecorder.onstop = () => {
-            const audioBlob = new Blob(audioChunks, { type: 'audio/mp3' });
-            const reader = new FileReader();
-            reader.onload = function(e) {
-              sendGlobalChatMessage(`<audio src="${e.target.result}" controls style="width:100%; max-width:240px;"></audio>`, true);
-            };
-            reader.readAsDataURL(audioBlob);
-          };
-          mediaRecorder.start();
-          isRecording = true;
-          const micBtn = document.getElementById('micBtn');
-          if (micBtn) { micBtn.style.color = '#ff5252'; micBtn.innerText = '🔴'; }
-          showAppToast("🎙️ रिकॉर्डिंग शुरू... दोबारा दबाकर भेजें।");
-        }).catch(() => showAppToast("माइक्रोफोन की अनुमति आवश्यक है!"));
-      } else {
-        if (mediaRecorder) mediaRecorder.stop();
-        isRecording = false;
-        const micBtn = document.getElementById('micBtn');
-        if (micBtn) { micBtn.style.color = 'var(--gold)'; micBtn.innerText = '🎙️'; }
-      }
-    }
-
-    let pressTimer = null;
-    function handleMsgTouchStart(chatId, senderClientId, msgEmail) {
-      pressTimer = setTimeout(() => {
-        const isOwner = currentUser && currentUser.email && currentUser.email.toLowerCase() === OWNER_EMAIL.toLowerCase();
-        const isMyMsg = (senderClientId && senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email === msgEmail);
-        
-        if (isMyMsg || isOwner) {
-          if (confirm("क्या आप इस संदेश को हमेशा के लिए डिलीट करना चाहते हैं?")) {
-            db.collection("chats").doc(chatId).delete().then(() => showAppToast("संदेश डिलीट हुआ!"));
-          }
-        } else {
-          showAppToast("आप केवल अपना भेजा हुआ संदेश डिलीट कर सकते हैं!");
-        }
-      }, 700);
-    }
-
-    function handleMsgTouchEnd() { clearTimeout(pressTimer); }
-
-    function renderGlobalChat() {
-      const box = document.getElementById('globalChatContainer');
-      if (!box) return;
-
-      box.innerHTML = cloudChats.map(c => {
-        const isSentByMe = (c.senderClientId && c.senderClientId === MY_CLIENT_ID) || (currentUser && currentUser.email && currentUser.email === c.email);
-        const alignmentClass = isSentByMe ? "sent" : "received";
-        const displayName = isSentByMe ? "आप (You)" : (c.name || "अज्ञात भक्त");
-
-        return `
-          <div class="msg-row ${alignmentClass}"
-               ontouchstart="handleMsgTouchStart('${c.id}', '${c.senderClientId || ''}', '${c.email || ''}')" 
-               ontouchend="handleMsgTouchEnd()" 
-               onmousedown="handleMsgTouchStart('${c.id}', '${c.senderClientId || ''}', '${c.email || ''}')" 
-               onmouseup="handleMsgTouchEnd()">
-            <div class="insta-msg-bubble" title="मैसेज डिलीट करने हेतु 2-3 सेकंड दबाकर रखें">
-              <div class="insta-msg-sender">${displayName}</div>
-              <div>${c.message || ''}</div>
-              <span class="msg-meta">${c.dateStr || ''}</span>
-            </div>
-          </div>
-        `;
-      }).join('');
-
-      scrollChatToBottom();
-    }
-
-    function renderAdminChat() {
-      const tb = document.querySelector('#admChatTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudChats.map(c => `
-        <tr>
-          <td>${c.dateStr || '—'}</td>
-          <td><b>${c.name || 'अज्ञात भक्त'}</b></td>
-          <td>${c.message.length > 50 ? c.message.substring(0, 50) + '...' : c.message}</td>
-          <td><button onclick="db.collection('chats').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
-    }
-
-    // --- Feedback Functions ---
-    function submitPublicFeedback() {
-      if (!db) return;
-      const name = document.getElementById('fbNameInput').value.trim() || "श्रद्धालु भक्त";
-      const rating = document.getElementById('fbRatingInput').value;
-      const msg = document.getElementById('fbMsgInput').value.trim();
-
-      if (!msg) {
-        showAppToast("कृपया अपना संदेश या अनुभव लिखें!");
-        return;
-      }
-
-      db.collection("feedbacks").add({
-        name, rating: Number(rating), message: msg, type: "पब्लिक फीडबैक",
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now()
-      }).then(() => {
-        showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
-        document.getElementById('fbMsgInput').value = '';
-        closeModal('feedbackModal');
-      }).catch(e => showAppToast(e.message));
-    }
-
-    function renderPublicFeedbacks() {
-      const box = document.getElementById('publicFeedbackList');
-      if (!box) return;
-      const filtered = cloudFeedbacks.filter(f => f.type !== "सहायता / समस्या रिपोर्ट");
-      if (filtered.length === 0) {
-        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
-        return;
-      }
-      box.innerHTML = filtered.map(f => `
-        <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
-          <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
-            <span>${f.name}</span>
-            <span>${'⭐'.repeat(f.rating || 5)}</span>
-          </div>
-          <p style="color:#ffcdd2;">${f.message}</p>
-        </div>
-      `).join('');
-    }
-
-    function renderAdminFeedbacks() {
-      const tb = document.querySelector('#admFeedTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudFeedbacks.map(f => `
-        <tr>
-          <td>${f.date || '—'}</td>
-          <td><b>${f.name || '—'}</b><br><small>${f.phone || ''}</small></td>
-          <td><span style="color:${f.type === 'सहायता / समस्या रिपोर्ट' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'फीडबैक'}</span></td>
-          <td>${f.message}</td>
-          <td>
-            ${f.screenshot ? `<img src="${f.screenshot}" onclick="viewAdminScreenshot('${f.screenshot}')" style="width:42px; height:42px; object-fit:cover; border-radius:4px; border:2px solid var(--gold); cursor:pointer;" title="बड़ा देखने के लिए क्लिक करें">` : '—'}
-          </td>
-          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-        </tr>
-      `).join('');
-    }
-
-    // --- WhatsApp Receipt Sender ---
-    function sendWhatsAppReceipt(phone, name, amount, cause, utr, date) {
-      if (!phone) {
-        showAppToast("दानदाता का मोबाइल नंबर उपलब्ध नहीं है!");
-        return;
-      }
-      const cleanPhone = phone.replace(/[^0-9]/g, '');
-      const finalPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
-      
-      const receiptMsg = encodeURIComponent(
-        `🚩 *श्री दुर्गा पूजा सेवा समिति & Maa Durga Enterprises* 🚩\n\n` +
-        `सादर प्रणाम, *${name}* जी,\n` +
-        `माँ भगवती के पावन कार्य हेतु आपका सहयोग सप्रेम प्राप्त हुआ।\n\n` +
-        `🧾 *पावन सहयोग रसीद:* \n` +
-        `• उद्देश्य: ${cause}\n` +
-        `• सहयोग राशि: ₹${amount}\n` +
-        `• UTR / Ref No: ${utr}\n` +
-        `• दिनांक: ${date}\n\n` +
-        `🌸 माँ दुर्गा जी की कृपा आप और आपके समस्त परिवार पर सदैव बनी रहे। जय माता दी! 🌸`
-      );
-
-      window.open(`https://wa.me/${finalPhone}?text=${receiptMsg}`, '_blank');
-    }
-
-    function renderAdminDonations() {
-      const tb = document.querySelector('#admDonTable tbody');
-      if (!tb) return;
-      tb.innerHTML = cloudDonations.map(d => {
-        const dName = formatDonorName(d.name, d.salutation);
-        const phone = d.phone || '';
-        return `
-          <tr>
-            <td>${d.date}</td>
-            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${dName}</b></td>
-            <td><b style="color:#81c784;">${phone ? '📞 ' + phone : '—'}</b></td>
-            <td>${d.address || '—'}</td>
-            <td>₹${d.amount}</td>
-            <td>${d.utr || 'VERIFIED'}</td>
-            <td>
-              ${phone ? `
-                <button onclick="sendWhatsAppReceipt('${phone}', '${d.name}', '${d.amount}', '${d.cause}', '${d.utr || 'VERIFIED'}', '${d.date}')" style="background:#25D366; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
-                  📲 WhatsApp
-                </button>
-              ` : '<span style="color:#777;">नंबर नहीं</span>'}
-            </td>
-            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
-          </tr>
-        `;
-      }).join('');
-    }
-
-    function saveAdminCashDonation() {
-      if (!db) return;
-      const name = document.getElementById('admCashName')?.value.trim();
-      const phone = document.getElementById('admCashPhone')?.value.trim() || '';
-      const city = document.getElementById('admCashCity')?.value.trim() || '';
-      const amt = document.getElementById('admCashAmt')?.value.trim();
-
-      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
-
-      db.collection("donations").add({
-        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
-        date: new Date().toLocaleDateString('hi-IN'),
-        timeNumber: Date.now(),
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      }).then(() => {
-        showAppToast("✅ सहयोग दर्ज हुआ!");
-        document.getElementById('admCashName').value = '';
-        document.getElementById('admCashPhone').value = '';
-        document.getElementById('admCashAmt').value = '';
-      });
-    }
-
-    // --- EXACT DUCKING & AUTO-CLOSE WELCOME AUDIO ENGINE ---
-    const welcomeAudio = new Audio("welcome.MP3");
-    function playWelcomeSoundWithDucking() {
-      if (coreAudio && !coreAudio.paused) {
-        coreAudio.volume = 0.5; // Duck to 50%
-      }
-      welcomeAudio.currentTime = 0;
-      welcomeAudio.play().then(() => {
-        welcomeAudio.onended = () => {
-          if (coreAudio) coreAudio.volume = 1.0; // Restore 100%
-          closeModal('celebrationModal'); // Auto close popup when audio ends
-        };
-      }).catch(() => {
-        if (coreAudio) coreAudio.volume = 1.0;
-      });
-    }
-
+    // --- 100% WORKING DONATION MODAL & DUCKING ---
     function openDonationModal() {
       const name = document.getElementById('donName')?.value.trim() || "श्रद्धालु भक्त";
       const sal = document.getElementById('donSalutation')?.value || 'none';
@@ -2534,6 +2058,22 @@
       });
     }
 
+    const welcomeAudio = new Audio("welcome.MP3");
+    function playWelcomeSoundWithDucking() {
+      if (coreAudio && !coreAudio.paused) {
+        coreAudio.volume = 0.5;
+      }
+      welcomeAudio.currentTime = 0;
+      welcomeAudio.play().then(() => {
+        welcomeAudio.onended = () => {
+          if (coreAudio) coreAudio.volume = 1.0;
+          closeModal('celebrationModal');
+        };
+      }).catch(() => {
+        if (coreAudio) coreAudio.volume = 1.0;
+      });
+    }
+
     function triggerCelebration(name, cause, amount, salutation) {
       const dName = formatDonorName(name, salutation);
       document.getElementById('celDonorName').innerText = `${dName},`;
@@ -2558,59 +2098,48 @@
     }
     function filterCategory(cat) { activeCategory = cat; renderCategories(); renderStoreProducts(); }
     
+    // CUSTOMER STORE RENDER WITH LIVE CAMPAIGN OFFER BANNER
     function renderStoreProducts() {
       const g = document.getElementById('fullStoreGrid');
-      if (!g) return;
-      const filtered = activeCategory === 'all' ? cloudProducts : cloudProducts.filter(p => p.category === activeCategory);
-      g.innerHTML = filtered.map(p => {
+      const sg = document.getElementById('suggestedGrid');
+      
+      // Default show in-stock products
+      const availableProducts = activeCategory === 'all' 
+        ? cloudProducts.filter(p => p.inStock !== false) 
+        : cloudProducts.filter(p => p.category === activeCategory && p.inStock !== false);
+
+      const html = availableProducts.map(p => {
+        const offerInfo = getProductActiveOffer(p.id);
         let displayPrice = p.price;
         let priceHtml = `₹${p.price}`;
-        if (p.discountPercent && p.discountPercent > 0) {
-          displayPrice = Math.round(p.price - (p.price * p.discountPercent) / 100);
-          priceHtml = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${displayPrice}`;
-        }
+        let offerBanner = '';
 
-        let stockBadge = p.inStock === false ? `<div style="color:#ff5252; font-size:11px; font-weight:bold; margin-bottom:4px;">❌ Out of Stock</div>` : '';
-        let btnDisabled = p.inStock === false ? `style="background:#444; color:#aaa; cursor:not-allowed;" disabled` : '';
-        let btnText = p.inStock === false ? `स्टॉक में नहीं` : `🛒 अभी खरीदें`;
+        if (offerInfo && offerInfo.discountPercent > 0) {
+          displayPrice = Math.round(p.price - (p.price * offerInfo.discountPercent) / 100);
+          priceHtml = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${displayPrice}`;
+          offerBanner = `
+            <div style="background:rgba(211,47,47,0.25); border:1px solid var(--red); color:#ff8a80; border-radius:4px; padding:2px 6px; font-size:10px; font-weight:bold; margin-bottom:4px;">
+              🏷️ ${offerInfo.title} (${offerInfo.discountPercent}% OFF)
+            </div>
+          `;
+        }
 
         return `
           <div class="p-card" onclick="openProductDetails('${p.id}')">
             <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
+            ${offerBanner}
             <div class="p-title">${p.name}</div>
-            <div class="p-sku">SKU: ${p.sku}</div>
-            ${stockBadge}
+            <div class="p-sku">${p.sku}</div>
             <div class="p-price">${priceHtml}</div>
-            <button class="btn-buy" ${btnDisabled} onclick="event.stopPropagation(); openCheckout('${p.id}')">${btnText}</button>
+            <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
           </div>
         `;
       }).join('');
 
-      const sg = document.getElementById('suggestedGrid');
-      if (sg) {
-        const suggested = cloudProducts.filter(p => p.showOnDonation === true);
-        const listToRender = suggested.length > 0 ? suggested : cloudProducts.slice(0, 4);
-        sg.innerHTML = listToRender.map(p => {
-          let dp = p.price;
-          let ph = `₹${p.price}`;
-          if (p.discountPercent && p.discountPercent > 0) {
-            dp = Math.round(p.price - (p.price * p.discountPercent) / 100);
-            ph = `<span style="text-decoration:line-through; color:#aaa; font-size:12px; margin-right:4px;">₹${p.price}</span> ₹${dp}`;
-          }
-          return `
-            <div class="p-card" onclick="openProductDetails('${p.id}')">
-              <img src="${p.img || 'https://via.placeholder.com/200'}" onerror="this.onerror=null; this.src='https://via.placeholder.com/200';">
-              <div class="p-title">${p.name}</div>
-              <div class="p-sku">SKU: ${p.sku}</div>
-              <div class="p-price">${ph}</div>
-              <button class="btn-buy" onclick="event.stopPropagation(); openCheckout('${p.id}')">🛒 अभी खरीदें</button>
-            </div>
-          `;
-        }).join('');
-      }
+      if (g) g.innerHTML = html || `<p style="color:#aaa; text-align:center; grid-column:1/-1;">स्टोर में उत्पाद उपलब्ध हैं।</p>`;
+      if (sg) sg.innerHTML = html;
     }
 
-    // --- SAVE PRODUCT ---
     function saveNewProduct() {
       const name = document.getElementById('newPName').value.trim();
       const price = document.getElementById('newPPrice').value.trim();
@@ -2665,79 +2194,63 @@
       }).catch(e => showAppToast("त्रुटि: " + e.message));
     }
 
+    // INVENTORY: ALL PRODUCTS DISPLAY ON EMPTY SEARCH + IN-STOCK ON TOP
     function renderAdminProducts() {
       const tb = document.querySelector('#admProdTable tbody');
       if (!tb) return;
       const query = (document.getElementById('adminInventorySearch')?.value || '').toLowerCase().trim();
 
-      const filtered = cloudProducts.filter(p => {
+      let filtered = cloudProducts.filter(p => {
+        if (!query) return true;
         const pName = (p.name || '').toLowerCase();
         const pSku = (p.sku || '').toLowerCase();
         return pName.includes(query) || pSku.includes(query);
       });
 
+      // 🟢 In Stock on top
+      filtered.sort((a, b) => {
+        const aStock = a.inStock !== false ? 1 : 0;
+        const bStock = b.inStock !== false ? 1 : 0;
+        return bStock - aStock;
+      });
+
       if (filtered.length === 0) {
-        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa;">कोई प्रोडक्ट नहीं मिला। ऊपर 'नया प्रोडक्ट जोड़ें' से जोड़ें।</td></tr>`;
+        tb.innerHTML = `<tr><td colspan="6" style="text-align:center; color:#aaa; padding:15px;">कोई प्रोडक्ट नहीं मिला। ऊपर '+ नया प्रोडक्ट जोड़ें' से जोड़ें।</td></tr>`;
         return;
       }
 
       tb.innerHTML = filtered.map(p => `
         <tr>
           <td><b style="color:var(--gold);">${p.sku}</b></td>
-          <td><img src="${p.img || ''}" width="30" onerror="this.style.display='none'"></td>
+          <td><img src="${p.img || 'https://via.placeholder.com/30'}" width="30" height="30" style="object-fit:cover; border-radius:4px;" onerror="this.style.display='none'"></td>
           <td><b>${p.name}</b></td>
           <td>
-            <button onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#ff5252'}; color:#fff; border:none; padding:3px 8px; border-radius:3px; font-weight:bold; cursor:pointer;">
+            <button type="button" onclick="toggleProductStock('${p.id}', ${p.inStock !== false})" style="background:${p.inStock !== false ? '#4caf50' : '#d32f2f'}; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
               ${p.inStock !== false ? '🟢 In Stock' : '🔴 Out of Stock'}
             </button>
           </td>
           <td>₹${p.price}</td>
           <td>
-            <button onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 6px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
-            <button onclick="db.collection('products').doc('${p.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:3px 6px; border-radius:3px; cursor:pointer; margin-left:3px;" title="डिलीट करें">🗑️</button>
+            <button type="button" onclick="openEditProductModal('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:3px 7px; border-radius:3px; font-weight:bold; cursor:pointer;" title="एडिट करें">✏️</button>
+            <button type="button" onclick="deleteProductWithConfirm('${p.id}')" style="background:#d32f2f; color:#fff; border:none; padding:3px 7px; border-radius:3px; cursor:pointer; margin-left:4px;" title="डिलीट करें">🗑️</button>
           </td>
         </tr>
       `).join('');
     }
 
-    function renderAdminOffers() {
-      const tb = document.querySelector('#admOffersTable tbody');
-      if (!tb) return;
-      if (cloudProducts.length === 0) {
-        tb.innerHTML = `<tr><td colspan="4" style="text-align:center; color:#aaa;">कोई प्रोडक्ट उपलब्ध नहीं है।</td></tr>`;
-        return;
-      }
-      tb.innerHTML = cloudProducts.map(p => `
-        <tr>
-          <td><b>${p.name}</b><br><small style="color:var(--gold);">${p.sku}</small></td>
-          <td>₹${p.price}</td>
-          <td>
-            <input type="number" id="offerDisc_${p.id}" value="${p.discountPercent || 0}" min="0" max="90" style="width:70px; padding:4px;" placeholder="%">
-          </td>
-          <td>
-            <button onclick="applyProductDiscount('${p.id}')" style="background:#ff9800; color:#000; border:none; padding:5px 10px; border-radius:4px; font-weight:bold; cursor:pointer;">
-              ऑफर सेट करें
-            </button>
-          </td>
-        </tr>
-      `).join('');
-    }
-
-    function applyProductDiscount(prodId) {
-      const discInput = document.getElementById(`offerDisc_${prodId}`);
-      if (!discInput || !db) return;
-      const discVal = Number(discInput.value) || 0;
-
-      const p = cloudProducts.find(item => item.id === prodId);
-      if (p && p.discountPercent && p.discountPercent > 0 && discVal > 0 && p.discountPercent !== discVal) {
-        if (!confirm(`⚠️ इस प्रोडक्ट पर पहले से ${p.discountPercent}% का ऑफर लगा है। क्या आप इसे बदलकर ${discVal}% करना चाहते हैं?`)) {
-          return;
-        }
-      }
-
-      db.collection("products").doc(prodId).update({ discountPercent: discVal }).then(() => {
-        showAppToast("✅ प्रोडक्ट पर विशेष ऑफर / डिस्काउंट अपडेट हो गया!");
+    function toggleProductStock(prodId, currentStock) {
+      if (!db) return;
+      db.collection("products").doc(prodId).update({ inStock: !currentStock }).then(() => {
+        showAppToast(!currentStock ? "🟢 प्रोडक्ट स्टॉक में सेट हुआ!" : "🔴 प्रोडक्ट आउट ऑफ़ स्टॉक सेट हुआ!");
       });
+    }
+
+    function deleteProductWithConfirm(prodId) {
+      if (confirm("क्या आप वाकई इस प्रोडक्ट को स्टोर से डिलीट करना चाहते हैं?")) {
+        db.collection("products").doc(prodId).delete().then(() => {
+          showAppToast("उत्पाद सफलतापूर्वक डिलीट कर दिया गया!");
+        });
+      }
     }
 
     function saveNewCoupon() {
@@ -2750,6 +2263,136 @@
       const tb = document.querySelector('#admCoupTable tbody');
       if (!tb) return;
       tb.innerHTML = cloudCoupons.map(c => `<tr><td>${c.code}</td><td>${c.discount}%</td><td><button onclick="db.collection('coupons').doc('${c.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px;">हटाएं</button></td></tr>`).join('');
+    }
+
+    function saveAdminCashDonation() {
+      if (!db) return;
+      const name = document.getElementById('admCashName')?.value.trim();
+      const phone = document.getElementById('admCashPhone')?.value.trim() || '';
+      const city = document.getElementById('admCashCity')?.value.trim() || '';
+      const amt = document.getElementById('admCashAmt')?.value.trim();
+
+      if (!name || !amt) { showAppToast("नाम व राशि आवश्यक हैं!"); return; }
+
+      db.collection("donations").add({
+        name, salutation: "none", address: city, phone, amount: Number(amt), cause: "श्री दुर्गा पूजा एवं अखंड भंडारा", utr: "MANUAL_" + Date.now().toString().slice(-6),
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now(),
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      }).then(() => {
+        showAppToast("✅ सहयोग दर्ज हुआ!");
+        document.getElementById('admCashName').value = '';
+        document.getElementById('admCashPhone').value = '';
+        document.getElementById('admCashAmt').value = '';
+      });
+    }
+
+    function renderAdminDonations() {
+      const tb = document.querySelector('#admDonTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudDonations.map(d => {
+        const dName = formatDonorName(d.name, d.salutation);
+        const phone = d.phone || '';
+        return `
+          <tr>
+            <td>${d.date}</td>
+            <td><b style="color:var(--gold); cursor:pointer; text-decoration:underline;" onclick="inspectRecord('donation', '${d.id}')">${dName}</b></td>
+            <td><b style="color:#81c784;">${phone ? '📞 ' + phone : '—'}</b></td>
+            <td>${d.address || '—'}</td>
+            <td>₹${d.amount}</td>
+            <td>${d.utr || 'VERIFIED'}</td>
+            <td>
+              ${phone ? `
+                <button onclick="sendWhatsAppReceipt('${phone}', '${d.name}', '${d.amount}', '${d.cause}', '${d.utr || 'VERIFIED'}', '${d.date}')" style="background:#25D366; color:#fff; border:none; padding:4px 8px; border-radius:4px; font-weight:bold; cursor:pointer;">
+                  📲 WhatsApp
+                </button>
+              ` : '<span style="color:#777;">नंबर नहीं</span>'}
+            </td>
+            <td><button onclick="db.collection('donations').doc('${d.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+          </tr>
+        `;
+      }).join('');
+    }
+
+    function sendWhatsAppReceipt(phone, name, amount, cause, utr, date) {
+      if (!phone) {
+        showAppToast("दानदाता का मोबाइल नंबर उपलब्ध नहीं है!");
+        return;
+      }
+      const cleanPhone = phone.replace(/[^0-9]/g, '');
+      const finalPhone = cleanPhone.length === 10 ? '91' + cleanPhone : cleanPhone;
+      
+      const receiptMsg = encodeURIComponent(
+        `🚩 *श्री दुर्गा पूजा सेवा समिति & Maa Durga Enterprises* 🚩\n\n` +
+        `सादर प्रणाम, *${name}* जी,\n` +
+        `माँ भगवती के पावन कार्य हेतु आपका सहयोग सप्रेम प्राप्त हुआ।\n\n` +
+        `🧾 *पावन सहयोग रसीद:* \n` +
+        `• उद्देश्य: ${cause}\n` +
+        `• सहयोग राशि: ₹${amount}\n` +
+        `• UTR / Ref No: ${utr}\n` +
+        `• दिनांक: ${date}\n\n` +
+        `🌸 माँ दुर्गा जी की कृपा आप और आपके समस्त परिवार पर सदैव बनी रहे। जय माता दी! 🌸`
+      );
+
+      window.open(`https://wa.me/${finalPhone}?text=${receiptMsg}`, '_blank');
+    }
+
+    function submitPublicFeedback() {
+      if (!db) return;
+      const name = document.getElementById('fbNameInput').value.trim() || "श्रद्धालु भक्त";
+      const rating = document.getElementById('fbRatingInput').value;
+      const msg = document.getElementById('fbMsgInput').value.trim();
+
+      if (!msg) {
+        showAppToast("कृपया अपना संदेश या अनुभव लिखें!");
+        return;
+      }
+
+      db.collection("feedbacks").add({
+        name, rating: Number(rating), message: msg, type: "पब्लिक फीडबैक",
+        date: new Date().toLocaleDateString('hi-IN'),
+        timeNumber: Date.now()
+      }).then(() => {
+        showAppToast("✅ आपका सुझाव सप्रेम स्वीकार हुआ! धन्यवाद।");
+        document.getElementById('fbMsgInput').value = '';
+        closeModal('feedbackModal');
+      }).catch(e => showAppToast(e.message));
+    }
+
+    function renderPublicFeedbacks() {
+      const box = document.getElementById('publicFeedbackList');
+      if (!box) return;
+      const filtered = cloudFeedbacks.filter(f => f.type !== "सहायता / समस्या रिपोर्ट");
+      if (filtered.length === 0) {
+        box.innerHTML = `<p style="color:#aaa; text-align:center; font-size:12px; padding:10px;">अभी कोई सुझाव उपलब्ध नहीं है। पहला सुझाव आप दें!</p>`;
+        return;
+      }
+      box.innerHTML = filtered.map(f => `
+        <div style="background:rgba(255,255,255,0.04); border:1px solid ${f.pinned ? 'var(--gold)' : 'rgba(255,215,0,0.15)'}; border-radius:6px; padding:8px; margin-bottom:6px; font-size:11px;">
+          <div style="display:flex; justify-content:space-between; color:var(--gold); font-weight:bold; margin-bottom:3px;">
+            <span>${f.name}</span>
+            <span>${'⭐'.repeat(f.rating || 5)}</span>
+          </div>
+          <p style="color:#ffcdd2;">${f.message}</p>
+        </div>
+      `).join('');
+    }
+
+    function renderAdminFeedbacks() {
+      const tb = document.querySelector('#admFeedTable tbody');
+      if (!tb) return;
+      tb.innerHTML = cloudFeedbacks.map(f => `
+        <tr>
+          <td>${f.date || '—'}</td>
+          <td><b>${f.name || '—'}</b><br><small>${f.phone || ''}</small></td>
+          <td><span style="color:${f.type === 'सहायता / समस्या रिपोर्ट' ? '#ff8a80' : 'var(--gold)'};">${f.type || 'फीडबैक'}</span></td>
+          <td>${f.message}</td>
+          <td>
+            ${f.screenshot ? `<img src="${f.screenshot}" onclick="viewAdminScreenshot('${f.screenshot}')" style="width:42px; height:42px; object-fit:cover; border-radius:4px; border:2px solid var(--gold); cursor:pointer;" title="बड़ा देखने के लिए क्लिक करें">` : '—'}
+          </td>
+          <td><button onclick="db.collection('feedbacks').doc('${f.id}').delete()" style="background:#d32f2f; color:#fff; border:none; padding:2px 6px; border-radius:3px; cursor:pointer;">हटाएं</button></td>
+        </tr>
+      `).join('');
     }
 
     // --- LEGAL & CONTACT MODAL LOGIC (FIXED) ---
@@ -2821,7 +2464,7 @@
       const selectedMode = document.getElementById('admAudioModeSelect').value;
       const ytLink = document.getElementById('admYtLink').value.trim();
       const ytVidId = extractVideoId(ytLink) || "";
-      const expiryInput = document.getElementById('admOfferExpiryInput').value;
+      const expiryInput = document.getElementById('admOfferExpiryInput')?.value || "";
       const payMode = document.getElementById('admPaymentMode').value;
 
       const batchSettings = {
